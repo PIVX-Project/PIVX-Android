@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 
 /**
@@ -17,17 +18,28 @@ import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 
 public class StartActivity extends BaseActivity {
 
-
+    Button buttonCreate;
+    Button buttonRestore;
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.fragment_start);
 
-        // example..
+        // Open Create Wallet
         pivxModule.createWallet();
-        Button next = (Button) findViewById(R.id.btnCreate);
-        next.setOnClickListener(new View.OnClickListener() {
+        buttonCreate = (Button) findViewById(R.id.btnCreate);
+        buttonCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), PincodeActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        // Open Restore Wallet
+        buttonRestore = (Button) findViewById(R.id.btnRestore);
+        buttonRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);

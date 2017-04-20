@@ -13,17 +13,20 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
  */
 
 public class RestoreActivity extends BaseActivity {
-
+    Button buttonFile;
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
-        setContentView(R.layout.restore_wallet);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Restore wallet");
+        setContentView(R.layout.fragment_restore);
 
 
         //Open File Folder
 
-        Button next = (Button) findViewById(R.id.addFile);
-        next.setOnClickListener(new View.OnClickListener() {
+        buttonFile = (Button) findViewById(R.id.addFile);
+        buttonFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

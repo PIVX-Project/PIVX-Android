@@ -26,6 +26,7 @@
         </activity>
 
         <activity android:name=".ui.restore_activity.RestoreActivity"></activity>
+        <activity android:name=".ui.pincode_activity.PincodeActivity"></activity>
 
     </application>
 
