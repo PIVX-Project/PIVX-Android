@@ -10,7 +10,9 @@
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
         <activity android:name=".MainActivity">
+
         </activity>
+
 
 
         <activity android:name=".ui.start_activity.StartActivity">
@@ -22,6 +24,8 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".ui.restore_activity.RestoreActivity"></activity>
 
     </application>
 
