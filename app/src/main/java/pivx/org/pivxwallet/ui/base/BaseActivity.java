@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -21,13 +22,13 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         pivxModule = ((PivxApplication) getApplication()).getModule();
 
         // onCreateChildMethod
         onCreateView(savedInstanceState);
     }
-
-
+    
     protected void onCreateView(Bundle savedInstanceState){
 
     }

@@ -8,5 +8,6 @@
     <color name="bgWhite30">#4Dffffff</color>
     <color name="textColorPurple">#55476c</color>
     <color name="textColorWhite">#ffffff</color>
+    <color name="textColorLightPurple">#ffffff</color>
 
 </resources>

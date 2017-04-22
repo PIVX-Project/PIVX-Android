@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:gravity="center_horizontal"
+    android:background="@color/bgPurple">
+    <TextView
+        android:id = "@+id/pivValue"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text = "USD 345"
+        android:layout_centerHorizontal = "true"
+        android:textColor = "@color/textColorWhite"
+        android:textSize = "24sp" />
+    <TextView
+        android:id = "@+id/pivValueLocal"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "USD 345"
+        android:layout_centerHorizontal = "true"
+        android:textColor = "@color/textColorLightPurple"
+        android:textSize = "16sp" />
+
+</LinearLayout>
