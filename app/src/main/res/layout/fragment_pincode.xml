@@ -31,31 +31,50 @@
         android:layout_below="@+id/pincodeMessage"
         android:layout_alignParentStart="true">
 
-        <EditText android:id="@+id/pin_first_edittext"
+        <ImageView
+            android:id="@+id/imageview_circle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription=""
-            style="@style/pin_edittext_style" />
-
-        <EditText android:id="@+id/pin_second_edittext"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle"
+            />
+        <ImageView
+            android:id="@+id/imageview_circle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription=""
-            style="@style/pin_edittext_style" />
-
-        <EditText android:id="@+id/pin_third_edittext"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle"
+            />
+        <ImageView
+            android:id="@+id/imageview_circle3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription=""
-            style="@style/pin_edittext_style" />
-
-        <EditText android:id="@+id/pin_forth_edittext"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle"
+            />
+        <ImageView
+            android:id="@+id/imageview_circle4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription=""
-            style="@style/pin_edittext_style" />
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle"
+            />
 
 
     </LinearLayout>
+
+    <EditText android:id="@+id/editText_enter_mpin"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/pin_layout"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:inputType="number"
+        android:password="true"
+        android:maxLength="4"
+        android:textColor="#00000000"
+        />
 
 </RelativeLayout>
