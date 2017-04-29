@@ -28,13 +28,7 @@ public class PincodeActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Create Pincode");
-
         setContentView(R.layout.fragment_pincode);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         i1 = (ImageView) findViewById(R.id.imageview_circle1);
         i2 = (ImageView) findViewById(R.id.imageview_circle2);

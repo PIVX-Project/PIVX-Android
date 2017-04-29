@@ -23,7 +23,6 @@ public class StartActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.fragment_start);
 
         // Open Create Wallet
