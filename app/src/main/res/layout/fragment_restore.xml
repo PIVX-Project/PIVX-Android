@@ -1,61 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bgPurple"
     tools:context="pivx.org.pivxwallet.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/bg_toolbar_login"
+        app:theme="@style/ToolBarStyle"
+        app:popupTheme="@style/AppTheme" />
 
-    <TextView
-        android:id = "@+id/restoreMessage"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="20dp"
-        android:text = "@string/restore_wallet_message"
-        android:layout_centerHorizontal = "true"
-        android:textColor = "@color/textColorWhite"
-        android:textSize = "18sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+        <TextView
+            android:id = "@+id/restoreMessage"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="20dp"
+            android:text = "@string/restore_wallet_message"
+            android:layout_centerHorizontal = "true"
+            android:textColor = "@color/textColorWhite"
+            android:textSize = "18sp" />
 
-    <Button
-        android:id="@+id/addFile"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:layout_marginTop="60dp"
-        android:gravity="left|center_vertical"
-        android:background="@drawable/login_input"
-        android:drawableRight="@mipmap/ic_add_file"
-        android:text="@string/select_file"
-        android:elevation="2dp"
-        android:textColor = "@color/textColorWhite"
-        android:textSize="14sp"
-        android:onClick="addFile"
-        android:layout_below="@+id/restoreMessage"
-        android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/addFile"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:layout_marginTop="60dp"
+            android:gravity="left|center_vertical"
+            android:background="@drawable/login_input"
+            android:drawableRight="@mipmap/ic_add_file"
+            android:text="@string/select_file"
+            android:elevation="2dp"
+            android:textColor = "@color/textColorWhite"
+            android:textSize="14sp"
+            android:onClick="addFile"
+            android:layout_below="@+id/restoreMessage"
+            android:layout_centerHorizontal="true"/>
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:gravity="left|center_vertical"
-        android:background="@drawable/bg_login_button"
-        android:inputType="textPassword"
-        android:hint="@string/string_password"
-        android:textSize="14sp"
-        android:textColorHint="@color/textColorWhite"
-        android:textColor="@color/textColorWhite"
-        android:layout_below="@+id/addFile"
-        android:layout_centerHorizontal="true" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="260dp"
+            android:layout_height="40dp"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:gravity="left|center_vertical"
+            android:background="@drawable/bg_login_button"
+            android:inputType="textPassword"
+            android:hint="@string/string_password"
+            android:textSize="14sp"
+            android:textColorHint="@color/textColorWhite"
+            android:textColor="@color/textColorWhite"
+            android:layout_below="@+id/addFile"
+            android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="314dp"
@@ -73,7 +86,7 @@
         android:layout_centerHorizontal = "true"
         android:onClick="tryCreate"/>
 
+    </RelativeLayout>
 
 
-
-</RelativeLayout>
+</LinearLayout>

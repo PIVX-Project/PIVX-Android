@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pivx.org.pivxwallet.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
     <TextView
@@ -15,6 +14,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <include layout="@layout/fragment_pivx_amount" />
+
+    <include layout="@layout/fragment_pivx_amount"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin" />
 
 </android.support.constraint.ConstraintLayout>
+

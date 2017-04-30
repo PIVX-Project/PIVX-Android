@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -29,6 +30,11 @@ public class PincodeActivity extends BaseActivity {
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
         setContentView(R.layout.fragment_pincode);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Create Pincode");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         i1 = (ImageView) findViewById(R.id.imageview_circle1);
         i2 = (ImageView) findViewById(R.id.imageview_circle2);

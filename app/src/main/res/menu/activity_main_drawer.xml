@@ -3,28 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="Import" />
+            android:id="@+id/nav_wallet"
+            android:icon="@mipmap/ic_wallet"
+            android:title="My Wallet" />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_address"
+            android:icon="@mipmap/ic_address"
+            android:title="Address book" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_settings"
+            android:title="Settings" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:title="Send" />
-        </menu>
-    </item>
+
 
 </menu>
