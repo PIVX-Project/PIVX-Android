@@ -3,8 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingTop="40dp"
+    android:paddingBottom="40dp"
     android:gravity="center_horizontal"
     android:background="@color/bgPurple">
     <TextView
@@ -12,16 +12,14 @@
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:layout_marginBottom="10dp"
-        android:text = "USD 345"
-        android:layout_centerHorizontal = "true"
+        android:text = "13.135 PIV"
         android:textColor = "@color/textColorWhite"
         android:textSize = "24sp" />
     <TextView
         android:id = "@+id/pivValueLocal"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
-        android:text = "USD 345"
-        android:layout_centerHorizontal = "true"
+        android:text = "14710 USD"
         android:textColor = "@color/textColorLightPurple"
         android:textSize = "16sp" />
 
