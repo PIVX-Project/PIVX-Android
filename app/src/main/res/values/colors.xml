@@ -9,5 +9,6 @@
     <color name="textColorPurple">#55476c</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorLightPurple">#ffffff</color>
+    <color name="transation_title">#55476c</color>
 
 </resources>

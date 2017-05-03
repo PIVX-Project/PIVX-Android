@@ -26,6 +26,11 @@
         <item name="color">@color/bgWhite</item>
     </style>
 
+    <style name="CardViewStyle" parent="CardView">
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
