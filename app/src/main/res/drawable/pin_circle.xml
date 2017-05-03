@@ -4,7 +4,10 @@
     android:shape="oval">
     <solid
         android:color="@color/bgWhite"/>
+    <stroke android:width="5dp" android:color="@color/bgPurple"/>
     <size
-        android:width="10dp"
-        android:height="10dp" />
+        android:width="20dp"
+        android:height="20dp" />
+    <corners android:radius="10dp" />
+
 </shape>
