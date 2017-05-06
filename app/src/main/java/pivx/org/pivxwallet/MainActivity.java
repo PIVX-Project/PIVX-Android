@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,15 +11,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
+import pivx.org.pivxwallet.ui.transaction_activity.TransactionActivity;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
+    Button buttonSend;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         adapter = new RecyclerViewAdapter(data, getApplication());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Open Send
+        buttonSend = (Button) findViewById(R.id.btnSend);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), TransactionActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
     }
 
     @Override

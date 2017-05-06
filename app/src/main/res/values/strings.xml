@@ -10,4 +10,9 @@
     <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="set_amount">Set amount to transfer</string>
+    <string name="title_amount">Amount</string>
+    <string name="title_address">Address</string>
+    <string name="set_address">Write address or name</string>
+    <string name="btn_send">Send</string>
 </resources>

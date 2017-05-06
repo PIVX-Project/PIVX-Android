@@ -32,6 +32,8 @@
 
         </activity>
 
+        <activity android:name=".ui.transaction_activity.TransactionActivity"></activity>
+
     </application>
 
 </manifest>
