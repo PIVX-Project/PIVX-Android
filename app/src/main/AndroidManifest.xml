@@ -9,11 +9,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
-        <activity android:name=".MainActivity">
-
-        </activity>
-
-
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ui.wallet_activity.WalletActivity"></activity>
+        <activity android:name=".ui.address_activity.AddressActivity"></activity>
+        <activity android:name=".ui.settings_activity.SettingsActivity"></activity>
 
         <activity android:name=".ui.start_activity.StartActivity">
 
@@ -29,10 +28,10 @@
         <activity android:name=".ui.pincode_activity.PincodeActivity"
                 android:windowSoftInputMode="stateVisible">
 
-
         </activity>
 
         <activity android:name=".ui.transaction_activity.TransactionActivity"></activity>
+        <activity android:name=".ui.request_activity.RequestActivity"></activity>
 
     </application>
 

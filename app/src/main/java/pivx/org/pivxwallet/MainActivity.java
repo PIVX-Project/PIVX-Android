@@ -17,20 +17,26 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
+import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.transaction_activity.TransactionActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
     Button buttonSend;
+    Button buttonRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("My Wallet");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,6 +59,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), TransactionActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        // Open Request
+        buttonRequest = (Button) findViewById(R.id.btnRequest);
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), RequestActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });
@@ -95,19 +111,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //to prevent current item select over and over
+        if (item.isChecked()){
+            drawer.closeDrawer(GravityCompat.START);
+            return false;
+        }
 
         if (id == R.id.nav_wallet) {
             // Handle the camera action
+            startActivity(new Intent(getApplicationContext(), WalletActivity.class));
         } else if (id == R.id.nav_address) {
-
+            startActivity(new Intent(getApplicationContext(), AddressActivity.class));
         } else if (id == R.id.nav_settings) {
-
+            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
     //Create a list of Data objects
     public List<TransactionData> fill_with_data() {

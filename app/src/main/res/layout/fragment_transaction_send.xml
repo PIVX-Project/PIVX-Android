@@ -20,20 +20,32 @@
 
     </include>
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="314dp"
-        android:layout_height="36dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/button_selector"
-        android:elevation="2dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:onClick="trySend"
-        android:text="@string/btn_send"
-        android:textColor="@color/textColorPurple"
-        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="314dp"
+            android:layout_height="36dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_button_border"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:onClick="trySend"
+            android:text="@string/btn_send"
+            android:textColor="@color/textColorPurple"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

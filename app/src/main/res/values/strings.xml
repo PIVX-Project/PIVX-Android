@@ -15,4 +15,5 @@
     <string name="title_address">Address</string>
     <string name="set_address">Write address or name</string>
     <string name="btn_send">Send</string>
+    <string name="btn_request">Request</string>
 </resources>
