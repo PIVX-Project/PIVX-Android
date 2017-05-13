@@ -11,7 +11,7 @@ public class TransactionData {
     public String amountLocal;
     public int imageId;
 
-    TransactionData(String title, String description, int imageId, String amount, String amountLocal) {
+    public TransactionData(String title, String description, int imageId, String amount, String amountLocal) {
         this.title = title;
         this.description = description;
         this.imageId = imageId;

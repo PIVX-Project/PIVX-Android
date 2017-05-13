@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 4/20/17.
@@ -78,7 +79,7 @@ public class PincodeActivity extends BaseActivity {
                 {
                     // Not null and OK, launch the activity
                     Log.d("TAG", "onKey: screen key pressed");
-                    Intent myIntent = new Intent(PincodeActivity.this,MainActivity.class);
+                    Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
                     PincodeActivity.this.startActivity(myIntent);
                 }
                 Log.d("TAG", "onKey: screen key pressed");

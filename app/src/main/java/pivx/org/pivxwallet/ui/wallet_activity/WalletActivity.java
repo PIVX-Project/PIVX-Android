@@ -1,6 +1,23 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import pivx.org.pivxwallet.MainActivity;
+import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.RecyclerViewAdapter;
+import pivx.org.pivxwallet.TransactionData;
+import pivx.org.pivxwallet.ui.request_activity.RequestActivity;
+import pivx.org.pivxwallet.ui.transaction_activity.TransactionActivity;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -8,4 +25,78 @@ import pivx.org.pivxwallet.MainActivity;
 
 public class WalletActivity extends MainActivity {
 
+    RecyclerView recyclerView;
+    private RecyclerViewAdapter adapter;
+    Button buttonSend;
+    Button buttonRequest;
+
+    @Override
+    protected void onCreateView(Bundle savedInstanceState) {
+        super.onCreateView(savedInstanceState);
+        getLayoutInflater().inflate(R.layout.fragment_wallet, frameLayout);
+        setTitle("My Wallet");
+        // Recicler view
+        List<TransactionData> data = fill_with_data();
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        adapter = new RecyclerViewAdapter(data, getApplication());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Open Send
+        buttonSend = (Button) findViewById(R.id.btnSend);
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), TransactionActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        // Open Request
+        buttonRequest = (Button) findViewById(R.id.btnRequest);
+        buttonRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), RequestActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // to check current activity in the navigation drawer
+        navigationView.getMenu().getItem(0).setChecked(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    //Create a list of Data objects
+    public List<TransactionData> fill_with_data() {
+
+        List<TransactionData> data = new ArrayList<>();
+
+        data.add(new TransactionData("Sent Pivx", "18:23", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
+        data.add(new TransactionData("Sent Pivx", "1 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "3 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "3 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+
+        data.add(new TransactionData("Sent Pivx", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
+
+        return data;
+    }
 }

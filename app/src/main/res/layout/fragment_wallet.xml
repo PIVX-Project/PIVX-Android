@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
-    tools:showIn="@layout/app_bar_main">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bgWhite"
+    tools:context="pivx.org.pivxwallet.MainActivity">
+
+    <include layout="@layout/fragment_pivx_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -17,12 +23,12 @@
         tools:ignore="MissingConstraints">
 
 
-            <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="50dp"/>
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="50dp"/>
 
 
         <LinearLayout
@@ -56,5 +62,4 @@
 
 
 
-</android.support.constraint.ConstraintLayout>
-
+</LinearLayout>
