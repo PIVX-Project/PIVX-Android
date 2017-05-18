@@ -5,8 +5,8 @@
     <solid android:color="@color/bgInput"/>
     <stroke android:width="0.5dp" android:color="#CFD0D1" />
     <corners
-        android:bottomRightRadius="3dp"
-        android:bottomLeftRadius="3dp"
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp"/>
+        android:bottomRightRadius="0dp"
+        android:bottomLeftRadius="0dp"
+        android:topLeftRadius="3dp"
+        android:topRightRadius="3dp"/>
 </shape>

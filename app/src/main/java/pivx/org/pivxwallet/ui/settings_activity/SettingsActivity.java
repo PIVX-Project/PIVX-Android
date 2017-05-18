@@ -9,6 +9,8 @@ import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
+import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
+import pivx.org.pivxwallet.ui.settings_restore_activity.SettingsRestoreActivity;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -26,7 +28,6 @@ public class SettingsActivity extends MainActivity {
         setTitle("Settings");
 
         // Open Backup Wallet
-        pivxModule.createWallet();
         buttonBackup = (Button) findViewById(R.id.btn_backup_wallet);
         buttonBackup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +37,26 @@ public class SettingsActivity extends MainActivity {
             }
         });
 
+        // Open Backup Wallet
+        buttonRestore = (Button) findViewById(R.id.btn_restore_wallet);
+        buttonRestore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), SettingsRestoreActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        // Open Backup Wallet
+        buttonChange = (Button) findViewById(R.id.btn_change_pincode);
+        buttonChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), SettingsPincodeActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+        
     }
 
     @Override

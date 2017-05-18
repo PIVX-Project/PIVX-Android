@@ -1,0 +1,79 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/bgWhite">
+
+    <TextView
+        android:id = "@+id/pincodeMessage"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:text = "@string/pincode_message"
+        android:layout_centerHorizontal = "true"
+        android:textColor = "@color/mainText"
+        android:textSize = "18sp" />
+
+    <LinearLayout android:id="@+id/pin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/pincodeMessage"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/imageview_circle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle_white"
+            />
+        <ImageView
+            android:id="@+id/imageview_circle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle_white"
+            />
+        <ImageView
+            android:id="@+id/imageview_circle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle_white"
+            />
+        <ImageView
+            android:id="@+id/imageview_circle4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/pin_circle_white"
+            />
+
+
+    </LinearLayout>
+
+    <EditText android:id="@+id/editText_enter_mpin"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/pin_layout"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:inputType="number"
+        android:password="true"
+        android:maxLength="4"
+        android:textColor="#00000000"
+        />
+
+</RelativeLayout>
+

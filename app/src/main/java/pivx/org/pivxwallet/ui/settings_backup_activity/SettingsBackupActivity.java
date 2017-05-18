@@ -15,7 +15,7 @@ public class SettingsBackupActivity extends BaseActivity {
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
         getLayoutInflater().inflate(R.layout.fragment_settings_backup, frameLayout);
-        setTitle("Backup wallet");
+        setTitle("Backup Wallet");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
