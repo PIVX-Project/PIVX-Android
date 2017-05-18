@@ -18,10 +18,8 @@ public class RestoreActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
-        setContentView(R.layout.fragment_restore);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Restore wallet");
+        getLayoutInflater().inflate(R.layout.fragment_restore, frameLayout);
+        setTitle("Restore wallet");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

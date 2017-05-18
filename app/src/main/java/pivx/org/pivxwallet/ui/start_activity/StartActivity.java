@@ -20,10 +20,12 @@ public class StartActivity extends BaseActivity {
 
     Button buttonCreate;
     Button buttonRestore;
+
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
-        setContentView(R.layout.fragment_start);
+        getSupportActionBar().hide();
+        getLayoutInflater().inflate(R.layout.fragment_start, frameLayout);
 
         // Open Create Wallet
         pivxModule.createWallet();

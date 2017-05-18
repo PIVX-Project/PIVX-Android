@@ -30,10 +30,8 @@ public class PincodeActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
-        setContentView(R.layout.fragment_pincode);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Create Pincode");
+        getLayoutInflater().inflate(R.layout.fragment_pincode, frameLayout);
+        setTitle("Create Pincode");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

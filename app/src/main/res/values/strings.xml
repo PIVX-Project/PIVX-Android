@@ -16,4 +16,12 @@
     <string name="set_address">Write address or name</string>
     <string name="btn_send">Send</string>
     <string name="btn_request">Request</string>
+    <string name="settings_subtitle_security">Security</string>
+    <string name="settings_subtitle_preference">Preference</string>
+    <string name="settings_subtitle_about">About</string>
+    <string name="restore_wallet">Restore Wallet</string>
+    <string name="backup_wallet">Backup Wallet</string>
+    <string name="change_pincode">Change PIN Code</string>
+    <string name="local_currency">Local Currency</string>
+    <string name="local_currency_usd">USD</string>
 </resources>
