@@ -17,6 +17,7 @@
     <string name="btn_send">Send</string>
     <string name="btn_request">Request</string>
     <string name="settings_subtitle_security">Security</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with the \n you choose and saved to an \n external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore Wallet</string>
@@ -24,4 +25,5 @@
     <string name="change_pincode">Change PIN Code</string>
     <string name="local_currency">Local Currency</string>
     <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Repeat Password</string>
 </resources>

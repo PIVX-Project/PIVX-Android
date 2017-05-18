@@ -4,7 +4,8 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bgWhite">
 
         <TextView
             android:layout_width="match_parent"
@@ -24,32 +25,44 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:id="@+id/btn_backup_wallet"
                 android:background="@drawable/settings_items"
+                android:stateListAnimator="@null"
                 android:padding="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:height="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="#444444"
-                android:text="Wallet Backup"/>
+                android:text="@string/backup_wallet"/>
             <Button
+                android:id="@+id/btn_restore_wallet"
                 android:background="@drawable/settings_items"
+                android:stateListAnimator="@null"
                 android:padding="8dp"
                 android:height="40dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="#444444"
-                android:text="Wallet Backup"/>
+                android:text="@string/restore_wallet"/>
             <Button
+                android:id="@+id/btn_change_pincode"
                 android:background="@drawable/settings_items"
+                android:stateListAnimator="@null"
                 android:padding="8dp"
                 android:height="40dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="#444444"
-                android:text="Wallet Backup"/>
+                android:text="@string/change_pincode"/>
 
 
         </LinearLayout>
@@ -71,32 +84,24 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:id="@+id/btn_local_currency"
                 android:background="@drawable/settings_items"
-                android:padding="8dp"
-                android:height="40dp"
+                android:stateListAnimator="@null"
+                android:paddingLeft="8dp"
+                android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:textColor="#444444"
-                android:text="Wallet Backup"/>
-            <Button
-                android:background="@drawable/settings_items"
-                android:padding="8dp"
-                android:height="40dp"
+                android:text="@string/local_currency"/>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textColor="#444444"
-                android:text="Wallet Backup"/>
-            <Button
-                android:background="@drawable/settings_items"
                 android:padding="8dp"
-                android:height="40dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:textAllCaps="true"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
-                android:text="Wallet Backup"/>
+                android:textColor="#929292"
+                android:text="@string/local_currency_usd"/>
 
 
         </LinearLayout>
