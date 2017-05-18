@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,8 +15,8 @@ import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.RecyclerViewAdapter;
 import pivx.org.pivxwallet.TransactionData;
-import pivx.org.pivxwallet.ui.request_activity.RequestActivity;
-import pivx.org.pivxwallet.ui.transaction_activity.TransactionActivity;
+import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -47,7 +46,7 @@ public class WalletActivity extends MainActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), TransactionActivity.class);
+                Intent myIntent = new Intent(v.getContext(), SendActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });

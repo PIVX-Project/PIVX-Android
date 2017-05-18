@@ -33,8 +33,8 @@
 
         </activity>
 
-        <activity android:name=".ui.transaction_activity.TransactionActivity"></activity>
-        <activity android:name=".ui.request_activity.RequestActivity"></activity>
+        <activity android:name=".ui.transaction_send_activity.SendActivity"></activity>
+        <activity android:name=".ui.transaction_request_activity.RequestActivity"></activity>
 
     </application>
 

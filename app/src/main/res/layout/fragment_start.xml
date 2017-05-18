@@ -34,7 +34,7 @@
     <Button
         android:id="@+id/btnCreate"
         android:layout_width="314dp"
-        android:layout_height="36dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical|center_horizontal"
         android:background="@drawable/button_selector"
         android:layout_marginTop="140dp"
@@ -51,7 +51,7 @@
 
     <Button
         android:layout_width="314dp"
-        android:layout_height="36dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical|center_horizontal"
         android:background="@android:color/transparent"
         android:text="@string/btn_restore_wallet"
