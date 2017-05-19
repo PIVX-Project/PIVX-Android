@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet;
+package pivx.org.pivxwallet.ui.address_activity;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,38 +9,37 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
+import pivx.org.pivxwallet.R;
+
 /**
- * Created by Neoperol on 5/3/17.
+ * Created by Neoperol on 5/18/17.
  */
 
+public class RecyclerAddressViewAdapter extends RecyclerView.Adapter<AddressViewHolder>{
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
-
-    List<TransactionData> list = Collections.emptyList();
+    List<AddressData> list = Collections.emptyList();
     Context context;
 
-    public RecyclerViewAdapter(List<TransactionData> list, Context context) {
+    public RecyclerAddressViewAdapter(List<AddressData> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.transaction_row, parent, false);
-        ViewHolder holder = new ViewHolder(v);
+    public AddressViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.address_row, parent, false);
+        AddressViewHolder holder = new AddressViewHolder(v);
         return holder;
 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(AddressViewHolder holder, int position) {
 
         //Use the provided View Holder on the onCreateViewHolder method to populate the current row on the RecyclerView
-        holder.title.setText(list.get(position).title);
-        holder.description.setText(list.get(position).description);
-        holder.imageView.setImageResource(list.get(position).imageId);
-        holder.amount.setText(list.get(position).amount);
-        holder.amountLocal.setText(list.get(position).amountLocal);
+        holder.name.setText(list.get(position).name);
+        holder.address.setText(list.get(position).address);
+
 
         //animate(holder);
 
@@ -58,13 +57,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     }
 
     // Insert a new item to the RecyclerView on a predefined position
-    public void insert(int position, TransactionData data) {
+    public void insert(int position, AddressData data) {
         list.add(position, data);
         notifyItemInserted(position);
     }
 
     // Remove a RecyclerView item containing a specified Data object
-    public void remove(TransactionData data) {
+    public void remove(AddressData data) {
         int position = list.indexOf(data);
         list.remove(position);
         notifyItemRemoved(position);

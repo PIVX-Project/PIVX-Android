@@ -13,8 +13,6 @@ import java.util.List;
 
 import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.RecyclerViewAdapter;
-import pivx.org.pivxwallet.TransactionData;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 

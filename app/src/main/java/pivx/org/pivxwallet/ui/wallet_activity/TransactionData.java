@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet;
+package pivx.org.pivxwallet.ui.wallet_activity;
 
 /**
  * Created by Neoperol on 5/3/17.
