@@ -21,5 +21,11 @@ public interface PivxModule {
      */
     void restoreWallet(File backupFile, String password);
 
+    /**
+     * If the wallet already exist
+     * @return
+     */
+    boolean isWalletCreated();
+
 
 }
