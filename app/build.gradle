@@ -45,6 +45,9 @@ dependencies {
     compile 'com.madgag.spongycastle:core:1.54.0.0'
 
     compile 'org.slf4j:slf4j-api:1.7.20'
+    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
+        exclude(group: 'com.google.android', module: 'android')
+    }
 
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.json', name: 'json', version: '20170516'

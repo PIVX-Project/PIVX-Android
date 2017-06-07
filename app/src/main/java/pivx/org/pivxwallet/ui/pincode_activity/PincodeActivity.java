@@ -18,6 +18,8 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 4/20/17.
+ *
+ * todo: You could do the same without imageViews everywhere. Please user radioGroups instead (RadioButtons).
  */
 
 public class PincodeActivity extends BaseActivity {
@@ -68,16 +70,11 @@ public class PincodeActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-
-                if(enter_main.getText().toString().equals(nam) )
-                {
+                if(enter_main.getText().toString().equals(nam) ) {
                     // Not null and OK, launch the activity
-                    Log.d("TAG", "onKey: screen key pressed");
                     Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
                     PincodeActivity.this.startActivity(myIntent);
                 }
-                Log.d("TAG", "onKey: screen key pressed");
                 i1.setImageResource(R.drawable.pin_circle_active);
             }
         });

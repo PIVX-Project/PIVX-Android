@@ -49,26 +49,19 @@ public class WalletManager {
     }
 
     public void init(){
-
         // init mnemonic code first..
         // initMnemonicCode();
-
         restoreOrCreateWallet();
     }
 
     private void restoreOrCreateWallet() {
-
         walletFile = contextWrapper.getFileStreamPath(conf.getWalletProtobufFilename());
-
         loadWalletFromProtobuf(walletFile);
     }
 
     private void loadWalletFromProtobuf(File walletFile) {
-
         if (walletFile.exists()){
-
             FileInputStream walletStream = null;
-
             try {
                 walletStream = new FileInputStream(walletFile);
                 wallet = new WalletProtobufSerializer().readWallet(walletStream);
@@ -78,7 +71,6 @@ public class WalletManager {
 
             } catch (UnreadableWalletException e) {
                 logger.error("problem loading wallet", e);
-
                 wallet = restoreWalletFromBackup();
             } catch (FileNotFoundException e) {
                 logger.error("problem loading wallet", e);
@@ -92,14 +84,11 @@ public class WalletManager {
                         //nothing
                     }
             }
-
-            //todo: ver que es esto..
             if (!wallet.isConsistent()) {
                 //contextWrapper.toast("inconsistent wallet: " + walletFile);
                 logger.error("inconsistent wallet "+walletFile);
                 wallet = restoreWalletFromBackup();
             }
-
             if (!wallet.getParams().equals(conf.getNetworkParams()))
                 throw new Error("bad wallet network parameters: " + wallet.getParams().getId());
 
@@ -122,7 +111,6 @@ public class WalletManager {
             logger.info("new wallet created");
         }
 
-
         wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
             @Override
             public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
@@ -133,10 +121,8 @@ public class WalletManager {
         });
     }
 
-    private void afterLoadWallet()
-    {
+    private void afterLoadWallet() {
         wallet.autosaveToFile(walletFile, conf.getWalletAutosaveDelayMs(), TimeUnit.MILLISECONDS, new WalletAutosaveEventListener(conf));
-
         try {
             // clean up spam
             wallet.cleanup();
@@ -147,6 +133,8 @@ public class WalletManager {
         // make sure there is at least one recent backup
         if (!contextWrapper.getFileStreamPath(conf.getKeyBackupProtobuf()).exists())
             backupWallet();
+
+        logger.info("Wallet loaded.");
     }
 
     /**
