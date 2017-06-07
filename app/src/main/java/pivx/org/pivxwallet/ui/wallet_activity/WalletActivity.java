@@ -6,12 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pivx.org.pivxwallet.MainActivity;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.RecyclerViewAdapter;
 import pivx.org.pivxwallet.TransactionData;
@@ -22,7 +23,7 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
  * Created by Neoperol on 5/11/17.
  */
 
-public class WalletActivity extends MainActivity {
+public class WalletActivity extends BaseDrawerActivity {
 
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
@@ -30,9 +31,8 @@ public class WalletActivity extends MainActivity {
     Button buttonRequest;
 
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.fragment_wallet, frameLayout);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+        getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         setTitle("My Wallet");
         // Recicler view
         List<TransactionData> data = fill_with_data();
@@ -67,7 +67,7 @@ public class WalletActivity extends MainActivity {
     protected void onResume() {
         super.onResume();
         // to check current activity in the navigation drawer
-        navigationView.getMenu().getItem(0).setChecked(true);
+        setNavigationMenuItemChecked(0);
     }
 
     @Override

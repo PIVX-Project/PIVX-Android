@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package pivx.org.pivxwallet.module.wallet;
 
 import com.google.protobuf.ByteString;
 
@@ -25,6 +25,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
+
+import pivx.org.pivxwallet.module.ContextWrapper;
+import pivx.org.pivxwallet.module.WalletConfiguration;
 
 /**
  * Created by furszy on 6/4/17.
@@ -248,13 +251,11 @@ public class WalletManager {
         }
 
         @Override
-        public void onBeforeAutoSave(final File file)
-        {
+        public void onBeforeAutoSave(final File file) {
         }
 
         @Override
-        public void onAfterAutoSave(final File file)
-        {
+        public void onAfterAutoSave(final File file) {
             // make wallets world accessible in test mode
             //if (conf.isTest())
             //    Io.chmod(file, 0777);

@@ -21,7 +21,7 @@ public class PivxContext {
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
     // report mail
-    public static final String REPORT_EMAIL = "matias.furszyfer@fermat.org";
+    public static final String REPORT_EMAIL = "matias.furszyfer@gmail.org";
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 

@@ -1,8 +1,8 @@
 package pivx.org.pivxwallet.module;
 
-import org.bitcoinj.wallet.Wallet;
-
 import java.io.File;
+
+import pivx.org.pivxwallet.module.wallet.WalletManager;
 
 /**
  * Created by mati on 18/04/17.
@@ -15,11 +15,12 @@ public class PivxModuleImp implements PivxModule {
 
     public PivxModuleImp(ContextWrapper contextWrapper,WalletConfiguration walletConfiguration) {
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
+        walletManager.init();
     }
 
     @Override
     public void createWallet() {
-        walletManager.init();
+
     }
 
     @Override

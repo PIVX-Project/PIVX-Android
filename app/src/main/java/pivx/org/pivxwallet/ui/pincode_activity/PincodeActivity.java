@@ -1,19 +1,17 @@
 package pivx.org.pivxwallet.ui.pincode_activity;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
@@ -28,9 +26,8 @@ public class PincodeActivity extends BaseActivity {
 
     String nam = new String();
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.fragment_pincode, frameLayout);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+        getLayoutInflater().inflate(R.layout.fragment_pincode, container);
         setTitle("Create Pincode");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet;
+package pivx.org.pivxwallet.ui.base;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,28 +6,30 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
+import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
-import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-    public NavigationView navigationView;
-    public FrameLayout frameLayout;
-    public Toolbar toolbar;
-    public DrawerLayout drawer;
+public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private NavigationView navigationView;
+    private FrameLayout frameLayout;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -36,6 +38,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        onCreateView(savedInstanceState,frameLayout);
+
+    }
+
+
+    /**
+     * Empty method to override.
+     *
+     * @param savedInstanceState
+     */
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container){
 
     }
 
@@ -48,8 +62,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             super.onBackPressed();
         }
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,6 +99,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    protected void setNavigationMenuItemChecked(int pos){
+        navigationView.getMenu().getItem(pos).setChecked(true);
     }
 
 
