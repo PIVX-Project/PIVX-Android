@@ -1,9 +1,13 @@
 package pivx.org.pivxwallet.ui.settings_activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
@@ -21,12 +25,17 @@ public class SettingsActivity extends MainActivity {
     Button buttonRestore;
     Button buttonChange;
     Button buttonCurrency;
+    TextView textAbout;
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
         getLayoutInflater().inflate(R.layout.fragment_settings, frameLayout);
         setTitle("Settings");
 
+        textAbout = (TextView)findViewById(R.id.text_about);
+        textAbout.setText("Hello");
+        String text = "MadeBy<br> <font color=#55476c>IoP Ventures LLC</font>  <br>Foundet <br> <font color=#55476c> By the Decentralized Society Foundation</font> <br>(c) PIVX Community";
+        textAbout.setText(Html.fromHtml(text));
         // Open Backup Wallet
         buttonBackup = (Button) findViewById(R.id.btn_backup_wallet);
         buttonBackup.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +64,29 @@ public class SettingsActivity extends MainActivity {
                 Intent myIntent = new Intent(v.getContext(), SettingsPincodeActivity.class);
                 startActivityForResult(myIntent, 0);
             }
+        });
+
+        // Open Dialog
+        buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
+        buttonCurrency.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                //Intent myIntent = new Intent(view.getContext(), agones.class);
+                //startActivityForResult(myIntent, 0);
+
+
+                AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create(); //Read Update
+                alertDialog.setTitle("hi");
+                alertDialog.setMessage("this is my app");
+
+                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // here you can add functions
+                    }
+                });
+
+                alertDialog.show();  //<-- See This!
+            }
+
         });
         
     }
