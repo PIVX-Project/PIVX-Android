@@ -13,6 +13,7 @@ import android.widget.TextView;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
+import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.settings_restore_activity.SettingsRestoreActivity;
 
@@ -45,7 +46,7 @@ public class SettingsActivity extends BaseDrawerActivity {
             }
         });
 
-        // Open Backup Wallet
+        // Open Restore Wallet
         buttonRestore = (Button) findViewById(R.id.btn_restore_wallet);
         buttonRestore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,12 +56,22 @@ public class SettingsActivity extends BaseDrawerActivity {
             }
         });
 
-        // Open Backup Wallet
+        // Open Change Pincode
         buttonChange = (Button) findViewById(R.id.btn_change_pincode);
         buttonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), SettingsPincodeActivity.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
+        // Open Network Monitor
+        buttonChange = (Button) findViewById(R.id.btn_network);
+        buttonChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(v.getContext(), SettingsNetworkActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });

@@ -27,4 +27,5 @@
     <string name="local_currency_usd">USD</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="text_version">Version</string>
+    <string name="network_monitor">Network Monitor</string>
 </resources>

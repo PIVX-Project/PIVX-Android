@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgWhite"
-    tools:context=".ui.address_activity.AddressActivity">
+    tools:context=".ui.settings_network_activity.SettingsNetworkActivity">
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/addressList"
+        android:id="@+id/networkList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
