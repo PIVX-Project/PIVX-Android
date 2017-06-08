@@ -1,25 +1,25 @@
 package pivx.org.pivxwallet.ui.pincode_activity;
 
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import pivx.org.pivxwallet.MainActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 4/20/17.
+ *
+ * todo: You could do the same without imageViews everywhere. Please user radioGroups instead (RadioButtons).
  */
 
 public class PincodeActivity extends BaseActivity {
@@ -28,9 +28,8 @@ public class PincodeActivity extends BaseActivity {
 
     String nam = new String();
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.fragment_pincode, frameLayout);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+        getLayoutInflater().inflate(R.layout.fragment_pincode, container);
         setTitle("Create Pincode");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,16 +70,11 @@ public class PincodeActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-
-                if(enter_main.getText().toString().equals(nam) )
-                {
+                if(enter_main.getText().toString().equals(nam) ) {
                     // Not null and OK, launch the activity
-                    Log.d("TAG", "onKey: screen key pressed");
                     Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
                     PincodeActivity.this.startActivity(myIntent);
                 }
-                Log.d("TAG", "onKey: screen key pressed");
                 i1.setImageResource(R.drawable.pin_circle_active);
             }
         });

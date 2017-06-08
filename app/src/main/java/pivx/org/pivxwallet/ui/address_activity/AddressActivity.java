@@ -6,21 +6,22 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.view.ViewGroup;
 
-import pivx.org.pivxwallet.MainActivity;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 
 /**
  * Created by Neoperol on 5/11/17.
  */
 
-public class AddressActivity extends MainActivity {
+
+public class AddressActivity extends BaseDrawerActivity {
     RecyclerView recyclerView;
     private RecyclerAddressViewAdapter adapter;
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.fragment_address, frameLayout);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+        getLayoutInflater().inflate(R.layout.fragment_address, container);
         setTitle("Address Book");
 
         // Recicler view
@@ -34,8 +35,8 @@ public class AddressActivity extends MainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // to check current activity in the navigation drawer
-        navigationView.getMenu().getItem(1).setChecked(true);
+        // check current activity in the navigation drawer
+        setNavigationMenuItemChecked(1);
     }
 
     //Create a list of Data objects

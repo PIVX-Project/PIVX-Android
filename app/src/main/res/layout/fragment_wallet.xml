@@ -7,7 +7,7 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bgWhite"
-    tools:context="pivx.org.pivxwallet.MainActivity">
+    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
 
     <include layout="@layout/fragment_pivx_amount"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
+        tools:context=".ui.base.BaseDrawerActivity"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
         tools:ignore="MissingConstraints">

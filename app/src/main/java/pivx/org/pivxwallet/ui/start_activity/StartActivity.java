@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.RadialGradient;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
@@ -18,21 +19,20 @@ import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 
 public class StartActivity extends BaseActivity {
 
-    Button buttonCreate;
-    Button buttonRestore;
+    private Button buttonCreate;
+    private Button buttonRestore;
 
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getSupportActionBar().hide();
-        getLayoutInflater().inflate(R.layout.fragment_start, frameLayout);
+        getLayoutInflater().inflate(R.layout.fragment_start, container);
 
-        // Open Create Wallet
-        pivxModule.createWallet();
         buttonCreate = (Button) findViewById(R.id.btnCreate);
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Open Create Wallet
+                pivxModule.createWallet();
                 Intent myIntent = new Intent(v.getContext(), PincodeActivity.class);
                 startActivityForResult(myIntent, 0);
             }

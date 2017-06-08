@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import pivx.org.pivxwallet.R;
@@ -16,9 +17,8 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 public class RestoreActivity extends BaseActivity {
     Button buttonFile;
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.fragment_restore, frameLayout);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+        getLayoutInflater().inflate(R.layout.fragment_restore, container);
         setTitle("Restore wallet");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

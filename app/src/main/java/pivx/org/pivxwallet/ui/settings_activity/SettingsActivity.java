@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import pivx.org.pivxwallet.MainActivity;
+import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.settings_restore_activity.SettingsRestoreActivity;
@@ -20,16 +20,15 @@ import pivx.org.pivxwallet.ui.settings_restore_activity.SettingsRestoreActivity;
  * Created by Neoperol on 5/11/17.
  */
 
-public class SettingsActivity extends MainActivity {
+public class SettingsActivity extends BaseDrawerActivity {
     Button buttonBackup;
     Button buttonRestore;
     Button buttonChange;
     Button buttonCurrency;
     TextView textAbout;
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.fragment_settings, frameLayout);
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+        getLayoutInflater().inflate(R.layout.fragment_settings, container);
         setTitle("Settings");
 
         textAbout = (TextView)findViewById(R.id.text_about);
@@ -95,6 +94,6 @@ public class SettingsActivity extends MainActivity {
     protected void onResume() {
         super.onResume();
         // to check current activity in the navigation drawer
-        navigationView.getMenu().getItem(2).setChecked(true);
+        setNavigationMenuItemChecked(2);
     }
 }

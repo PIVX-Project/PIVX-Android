@@ -3,7 +3,7 @@
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
     <string name="restore_wallet_message">Select a backup of the wallet \n from a storage unit</string>
-    <string name="pincode_message">To create your wallet \n you most set a Pincode</string>
+    <string name="pincode_message">For your security \nthe pincode is needed</string>
     <string name="select_file">Select File</string>
     <string name="action_qr">QR Cocde</string>
     <string name="string_password">Password</string>

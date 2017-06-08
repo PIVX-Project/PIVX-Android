@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ui.base.BaseDrawerActivity"></activity>
         <activity android:name=".ui.wallet_activity.WalletActivity"></activity>
         <activity android:name=".ui.address_activity.AddressActivity"></activity>
         <activity android:name=".ui.settings_activity.SettingsActivity"></activity>
