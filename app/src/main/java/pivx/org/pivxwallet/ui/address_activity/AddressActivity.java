@@ -1,13 +1,19 @@
 package pivx.org.pivxwallet.ui.address_activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
+import pivx.org.pivxwallet.ui.address_add_activity.AddressAddActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 
@@ -38,6 +44,34 @@ public class AddressActivity extends BaseDrawerActivity {
         // check current activity in the navigation drawer
         setNavigationMenuItemChecked(1);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.address, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_add:
+                Intent intent = new Intent(this, AddressAddActivity.class);
+                //      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void actionAdd(View view) {
+        Intent intent = new Intent(AddressActivity.this, AddressAddActivity.class);
+        startActivity(intent);
+    }
+
 
     //Create a list of Data objects
     public List<AddressData> fill_with_data() {

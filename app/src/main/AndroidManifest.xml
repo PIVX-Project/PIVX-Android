@@ -12,6 +12,7 @@
         <activity android:name=".ui.base.BaseDrawerActivity"></activity>
         <activity android:name=".ui.wallet_activity.WalletActivity"></activity>
         <activity android:name=".ui.address_activity.AddressActivity"></activity>
+        <activity android:name=".ui.address_add_activity.AddressAddActivity"></activity>
         <activity android:name=".ui.settings_activity.SettingsActivity"></activity>
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"></activity>
         <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"></activity>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/bg"
+            android:orientation="vertical"
+            android:layout_height="130dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_gradient" >
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:padding="16dp"
+            android:gravity="left">
+
+            <TextView
+                android:id = "@+id/titleName"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/title_name"
+                android:layout_marginBottom="10dp"
+                android:textColor = "#757575"
+                android:textSize = "14sp" />
+
+            <EditText
+                android:id = "@+id/amount"
+                android:ellipsize="start"
+                android:gravity="left"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:padding="8dp"
+                android:background="@drawable/transaction_inputs"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                android:hint="@string/set_name"
+                android:text = ""
+                android:textColor = "#434343"
+                android:textSize = "18sp" />
+
+
+            <TextView
+                android:id = "@+id/titleAddress"
+                android:layout_marginTop="20dp"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text = "@string/title_address"
+                android:textColor = "#757575"
+                android:textSize = "14sp" />
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp" >
+
+                <EditText
+                    android:id = "@+id/address"
+                    android:ellipsize="start"
+                    android:gravity="left"
+                    android:layout_width = "match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:background="@drawable/transaction_inputs"
+                    android:hint="@string/set_address"
+                    android:text = ""
+                    android:textColor = "#434343"
+                    android:textSize = "18sp"
+                    android:layout_alignParentBottom="true" />
+
+
+                <ImageButton
+                    android:id="@+id/button_qr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/ic_qr_code"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:text="Button"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+</LinearLayout>
