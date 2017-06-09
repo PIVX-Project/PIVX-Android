@@ -32,9 +32,18 @@
     <string name="local_currency">Local Currency</string>
     <string name="local_currency_usd">USD</string>
     <string name="repeat_password">Repeat Password</string>
+
+    <string name="scan_camera_problem_dialog_title">Sorry</string>
+    <string name="scan_camera_problem_dialog_message">The camera has a problem. You probably need to restart the device.</string>
+    <string name="scan_camera_permission_dialog_title">Camera permission</string>
+    <string name="scan_camera_permission_dialog_message">In order to scan QR codes, you need to grant permission to use the camera.</string>
+    <string name="scan_result_title">Scanner result</string>
+
+
     <string name="text_version">Version</string>
     <string name="network_monitor">Network Monitor</string>
     <string name="send_message">You just send</string>
     <string name="save_message">Do you want to save the address?</string>
     <string name="confirm">Confirm</string>
+    <string name="action_scan">scanner</string>
 </resources>

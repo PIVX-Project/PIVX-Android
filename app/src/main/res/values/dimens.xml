@@ -13,4 +13,8 @@
     <dimen name="icon_star">25dp</dimen>
     <dimen name="icon_text">22dp</dimen>
     <dimen name="timestamp">12dp</dimen>
+
+    <dimen name="scan_laser_width">4dp</dimen>
+    <dimen name="scan_dot_size">8dp</dimen>
+
 </resources>

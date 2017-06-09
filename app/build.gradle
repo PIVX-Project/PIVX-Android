@@ -49,6 +49,9 @@ dependencies {
         exclude(group: 'com.google.android', module: 'android')
     }
 
+    //qr
+    compile group: 'com.google.zxing', name: 'core', version: '3.3.0'
+
     testCompile 'junit:junit:4.12'
     testCompile group: 'org.json', name: 'json', version: '20170516'
     testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'

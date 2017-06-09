@@ -19,7 +19,5 @@ public class TransactionDetailActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-        
-
     }
 }

@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.module.wallet;
 
 import com.google.protobuf.ByteString;
 
+import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Utils;
@@ -47,6 +48,22 @@ public class WalletManager {
         this.conf = conf;
         this.contextWrapper = contextWrapper;
     }
+
+    // methods
+
+    public Address newFreshReceiveAddress() {
+        return wallet.freshReceiveAddress();
+    }
+
+    /**
+     * Method to know if an address is already used for receive coins.
+     * @return
+     */
+    public boolean isMarkedAddress() {
+        return false;
+    }
+
+    // init
 
     public void init(){
         // init mnemonic code first..
