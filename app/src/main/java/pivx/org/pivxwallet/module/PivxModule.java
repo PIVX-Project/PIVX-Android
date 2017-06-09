@@ -1,6 +1,10 @@
 package pivx.org.pivxwallet.module;
 
+import org.bitcoinj.core.Address;
+
 import java.io.File;
+
+import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
 
 /**
  * Created by mati on 18/04/17.
@@ -30,7 +34,7 @@ public interface PivxModule {
     /**
      * Return a new address.
      */
-    String freshNewAddress();
+    Address freshNewAddress();
 
-    boolean isAddressUsed(String address);
+    boolean isAddressUsed(Address address);
 }

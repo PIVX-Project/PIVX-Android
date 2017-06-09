@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.module.wallet;
 
 import com.google.protobuf.ByteString;
 
+import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Utils;
@@ -50,8 +51,8 @@ public class WalletManager {
 
     // methods
 
-    public String newFreshReceiveAddress() {
-        return wallet.freshReceiveAddress().toBase58();
+    public Address newFreshReceiveAddress() {
+        return wallet.freshReceiveAddress();
     }
 
     /**

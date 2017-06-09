@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.module;
 
+import org.bitcoinj.core.Address;
+
 import java.io.File;
 
 import pivx.org.pivxwallet.module.wallet.WalletManager;
@@ -34,12 +36,12 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public String freshNewAddress() {
+    public Address freshNewAddress() {
         return walletManager.newFreshReceiveAddress();
     }
 
     @Override
-    public boolean isAddressUsed(String address) {
+    public boolean isAddressUsed(Address address) {
         return walletManager.isMarkedAddress();
     }
 }

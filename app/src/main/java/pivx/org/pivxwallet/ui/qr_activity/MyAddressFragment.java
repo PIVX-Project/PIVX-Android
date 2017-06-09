@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 
+import org.bitcoinj.core.Address;
+import org.bitcoinj.uri.BitcoinURI;
+
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
@@ -38,7 +41,7 @@ public class MyAddressFragment extends Fragment{
     private Button btn_share;
     private ImageView img_qr;
 
-    private String address;
+    private Address address;
 
     public static MyAddressFragment newInstance(PivxModule pivxModule) {
         MyAddressFragment f = new MyAddressFragment();
@@ -67,9 +70,10 @@ public class MyAddressFragment extends Fragment{
                 address = module.freshNewAddress();
                 flag = true;
             }
-            if (flag)
-                loadAddress(address);
-
+            if (flag) {
+                String pivxUri = BitcoinURI.convertToBitcoinURI(address,null,"Receive address",null);
+                loadAddress(pivxUri,address.toBase58());
+            }
         }catch (WriterException e){
             e.printStackTrace();
             Toast.makeText(getActivity(),"Problem loading qr",Toast.LENGTH_LONG).show();
@@ -79,17 +83,17 @@ public class MyAddressFragment extends Fragment{
 
     }
 
-    private void loadAddress(String address) throws WriterException {
+    private void loadAddress(String uri,String addressStr) throws WriterException {
         Bitmap qrBitmap = null;//Cache.getQrBigBitmapCache();
         if (qrBitmap == null) {
             Resources r = getResources();
             int px = convertDpToPx(r,225);
-            Log.i("Util",address);
-            qrBitmap = encodeAsBitmap(address, px, px, Color.parseColor("#1A1A1A"), WHITE );
+            Log.i("Util",uri);
+            qrBitmap = encodeAsBitmap(uri, px, px, Color.parseColor("#1A1A1A"), WHITE );
             //Cache.setQrBigBitmapCache(qrBitmap);
         }
         img_qr.setImageBitmap(qrBitmap);
-        txt_address.setText(address);
+        txt_address.setText(addressStr);
     }
 
     public void setModule(PivxModule module) {
