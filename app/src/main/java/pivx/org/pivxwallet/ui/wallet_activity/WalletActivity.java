@@ -16,8 +16,6 @@ import java.util.List;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.RecyclerViewAdapter;
-import pivx.org.pivxwallet.TransactionData;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;

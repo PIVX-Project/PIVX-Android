@@ -1,10 +1,12 @@
-package pivx.org.pivxwallet;
+package pivx.org.pivxwallet.ui.wallet_activity;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import pivx.org.pivxwallet.R;
 
 /**
  * Created by Neoperol on 5/3/17.

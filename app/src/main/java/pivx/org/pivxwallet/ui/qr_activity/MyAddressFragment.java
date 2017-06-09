@@ -14,7 +14,7 @@ import pivx.org.pivxwallet.module.PivxModule;
  * Created by furszy on 6/8/17.
  */
 
-public class MyAddressFragment extends Fragment implements PagerFragment{
+public class MyAddressFragment extends Fragment{
 
     private PivxModule module;
 
@@ -37,13 +37,4 @@ public class MyAddressFragment extends Fragment implements PagerFragment{
         this.module = module;
     }
 
-    @Override
-    public void onPageVisible() {
-
-    }
-
-    @Override
-    public void onPageInvisible() {
-
-    }
 }
