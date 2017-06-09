@@ -91,6 +91,10 @@ public class WalletActivity extends BaseDrawerActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==R.id.action_qr){
+            startActivity(new Intent(this, QrActivity.class));
+            return true;
+        }else if (item.getItemId()==R.id.action_scan){
+
             startActivity(new Intent(this, ScanActivity.class));
             return true;
         }

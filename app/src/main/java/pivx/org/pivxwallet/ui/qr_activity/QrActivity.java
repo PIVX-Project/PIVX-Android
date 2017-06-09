@@ -18,18 +18,17 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 public class QrActivity extends BaseActivity implements View.OnClickListener {
 
     private View root;
-
-
-    WeakReference<MyAddressFragment> myAddressFragment;
+    //WeakReference<MyAddressFragment> myAddressFragment;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         super.onCreateView(savedInstanceState, container);
 
+        getSupportActionBar().hide();
         root = getLayoutInflater().inflate(R.layout.qr_activity,container,true);
-        myAddressFragment = new WeakReference<MyAddressFragment>(MyAddressFragment.newInstance(pivxModule));
+        //myAddressFragment = new WeakReference<MyAddressFragment>(MyAddressFragment.newInstance(pivxModule));
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,myAddressFragment.get()).commit();
+        //getSupportFragmentManager().beginTransaction().add(R.id.container,myAddressFragment.get()).commit();
 
     }
 

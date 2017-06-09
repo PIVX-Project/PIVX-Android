@@ -27,5 +27,10 @@ public interface PivxModule {
      */
     boolean isWalletCreated();
 
+    /**
+     * Return a new address.
+     */
+    String freshNewAddress();
 
+    boolean isAddressUsed(String address);
 }

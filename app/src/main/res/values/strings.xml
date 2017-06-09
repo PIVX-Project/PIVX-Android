@@ -41,5 +41,6 @@
 
     <string name="text_version">Version</string>
     <string name="network_monitor">Network Monitor</string>
+    <string name="action_scan">scanner</string>
 
 </resources>

@@ -32,4 +32,14 @@ public class PivxModuleImp implements PivxModule {
     public boolean isWalletCreated() {
         return false;
     }
+
+    @Override
+    public String freshNewAddress() {
+        return walletManager.newFreshReceiveAddress();
+    }
+
+    @Override
+    public boolean isAddressUsed(String address) {
+        return walletManager.isMarkedAddress();
+    }
 }

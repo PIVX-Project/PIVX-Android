@@ -48,6 +48,22 @@ public class WalletManager {
         this.contextWrapper = contextWrapper;
     }
 
+    // methods
+
+    public String newFreshReceiveAddress() {
+        return wallet.freshReceiveAddress().toBase58();
+    }
+
+    /**
+     * Method to know if an address is already used for receive coins.
+     * @return
+     */
+    public boolean isMarkedAddress() {
+        return false;
+    }
+
+    // init
+
     public void init(){
         // init mnemonic code first..
         // initMnemonicCode();
