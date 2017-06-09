@@ -16,6 +16,7 @@
     <string name="title_address">Address</string>
     <string name="title_name">Name</string>
     <string name="title_description">Description</string>
+    <string name="title_date">Date</string>
     <string name="set_address">Write address or name</string>
     <string name="set_name">Add a name</string>
     <string name="set_description">Add a description</string>
@@ -33,4 +34,7 @@
     <string name="repeat_password">Repeat Password</string>
     <string name="text_version">Version</string>
     <string name="network_monitor">Network Monitor</string>
+    <string name="send_message">You just send</string>
+    <string name="save_message">Do you want to save the address?</string>
+    <string name="confirm">Confirm</string>
 </resources>

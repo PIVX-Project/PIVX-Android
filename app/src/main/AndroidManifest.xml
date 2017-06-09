@@ -36,6 +36,7 @@
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"></activity>
         <activity android:name=".ui.transaction_request_activity.RequestActivity"></activity>
+        <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"></activity>
 
     </application>
 
