@@ -6,17 +6,18 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
+import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
-public class BaseDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseDrawerActivity extends PivxActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private FrameLayout frameLayout;
@@ -26,6 +27,7 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        beforeCreate();
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,6 +45,12 @@ public class BaseDrawerActivity extends AppCompatActivity implements NavigationV
 
     }
 
+    /**
+     * Empty method to check some status before set the main layout of the activity
+     */
+    protected void beforeCreate(){
+
+    }
 
     /**
      * Empty method to override.

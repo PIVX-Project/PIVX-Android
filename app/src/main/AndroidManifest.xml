@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pivx.org.pivxwallet">
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,14 +11,7 @@
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
         <activity android:name=".ui.base.BaseDrawerActivity"></activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity"></activity>
-        <activity android:name=".ui.address_activity.AddressActivity"></activity>
-        <activity android:name=".ui.settings_activity.SettingsActivity"></activity>
-        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"></activity>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"></activity>
-        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"></activity>
-
-        <activity android:name=".ui.start_activity.StartActivity">
+        <activity android:name=".ui.wallet_activity.WalletActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,6 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+        </activity>
+        <activity android:name=".ui.address_activity.AddressActivity"></activity>
+        <activity android:name=".ui.settings_activity.SettingsActivity"></activity>
+        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"></activity>
+        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"></activity>
+        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"></activity>
+
+        <activity android:name=".ui.start_activity.StartActivity">
         </activity>
 
         <activity android:name=".ui.restore_activity.RestoreActivity"></activity>
@@ -35,6 +37,9 @@
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"></activity>
         <activity android:name=".ui.transaction_request_activity.RequestActivity"></activity>
+
+        <activity android:name=".ui.qr_activity.QrActivity"/>
+        <activity android:name=".utils.scanner.ScanActivity"/>
 
     </application>
 

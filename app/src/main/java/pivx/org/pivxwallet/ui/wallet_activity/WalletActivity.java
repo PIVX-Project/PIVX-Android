@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,12 +13,16 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.RecyclerViewAdapter;
 import pivx.org.pivxwallet.TransactionData;
+import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
+import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
+import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -27,8 +32,16 @@ public class WalletActivity extends BaseDrawerActivity {
 
     RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    Button buttonSend;
-    Button buttonRequest;
+    private Button buttonSend;
+    private Button buttonRequest;
+
+    @Override
+    protected void beforeCreate(){
+        if (!pivxApplication.getAppConf().isAppInit()){
+            Intent intent = new Intent(this, StartActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -75,6 +88,16 @@ public class WalletActivity extends BaseDrawerActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.action_qr){
+            startActivity(new Intent(this, ScanActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     //Create a list of Data objects

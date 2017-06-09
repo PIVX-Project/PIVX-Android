@@ -23,6 +23,7 @@ import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
 import pivx.org.pivxwallet.module.WalletConfiguration;
+import pivx.org.pivxwallet.utils.AppConf;
 
 /**
  * Created by mati on 18/04/17.
@@ -30,13 +31,22 @@ import pivx.org.pivxwallet.module.WalletConfiguration;
 
 public class PivxApplication extends Application implements ContextWrapper {
 
+    /** Singleton */
+    private static PivxApplication instance;
 
     private PivxModule pivxModule;
+    private AppConf appConf;
+
+    public static PivxApplication getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         initLogging();
+        appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME,MODE_PRIVATE));
         WalletConfiguration walletConfiguration = new WalletConfImp();
         pivxModule = new PivxModuleImp(this,walletConfiguration);
     }
@@ -92,6 +102,10 @@ public class PivxApplication extends Application implements ContextWrapper {
         return pivxModule;
     }
 
+    public AppConf getAppConf(){
+        return appConf;
+    }
+
     @Override
     public FileOutputStream openFileOutputPrivateMode(String name) throws FileNotFoundException {
         return openFileOutput(name,MODE_PRIVATE);
@@ -106,6 +120,5 @@ public class PivxApplication extends Application implements ContextWrapper {
     public InputStream openAssestsStream(String name) throws IOException {
         return null;
     }
-
 
 }
