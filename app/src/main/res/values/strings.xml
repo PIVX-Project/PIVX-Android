@@ -32,6 +32,7 @@
     <string name="local_currency">Local Currency</string>
     <string name="local_currency_usd">USD</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="add_name">Add a name</string>
 
     <string name="scan_camera_problem_dialog_title">Sorry</string>
     <string name="scan_camera_problem_dialog_message">The camera has a problem. You probably need to restart the device.</string>
