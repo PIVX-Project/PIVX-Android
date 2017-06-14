@@ -80,21 +80,18 @@ public class SettingsActivity extends BaseDrawerActivity {
         buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
         buttonCurrency.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                //Intent myIntent = new Intent(view.getContext(), agones.class);
-                //startActivityForResult(myIntent, 0);
 
-
-                AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create(); //Read Update
+                AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create();
                 alertDialog.setTitle("hi");
                 alertDialog.setMessage("this is my app");
 
                 alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
+
                     }
                 });
 
-                alertDialog.show();  //<-- See This!
+                alertDialog.show();
             }
 
         });

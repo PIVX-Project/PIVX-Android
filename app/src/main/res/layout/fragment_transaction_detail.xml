@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgWhite">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/bg"
+            android:orientation="vertical"
+            android:layout_height="130dp"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_gradient" >
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/transactionAmount"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id = "@+id/transactionType"
+                android:layout_marginTop="10dp"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text = "You Send"
+                android:textColor = "#757575"
+                android:textSize = "14sp" />
+
+            <TextView
+                android:id = "@+id/valueAmount"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "- 3.13532 PIV"
+                android:layout_marginBottom="10dp"
+                android:textColor = "#434343"
+                android:textSize = "22sp"
+                android:textStyle="bold"/>
+
+
+
+            <TextView
+                android:id = "@+id/valueCurrecy"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "14710 USD"
+                android:textColor = "#4c4c4c"
+                android:textSize = "16sp" />
+
+            <TextView
+                android:id = "@+id/status"
+                android:layout_marginTop="10dp"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text = "Status"
+                android:textColor = "#757575"
+                android:textSize = "14sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/transactionAmount"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            android:gravity="left">
+
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/title_date"
+                android:layout_marginBottom="10dp"
+                android:textColor = "@color/subtitle"
+                android:textSize = "14sp" />
+
+
+
+            <TextView
+                android:id = "@+id/date"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"
+                android:background="@drawable/transaction_inputs"
+                android:text = "13 Mar 2017"
+                android:textColor = "@color/mainText"
+                android:textSize = "16sp" />
+
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/title_address"
+                android:layout_marginBottom="10dp"
+                android:textColor = "@color/subtitle"
+                android:textSize = "14sp" />
+
+
+
+            <TextView
+                android:id = "@+id/valueAddress"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"
+                android:background="@drawable/transaction_inputs"
+                android:text = "1FfmbHfnpaZjKFvyi1okTjJJusN455paPH"
+                android:textColor = "@color/mainText"
+                android:textSize = "16sp" />
+
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/title_description"
+                android:layout_marginBottom="10dp"
+                android:textColor = "@color/subtitle"
+                android:textSize = "14sp" />
+
+
+
+            <TextView
+                android:id = "@+id/valueDescription"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"
+                android:background="@drawable/transaction_inputs"
+                android:text = "Select a backup of the wallet from a storage unit"
+                android:textColor = "@color/mainText"
+                android:textSize = "16sp" />
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

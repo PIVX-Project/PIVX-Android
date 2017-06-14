@@ -12,6 +12,7 @@
     <color name="textColorLightPurple">#ffffff</color>
     <color name="transation_title">#55476c</color>
     <color name="mainText">#4F4F4F</color>
+    <color name="subtitle">#757575</color>
     <color name="bgInput">#F5F6F7</color>
     <color name="hintInput">#979899</color>
 
