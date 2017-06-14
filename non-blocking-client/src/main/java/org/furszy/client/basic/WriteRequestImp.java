@@ -51,4 +51,13 @@ public class WriteRequestImp implements WriteRequest {
     public void setFilteredMessage(ByteBuffer byteBuffer) {
         this.filteredMessage = byteBuffer;
     }
+
+    @Override
+    public String toString() {
+        return "WriteRequestImp{" +
+                "msg=" + msg +
+                ", filteredMessage=" + filteredMessage +
+                ", writeFuture=" + writeFuture +
+                '}';
+    }
 }

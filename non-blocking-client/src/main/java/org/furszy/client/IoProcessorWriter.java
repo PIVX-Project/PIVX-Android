@@ -173,9 +173,10 @@ public class IoProcessorWriter {
 
     private void fireMessageSent(IoSessionImp session, WriteRequest req) {
 
+        // clean current write request
+        session.setCurrentWriteRequest(null);
         // first notity future:
         req.getFuture().notifySend();
-
         try {
             session.getIoHandler().messageSent(session,req);
         } catch (Exception e) {
