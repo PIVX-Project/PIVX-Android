@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import org.bitcoinj.uri.BitcoinURI;
+import org.bitcoinj.uri.PivxURI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +152,7 @@ public class WalletActivity extends BaseDrawerActivity {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     //Toast.makeText(this,address,Toast.LENGTH_LONG).show();
-                    BitcoinURI pivxUri = new BitcoinURI(address);
+                    PivxURI pivxUri = new PivxURI(address);
                     final DialogBuilder dialog = DialogBuilder.warn(this, R.string.scan_result_title);
                     dialog.setMessage("Hey!, new address found: \n"+pivxUri.getAddress());
                     final String tempPubKey = pivxUri.getAddress().toBase58();

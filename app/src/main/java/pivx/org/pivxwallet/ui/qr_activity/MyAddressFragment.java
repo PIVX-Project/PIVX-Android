@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.google.zxing.WriterException;
 
 import org.bitcoinj.core.Address;
-import org.bitcoinj.uri.BitcoinURI;
+import org.bitcoinj.uri.PivxURI;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
@@ -67,11 +67,11 @@ public class MyAddressFragment extends Fragment{
             // check if the address is already used
             boolean flag = false;
             if (address == null || module.isAddressUsed(address)) {
-                address = module.freshNewAddress();
+                address = module.getCurrentAddress();
                 flag = true;
             }
             if (flag) {
-                String pivxUri = BitcoinURI.convertToBitcoinURI(address,null,"Receive address",null);
+                String pivxUri = PivxURI.convertToBitcoinURI(address,null,"Receive address",null);
                 loadAddress(pivxUri,address.toBase58());
             }
         }catch (WriterException e){

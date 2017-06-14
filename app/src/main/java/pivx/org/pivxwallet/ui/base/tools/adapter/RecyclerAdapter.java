@@ -141,7 +141,7 @@ public abstract class RecyclerAdapter<M, H extends RecyclerViewHolder> extends R
         return item;
     }
 
-    public void setFermatListEventListener(ListItemListeners<M> onEventListeners) {
+    public void setListEventListener(ListItemListeners<M> onEventListeners) {
         this.eventListeners = onEventListeners;
     }
 

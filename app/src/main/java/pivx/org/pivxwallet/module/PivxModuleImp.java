@@ -36,8 +36,8 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Address freshNewAddress() {
-        return walletManager.newFreshReceiveAddress();
+    public Address getCurrentAddress() {
+        return walletManager.getCurrentAddress();
     }
 
     @Override

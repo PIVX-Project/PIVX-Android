@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import pivx.org.pivxwallet.module.ContextWrapper;
@@ -53,6 +54,18 @@ public class WalletManager {
 
     public Address newFreshReceiveAddress() {
         return wallet.freshReceiveAddress();
+    }
+
+    /**
+     * Get the last address active which not appear on a tx.
+     * @return
+     */
+    public Address getCurrentAddress() {
+        return wallet.currentReceiveAddress();
+    }
+
+    public List<Address> getIssuedReceiveAddresses(){
+        return wallet.getIssuedReceiveAddresses();
     }
 
     /**
@@ -245,6 +258,10 @@ public class WalletManager {
                 // nothing
             }
         }
+    }
+
+    public List<Address> getWatchedAddresses() {
+        return wallet.getWatchedAddresses();
     }
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

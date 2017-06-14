@@ -26,6 +26,11 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import pivx.org.pivxwallet.module.pivtrum.messages.BaseMsg;
+import pivx.org.pivxwallet.module.pivtrum.messages.Method;
+import pivx.org.pivxwallet.module.pivtrum.messages.SubscribeAddressMsg;
+import pivx.org.pivxwallet.module.pivtrum.messages.VersionMsg;
+
 /**
  * Created by furszy on 6/5/17.
  */
@@ -36,13 +41,9 @@ public class ClientTest {
     @Test
     public void connectClientTest() throws JSONException, IOException {
         // Msg version
-        JSONObject jsonObject = new JSONObject();
+        VersionMsg versionMsg = new VersionMsg("mobile","2.9.5","0.6");
+        JSONObject jsonObject = versionMsg.toJson();
         jsonObject.put("id",1);
-        jsonObject.put("method","server.version");
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.put("2.9.5");
-        jsonArray.put("0.6");
-        jsonObject.put("params",jsonArray);
         // Send
         final Socket socket = new Socket("localhost", 50001);
         socket.setReuseAddress(true);
@@ -113,6 +114,62 @@ public class ClientTest {
         }
         osw.close();
         bw.close();
+    }
+
+    @Test
+    public void getPeersTest() throws IOException, JSONException {
+        // Send
+        final Socket socket = new Socket("localhost", 50001);
+        socket.setReuseAddress(true);
+        System.out.println("socket connected");
+
+        // Msg version
+        VersionMsg versionMsg = new VersionMsg("mobile","2.9.5","0.6");
+        JSONObject jsonVersion = versionMsg.toJson();
+        jsonVersion.put("id",1);
+        sendAndWaitReceive(socket,jsonVersion);
+        // get peers
+        BaseMsg baseMsg = new BaseMsg(Method.GET_PEERS.getMethod());
+        baseMsg.setId(3);
+        JSONObject jsonObject = baseMsg.toJson();
+        sendAndWaitReceive(socket,jsonObject);
+    }
+
+    /**
+     * Todo: make this
+     */
+    @Test
+    public void subscribeAddresTest() throws IOException, JSONException {
+        // Send
+        final Socket socket = new Socket("localhost", 50001);
+        socket.setReuseAddress(true);
+        System.out.println("socket connected");
+
+        SubscribeAddressMsg subscribeAddressMsg = new SubscribeAddressMsg("DDjju8xCtGczPCrdz2LG683xj8j8hz1XpU");
+        subscribeAddressMsg.setId(4);
+        sendAndWaitReceive(socket,subscribeAddressMsg.toJson());
+
+
+    }
+
+    private void sendAndWaitReceive(Socket socket,JSONObject jsonObject) throws IOException, JSONException {
+        System.out.println("sending: "+jsonObject.toString()+"\n");
+        OutputStreamWriter osw = new OutputStreamWriter(socket.getOutputStream());
+        BufferedWriter bw = new BufferedWriter(osw);
+        bw.write(jsonObject.toString()+'\n');
+        bw.flush();
+        System.out.println("server getPeers sent");
+        byte[] readBuffer = new byte[8064];
+        int read = socket.getInputStream().read(readBuffer);
+        if (read>1) {
+            ByteBuffer byteBuffer = ByteBuffer.allocate(read);
+            byteBuffer.put(readBuffer,0,read);
+            String str = ByteString.copyFrom(byteBuffer.array()).toStringUtf8();
+            System.out.println("str: "+str);
+            JSONObject returnJson = new JSONObject(str);
+        }
+        //osw.close();
+        //bw.close();
     }
 
 

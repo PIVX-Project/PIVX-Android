@@ -6,6 +6,7 @@ import android.text.format.DateUtils;
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.TestNet3Params;
 
 import java.io.File;
 
@@ -15,9 +16,9 @@ import java.io.File;
 
 public class PivxContext {
 
-    public static final boolean IS_TEST = false;
-    public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST?MainNetParams.get():MainNetParams.get();
-    /** Bitcoinj global context. */
+    public static final boolean IS_TEST = true;
+    public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
+    /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
     // report mail
@@ -39,7 +40,7 @@ public class PivxContext {
         /** Path to external storage */
         public static final File EXTERNAL_STORAGE_DIR = Environment.getExternalStorageDirectory();
         /** Filename of the manual wallet backup. */
-        public static final String EXTERNAL_WALLET_BACKUP = "iop-wallet-backup" +"_"+ FILENAME_NETWORK_SUFFIX;
+        public static final String EXTERNAL_WALLET_BACKUP = "pivx-wallet-backup" +"_"+ FILENAME_NETWORK_SUFFIX;
         /** Manual backups go here. */
         public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 

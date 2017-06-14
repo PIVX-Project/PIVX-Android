@@ -34,7 +34,7 @@ public interface PivxModule {
     /**
      * Return a new address.
      */
-    Address freshNewAddress();
+    Address getCurrentAddress();
 
     boolean isAddressUsed(Address address);
 }
