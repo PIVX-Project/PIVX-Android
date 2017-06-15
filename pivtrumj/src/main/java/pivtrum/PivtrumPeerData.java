@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.pivtrum;
+package pivtrum;
 
 /**
  * Created by furszy on 6/13/17.

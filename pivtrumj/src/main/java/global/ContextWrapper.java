@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package global;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -3,6 +3,8 @@ package pivx.org.pivxwallet.module;
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.NetworkParameters;
 
+import global.WalletConfiguration;
+
 import static pivx.org.pivxwallet.module.PivxContext.CONTEXT;
 import static pivx.org.pivxwallet.module.PivxContext.Files.WALLET_FILENAME_PROTOBUF;
 import static pivx.org.pivxwallet.module.PivxContext.Files.WALLET_KEY_BACKUP_PROTOBUF;

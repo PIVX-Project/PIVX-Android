@@ -1,8 +1,6 @@
-package pivx.org.pivxwallet.module.pivtrum;
+package pivtrum;
 
-import java.net.Inet4Address;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

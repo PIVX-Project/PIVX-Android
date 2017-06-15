@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.pivtrum.messages;
+package pivtrum.messages;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +14,6 @@ public class VersionMsg extends BaseMsg<VersionMsg> {
     private String maxVersion;
     private String minVersion;
 
-
     /**
      * version("2.7.11", "1.0")
      * @param name
@@ -22,10 +21,14 @@ public class VersionMsg extends BaseMsg<VersionMsg> {
      * @param minVersion
      */
     public VersionMsg(String name, String maxVersion, String minVersion) {
-        super(Method.VERSION.getMethod());
+        this();
         this.name = name;
         this.maxVersion = maxVersion;
         this.minVersion = minVersion;
+    }
+
+    public VersionMsg() {
+        super(Method.VERSION.getMethod());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.wallet;
+package wallet;
 
 import com.google.protobuf.ByteString;
 
@@ -28,8 +28,8 @@ import java.security.SecureRandom;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import pivx.org.pivxwallet.module.ContextWrapper;
-import pivx.org.pivxwallet.module.WalletConfiguration;
+import global.ContextWrapper;
+import global.WalletConfiguration;
 
 /**
  * Created by furszy on 6/4/17.

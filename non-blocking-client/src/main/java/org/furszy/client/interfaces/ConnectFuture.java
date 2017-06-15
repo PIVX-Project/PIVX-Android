@@ -15,7 +15,7 @@ public interface ConnectFuture {
      * @return The {link IoSession} instance that has been associated with the connection,
      * if the connection was successful, {@code null} otherwise
      */
-    ConnectionId getConnectionId();
+    IoSession getSession();
 
     /**
      * Returns the cause of the connection failure.
@@ -44,7 +44,7 @@ public interface ConnectFuture {
      *
      * @param session The created session to store in the ConnectFuture insteance
      */
-    void setConnectionId(ConnectionId connectionId);
+    void setSession(IoSession session);
 
     /**
      * Sets the exception caught due to connection failure and notifies all

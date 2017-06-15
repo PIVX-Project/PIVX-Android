@@ -1,10 +1,7 @@
-package pivx.org.pivxwallet.module.pivtrum;
+package pivtrum;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.CoinDefinition;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.net.ClientConnectionManager;
-import org.bitcoinj.net.NioClientManager;
 import org.furszy.client.IoManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import pivx.org.pivxwallet.module.pivtrum.messages.VersionMsg;
-import pivx.org.pivxwallet.module.wallet.WalletManager;
+import pivtrum.messages.VersionMsg;
+import store.AddressStore;
+import wallet.WalletManager;
 
 /**
  * Created by furszy on 6/12/17.
@@ -55,13 +52,17 @@ public class PivtrumPeergroup {
     private long pingIntervalMsec = DEFAULT_PING_INTERVAL_MSEC;
     /** Wallet manager */
     private WalletManager walletManager;
+    /** Address-status store */
+    private AddressStore addressStore;
     /** Minumum amount of server in which the app is going to broadcast a tx */
     private int minBroadcastConnections = CoinDefinition.minBroadcastConnections;
 
-    public PivtrumPeergroup(NetworkConf networkConf) throws IOException {
+    public PivtrumPeergroup(NetworkConf networkConf, WalletManager walletManager, AddressStore addressStore) throws IOException {
         this.peers = new CopyOnWriteArrayList<>();
         this.pendingPeers = new CopyOnWriteArrayList<>();
         this.networkConf = networkConf;
+        this.walletManager = walletManager;
+        this.addressStore = addressStore;
         this.ioManager = new IoManager(1,1);
         // create the version message that the manager will always use
         versionMsg = new VersionMsg(networkConf.getClientName(),networkConf.getMaxProtocolVersion(),networkConf.getMinProtocolVersion());
@@ -80,7 +81,7 @@ public class PivtrumPeergroup {
             /*
             * Connect to the trusted node and get servers from it.
             */
-            trustedPeer = new PivtrumPeer(networkConf.getTrustedServer(), ioManager);
+            trustedPeer = new PivtrumPeer(networkConf.getTrustedServer(), ioManager,versionMsg);
             trustedPeer.connect();
             // Get more peers from the trusted server to use it later
             trustedPeer.getPeers();

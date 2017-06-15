@@ -4,7 +4,9 @@ import org.bitcoinj.core.Address;
 
 import java.io.File;
 
-import pivx.org.pivxwallet.module.wallet.WalletManager;
+import global.ContextWrapper;
+import global.WalletConfiguration;
+import wallet.WalletManager;
 
 /**
  * Created by mati on 18/04/17.
@@ -14,8 +16,7 @@ public class PivxModuleImp implements PivxModule {
 
     WalletManager walletManager;
 
-
-    public PivxModuleImp(ContextWrapper contextWrapper,WalletConfiguration walletConfiguration) {
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration) {
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
         walletManager.init();
     }

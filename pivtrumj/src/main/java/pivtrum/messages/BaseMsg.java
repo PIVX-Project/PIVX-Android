@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.pivtrum.messages;
+package pivtrum.messages;
 
 import org.json.JSONException;
 import org.json.JSONObject;

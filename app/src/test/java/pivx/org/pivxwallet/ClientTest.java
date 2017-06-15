@@ -2,8 +2,6 @@ package pivx.org.pivxwallet;
 
 import com.google.protobuf.ByteString;
 
-import org.apache.http.client.methods.HttpGet;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -11,25 +9,13 @@ import org.junit.Test;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
-
-import pivx.org.pivxwallet.module.pivtrum.messages.BaseMsg;
-import pivx.org.pivxwallet.module.pivtrum.messages.Method;
-import pivx.org.pivxwallet.module.pivtrum.messages.SubscribeAddressMsg;
-import pivx.org.pivxwallet.module.pivtrum.messages.VersionMsg;
+import pivtrum.messages.BaseMsg;
+import pivtrum.messages.Method;
+import pivtrum.messages.SubscribeAddressMsg;
+import pivtrum.messages.VersionMsg;
 
 /**
  * Created by furszy on 6/5/17.
@@ -145,7 +131,7 @@ public class ClientTest {
         socket.setReuseAddress(true);
         System.out.println("socket connected");
 
-        SubscribeAddressMsg subscribeAddressMsg = new SubscribeAddressMsg("DDjju8xCtGczPCrdz2LG683xj8j8hz1XpU");
+        SubscribeAddressMsg subscribeAddressMsg = new SubscribeAddressMsg("yChC1VQS5zET5pDxXgcc4bFye3Q9nurccG");
         subscribeAddressMsg.setId(4);
         sendAndWaitReceive(socket,subscribeAddressMsg.toJson());
 

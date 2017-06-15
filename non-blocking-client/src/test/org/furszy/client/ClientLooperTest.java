@@ -2,10 +2,13 @@ package org.furszy.client;
 
 import org.furszy.client.basic.ConnectionId;
 import org.furszy.client.basic.IoSessionConfImp;
+import org.furszy.client.basic.WriteFutureImp;
+import org.furszy.client.basic.WriteRequestImp;
 import org.furszy.client.exceptions.ConnectionFailureException;
 import org.furszy.client.exceptions.InvalidProtocolViolationException;
 import org.furszy.client.interfaces.ConnectFuture;
 import org.furszy.client.interfaces.IoHandler;
+import org.furszy.client.interfaces.IoSession;
 import org.furszy.client.interfaces.ProtocolDecoder;
 import org.furszy.client.interfaces.ProtocolEncoder;
 import org.furszy.client.interfaces.write.WriteFuture;
@@ -62,15 +65,15 @@ public class ClientLooperTest {
         ioSessionConfImp.setProtocolEncoder(new StringEncoder());
         ConnectFuture connectFuture = ioManager.connect(remoteAddress,localAddress,new IoHandlerImpTest(),ioSessionConfImp);
         connectFuture.get(TimeUnit.SECONDS.toMillis(30));
-        ConnectionId connectionId = connectFuture.getConnectionId();
+        IoSession session = connectFuture.getSession();
 
-        if (connectionId==null){
+        if (session==null){
             throw connectFuture.getException();
         }
 
-        WriteRequest writeRequest = ioManager.send("holaa",connectionId);
-
-        WriteFuture writeFuture = writeRequest.getFuture();
+        WriteFuture writeFuture = new WriteFutureImp();
+        WriteRequest writeRequest = new WriteRequestImp("holaa",writeFuture);
+        session.addWriteRequest(writeRequest);
         writeFuture.get(TimeUnit.SECONDS.toMillis(30));
 
         assert writeFuture.isSent();

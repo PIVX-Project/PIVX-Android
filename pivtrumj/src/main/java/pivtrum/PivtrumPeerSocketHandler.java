@@ -1,7 +1,4 @@
-package pivx.org.pivxwallet.module.pivtrum;
-
-import org.bitcoinj.net.AbstractTimeoutHandler;
-import org.bitcoinj.net.StreamConnection;
+package pivtrum;
 
 /**
  * Created by furszy on 6/13/17.

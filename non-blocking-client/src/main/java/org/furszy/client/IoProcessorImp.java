@@ -304,7 +304,7 @@ public class IoProcessorImp implements IoProcessor {
             // add session to reference map
             sessions.put(connectionId,session);
             // release the future setting the id
-            connectFuture.setConnectionId(connectionId);
+            connectFuture.setSession(session);
 
         } catch (Exception e) {
             e.printStackTrace();

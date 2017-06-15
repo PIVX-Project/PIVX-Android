@@ -18,11 +18,11 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
-import pivx.org.pivxwallet.module.ContextWrapper;
+import global.ContextWrapper;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
-import pivx.org.pivxwallet.module.WalletConfiguration;
+import global.WalletConfiguration;
 import pivx.org.pivxwallet.utils.AppConf;
 
 /**

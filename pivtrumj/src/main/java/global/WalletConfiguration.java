@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package global;
 
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.NetworkParameters;

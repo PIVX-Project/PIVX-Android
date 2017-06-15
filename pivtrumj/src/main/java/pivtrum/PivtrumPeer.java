@@ -1,7 +1,8 @@
-package pivx.org.pivxwallet.module.pivtrum;
+package pivtrum;
 
 import org.bitcoinj.core.Address;
 import org.furszy.client.IoManager;
+import org.furszy.client.basic.BaseMsgFuture;
 import org.furszy.client.basic.ConnectionId;
 import org.furszy.client.basic.IoSessionConfImp;
 import org.furszy.client.exceptions.InvalidProtocolViolationException;
@@ -12,17 +13,20 @@ import org.furszy.client.interfaces.ProtocolDecoder;
 import org.furszy.client.interfaces.ProtocolEncoder;
 import org.furszy.client.interfaces.write.WriteRequest;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-import pivx.org.pivxwallet.module.pivtrum.messages.BaseMsg;
-import pivx.org.pivxwallet.module.pivtrum.messages.Method;
+import pivtrum.messages.BaseMsg;
+import pivtrum.messages.Method;
+import pivtrum.messages.VersionMsg;
 
 /**
  * Created by furszy on 6/12/17.
@@ -40,13 +44,22 @@ public class PivtrumPeer implements IoHandler{
     private IoManager ioManager;
     /** Session connection id */
     private IoSession session;
-    private ConnectionId connectionId;
+    /** Client version */
+    private VersionMsg versionMsg;
+    /** Message listeners */
+    private ConcurrentMap<Long,MsgListener> msgListeners = new ConcurrentHashMap<>();
+
     private AtomicLong msgIdGenerator = new AtomicLong(0);
 
+    private interface MsgListener{
+        void onMsgReceived(String jsonStr);
+        void onMsgFail(String jsonStr);
+    }
 
-    public PivtrumPeer(PivtrumPeerData peerData,IoManager ioManager) {
+    public PivtrumPeer(PivtrumPeerData peerData,IoManager ioManager,VersionMsg versionMsg) {
         this.peerData = peerData;
         this.ioManager = ioManager;
+        this.versionMsg = versionMsg;
     }
 
     /**
@@ -59,10 +72,36 @@ public class PivtrumPeer implements IoHandler{
             ioSessionConfImp.setProtocolEncoder(new StringEncoder());
             ConnectFuture future = ioManager.connect(new InetSocketAddress(peerData.getHost(),peerData.getTcpPort()),null,this,ioSessionConfImp);
             future.get(TimeUnit.SECONDS.toNanos(30));
-            connectionId = future.getConnectionId();
+            session = future.getSession();
+            log.info("Peer connected");
+            // Check the version sync
+            MsgFuture versionFuture = new MsgFuture();
+            sendVersion(versionFuture);
+            String version = versionFuture.get();
+            log.info("version message arrive");
+            VersionMsg versionMsg = new VersionMsg().fromJson(version);
+            checkVersion(versionMsg);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Send version message
+     */
+    public void sendVersion(MsgListener msgListener){
+        try{
+            WriteRequest writeRequest = ioManager.send(buildMsg(versionMsg,true),new ConnectionId(session.getId()));
+            writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkVersion(VersionMsg versionMsg){
+        // todo: here make the check and throw an exception
     }
 
     /**
@@ -72,7 +111,7 @@ public class PivtrumPeer implements IoHandler{
     public void getPeers() {
         try {
             BaseMsg getPeers = new BaseMsg(Method.GET_PEERS.getMethod());
-            WriteRequest writeRequest = ioManager.send(buildMsg(getPeers,true),connectionId);
+            WriteRequest writeRequest = ioManager.send(buildMsg(getPeers,true),new ConnectionId(session.getId()));
             writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -165,6 +204,45 @@ public class PivtrumPeer implements IoHandler{
                 return byteBuffer;
             } catch (UnsupportedEncodingException e) {
                 throw new InvalidProtocolViolationException("error encoder",e);
+            }
+        }
+    }
+
+
+    public class MsgFuture extends BaseMsgFuture<String> implements MsgListener {
+        @Override
+        public void onMsgReceived(String jsonStr) {
+            try {
+                synchronized (reentrantLock) {
+                    JSONObject jsonObject = new JSONObject(jsonStr);
+                    this.messageId = jsonObject.getInt("id");
+                    this.status = 200;
+                    object = jsonStr;
+                    reentrantLock.notifyAll();
+                }
+                if (listener != null) {
+                    listener.onAction(messageId, jsonStr);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onMsgFail(String jsonStr) {
+            try {
+                synchronized (reentrantLock) {
+                    JSONObject jsonObject = new JSONObject(jsonStr);
+                    this.messageId = jsonObject.getInt("id");
+                    this.status = 501;
+                    this.statusDetail = jsonStr;
+                    reentrantLock.notifyAll();
+                }
+                if (listener != null) {
+                    listener.onFail(messageId, status, statusDetail);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }

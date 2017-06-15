@@ -1,5 +1,5 @@
 /*
-package pivx.org.pivxwallet.module.pivtrum;
+package pivtrum;
 
 import org.bitcoinj.core.BitcoinSerializer;
 import org.bitcoinj.core.Message;

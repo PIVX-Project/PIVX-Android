@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.pivtrum.messages;
+package pivtrum.messages;
 
 /**
  * Created by furszy on 6/12/17.

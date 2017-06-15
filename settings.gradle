@@ -1,1 +1,1 @@
-include ':app', ':pivx-core-0.14.3-12.1', ':non-blocking-client'
+include ':app', ':pivx-core-0.14.3-12.1', ':non-blocking-client', ':pivtrumj'
