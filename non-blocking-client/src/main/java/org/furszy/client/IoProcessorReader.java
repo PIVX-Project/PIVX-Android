@@ -51,11 +51,14 @@ public class IoProcessorReader {
             if (readBytes > 0) {
                 // todo: here i can add the ssl engine before the decoder.
                 // first i decode the message
-                Object o = session.getProtocolDecoder().decode(buf);
+                ByteBuffer msgBuffer = ByteBuffer.allocate(ret);
+                msgBuffer.put(buf.array(),0,ret);
+                Object o = session.getProtocolDecoder().decode(msgBuffer);
                 // notify user message arrived
                 session.getIoHandler().messageReceived(session,o);
 
                 buf = null;
+                msgBuffer = null;
             }
 
             if (ret < 0) {
