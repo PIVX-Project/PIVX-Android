@@ -7,10 +7,11 @@ import com.snappydb.SnappydbException;
 
 import org.junit.Test;
 
-import pivx.org.pivxwallet.module.store.AddressStore;
 import pivx.org.pivxwallet.module.store.SnappyStore;
-import pivx.org.pivxwallet.module.store.exceptions.AddressNotFoundException;
-import pivx.org.pivxwallet.module.store.exceptions.CantInsertAddressException;
+import store.AddressNotFoundException;
+import store.AddressStore;
+import store.CantInsertAddressException;
+
 
 /**
  * Created by furszy on 6/15/17.
