@@ -102,10 +102,10 @@ public class PivtrumPeer implements IoHandler{
         try{
             WriteFuture writeFuture = new WriteFutureImp();
             WriteRequest writeRequest = sendMsg(versionMsg,true,writeFuture);
-            writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
+            //writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -116,20 +116,21 @@ public class PivtrumPeer implements IoHandler{
      */
     public void getPeers() {
         try {
+            log.info("getPeers");
             BaseMsg getPeers = new BaseMsg(Method.GET_PEERS.getMethod());
             WriteFuture writeFuture = new WriteFutureImp();
             WriteRequest writeRequest = sendMsg(getPeers,true,writeFuture);
-            writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
+            //writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
 
     private WriteRequest sendMsg(BaseMsg baseMsg, boolean singleRequest, WriteFuture writeFuture){
         WriteRequest writeRequest = new WriteRequestImp(buildMsg(baseMsg,singleRequest),writeFuture);
-        waitingRequests.put(versionMsg.getId(),versionMsg.getMethod());
+        waitingRequests.put(baseMsg.getId(),baseMsg.getMethod());
         session.addWriteRequest(writeRequest);
         return writeRequest;
     }
@@ -140,6 +141,7 @@ public class PivtrumPeer implements IoHandler{
      */
     public void subscribeAddresses(List<Address> addresses) {
         log.info("suscribe addresses: " + Arrays.toString(addresses.toArray()));
+
     }
 
     // -----------------------  Receive -------------------------------
@@ -169,6 +171,12 @@ public class PivtrumPeer implements IoHandler{
         }
     }
 
+    private void receivePeers(JSONObject jsonObject){
+        log.info("receive peers");
+        //todo: save peers
+        jsonObject.getJSONArray("result");
+    }
+
 
     private String buildMsg(BaseMsg msg,boolean isSingleMsg) throws JSONException {
         msg.setId(msgIdGenerator.incrementAndGet());
@@ -188,7 +196,7 @@ public class PivtrumPeer implements IoHandler{
                     receiveVersion(jsonObject);
                     break;
                 case GET_PEERS:
-                    log.info("method not implemented");
+                    receivePeers(jsonObject);
                     break;
                 case ADDRESS_SUBSCRIBE:
                     log.info("method not implemented");

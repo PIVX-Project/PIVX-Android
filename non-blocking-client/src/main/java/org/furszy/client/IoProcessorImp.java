@@ -26,6 +26,7 @@ import static org.furszy.client.basic.IoSessionImp.ATTR_CONNECT_FUTURE;
 
 /**
  * Created by mati on 14/05/17.
+ * todo: los eventos que lanza se encuentran en el hilo main.. tengo que sacarlos para afuera para que no se quede pegado.
  */
 
 public class IoProcessorImp implements IoProcessor {
@@ -141,9 +142,15 @@ public class IoProcessorImp implements IoProcessor {
 
             int nSessions = 0;
 //            lastIdleCheckTime = System.currentTimeMillis();
+            Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread thread, Throwable throwable) {
+                    throwable.printStackTrace();
+                    log.info("uncaughtException",throwable);
+                }
+            });
 
-
-            for (; ; )
+            for (; ; ) {
                 try {
                     // This select has a timeout so that we can manage
                     // idle session when we get out of the select every
@@ -179,7 +186,6 @@ public class IoProcessorImp implements IoProcessor {
                     // Manage newly created session first
                     nSessions += handleNewSessions();
 
-
                     // Now, if we have had some incoming or outgoing events,
                     // deal with them
                     if (selected > 0) {
@@ -201,6 +207,7 @@ public class IoProcessorImp implements IoProcessor {
                     // Get a chance to exit the infinite loop if there are no
                     // more sessions on this Processor
                     if (nSessions == 0) {
+                        log.info("shuting down - no sessions");
                         processorRef.set(null);
 
                         ProcessorLoop processorLoop = this;
@@ -226,6 +233,7 @@ public class IoProcessorImp implements IoProcessor {
                     // Disconnect all sessions immediately if disposal has been
                     // requested so that we exit this loop eventually.
                     if (isDisposing()) {
+                        log.info("isDisposing");
                         boolean hasKeys = false;
 
                         for (Iterator<IoSessionImp> i = selectorWrapper.allSessions(); i.hasNext(); ) {
@@ -245,17 +253,23 @@ public class IoProcessorImp implements IoProcessor {
                 } catch (ClosedSelectorException cse) {
                     // If the selector has been closed, we can exit the loop
                     // But first, dump a stack trace
-                    log.error("Main loop",cse);
+                    cse.printStackTrace();
+                    log.info("error");
+                    log.error("Main loop", cse);
                     break;
                 } catch (Exception e) {
                     e.printStackTrace();
-                    log.error("Main loop",e);
+                    log.info("error");
+                    log.error("Main loop", e);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e1) {
-                        log.error("Main loop",e1);
+                        log.error("Main loop", e1);
                     }
                 }
+            }
+            log.info("error");
+            log.error("Main loop finished..");
         }
     }
 
@@ -365,12 +379,14 @@ public class IoProcessorImp implements IoProcessor {
     private void process(IoSessionImp session) {
         // Process Reads
         if (selectorWrapper.isReadable(session) && !session.isReadSuspended()) {
+            log.info("process read");
             ioProcessorReader.read(session);
         }
 
         // Process writes
         if (selectorWrapper.isWritable(session) && !session.isWriteSuspended()) {
             // add the session to the queue, if it's not already there
+            log.info("process write");
             if (session.setScheduledForFlush(true)) {
                 flushingSessions.add(session);
             }

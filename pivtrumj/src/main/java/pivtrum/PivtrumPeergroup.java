@@ -104,14 +104,19 @@ public class PivtrumPeergroup implements PeerListener {
 
     @Override
     public void onConnected(PivtrumPeer pivtrumPeer) {
-        if (pivtrumPeer == trustedPeer){
-            // trusted peer connected.
-            isRunning = true;
-            // Get more peers from the trusted server to use it later
-            trustedPeer.getPeers();
-            // Suscribe watched addresses to the trusted server
-            List<Address> addresses = walletManager.getWatchedAddresses();
-            trustedPeer.subscribeAddresses(addresses);
+        try {
+            if (pivtrumPeer == trustedPeer) {
+                // trusted peer connected.
+                isRunning = true;
+                // Get more peers from the trusted server to use it later
+                trustedPeer.getPeers();
+                // Suscribe watched addresses to the trusted server
+                List<Address> addresses = walletManager.getWatchedAddresses();
+                if (!addresses.isEmpty())
+                    trustedPeer.subscribeAddresses(addresses);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
