@@ -78,18 +78,18 @@ public class WalletManager {
 
     // init
 
-    public void init(){
+    public void init() throws IOException {
         // init mnemonic code first..
         // initMnemonicCode();
         restoreOrCreateWallet();
     }
 
-    private void restoreOrCreateWallet() {
+    private void restoreOrCreateWallet() throws IOException {
         walletFile = contextWrapper.getFileStreamPath(conf.getWalletProtobufFilename());
         loadWalletFromProtobuf(walletFile);
     }
 
-    private void loadWalletFromProtobuf(File walletFile) {
+    private void loadWalletFromProtobuf(File walletFile) throws IOException {
         if (walletFile.exists()){
             FileInputStream walletStream = null;
             try {
@@ -151,7 +151,7 @@ public class WalletManager {
         });
     }
 
-    private void afterLoadWallet() {
+    private void afterLoadWallet() throws IOException {
         wallet.autosaveToFile(walletFile, conf.getWalletAutosaveDelayMs(), TimeUnit.MILLISECONDS, new WalletAutosaveEventListener(conf));
         try {
             // clean up spam
@@ -217,6 +217,7 @@ public class WalletManager {
      * @throws IOException
      */
     private void protobufSerializeWallet(final Wallet wallet) throws IOException {
+        logger.info("trying to serialize: "+walletFile.getAbsolutePath());
         wallet.saveToFile(walletFile);
         // make wallets world accessible in test mode
         //if (conf.isTest())

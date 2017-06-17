@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import pivtrum.exceptions.InvalidPeerVersion;
+import pivtrum.listeners.PeerListener;
 import pivtrum.messages.VersionMsg;
 import store.AddressStore;
 import wallet.WalletManager;
@@ -21,7 +23,7 @@ import wallet.WalletManager;
  * Class in charge of manage the connection with pivtrum servers.
  */
 
-public class PivtrumPeergroup {
+public class PivtrumPeergroup implements PeerListener {
 
     private static final Logger log = LoggerFactory.getLogger(PivtrumPeergroup.class);
 
@@ -47,6 +49,8 @@ public class PivtrumPeergroup {
     private AtomicInteger maxConnections = new AtomicInteger(1);
     // Whether the peer group is currently running. Once shut down it cannot be restarted.
     private volatile boolean isRunning;
+    /** Whether the peer group was active. */
+    private volatile boolean isActive;
     /** How many milliseconds to wait after receiving a pong before sending another ping. */
     public static final long DEFAULT_PING_INTERVAL_MSEC = 2000;
     private long pingIntervalMsec = DEFAULT_PING_INTERVAL_MSEC;
@@ -70,28 +74,25 @@ public class PivtrumPeergroup {
 
     /**
      *
-     * First synchronized start
-     *
+     * La conexión no deberia ser sincrona, lo único que necesito es agregar una variable de "isRunning", una de "isConnecting" y un listener de conexion.
+     * todo: return future..
      */
     public synchronized void start(){
         try {
             log.info("Starting PivtrumPeergroup");
-            isRunning = true;
+            isActive = true;
             // todo: first part discovery..
             /*
             * Connect to the trusted node and get servers from it.
             */
             trustedPeer = new PivtrumPeer(networkConf.getTrustedServer(), ioManager,versionMsg);
+            trustedPeer.addPeerListener(this);
             trustedPeer.connect();
-            // Get more peers from the trusted server to use it later
-            trustedPeer.getPeers();
-            // now i suscribe my watched addresses to the trusted server
-            List<Address> addresses = walletManager.getWatchedAddresses();
-            trustedPeer.subscribeAddresses(addresses);
-
         }catch (Exception e){
             isRunning = false;
+            isActive = false;
             e.printStackTrace();
+            log.error("PivtrumPeerGroup start",e);
         }
     }
 
@@ -101,4 +102,34 @@ public class PivtrumPeergroup {
     }
 
 
+    @Override
+    public void onConnected(PivtrumPeer pivtrumPeer) {
+        if (pivtrumPeer == trustedPeer){
+            // trusted peer connected.
+            isRunning = true;
+            // Get more peers from the trusted server to use it later
+            trustedPeer.getPeers();
+            // Suscribe watched addresses to the trusted server
+            List<Address> addresses = walletManager.getWatchedAddresses();
+            trustedPeer.subscribeAddresses(addresses);
+        }
+    }
+
+    @Override
+    public void onDisconnected(PivtrumPeer pivtrumPeer) {
+
+    }
+
+    @Override
+    public void onExceptionCaught(PivtrumPeer pivtrumPeer, Exception e) {
+        if (e instanceof InvalidPeerVersion){
+            if (pivtrumPeer == trustedPeer){
+                // We are fuck. Invalid trusted peer version..
+                isActive = false;
+                isRunning = false;
+                // notify error..
+
+            }
+        }
+    }
 }

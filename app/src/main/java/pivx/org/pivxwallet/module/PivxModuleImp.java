@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.module;
 import org.bitcoinj.core.Address;
 
 import java.io.File;
+import java.io.IOException;
 
 import global.ContextWrapper;
 import global.WalletConfiguration;
@@ -16,7 +17,7 @@ public class PivxModuleImp implements PivxModule {
 
     WalletManager walletManager;
 
-    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration) {
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration) throws IOException {
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
         walletManager.init();
     }

@@ -45,10 +45,14 @@ public class PivxApplication extends Application implements ContextWrapper {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        initLogging();
-        appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME,MODE_PRIVATE));
-        WalletConfiguration walletConfiguration = new WalletConfImp();
-        pivxModule = new PivxModuleImp(this,walletConfiguration);
+        try {
+            initLogging();
+            appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
+            WalletConfiguration walletConfiguration = new WalletConfImp();
+            pivxModule = new PivxModuleImp(this, walletConfiguration);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initLogging() {

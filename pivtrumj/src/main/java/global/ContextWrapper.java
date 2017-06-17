@@ -13,13 +13,13 @@ import java.io.InputStream;
 
 public interface ContextWrapper {
 
-    FileOutputStream openFileOutputPrivateMode(String name) throws FileNotFoundException;
+    FileOutputStream openFileOutputPrivateMode(String name) throws IOException;
 
-    FileOutputStream openFileOutput(String name, int mode) throws FileNotFoundException;
+    FileOutputStream openFileOutput(String name, int mode) throws IOException;
 
-    FileInputStream openFileInput(String name) throws FileNotFoundException;
+    FileInputStream openFileInput(String name) throws IOException;
 
-    File getFileStreamPath(String name);
+    File getFileStreamPath(String name) throws IOException;
 
     File getDir(String name, int mode);
 

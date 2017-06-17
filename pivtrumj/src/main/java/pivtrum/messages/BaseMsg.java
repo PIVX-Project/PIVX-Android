@@ -47,4 +47,12 @@ public class BaseMsg<T>{
     public final void setId(long id) {
         this.id = id;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getMethod() {
+        return method;
+    }
 }

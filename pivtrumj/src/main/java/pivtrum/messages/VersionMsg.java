@@ -31,6 +31,8 @@ public class VersionMsg extends BaseMsg<VersionMsg> {
         super(Method.VERSION.getMethod());
     }
 
+
+
     @Override
     public void toJson(JSONObject jsonObject) throws JSONException {
         JSONArray jsonArray = new JSONArray();
