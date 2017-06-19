@@ -1,32 +1,40 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.bitcoinj.core.Coin;
 import org.bitcoinj.uri.PivxURI;
+import org.bitcoinj.utils.MonetaryFormat;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Locale;
 
-import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
-import pivx.org.pivxwallet.ui.start_activity.StartActivity;
+import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
@@ -43,23 +51,42 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private static final int SCANNER_RESULT = 122;
 
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
     private Button buttonSend;
     private Button buttonRequest;
 
+    private TextView txt_value;
+    private TextView txt_local_value;
+
+    // Receiver
+    private LocalBroadcastManager localBroadcastManager;
+    private IntentFilter addressBalanceIntent = new IntentFilter(IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE);
+
+    private BroadcastReceiver localReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    };
+
     @Override
     protected void beforeCreate(){
         if (!pivxApplication.getAppConf().isAppInit()){
-            Intent intent = new Intent(this, StartActivity.class);
+            Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
         }
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         setTitle("My Wallet");
+
+        txt_value = (TextView) findViewById(R.id.pivValue);
+        txt_local_value = (TextView) findViewById(R.id.pivValueLocal);
+
         // Recicler view
         List<TransactionData> data = fill_with_data();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -86,7 +113,6 @@ public class WalletActivity extends BaseDrawerActivity {
                 startActivityForResult(myIntent, 0);
             }
         });
-
     }
 
     @Override
@@ -94,6 +120,17 @@ public class WalletActivity extends BaseDrawerActivity {
         super.onResume();
         // to check current activity in the navigation drawer
         setNavigationMenuItemChecked(0);
+        // register
+        localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
+
+        updateBalance();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // unregister
+        localBroadcastManager.unregisterReceiver(localReceiver);
     }
 
     @Override
@@ -184,5 +221,17 @@ public class WalletActivity extends BaseDrawerActivity {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
 
         return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    private void updateBalance() {
+        long availableBalance = pivxModule.getAvailableBalance();
+        txt_value.setText((availableBalance!=0)?Coin.valueOf(availableBalance).toFriendlyString():"0 Pivs");
+        BigDecimal amountInUsd = pivxModule.getAvailableBalanceLocale();
+        NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        usdCostFormat.setMinimumFractionDigits( 1 );
+        usdCostFormat.setMaximumFractionDigits( 2 );
+        txt_local_value.setText(usdCostFormat.format(amountInUsd.doubleValue()));
+
     }
 }

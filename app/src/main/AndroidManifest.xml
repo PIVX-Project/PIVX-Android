@@ -19,20 +19,20 @@
         <activity android:name=".ui.splash_activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity android:name=".ui.base.BaseDrawerActivity"></activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
+
+        </activity>
+        <activity android:name=".ui.base.BaseDrawerActivity"></activity>
+        <activity android:name=".ui.wallet_activity.WalletActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".ui.address_activity.AddressActivity"/>
@@ -56,6 +56,8 @@
 
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
+
+        <service android:name=".service.PivxWalletService"/>
 
     </application>
 

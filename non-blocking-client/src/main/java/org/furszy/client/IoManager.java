@@ -91,4 +91,15 @@ public class IoManager implements IoProcessor {
     public ConnectFuture connect(SocketAddress remoteAddress, SocketAddress localAddress, IoHandler ioHandler, IoSessionConf ioSessionConf) throws ConnectionFailureException {
         return connectors.get(0).connect(remoteAddress,localAddress,ioHandler,ioSessionConf);
     }
+
+    public void shutdown() {
+        // i should release every single session before shutdown the executorService
+        for (IoLooper ioLooper : connectors.values()) {
+            ioLooper.shutdown();
+        }
+        for (IoProcessorImp ioProcessorImp : ioProcessor.values()) {
+            ioProcessorImp.setDisposing(true);
+        }
+        executorService.shutdownNow();
+    }
 }

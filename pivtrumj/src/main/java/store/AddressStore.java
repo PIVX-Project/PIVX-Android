@@ -1,5 +1,7 @@
 package store;
 
+import java.util.List;
+
 /**
  * Created by furszy on 6/14/17.
  */
@@ -12,11 +14,16 @@ public interface AddressStore {
      * @param address
      * @param addressBalance
      */
-    public void insert(String address, AddressBalance addressBalance) throws CantInsertAddressException;
+    void insert(String address, AddressBalance addressBalance) throws CantInsertAddressException;
 
     /**
      * Get the address status
      */
-    public AddressBalance getAddressStatus(String address) throws AddressNotFoundException;
+    AddressBalance getAddressStatus(String address) throws AddressNotFoundException;
 
+    /**
+     *
+     * @return
+     */
+    List<AddressBalance> listBalance();
 }

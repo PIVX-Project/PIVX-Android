@@ -3,6 +3,7 @@ package pivtrum;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.CoinDefinition;
 import org.furszy.client.IoManager;
+import org.furszy.client.exceptions.ConnectionFailureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,6 +87,23 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
         versionMsg = new VersionMsg(networkConf.getClientName(),networkConf.getMaxProtocolVersion(),networkConf.getMinProtocolVersion());
     }
 
+    public PivtrumPeergroup(NetworkConf networkConf) throws IOException {
+        this.peers = new CopyOnWriteArrayList<>();
+        this.pendingPeers = new CopyOnWriteArrayList<>();
+        this.networkConf = networkConf;
+        this.ioManager = new IoManager(1,1);
+        // create the version message that the manager will always use
+        versionMsg = new VersionMsg(networkConf.getClientName(),networkConf.getMaxProtocolVersion(),networkConf.getMinProtocolVersion());
+    }
+
+    public void setWalletManager(WalletManager walletManager) {
+        this.walletManager = walletManager;
+    }
+
+    public void setAddressStore(AddressStore addressStore) {
+        this.addressStore = addressStore;
+    }
+
     public void addAddressListener(AddressListener addressListener) {
         this.addressListeners.add(addressListener);
     }
@@ -95,7 +113,7 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
      * La conexión no deberia ser sincrona, lo único que necesito es agregar una variable de "isRunning", una de "isConnecting" y un listener de conexion.
      * todo: return future..
      */
-    public synchronized void start(){
+    public synchronized void start() throws InterruptedException, ConnectionFailureException {
         try {
             log.info("Starting PivtrumPeergroup");
             isActive = true;
@@ -111,8 +129,8 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
         }catch (Exception e){
             isRunning = false;
             isActive = false;
-            e.printStackTrace();
             log.error("PivtrumPeerGroup start",e);
+            throw e;
         }
     }
 
@@ -133,8 +151,9 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
                 trustedPeer.getPeers();
                 // Suscribe watched addresses to the trusted server
                 List<Address> addresses = walletManager.getWatchedAddresses();
-                if (!addresses.isEmpty())
+                if (!addresses.isEmpty()) {
                     trustedPeer.subscribeAddresses(addresses);
+                }
 
                 // connect to non trusted peers
                 for (InetSocketAddress inetSocketAddress : networkConf.getNetworkServers()) {
@@ -270,5 +289,10 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
         } catch (CantInsertAddressException e) {
             e.printStackTrace();
         }
+    }
+
+    public void shutdown() {
+        //todo: check if this is fine.. i have to let every single listener know about this action.
+        ioManager.shutdown();
     }
 }

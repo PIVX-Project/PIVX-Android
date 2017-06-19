@@ -47,4 +47,7 @@
     <string name="save_message">Do you want to save the address?</string>
     <string name="confirm">Confirm</string>
     <string name="action_scan">scanner</string>
+
+    <string name="title_no_trusted_peer_connection">Peer issue</string>
+    <string name="message_no_trusted_peer_connection">Trusted peer connection fail</string>
 </resources>

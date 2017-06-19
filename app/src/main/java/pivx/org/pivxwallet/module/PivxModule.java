@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.module;
 import org.bitcoinj.core.Address;
 
 import java.io.File;
+import java.math.BigDecimal;
 
 import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
 
@@ -37,4 +38,8 @@ public interface PivxModule {
     Address getCurrentAddress();
 
     boolean isAddressUsed(Address address);
+
+    long getAvailableBalance();
+
+    BigDecimal getAvailableBalanceLocale();
 }

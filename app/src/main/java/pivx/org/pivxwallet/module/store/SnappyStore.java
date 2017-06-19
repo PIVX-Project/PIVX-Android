@@ -4,7 +4,12 @@ import android.content.Context;
 
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
+import com.snappydb.KeyIterator;
 import com.snappydb.SnappydbException;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import store.AddressBalance;
 import store.AddressNotFoundException;
@@ -51,6 +56,24 @@ public class SnappyStore implements AddressStore {
             e.printStackTrace();
             throw new AddressNotFoundException("Cant insert: "+address,e);
         }
+    }
+
+    @Override
+    public List<AddressBalance> listBalance() {
+        List<AddressBalance> balances = new ArrayList<>();
+        try {
+            KeyIterator keyIterator = snappyDb.allKeysIterator();
+            while (keyIterator.hasNext()){
+                String[] keys = keyIterator.next(50);
+                for (String key : keys) {
+                    AddressBalance addressBalance = snappyDb.getObject(key,AddressBalance.class);
+                    balances.add(addressBalance);
+                }
+            }
+        } catch (SnappydbException e) {
+            e.printStackTrace();
+        }
+        return balances;
     }
 
 

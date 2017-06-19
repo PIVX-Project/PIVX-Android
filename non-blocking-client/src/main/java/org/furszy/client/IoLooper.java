@@ -313,6 +313,10 @@ public class IoLooper {
         return (IoLooper.ConnectionRequest) key.attachment();
     }
 
+    public void shutdown() {
+        dispose(false);
+    }
+
     private class Looper implements Runnable{
 
         @Override

@@ -22,6 +22,9 @@ public interface IoSession<M> {
     IoSessionConf getSessionConf();
     /** session events handler */
     IoHandler getIoHandler();
+
+    boolean isConnected();
+
     /** Session messages decoder */
     ProtocolDecoder getProtocolDecoder();
     /** Session message encoder */
@@ -56,5 +59,8 @@ public interface IoSession<M> {
     void close();
 
     boolean setScheduledForFlush();
+
+    boolean isClosing();
+
     void unscheduledForFlush();
 }

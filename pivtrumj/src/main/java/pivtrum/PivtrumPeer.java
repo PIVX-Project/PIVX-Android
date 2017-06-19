@@ -106,11 +106,14 @@ public class PivtrumPeer implements IoHandler{
             ioSessionConfImp.setProtocolDecoder(new JsonDecoder());
             ioSessionConfImp.setProtocolEncoder(new StringEncoder());
             ConnectFuture future = ioManager.connect(new InetSocketAddress(peerData.getHost(), peerData.getTcpPort()), null, this, ioSessionConfImp);
-            future.get(TimeUnit.SECONDS.toNanos(30));
-            session = future.getSession();
-            log.info("Peer connected");
-            // Send version
-            sendVersion();
+            future = future.get(TimeUnit.SECONDS.toNanos(30));
+            if(future.isConnected()){
+                session = future.getSession();
+            }else {
+                log.info("Connection fail",future.getException());
+                throw new ConnectionFailureException(future.getException());
+            }
+
         }else {
             throw new IllegalStateException("PivtrumPeer already initializing");
         }
@@ -163,6 +166,9 @@ public class PivtrumPeer implements IoHandler{
      */
     public void subscribeAddresses(List<Address> addresses) {
         log.info("suscribe addresses: " + Arrays.toString(addresses.toArray()));
+        for (Address address : addresses) {
+            subscribeAddress(address);
+        }
     }
 
     public void subscribeAddress(Address address){
@@ -229,10 +235,14 @@ public class PivtrumPeer implements IoHandler{
     }
 
     private WriteRequest sendMsg(BaseMsg baseMsg, boolean singleRequest, WriteFuture writeFuture){
-        WriteRequest writeRequest = new WriteRequestImp(buildMsg(baseMsg,singleRequest),writeFuture);
-        waitingRequests.put(baseMsg.getId(),baseMsg);
-        session.addWriteRequest(writeRequest);
-        return writeRequest;
+        if (session.isConnected()) {
+            WriteRequest writeRequest = new WriteRequestImp(buildMsg(baseMsg, singleRequest), writeFuture);
+            waitingRequests.put(baseMsg.getId(), baseMsg);
+            session.addWriteRequest(writeRequest);
+            return writeRequest;
+        }else {
+            throw new IllegalStateException("Session not connected");
+        }
     }
 
     // -----------------------  Receive -------------------------------
@@ -408,6 +418,9 @@ public class PivtrumPeer implements IoHandler{
     public void sessionCreated(IoSession ioSession) throws Exception {
         log.info("Session created: "+ioSession.getId());
         session = ioSession;
+        log.info("Peer connected");
+        // Send version
+        sendVersion();
     }
 
     @Override

@@ -160,6 +160,7 @@ public abstract class IoSessionImp<M> implements IoSession<M> {
         //getFilterChain().fireFilterClose();
     }
 
+    @Override
     public boolean isClosing() {
         return isClosing.get();
     }
@@ -189,6 +190,7 @@ public abstract class IoSessionImp<M> implements IoSession<M> {
         return scheduledForFlush.get();
     }
 
+    @Override
     public boolean isConnected() {
         return channel.isOpen();
     }
