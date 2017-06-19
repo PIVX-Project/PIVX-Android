@@ -68,7 +68,124 @@ public enum Method {
      *
      */
 
-    ADDRESS_SUBSCRIBE("blockchain.address.subscribe")
+    ADDRESS_SUBSCRIBE("blockchain.address.subscribe"),
+
+    /**
+     *
+     * Return an ordered list of UTXOs sent to a pivx address.
+     *
+     * blockchain.address.listunspent(**address**)
+     *
+     * **address**
+     *
+     * The address as a Base58 string.
+     *
+     * **Response**
+     *
+     * A list of unspent outputs in blockchain order.  Each transaction
+     * is a dictionary with keys *height* , *tx_pos*, *tx_height* and
+     * *value* keys.  *height* is the integer height of the block the
+     * transaction was confirmed in, *tx_hash* the transaction hash in
+     * hexadecimal, *tx_pos* the zero-based index of the output in the
+     * transaction's list of outputs, and *value* its integer value in
+     * minimum coin units (satoshis in the case of Pivx).
+     *
+     */
+
+    LIST_UNSPENT("blockchain.address.listunspent"),
+
+    /**
+     *
+     * Return the *deserialized header* [2]_ of the block at the given height.
+     *
+     * blockchain.block.get_header(**height**)
+     *
+     * **height**
+     *
+     * The height of the block, an integer.
+     *
+     * **Response**
+     *
+     * .. [2] The *deserialized header* of a block is a dictionary like
+     * so::
+     *
+     * {
+     * "block_height": <integer>,
+     * 'version': <integer>,
+     * 'prev_block_hash': <hexadecimal string>,
+     * 'merkle_root':  <hexadecimal string>,
+     * 'timestamp': <integer>,
+     * 'bits': <integer>,
+     * 'nonce': <integer>
+     * }
+     *
+     */
+
+    GET_HEADER("blockchain.block.get_header"),
+
+    /**
+     * Subscribe to receive the block height when a new block is found.  This
+     * subscription is deprecated in favour of *blockchain.headers.subscribe*
+     * which provides more detailed information.
+     *
+     * blockchain.numblocks.subscribe()
+     *
+     * **Response**
+     *
+     * The height of the current block, an integer
+     *
+     * **Notification Parameters**
+     *
+     * As this is a subcription, the client will receive a notification
+     * when a new block is found.  The parameters are:
+     *
+     * [**height**]
+     */
+    HEIGHT_SUBSCRIBE("blockchain.numblocks.subscribe"),
+    /**
+     *
+     * Return the confirmed and unconfirmed balances of a bitcoin address.
+     *
+     * blockchain.address.get_balance(**address**)
+     *
+     * **address**
+     *
+     * The address as a Base58 string.
+     *
+     * **Response**
+     *
+     * A dictionary with keys *confirmed* and *unconfirmed*.  The value of
+     * each is the appropriate balance in coin units as a string.
+     *
+     * **Response Example**::
+     *
+     * {
+     * "confirmed": "1.03873966",
+     * "unconfirmed": "0.236844"
+     * }
+     *
+     */
+    GET_BALANCE("blockchain.address.get_balance"),
+
+    /**
+     * Return the confirmed and unconfirmed history of a bitcoin address.
+     *
+     * blockchain.address.get_history(**address**)
+     *
+     * **address**
+     *
+     * The address as a Base58 string.
+     *
+     * **Response**
+     *
+     * A list of confirmed transactions in blockchain order, with the
+     * output of *blockchain.address.get_mempool* appended to the list.
+     * Each transaction is a dictionary with keys *height* and *tx_hash*.
+     * *height* is the integer height of the block the transaction was
+     * confirmed in, and *tx_hash* the transaction hash in hexadecimal.
+     */
+
+    GET_ADDRESS_HISTORY("blockchain.address.get_history")
     ;
 
     String method;

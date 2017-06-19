@@ -53,4 +53,8 @@ public class NetworkConf {
     public String getMinProtocolVersion() {
         return MIN_PROTOCOL_VERSION;
     }
+
+    public void addPeers(List<InetSocketAddress> peers) {
+        networkServers.addAll(peers);
+    }
 }

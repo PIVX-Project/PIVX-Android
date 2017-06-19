@@ -39,8 +39,8 @@ public class IoManager implements IoProcessor {
     public IoManager(int numConnectors,int numProcessors) throws IOException {
         connectors = new HashMap<>();
         ioProcessor = new HashMap<>();
-
-        executorService = Executors.newFixedThreadPool(2);
+        //For now: 3 threads. 1 for connection, 1 for processor and 1 for dispatcher..
+        executorService = Executors.newFixedThreadPool(3);
 
         for (int i = 0; i < numProcessors; i++) {
             ioProcessor.put(connectorsId.getAndIncrement(), new IoProcessorImp(SelectorProvider.provider(), executorService));

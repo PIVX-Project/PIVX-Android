@@ -1,9 +1,11 @@
 package pivtrum;
 
+import com.google.protobuf.ByteString;
+
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Sha256Hash;
 import org.furszy.client.IoManager;
 import org.furszy.client.basic.BaseMsgFuture;
-import org.furszy.client.basic.ConnectionId;
 import org.furszy.client.basic.IoSessionConfImp;
 import org.furszy.client.basic.WriteFutureImp;
 import org.furszy.client.basic.WriteRequestImp;
@@ -16,13 +18,17 @@ import org.furszy.client.interfaces.ProtocolDecoder;
 import org.furszy.client.interfaces.ProtocolEncoder;
 import org.furszy.client.interfaces.write.WriteFuture;
 import org.furszy.client.interfaces.write.WriteRequest;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spongycastle.util.encoders.Hex;
+
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,10 +39,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import pivtrum.exceptions.InvalidPeerVersion;
+import pivtrum.listeners.PeerDataListener;
 import pivtrum.listeners.PeerListener;
 import pivtrum.messages.BaseMsg;
+import pivtrum.messages.GetBalanceMsg;
+import pivtrum.messages.GetHeader;
+import pivtrum.messages.GetHistoryMsg;
+import pivtrum.messages.ListUnspentMsg;
 import pivtrum.messages.Method;
+import pivtrum.messages.SubscribeAddressMsg;
 import pivtrum.messages.VersionMsg;
+import pivtrum.messages.responses.Unspent;
 
 /**
  * Created by furszy on 6/12/17.
@@ -61,10 +74,13 @@ public class PivtrumPeer implements IoHandler{
     private VersionMsg versionMsg;
     private AtomicLong msgIdGenerator = new AtomicLong(0);
     /** Messages sent by type */
-    private ConcurrentMap<Long,String> waitingRequests = new ConcurrentHashMap<>();
+    private ConcurrentMap<Long,BaseMsg> waitingRequests = new ConcurrentHashMap<>();
+    /** Peer height */
+    private long height;
 
     /** Listeners */
     private CopyOnWriteArrayList<PeerListener> peerListeners = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<PeerDataListener> peerDataListeners = new CopyOnWriteArrayList<>();
 
     public PivtrumPeer(PivtrumPeerData peerData,IoManager ioManager,VersionMsg versionMsg) {
         this.peerData = peerData;
@@ -74,6 +90,10 @@ public class PivtrumPeer implements IoHandler{
 
     public void addPeerListener(PeerListener peerListener){
         peerListeners.add(peerListener);
+    }
+
+    public void addPeerDataListener(PeerDataListener peerDataListener){
+        peerDataListeners.add(peerDataListener);
     }
 
     /**
@@ -119,8 +139,7 @@ public class PivtrumPeer implements IoHandler{
             log.info("getPeers");
             BaseMsg getPeers = new BaseMsg(Method.GET_PEERS.getMethod());
             WriteFuture writeFuture = new WriteFutureImp();
-            WriteRequest writeRequest = sendMsg(getPeers,true,writeFuture);
-            //writeRequest.getFuture().get(TimeUnit.SECONDS.toNanos(30));
+            sendMsg(getPeers,true,writeFuture);
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (Exception e){
@@ -128,11 +147,13 @@ public class PivtrumPeer implements IoHandler{
         }
     }
 
-    private WriteRequest sendMsg(BaseMsg baseMsg, boolean singleRequest, WriteFuture writeFuture){
-        WriteRequest writeRequest = new WriteRequestImp(buildMsg(baseMsg,singleRequest),writeFuture);
-        waitingRequests.put(baseMsg.getId(),baseMsg.getMethod());
-        session.addWriteRequest(writeRequest);
-        return writeRequest;
+    /**
+     *
+     */
+    private void subscribeHeight() {
+        log.info("subscribeHeight");
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(new BaseMsg(Method.HEIGHT_SUBSCRIBE.getMethod()),true,writeFuture);
     }
 
     /**
@@ -141,7 +162,76 @@ public class PivtrumPeer implements IoHandler{
      */
     public void subscribeAddresses(List<Address> addresses) {
         log.info("suscribe addresses: " + Arrays.toString(addresses.toArray()));
+    }
 
+    public void subscribeAddress(Address address){
+        String addressStr = address.toBase58();
+        log.info("subscribe address: "+addressStr);
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(
+                new SubscribeAddressMsg(addressStr),
+                true,
+                writeFuture
+        );
+    }
+
+    /**
+     *
+     * @param address
+     */
+    public void listUnspent(String address){
+        log.info("list unspent");
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(
+                new ListUnspentMsg(address),
+                true,
+                writeFuture
+        );
+    }
+
+    public void getBalance(String address) {
+        log.info("getBalance");
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(
+                new GetBalanceMsg(address),
+                true,
+                writeFuture
+        );
+    }
+
+    /**
+     *
+     * @param height
+     */
+    public void getHeader(long height){
+        log.info("getHeader");
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(
+                new GetHeader(height),
+                true,
+                writeFuture
+        );
+    }
+
+    /**
+     *
+     * @param address
+     */
+    public void getHistory(String address) {
+        log.info("onGetHistory");
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(
+                new GetHistoryMsg(address),
+                true,
+                writeFuture
+        );
+    }
+
+    private WriteRequest sendMsg(BaseMsg baseMsg, boolean singleRequest, WriteFuture writeFuture){
+        WriteRequest writeRequest = new WriteRequestImp(buildMsg(baseMsg,singleRequest),writeFuture);
+        waitingRequests.put(baseMsg.getId(),baseMsg);
+        session.addWriteRequest(writeRequest);
+        return writeRequest;
     }
 
     // -----------------------  Receive -------------------------------
@@ -154,6 +244,8 @@ public class PivtrumPeer implements IoHandler{
         String peerVersion = serverVersion.getString("result");
         if (peerVersion.equals("ElectrumX 1.0.10")) {
             if (isInitilizing.get()) {
+                // subscribe height before init
+                subscribeHeight();
                 isRunning.set(true);
                 isInitilizing.set(false);
                 log.info("Peer initilized, " + peerData.getHost());
@@ -177,6 +269,71 @@ public class PivtrumPeer implements IoHandler{
         jsonObject.getJSONArray("result");
     }
 
+    private void receiveAddress(JSONObject jsonObject, String address){
+        log.info("receive address: "+jsonObject.toString());
+        String result = jsonObject.getString("result");
+        log.info("result: "+result);
+        for (PeerDataListener peerDataListener : peerDataListeners) {
+            peerDataListener.onSubscribedAddress(this,address,result);
+        }
+    }
+
+    private void receiveUnspents(JSONObject jsonObject, ListUnspentMsg msg) {
+        log.info("receive unspents: "+jsonObject.toString());
+        List<Unspent> unspents = new ArrayList<>();
+        JSONArray unspentArray = jsonObject.getJSONArray("result");
+        for (int i=0;i<unspentArray.length();i++){
+            JSONObject unspent = unspentArray.getJSONObject(0);
+            int txPos = unspent.getInt("tx_pos");
+            String txHash = unspent.getString("tx_hash");
+            long value = unspent.getLong("value");
+            long height = unspent.getLong("height");
+            unspents.add(new Unspent(txPos,txHash,value,height));
+        }
+        for (PeerDataListener peerDataListener : peerDataListeners) {
+            peerDataListener.onListUnpent(this,msg.getAddress(),unspents);
+        }
+    }
+
+    private void receiveHeaders(JSONObject jsonObject,GetHeader getHeader){
+        log.info("receive getHeader, "+jsonObject.toString());
+
+    }
+
+    private void receiveSubscribeHeight(JSONObject jsonObject){
+        log.info("receive receiveSubscribeHeight, "+jsonObject.toString());
+        if (jsonObject.has("result")){
+            this.height = jsonObject.getLong("result");
+        }else
+            this.height = jsonObject.getJSONArray("params").getLong(0);
+    }
+
+    private void receiveGetBalance(JSONObject jsonObject,GetBalanceMsg msg){
+        log.info("receive receiveGetBalance, "+jsonObject.toString());
+        JSONObject jsonObj = jsonObject.getJSONObject("result");
+        long confirmed = jsonObj.getLong("confirmed");
+        long unconfirmed = jsonObj.getLong("unconfirmed");
+        for (PeerDataListener peerDataListener : peerDataListeners) {
+            peerDataListener.onGetBalance(this,msg.getAddress(),confirmed,unconfirmed);
+        }
+    }
+    // {"result":[{"tx_hash":"d2b6046de1febf450f416eef820ecdfee30112d7522bc9470fb0ae44fc704e02","height":131213},{"tx_hash":"a79c6eefb61e544303e7e4c6d12150018d253ed92a7538ceddd38add228942cd","height":132939}],"id":3,"jsonrpc":"2.0"},
+    private void receiveHistory(JSONObject jsonObject,String address){
+        log.info("receiveHistory, "+jsonObject.toString());
+        JSONArray jsonArray = jsonObject.getJSONArray("result");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i =0;i<jsonArray.length();i++){
+            JSONObject txAndHeightJson = jsonArray.getJSONObject(i);
+            stringBuilder.append(txAndHeightJson.getString("tx_hash"))
+                    .append(":")
+                    .append(txAndHeightJson.getLong("height"));
+        }
+        byte[] hash = Sha256Hash.hash(ByteString.copyFromUtf8(stringBuilder.toString()).toByteArray());
+        String hashHex = Hex.toHexString(hash);
+        for (PeerDataListener peerDataListener : peerDataListeners) {
+            peerDataListener.onGetHistory(this,address,hashHex);
+        }
+    }
 
     private String buildMsg(BaseMsg msg,boolean isSingleMsg) throws JSONException {
         msg.setId(msgIdGenerator.incrementAndGet());
@@ -188,27 +345,60 @@ public class PivtrumPeer implements IoHandler{
     }
 
     private void msgArrived(JSONObject jsonObject){
-        long id = jsonObject.getLong("id");
-        if (waitingRequests.containsKey(id)){
-            String method = waitingRequests.get(id);
-            switch (Method.getMethodByName(method)){
-                case VERSION:
-                    receiveVersion(jsonObject);
-                    break;
-                case GET_PEERS:
-                    receivePeers(jsonObject);
-                    break;
-                case ADDRESS_SUBSCRIBE:
-                    log.info("method not implemented");
-                    break;
-                default:
-                    log.info("dispatch method "+method+" not implemented");
-                    break;
+        if (jsonObject.has("id")) {
+            long id = jsonObject.getLong("id");
+            if (waitingRequests.containsKey(id)) {
+                BaseMsg baseMsg = waitingRequests.get(id);
+                String method = baseMsg.getMethod();
+                switch (Method.getMethodByName(method)) {
+                    case VERSION:
+                        receiveVersion(jsonObject);
+                        break;
+                    case GET_PEERS:
+                        receivePeers(jsonObject);
+                        break;
+                    case ADDRESS_SUBSCRIBE:
+                        receiveAddress(jsonObject, ((SubscribeAddressMsg) baseMsg).getAddress());
+                        break;
+                    case LIST_UNSPENT:
+                        receiveUnspents(jsonObject, (ListUnspentMsg) baseMsg);
+                        break;
+                    case GET_HEADER:
+                        receiveHeaders(jsonObject, (GetHeader) baseMsg);
+                        break;
+                    case HEIGHT_SUBSCRIBE:
+                        receiveSubscribeHeight(jsonObject);
+                        break;
+                    case GET_BALANCE:
+                        receiveGetBalance(jsonObject,(GetBalanceMsg)baseMsg);
+                        break;
+                    case GET_ADDRESS_HISTORY:
+                        receiveHistory(jsonObject,((GetHistoryMsg)baseMsg).getAddress());
+                        break;
+                    default:
+                        log.info("dispatch method " + method + " not implemented");
+                        break;
+                }
+                waitingRequests.remove(id);
+            } else {
+                log.info("Message arrive without a waiting request type.., "+jsonObject.toString());
             }
         }else {
-            log.info("Message arrive without a waiting request type..");
+            // Is a notification
+            String method = jsonObject.getString("method");
+            switch (Method.getMethodByName(method)){
+                case HEIGHT_SUBSCRIBE:
+                    receiveSubscribeHeight(jsonObject);
+                    break;
+                case ADDRESS_SUBSCRIBE:
+                    // todo: get address from json object
+                    receiveAddress(jsonObject,null);
+                    break;
+                default:
+                    log.info("Message notification arrive without a waiting request type..");
+                    break;
+            }
         }
-
     }
 
     @Override
@@ -251,6 +441,9 @@ public class PivtrumPeer implements IoHandler{
         log.error("input closed session id:"+ioSession.getId());
     }
 
+    public PivtrumPeerData getPeerData() {
+        return peerData;
+    }
 
     static class JsonDecoder extends ProtocolDecoder<JSONObject> {
 

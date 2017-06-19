@@ -1,5 +1,7 @@
 package org.pivtrum;
 
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Coin;
 import org.junit.Test;
 import org.pivtrum.imp.AddressStoreImp;
 import org.pivtrum.imp.ContextWrapperImp;
@@ -9,12 +11,17 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import global.WalletConfiguration;
 import pivtrum.NetworkConf;
+import pivtrum.PivtrumPeer;
 import pivtrum.PivtrumPeergroup;
+import pivtrum.listeners.AddressListener;
 import store.AddressStore;
+import store.CantInsertAddressException;
 import wallet.WalletManager;
 
 /**
@@ -43,6 +50,54 @@ public class PeergroupTest {
             }
         }
         //assert pivtrumPeergroup.isRunning():"PivtrumPeergroup is not running..";
+    }
+
+    @Test
+    public void pushAddressPivtrumPeergroupTest() throws IOException, CantInsertAddressException {
+        ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
+        WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
+        NetworkConf networkConf = new NetworkConf(new InetSocketAddress("localhost",50001));
+        // fake non trusted peers to start testing..
+        networkConf.addPeers(fakePeers());
+        WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);
+        walletManager.init();
+        AddressStore addressStore = new AddressStoreImp();
+        PivtrumPeergroup pivtrumPeergroup = new PivtrumPeergroup(networkConf,walletManager,addressStore);
+        pivtrumPeergroup.addAddressListener(new AddressListener() {
+            @Override
+            public void onCoinReceived(String address, long confirmed, long unconfirmed) {
+                System.out.println("onCoinReceived, address: "+address+", confirmed amount: "+Coin.valueOf(confirmed).toFriendlyString()+" ,unconfirmed amount: "+Coin.valueOf(unconfirmed).toFriendlyString());
+            }
+        });
+        pivtrumPeergroup.start();
+        while (!pivtrumPeergroup.isRunning()){
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        assert pivtrumPeergroup.isRunning():"PivtrumPeergroup is not running..";
+        // subscribe address
+        Address address = Address.fromBase58(walletConfiguration.getNetworkParams(),"yCRaSQvLd5a9VFFv9dzns2zNMJhWyymtAd");
+        pivtrumPeergroup.addWatchedAddress(address);
+        while (true){
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private List<InetSocketAddress> fakePeers(){
+        List<InetSocketAddress> peers = new ArrayList<>();
+        peers.add(new InetSocketAddress("localhost",50001));
+        peers.add(new InetSocketAddress("localhost",50001));
+        peers.add(new InetSocketAddress("localhost",50001));
+        peers.add(new InetSocketAddress("localhost",50001));
+        return peers;
     }
 
 

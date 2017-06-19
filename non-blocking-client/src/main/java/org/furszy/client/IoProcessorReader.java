@@ -1,6 +1,7 @@
 package org.furszy.client;
 
 import org.furszy.client.basic.IoSessionImp;
+import org.furszy.client.interfaces.IoSession;
 import org.furszy.client.interfaces.IoSessionConf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,9 @@ public class IoProcessorReader {
     private Logger log = LoggerFactory.getLogger(IoProcessorReader.class);
 
     private IoProcessorImp processor;
+    /** Runnable dispatcher */
+    private RunnableDispatcher runnableDispatcher = new RunnableDispatcher();
+
 
     public IoProcessorReader(IoProcessorImp processor) {
         this.processor = processor;
@@ -32,8 +36,6 @@ public class IoProcessorReader {
         IoSessionConf config = session.getSessionConf();
         int bufferSize = config.getReadBufferSize();
         ByteBuffer buf = ByteBuffer.allocate(bufferSize);
-//        IoBuffer buf = IoBuffer.allocate(bufferSize);
-
         try {
             int readBytes = 0;
             int ret;
@@ -55,7 +57,9 @@ public class IoProcessorReader {
                 msgBuffer.put(buf.array(),0,ret);
                 Object o = session.getProtocolDecoder().decode(msgBuffer);
                 // notify user message arrived
-                session.getIoHandler().messageReceived(session,o);
+                runnableDispatcher.setSession(session);
+                runnableDispatcher.setO(o);
+                processor.execute(runnableDispatcher);
 
                 buf = null;
                 msgBuffer = null;
@@ -84,5 +88,35 @@ public class IoProcessorReader {
         ByteChannel channel = (ByteChannel) session.getChannel();
         return channel.read(buf);
     }
+
+
+    private class RunnableDispatcher implements Runnable{
+        private IoSession session;
+        private Object o;
+
+        @Override
+        public void run() {
+            try {
+                session.getIoHandler().messageReceived(session,o);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.info("Dispatching message received",e);
+                try {
+                    session.getIoHandler().exceptionCaught(session,e);
+                } catch (Exception e1) {
+                    log.info("Dispatching message received exceptionCaught",e1);
+                }
+            }
+        }
+
+        public void setSession(IoSession session) {
+            this.session = session;
+        }
+
+        public void setO(Object o) {
+            this.o = o;
+        }
+    }
+
 
 }

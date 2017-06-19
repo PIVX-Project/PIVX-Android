@@ -50,7 +50,7 @@ public class IoProcessorImp implements IoProcessor {
     private IoProcessorWriter ioProcessorWriter;
     private boolean disposing;
     private AtomicBoolean disposed = new AtomicBoolean(false);
-
+    /** Main thread executor */
     private ExecutorService executor;
 
     public IoProcessorImp(SelectorProvider selectorProvider, ExecutorService executorService) throws IOException {
@@ -129,6 +129,10 @@ public class IoProcessorImp implements IoProcessor {
 
     public void setDisposing(boolean disposing) {
         this.disposing = disposing;
+    }
+
+    public void execute(Runnable runnable) {
+        executor.submit(runnable);
     }
 
 

@@ -48,11 +48,11 @@ public class BaseMsg<T>{
         this.id = id;
     }
 
-    public long getId() {
+    public final long getId() {
         return id;
     }
 
-    public String getMethod() {
+    public final String getMethod() {
         return method;
     }
 }

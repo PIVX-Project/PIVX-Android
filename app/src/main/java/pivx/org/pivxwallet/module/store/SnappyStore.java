@@ -6,6 +6,7 @@ import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
 
+import store.AddressBalance;
 import store.AddressNotFoundException;
 import store.AddressStore;
 import store.CantInsertAddressException;
@@ -31,7 +32,7 @@ public class SnappyStore implements AddressStore {
      * @param address
      * @param status
      */
-    public void insert(String address,String status) throws CantInsertAddressException {
+    public void insert(String address, AddressBalance status) throws CantInsertAddressException {
         try {
             snappyDb.put(address, status);
         } catch (SnappydbException e) {
@@ -43,9 +44,9 @@ public class SnappyStore implements AddressStore {
     /**
      * Get the address status
      */
-    public String getAddressStatus(String address) throws AddressNotFoundException {
+    public AddressBalance getAddressStatus(String address) throws AddressNotFoundException {
         try {
-            return snappyDb.get(address);
+            return snappyDb.getObject(address,AddressBalance.class);
         } catch (SnappydbException e) {
             e.printStackTrace();
             throw new AddressNotFoundException("Cant insert: "+address,e);

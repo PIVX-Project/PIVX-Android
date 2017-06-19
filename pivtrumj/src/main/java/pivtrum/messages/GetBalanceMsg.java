@@ -1,6 +1,5 @@
 package pivtrum.messages;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,12 +7,12 @@ import org.json.JSONObject;
  * Created by furszy on 6/14/17.
  */
 
-public class SubscribeAddressMsg extends BaseMsg<SubscribeAddressMsg> {
+public class GetBalanceMsg extends BaseMsg<GetBalanceMsg> {
 
     String address;
 
-    public SubscribeAddressMsg(String addressBase58) {
-        super(Method.ADDRESS_SUBSCRIBE.getMethod());
+    public GetBalanceMsg(String addressBase58) {
+        super(Method.GET_BALANCE.getMethod());
         this.address = addressBase58;
     }
 
@@ -25,7 +24,7 @@ public class SubscribeAddressMsg extends BaseMsg<SubscribeAddressMsg> {
     }
 
     @Override
-    public SubscribeAddressMsg fromJson(JSONObject jsonObject) throws JSONException {
+    public GetBalanceMsg fromJson(JSONObject jsonObject) throws JSONException {
         return super.fromJson(jsonObject);
     }
 

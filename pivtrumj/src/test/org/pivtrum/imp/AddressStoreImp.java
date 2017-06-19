@@ -3,6 +3,7 @@ package org.pivtrum.imp;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import store.AddressBalance;
 import store.AddressNotFoundException;
 import store.AddressStore;
 import store.CantInsertAddressException;
@@ -13,15 +14,15 @@ import store.CantInsertAddressException;
 
 public class AddressStoreImp implements AddressStore {
 
-    ConcurrentMap<String,String> addresses = new ConcurrentHashMap();
+    ConcurrentMap<String,AddressBalance> addresses = new ConcurrentHashMap();
 
     @Override
-    public void insert(String address, String status) throws CantInsertAddressException {
-        addresses.put(address,status);
+    public void insert(String address, AddressBalance addressBalance) throws CantInsertAddressException {
+        addresses.put(address,addressBalance);
     }
 
     @Override
-    public String getAddressStatus(String address) throws AddressNotFoundException {
+    public AddressBalance getAddressStatus(String address) throws AddressNotFoundException {
         return addresses.get(address);
     }
 }

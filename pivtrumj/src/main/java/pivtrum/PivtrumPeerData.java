@@ -28,4 +28,14 @@ public class PivtrumPeerData {
     public int getSslPort() {
         return sslPort;
     }
+
+    @Override
+    public String toString() {
+        return "PivtrumPeerData{" +
+                "host='" + host + '\'' +
+                ", tcpPort=" + tcpPort +
+                ", sslPort=" + sslPort +
+                ", prunningLimit=" + prunningLimit +
+                '}';
+    }
 }
