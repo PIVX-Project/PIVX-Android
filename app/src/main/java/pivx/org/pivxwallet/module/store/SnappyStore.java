@@ -61,8 +61,9 @@ public class SnappyStore implements AddressStore {
     @Override
     public List<AddressBalance> listBalance() {
         List<AddressBalance> balances = new ArrayList<>();
+        KeyIterator keyIterator = null;
         try {
-            KeyIterator keyIterator = snappyDb.allKeysIterator();
+            keyIterator = snappyDb.allKeysIterator();
             while (keyIterator.hasNext()){
                 String[] keys = keyIterator.next(50);
                 for (String key : keys) {
@@ -72,6 +73,10 @@ public class SnappyStore implements AddressStore {
             }
         } catch (SnappydbException e) {
             e.printStackTrace();
+        } finally {
+            if (keyIterator!=null){
+                keyIterator.close();
+            }
         }
         return balances;
     }
