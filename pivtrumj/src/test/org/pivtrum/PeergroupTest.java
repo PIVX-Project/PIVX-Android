@@ -2,6 +2,7 @@ package org.pivtrum;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.utils.MonetaryFormat;
 import org.junit.Test;
 import org.pivtrum.imp.AddressStoreImp;
 import org.pivtrum.imp.ContextWrapperImp;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import global.WalletConfiguration;

@@ -183,6 +183,13 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
                 // nothing
             }
             if (statusDb==null || !status.equals(statusDb.getStatus())){
+
+                // this should done be when the balance is updated
+                log.info("inserting new address-status");
+                AddressBalance addressBalance = new AddressBalance(status);
+                addressBalance.addStatusConfirmation();
+                addressStore.insert(address,addressBalance);
+
                 // first request balance
                 // notify
                 // todo: notify address change.. make the balance flow (where the balance is saved? in a db?, where is calculated?)
@@ -193,12 +200,6 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
                 for (PivtrumPeer peer : peers) {
                     peer.getHistory(address);
                 }
-
-                // this should done be when the balance is updated
-                log.info("inserting new address-status");
-                AddressBalance addressBalance = new AddressBalance(status);
-                addressBalance.addStatusConfirmation();
-                addressStore.insert(address,addressBalance);
             }
         } catch (CantInsertAddressException e) {
             e.printStackTrace();
@@ -234,6 +235,10 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
             if (pivtrumPeer == trustedPeer) {
                 AddressBalance addressBalance = addressStore.getAddressStatus(address);
                 // todo: me falta agregarle un flag a la clase AddressBalance para saber cuando se está actualizando el status y el balance está mal
+
+                long prevConfirmedBalance = addressBalance.getConfirmedBalance();
+                long prevUnConfirmedBalance = addressBalance.getUnconfirmedBalance();
+
                 addressBalance.setConfirmedBalance(confirmed);
                 addressBalance.setUnconfirmedBalance(unconfirmed);
                 addressBalance.addBalanceConfirmation();
@@ -241,7 +246,7 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
 
                 // Notify here just for test reasons. The reality is with 4 other peers confirmations
                 for (AddressListener addressListener : addressListeners) {
-                    addressListener.onCoinReceived(address,confirmed-addressBalance.getConfirmedBalance(),unconfirmed-addressBalance.getUnconfirmedBalance());
+                    addressListener.onCoinReceived(address,confirmed-prevConfirmedBalance,unconfirmed-prevUnConfirmedBalance);
                 }
             }
         } catch (AddressNotFoundException e) {

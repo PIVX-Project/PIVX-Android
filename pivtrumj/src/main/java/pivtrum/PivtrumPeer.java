@@ -59,9 +59,9 @@ import pivtrum.messages.responses.Unspent;
 
 public class PivtrumPeer implements IoHandler{
 
-    private static final Logger log = LoggerFactory.getLogger(PivtrumPeer.class);
+    private final Logger log;
 
-    /**  */
+    /** Peer data */
     private PivtrumPeerData peerData;
     /**  */
     private IoManager ioManager;
@@ -86,6 +86,7 @@ public class PivtrumPeer implements IoHandler{
         this.peerData = peerData;
         this.ioManager = ioManager;
         this.versionMsg = versionMsg;
+        this.log = LoggerFactory.getLogger(PivtrumPeer.class.getName()+"-"+peerData.getHost());
     }
 
     public void addPeerListener(PeerListener peerListener){
@@ -321,12 +322,14 @@ public class PivtrumPeer implements IoHandler{
     private void receiveHistory(JSONObject jsonObject,String address){
         log.info("receiveHistory, "+jsonObject.toString());
         JSONArray jsonArray = jsonObject.getJSONArray("result");
+        // server hash status
         StringBuilder stringBuilder = new StringBuilder();
         for (int i =0;i<jsonArray.length();i++){
             JSONObject txAndHeightJson = jsonArray.getJSONObject(i);
             stringBuilder.append(txAndHeightJson.getString("tx_hash"))
                     .append(":")
-                    .append(txAndHeightJson.getLong("height"));
+                    .append(txAndHeightJson.getLong("height"))
+                    .append(":");
         }
         byte[] hash = Sha256Hash.hash(ByteString.copyFromUtf8(stringBuilder.toString()).toByteArray());
         String hashHex = Hex.toHexString(hash);
