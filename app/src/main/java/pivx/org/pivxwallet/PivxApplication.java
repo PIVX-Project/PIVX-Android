@@ -67,7 +67,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             initLogging();
             log = LoggerFactory.getLogger(PivxApplication.class);
             // Default network conf for localhost test
-            networkConf = new NetworkConf(new InetSocketAddress("192.168.0.10",50001));
+            networkConf = new NetworkConf(new InetSocketAddress("10.0.2.2",50001));
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
             WalletConfiguration walletConfiguration = new WalletConfImp();
             AddressStore addressStore = new SnappyStore(this);
