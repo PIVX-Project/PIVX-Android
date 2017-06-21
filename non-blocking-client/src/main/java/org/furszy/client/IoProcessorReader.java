@@ -66,7 +66,7 @@ public class IoProcessorReader {
             }
 
             if (ret < 0) {
-                // scheduleRemove(session);
+                processor.scheduleRemove(session);
                 session.getIoHandler().inputClosed(session);
             }
         } catch (Exception e) {
