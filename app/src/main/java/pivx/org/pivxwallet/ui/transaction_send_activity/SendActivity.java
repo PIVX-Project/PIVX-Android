@@ -8,10 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 
 /**
@@ -21,6 +27,9 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 public class SendActivity extends BaseActivity {
     final Context context = this;
     private Button buttonSend;
+    private AutoCompleteTextView edit_address;
+    private EditText edit_name;
+    private MyFilterableAdapter filterableAdapter;
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
@@ -29,7 +38,8 @@ public class SendActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         buttonSend = (Button) findViewById(R.id.btnSend);
-
+        edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
+        edit_name = (EditText) findViewById(R.id.edit_name);
         buttonSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -60,12 +70,22 @@ public class SendActivity extends BaseActivity {
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 Window window = dialog.getWindow();
                 lp.copyFrom(window.getAttributes());
-//This makes the dialog take up the full width
+                //This makes the dialog take up the full width
                 lp.width = WindowManager.LayoutParams.MATCH_PARENT;
                 lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
                 window.setAttributes(lp);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // todo: This is not updating the filter..
+        if (filterableAdapter==null) {
+            List<Contact> list = new ArrayList<>(pivxModule.getContacts());
+            filterableAdapter = new MyFilterableAdapter(this,list );
+            edit_address.setAdapter(filterableAdapter);
+        }
     }
 }

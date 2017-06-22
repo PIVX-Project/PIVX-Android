@@ -33,4 +33,9 @@ public class Contact implements Serializable{
     public void addAddress(String address){
         addresses.add(address);
     }
+
+    @Override
+    public String toString() {
+        return addresses.get(0);
+    }
 }
