@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.address_activity;
+package pivx.org.pivxwallet.ui.contacts_activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.address_add_activity.AddressAddActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
@@ -22,20 +26,21 @@ import pivx.org.pivxwallet.R;
  */
 
 
-public class AddressActivity extends BaseDrawerActivity {
+public class ContactsActivity extends BaseDrawerActivity {
     RecyclerView recyclerView;
-    private RecyclerAddressViewAdapter adapter;
+    private ContactsAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private Collection<Contact> contacts;
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_address, container);
-        setTitle("Address Book");
-
-        // Recicler view
-        List<AddressData> data = fill_with_data();
+        setTitle("Contacts Book");
         recyclerView = (RecyclerView) findViewById(R.id.addressList);
-        adapter = new RecyclerAddressViewAdapter(data, getApplication());
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new ContactsAdapter(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -43,6 +48,21 @@ public class AddressActivity extends BaseDrawerActivity {
         super.onResume();
         // check current activity in the navigation drawer
         setNavigationMenuItemChecked(1);
+        // re load
+        load();
+    }
+
+    private void load() {
+        // add loading..
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                contacts = pivxModule.getContacts();
+                if (contacts!=null && !contacts.isEmpty())
+                    adapter.changeDataSet(new ArrayList(contacts));
+                // Empty view..
+            }
+        }).start();
     }
 
     @Override
@@ -68,24 +88,7 @@ public class AddressActivity extends BaseDrawerActivity {
     }
 
     public void actionAdd(View view) {
-        Intent intent = new Intent(AddressActivity.this, AddressAddActivity.class);
+        Intent intent = new Intent(ContactsActivity.this, AddressAddActivity.class);
         startActivity(intent);
-    }
-
-
-    //Create a list of Data objects
-    public List<AddressData> fill_with_data() {
-
-        List<AddressData> data = new ArrayList<>();
-
-        data.add(new AddressData("Antonio Lyons", "1BoatSLRHtKNngkdXEeobR76b53LETtpyT" ));
-        data.add(new AddressData("Daniel Hardy", "1BoatSLRHtKNngkdXEeobR76b53LETtpyT" ));
-        data.add(new AddressData("Nell Gutierrez", "1BoatSLRHtKNngkdXEeobR76b53LETtpyT" ));
-        data.add(new AddressData("Edith Little", "1BoatSLRHtKNngkdXEeobR76b53LETtpyT" ));
-        data.add(new AddressData("Antonio Lyons", "1BoatSLRHtKNngkdXEeobR76b53LETtpyT"));
-        data.add(new AddressData("Nell Gutierrez", "1BoatSLRHtKNngkdXEeobR76b53LETtpyT"));
-
-
-        return data;
     }
 }

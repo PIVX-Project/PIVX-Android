@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 
     <application
@@ -18,6 +19,7 @@
         android:name=".PivxApplication">
         <activity android:name=".ui.splash_activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +28,6 @@
             </intent-filter>-->
 
         </activity>
-        <activity android:name=".ui.base.BaseDrawerActivity"></activity>
         <activity android:name=".ui.wallet_activity.WalletActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +36,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.address_activity.AddressActivity"/>
+        <activity android:name=".ui.contacts_activity.ContactsActivity"/>
         <activity android:name=".ui.settings_activity.SettingsActivity"/>
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"/>
         <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"/>

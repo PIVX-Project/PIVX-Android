@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgWhite"
-    tools:context=".ui.address_activity.AddressActivity">
+    tools:context=".ui.contacts_activity.ContactsActivity">
 
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
