@@ -2,15 +2,19 @@ package pivx.org.pivxwallet.module;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.Context;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collection;
 
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeergroup;
+import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.ContactsStore;
 import store.AddressBalance;
 import store.AddressNotFoundException;
 import store.AddressStore;
@@ -25,13 +29,15 @@ public class PivxModuleImp implements PivxModule {
     private WalletManager walletManager;
     private PivtrumPeergroup peergroup;
     private AddressStore addressStore;
+    private ContactsStore contactsStore;
 
     // cache balance
     private long availableBalance = 0;
     private BigDecimal pivInUsdHardcoded = new BigDecimal("1.5");
 
-    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore) throws IOException {
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore) throws IOException {
         this.addressStore = addressStore;
+        this.contactsStore = contactsStore;
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
         walletManager.init();
         for (AddressBalance addressBalance : addressStore.listBalance()) {
@@ -63,7 +69,7 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Address getAddress() {
         Address address = walletManager.getCurrentAddress();
-        if (peergroup!=null){
+        if (peergroup!=null && peergroup.isRunning()){
             peergroup.addWatchedAddress(address);
         }
         return address;
@@ -84,7 +90,10 @@ public class PivxModuleImp implements PivxModule {
         return pivInUsdHardcoded.multiply(new BigDecimal(availableBalance));
     }
 
-    public WalletManager getWalletManager() {
-        return walletManager;
+    @Override
+    public Collection<Contact> getContacts(){
+        return contactsStore.list();
     }
+
+
 }

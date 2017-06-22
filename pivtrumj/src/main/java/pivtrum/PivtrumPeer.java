@@ -257,6 +257,7 @@ public class PivtrumPeer implements IoHandler{
     }
 
     private WriteRequest sendMsg(BaseMsg baseMsg, boolean singleRequest, WriteFuture writeFuture){
+        if (session==null) throw new IllegalStateException("Not connected peer");
         if (session.isConnected()) {
             WriteRequest writeRequest = new WriteRequestImp(buildMsg(baseMsg, singleRequest), writeFuture);
             waitingRequests.put(baseMsg.getId(), baseMsg);

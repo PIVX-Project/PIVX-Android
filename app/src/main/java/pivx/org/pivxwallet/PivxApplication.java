@@ -30,6 +30,7 @@ import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
 import pivtrum.NetworkConf;
+import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
@@ -53,7 +54,6 @@ public class PivxApplication extends Application implements ContextWrapper {
     private PivxModule pivxModule;
     private AppConf appConf;
     private NetworkConf networkConf;
-    private PivxWalletService pivxWalletService;
 
     public static PivxApplication getInstance() {
         return instance;
@@ -70,8 +70,9 @@ public class PivxApplication extends Application implements ContextWrapper {
             networkConf = new NetworkConf(new InetSocketAddress("10.0.2.2",50001));
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
             WalletConfiguration walletConfiguration = new WalletConfImp();
-            AddressStore addressStore = new SnappyStore(this);
-            pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore);
+            AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
+            ContactsStore contactsStore = new ContactsStore(this);
+            pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore);
             // start service
             startPivxService();
         } catch (IOException e) {

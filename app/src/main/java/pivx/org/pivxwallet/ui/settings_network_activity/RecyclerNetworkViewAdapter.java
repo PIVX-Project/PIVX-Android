@@ -10,8 +10,6 @@ import java.util.Collections;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.address_activity.AddressData;
-import pivx.org.pivxwallet.ui.address_activity.AddressViewHolder;
 
 /**
  * Created by Neoperol on 6/8/17.

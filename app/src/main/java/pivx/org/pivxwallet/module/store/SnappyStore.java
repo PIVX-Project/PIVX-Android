@@ -35,6 +35,10 @@ public class SnappyStore implements AddressStore {
         snappyDb = DBFactory.open(context,DB_NAME);
     }
 
+    public SnappyStore(String folder) throws SnappydbException {
+        snappyDb = DBFactory.open(folder,DB_NAME);
+    }
+
     /**
      * Insert a base58 address an his status (hash of the address history)
      *

@@ -11,10 +11,8 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxModule;
-import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
+import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
-import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 public class BaseDrawerActivity extends PivxActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -100,7 +98,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         if (id == R.id.nav_wallet) {
             startActivity(new Intent(getApplicationContext(), WalletActivity.class));
         } else if (id == R.id.nav_address) {
-            startActivity(new Intent(getApplicationContext(), AddressActivity.class));
+            startActivity(new Intent(getApplicationContext(), ContactsActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         }

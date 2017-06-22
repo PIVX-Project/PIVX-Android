@@ -4,8 +4,9 @@ import org.bitcoinj.core.Address;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.Collection;
 
-import pivx.org.pivxwallet.ui.address_activity.AddressActivity;
+import pivx.org.pivxwallet.contacts.Contact;
 
 /**
  * Created by mati on 18/04/17.
@@ -42,4 +43,6 @@ public interface PivxModule {
     long getAvailableBalance();
 
     BigDecimal getAvailableBalanceLocale();
+
+    Collection<Contact> getContacts();
 }

@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.address_activity.AddressData;
-import pivx.org.pivxwallet.ui.address_activity.RecyclerAddressViewAdapter;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 
 /**
