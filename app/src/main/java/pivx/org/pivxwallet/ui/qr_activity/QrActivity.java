@@ -19,13 +19,11 @@ public class QrActivity extends BaseActivity {
 
     private View root;
 
-
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         super.onCreateView(savedInstanceState, container);
         getSupportActionBar().hide();
         root = getLayoutInflater().inflate(R.layout.qr_activity,container,true);
-
     }
 
 }
