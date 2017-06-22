@@ -50,4 +50,5 @@
 
     <string name="title_no_trusted_peer_connection">Peer issue</string>
     <string name="message_no_trusted_peer_connection">Trusted peer connection fail</string>
+    <string name="share_address_text">Share address</string>
 </resources>
