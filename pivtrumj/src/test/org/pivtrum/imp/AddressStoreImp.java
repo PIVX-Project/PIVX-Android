@@ -1,5 +1,7 @@
 package org.pivtrum.imp;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -24,5 +26,10 @@ public class AddressStoreImp implements AddressStore {
     @Override
     public AddressBalance getAddressStatus(String address) throws AddressNotFoundException {
         return addresses.get(address);
+    }
+
+    @Override
+    public Collection<AddressBalance> listBalance() {
+        return addresses.values();
     }
 }

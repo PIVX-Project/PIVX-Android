@@ -3,6 +3,7 @@ package org.pivtrum;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.utils.MonetaryFormat;
+import org.furszy.client.exceptions.ConnectionFailureException;
 import org.junit.Test;
 import org.pivtrum.imp.AddressStoreImp;
 import org.pivtrum.imp.ContextWrapperImp;
@@ -35,7 +36,7 @@ public class PeergroupTest {
 
 
     @Test
-    public void connectPivtrumPeergroupTest() throws IOException {
+    public void connectPivtrumPeergroupTest() throws IOException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
         NetworkConf networkConf = new NetworkConf(new InetSocketAddress("localhost",50001));
@@ -55,7 +56,7 @@ public class PeergroupTest {
     }
 
     @Test
-    public void pushAddressPivtrumPeergroupTest() throws IOException, CantInsertAddressException {
+    public void pushAddressPivtrumPeergroupTest() throws IOException, CantInsertAddressException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
         NetworkConf networkConf = new NetworkConf(new InetSocketAddress("localhost",50001));
@@ -67,8 +68,11 @@ public class PeergroupTest {
         PivtrumPeergroup pivtrumPeergroup = new PivtrumPeergroup(networkConf,walletManager,addressStore);
         pivtrumPeergroup.addAddressListener(new AddressListener() {
             @Override
-            public void onCoinReceived(String address, long confirmed, long unconfirmed) {
-                System.out.println("onCoinReceived, address: "+address+", confirmed amount: "+Coin.valueOf(confirmed).toFriendlyString()+" ,unconfirmed amount: "+Coin.valueOf(unconfirmed).toFriendlyString());
+            public void onBalanceChange(String address, long confirmed, long unconfirmed,int numConfirmations) {
+                System.out.println("onBalanceChange, address: "+address+
+                        ", confirmed amount: "+Coin.valueOf(confirmed).toFriendlyString()+
+                        " ,unconfirmed amount: "+Coin.valueOf(unconfirmed).toFriendlyString()+
+                        "\n Amount of confirmations: "+numConfirmations);
             }
         });
         pivtrumPeergroup.start();

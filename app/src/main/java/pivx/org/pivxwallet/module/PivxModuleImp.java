@@ -12,6 +12,7 @@ import global.WalletConfiguration;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeergroup;
 import store.AddressBalance;
+import store.AddressNotFoundException;
 import store.AddressStore;
 import wallet.WalletManager;
 
@@ -60,8 +61,12 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Address getCurrentAddress() {
-        return walletManager.getCurrentAddress();
+    public Address getAddress() {
+        Address address = walletManager.getCurrentAddress();
+        if (peergroup!=null){
+            peergroup.addWatchedAddress(address);
+        }
+        return address;
     }
 
     @Override

@@ -54,7 +54,7 @@ public class PivxWalletService extends Service{
 
     private AddressListener addressListener = new AddressListener() {
         @Override
-        public void onCoinReceived(String address, long confirmed, long unconfirmed) {
+        public void onBalanceChange(String address, long confirmed, long unconfirmed,int numConfirmations) {
             Intent intent = new Intent(ACTION_ADDRESS_BALANCE_CHANGE);
             broadcastManager.sendBroadcast(intent);
         }

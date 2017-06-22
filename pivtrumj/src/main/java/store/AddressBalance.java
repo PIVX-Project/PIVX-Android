@@ -1,6 +1,11 @@
 package store;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import pivtrum.utility.TxHashHeightWrapper;
 
 /**
  * Created by furszy on 6/18/17.
@@ -9,11 +14,16 @@ import java.io.Serializable;
 public class AddressBalance implements Serializable{
 
     private String status;
-    private long confirmedBalance;
-    private long unconfirmedBalance;
+    private long confirmedBalance = 0;
+    private long unconfirmedBalance = 0;
+    /** List of tx in which this address was used */
+    private List<TxHashHeightWrapper> txList;
     /** Amount of peers whom confirme this status and balance */
     private int amountOfStatusConfirmations = 0;
     private int amountOfBalanceConfirmations = 0;
+
+    public AddressBalance() {
+    }
 
     public AddressBalance(String status) {
         this.status = status;
@@ -43,6 +53,16 @@ public class AddressBalance implements Serializable{
         this.unconfirmedBalance = unconfirmedBalance;
     }
 
+    public void addTx(TxHashHeightWrapper tx){
+        if (txList==null) txList = new ArrayList<>();
+        txList.add(tx);
+    }
+
+    public void addAllTx(Collection<TxHashHeightWrapper> txs){
+        if (txList==null) txList = new ArrayList<>();
+        txList.addAll(txs);
+    }
+
     public int getAmountOfStatusConfirmations() {
         return amountOfStatusConfirmations;
     }
@@ -56,5 +76,21 @@ public class AddressBalance implements Serializable{
     }
     public void addBalanceConfirmation(){
         amountOfBalanceConfirmations++;
+    }
+
+    public List<TxHashHeightWrapper> getTxList() {
+        return txList;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressBalance{" +
+                "status='" + status + '\'' +
+                ", confirmedBalance=" + confirmedBalance +
+                ", unconfirmedBalance=" + unconfirmedBalance +
+                ", txList=" + txList +
+                ", amountOfStatusConfirmations=" + amountOfStatusConfirmations +
+                ", amountOfBalanceConfirmations=" + amountOfBalanceConfirmations +
+                '}';
     }
 }

@@ -25,12 +25,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.util.encoders.Hex;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -45,16 +48,20 @@ import pivtrum.messages.BaseMsg;
 import pivtrum.messages.GetBalanceMsg;
 import pivtrum.messages.GetHeader;
 import pivtrum.messages.GetHistoryMsg;
+import pivtrum.messages.GetTxMsg;
 import pivtrum.messages.ListUnspentMsg;
 import pivtrum.messages.Method;
 import pivtrum.messages.SubscribeAddressMsg;
 import pivtrum.messages.VersionMsg;
 import pivtrum.messages.responses.Unspent;
+import pivtrum.utility.TxHashHeightWrapper;
 
 /**
  * Created by furszy on 6/12/17.
  *
  * Class in charge of connect to a single peer on the network
+ *
+ * todo: create batch message builder and bathMessage
  */
 
 public class PivtrumPeer implements IoHandler{
@@ -164,23 +171,24 @@ public class PivtrumPeer implements IoHandler{
      *
      * @param addresses
      */
-    public void subscribeAddresses(List<Address> addresses) {
+    public void subscribeAddresses(Set<String> addresses) {
         log.info("suscribe addresses: " + Arrays.toString(addresses.toArray()));
-        for (Address address : addresses) {
+        for (String address : addresses) {
             subscribeAddress(address);
         }
     }
 
-    public void subscribeAddress(Address address){
-        String addressStr = address.toBase58();
-        log.info("subscribe address: "+addressStr);
+    public void subscribeAddress(String address){
+        log.info("subscribe address: "+address);
         WriteFuture writeFuture = new WriteFutureImp();
         sendMsg(
-                new SubscribeAddressMsg(addressStr),
+                new SubscribeAddressMsg(address),
                 true,
                 writeFuture
         );
     }
+
+
 
     /**
      *
@@ -229,6 +237,20 @@ public class PivtrumPeer implements IoHandler{
         WriteFuture writeFuture = new WriteFutureImp();
         sendMsg(
                 new GetHistoryMsg(address),
+                true,
+                writeFuture
+        );
+    }
+
+    /**
+     *
+     * @param txHash
+     */
+    public void getTx(String txHash){
+        log.info("onGetTx");
+        WriteFuture writeFuture = new WriteFutureImp();
+        sendMsg(
+                new GetTxMsg(txHash),
                 true,
                 writeFuture
         );
@@ -285,7 +307,7 @@ public class PivtrumPeer implements IoHandler{
         String result = jsonObject.getString("result");
         log.info("result: "+result);
         for (PeerDataListener peerDataListener : peerDataListeners) {
-            peerDataListener.onSubscribedAddress(this,address,result);
+            peerDataListener.onSubscribedAddressChange(this,address,result);
         }
     }
 
@@ -325,27 +347,39 @@ public class PivtrumPeer implements IoHandler{
         long confirmed = jsonObj.getLong("confirmed");
         long unconfirmed = jsonObj.getLong("unconfirmed");
         for (PeerDataListener peerDataListener : peerDataListeners) {
-            peerDataListener.onGetBalance(this,msg.getAddress(),confirmed,unconfirmed);
+            peerDataListener.onBalanceReceive(this,msg.getAddress(),confirmed,unconfirmed);
         }
     }
+
     // {"result":[{"tx_hash":"d2b6046de1febf450f416eef820ecdfee30112d7522bc9470fb0ae44fc704e02","height":131213},{"tx_hash":"a79c6eefb61e544303e7e4c6d12150018d253ed92a7538ceddd38add228942cd","height":132939}],"id":3,"jsonrpc":"2.0"},
     private void receiveHistory(JSONObject jsonObject,String address){
         log.info("receiveHistory, "+jsonObject.toString());
         JSONArray jsonArray = jsonObject.getJSONArray("result");
+        List<TxHashHeightWrapper> list = new ArrayList<>();
         // server hash status
         StringBuilder stringBuilder = new StringBuilder();
         for (int i =0;i<jsonArray.length();i++){
             JSONObject txAndHeightJson = jsonArray.getJSONObject(i);
-            stringBuilder.append(txAndHeightJson.getString("tx_hash"))
+            String txHash = txAndHeightJson.getString("tx_hash");
+            long height = txAndHeightJson.getLong("height");
+            stringBuilder.append(txHash)
                     .append(":")
-                    .append(txAndHeightJson.getLong("height"))
+                    .append(height)
                     .append(":");
+            list.add(new TxHashHeightWrapper(txHash,height));
         }
         byte[] hash = Sha256Hash.hash(ByteString.copyFromUtf8(stringBuilder.toString()).toByteArray());
         String hashHex = Hex.toHexString(hash);
         for (PeerDataListener peerDataListener : peerDataListeners) {
-            peerDataListener.onGetHistory(this,address,hashHex);
+            peerDataListener.onGetHistory(this,address,list,hashHex);
         }
+    }
+
+    private void receiveTx(JSONObject jsonObject,GetTxMsg getTxMsg){
+        log.info("receive receiveTx, "+jsonObject.toString());
+        //JSONArray jsonArray = jsonObject.getJSONArray("result");
+
+
     }
 
     private String buildMsg(BaseMsg msg,boolean isSingleMsg) throws JSONException {
@@ -387,6 +421,9 @@ public class PivtrumPeer implements IoHandler{
                         break;
                     case GET_ADDRESS_HISTORY:
                         receiveHistory(jsonObject,((GetHistoryMsg)baseMsg).getAddress());
+                        break;
+                    case GET_TX:
+                        receiveTx(jsonObject, (GetTxMsg) baseMsg);
                         break;
                     default:
                         log.info("dispatch method " + method + " not implemented");

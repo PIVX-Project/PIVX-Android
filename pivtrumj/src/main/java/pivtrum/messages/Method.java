@@ -185,7 +185,32 @@ public enum Method {
      * confirmed in, and *tx_hash* the transaction hash in hexadecimal.
      */
 
-    GET_ADDRESS_HISTORY("blockchain.address.get_history")
+    GET_ADDRESS_HISTORY("blockchain.address.get_history"),
+
+    /**
+     *
+     * Return a raw transaction.
+     *
+     * blockchain.transaction.get(**tx_hash**, **height**)
+     *
+     * **tx_hash**
+     *
+     * The transaction hash as a hexadecimal string.
+     *
+     * **height**
+     *
+     * The height at which it was confirmed, an integer.  This parameter
+     * is optional and ignored; it is recommended that clients do not
+     * send it as it will be removed in a future protocol version.
+     *
+     * **Response**
+     *
+     * The raw transaction as a hexadecimal string.
+     *
+     */
+
+    GET_TX("blockchain.transaction.get")
+
     ;
 
     String method;

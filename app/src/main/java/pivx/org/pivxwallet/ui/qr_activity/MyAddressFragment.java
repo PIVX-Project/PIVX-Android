@@ -1,5 +1,9 @@
 package pivx.org.pivxwallet.ui.qr_activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,6 +29,7 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
 
+import static android.R.attr.label;
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 
@@ -32,7 +37,7 @@ import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
  * Created by furszy on 6/8/17.
  */
 
-public class MyAddressFragment extends Fragment{
+public class MyAddressFragment extends Fragment implements View.OnClickListener {
 
     private PivxModule module;
 
@@ -57,6 +62,8 @@ public class MyAddressFragment extends Fragment{
         txt_address = (TextView) root.findViewById(R.id.txt_address);
         btn_share = (Button) root.findViewById(R.id.btn_share);
         img_qr = (ImageView) root.findViewById(R.id.img_qr);
+        btn_share.setOnClickListener(this);
+        img_qr.setOnClickListener(this);
         return root;
     }
 
@@ -67,7 +74,7 @@ public class MyAddressFragment extends Fragment{
             // check if the address is already used
             boolean flag = false;
             if (address == null || module.isAddressUsed(address)) {
-                address = module.getCurrentAddress();
+                address = module.getAddress();
                 flag = true;
             }
             if (flag) {
@@ -104,4 +111,28 @@ public class MyAddressFragment extends Fragment{
         return Math.round(dp*(resources.getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
 
+    private void share(String address){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, address);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_address_text)));
+    }
+
+    private void copyToClipboard(String text){
+        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Address", text);
+        clipboard.setPrimaryClip(clip);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.btn_share){
+            share(address.toBase58());
+        }else if(id == R.id.img_qr){
+            copyToClipboard(address.toBase58());
+            Toast.makeText(v.getContext(),"Address copied",Toast.LENGTH_LONG).show();
+        }
+    }
 }

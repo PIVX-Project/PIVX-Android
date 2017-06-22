@@ -1,6 +1,10 @@
 package store;
 
+import org.bitcoinj.core.Address;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by furszy on 6/14/17.
@@ -25,5 +29,9 @@ public interface AddressStore {
      *
      * @return
      */
-    List<AddressBalance> listBalance();
+    Collection<AddressBalance> listBalance();
+
+    Map<String,AddressBalance> map();
+
+    boolean contains(String address) throws DbException;
 }

@@ -8,13 +8,17 @@ import com.snappydb.KeyIterator;
 import com.snappydb.SnappydbException;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import store.AddressBalance;
 import store.AddressNotFoundException;
 import store.AddressStore;
 import store.CantInsertAddressException;
+import store.DbException;
 
 
 /**
@@ -59,8 +63,13 @@ public class SnappyStore implements AddressStore {
     }
 
     @Override
-    public List<AddressBalance> listBalance() {
-        List<AddressBalance> balances = new ArrayList<>();
+    public Collection<AddressBalance> listBalance() {
+        return map().values();
+    }
+
+    @Override
+    public Map<String, AddressBalance> map() {
+        Map<String,AddressBalance> map = new HashMap<>();
         KeyIterator keyIterator = null;
         try {
             keyIterator = snappyDb.allKeysIterator();
@@ -68,7 +77,7 @@ public class SnappyStore implements AddressStore {
                 String[] keys = keyIterator.next(50);
                 for (String key : keys) {
                     AddressBalance addressBalance = snappyDb.getObject(key,AddressBalance.class);
-                    balances.add(addressBalance);
+                    map.put(key,addressBalance);
                 }
             }
         } catch (SnappydbException e) {
@@ -78,7 +87,17 @@ public class SnappyStore implements AddressStore {
                 keyIterator.close();
             }
         }
-        return balances;
+        return map;
+    }
+
+    @Override
+    public boolean contains(String address) throws DbException {
+        try {
+            return snappyDb.exists(address);
+        } catch (SnappydbException e) {
+            e.printStackTrace();
+            throw new DbException("SnappydbException on contains address: "+address,e);
+        }
     }
 
 

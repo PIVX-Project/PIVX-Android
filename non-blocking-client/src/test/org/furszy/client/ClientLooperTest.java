@@ -40,7 +40,7 @@ public class ClientLooperTest {
 
                 Socket socket = serverSocket.accept();
 
-                System.out.println("socket conectado: "+socket.getRemoteSocketAddress());
+                System.out.println("socket connected: "+socket.getRemoteSocketAddress());
 
                 byte[] bytes = new byte[8048];
                 socket.getInputStream().read(bytes);
@@ -72,7 +72,7 @@ public class ClientLooperTest {
         }
 
         WriteFuture writeFuture = new WriteFutureImp();
-        WriteRequest writeRequest = new WriteRequestImp("holaa",writeFuture);
+        WriteRequest writeRequest = new WriteRequestImp("Hi!",writeFuture);
         session.addWriteRequest(writeRequest);
         writeFuture.get(TimeUnit.SECONDS.toMillis(30));
 

@@ -2,6 +2,7 @@ package pivx.org.pivxwallet;
 
 import com.google.protobuf.ByteString;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -23,6 +24,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import pivtrum.messages.BaseMsg;
+import pivtrum.messages.GetBalanceMsg;
+import pivtrum.messages.GetHistoryMsg;
 import pivtrum.messages.Method;
 import pivtrum.messages.SubscribeAddressMsg;
 import pivtrum.messages.VersionMsg;
@@ -84,12 +87,9 @@ public class ClientTest {
     @Test
     public void getAddressBalanceTest() throws JSONException, IOException {
         // Msg version
-        JSONObject jsonObject = new JSONObject();
+        GetBalanceMsg getBalanceMsg = new GetBalanceMsg("DDjju8xCtGczPCrdz2LG683xj8j8hz1XpU");
+        JSONObject jsonObject = getBalanceMsg.toJson();
         jsonObject.put("id",2);
-        jsonObject.put("method","blockchain.address.get_balance");
-        JSONObject balanceJson = new JSONObject();
-        balanceJson.put("address","DDjju8xCtGczPCrdz2LG683xj8j8hz1XpU");
-        jsonObject.put("params",balanceJson);
         // Send
         final Socket socket = new Socket("localhost", 50001);
         socket.setReuseAddress(true);
@@ -145,6 +145,44 @@ public class ClientTest {
         SubscribeAddressMsg subscribeAddressMsg = new SubscribeAddressMsg("yChC1VQS5zET5pDxXgcc4bFye3Q9nurccG");
         subscribeAddressMsg.setId(4);
         sendAndWaitReceive(socket,subscribeAddressMsg.toJson());
+    }
+
+    @Test
+    public void batchRequestTest() throws IOException, JSONException {
+        GetHistoryMsg getBalanceMsg1 = new GetHistoryMsg("yCRaSQvLd5a9VFFv9dzns2zNMJhWyymtAd");
+        getBalanceMsg1.setId(5);
+        GetHistoryMsg getBalanceMsg2 = new GetHistoryMsg("yCRaSQvLd5a9VFFv9dzns2zNMJhWyymtAd");
+        getBalanceMsg2.setId(6);
+        GetHistoryMsg getBalanceMsg3 = new GetHistoryMsg("yCRaSQvLd5a9VFFv9dzns2zNMJhWyymtAd");
+        getBalanceMsg3.setId(7);
+        // Send
+        final Socket socket1 = new Socket("localhost", 50001);
+        socket1.setReuseAddress(true);
+        System.out.println("socket1 connected");
+
+        JSONObject jsonObject1 = getBalanceMsg1.toJson();
+        JSONObject jsonObject2 = getBalanceMsg2.toJson();
+        JSONObject jsonObject3 = getBalanceMsg3.toJson();
+
+        OutputStreamWriter osw = new OutputStreamWriter(socket1.getOutputStream());
+        BufferedWriter bw = new BufferedWriter(osw);
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(jsonObject1);
+        jsonArray.put(jsonObject2);
+        jsonArray.put(jsonObject3);
+        bw.write(jsonArray.toString()+'\n');
+        bw.flush();
+        System.out.println("server batchRequest sent");
+        byte[] readBuffer = new byte[8064];
+
+        int read = socket1.getInputStream().read(readBuffer);
+        if (read > 1) {
+            ByteBuffer byteBuffer = ByteBuffer.allocate(read);
+            byteBuffer.put(readBuffer, 0, read);
+            String str = ByteString.copyFrom(byteBuffer.array()).toStringUtf8();
+            System.out.println("str: " + str);
+            JSONArray returnJson = new JSONArray(str);
+        }
 
 
     }
