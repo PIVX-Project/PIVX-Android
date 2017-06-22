@@ -26,6 +26,7 @@ import wallet.WalletManager;
 
 public class PivxModuleImp implements PivxModule {
 
+    private WalletConfiguration walletConfiguration;
     private WalletManager walletManager;
     private PivtrumPeergroup peergroup;
     private AddressStore addressStore;
@@ -36,6 +37,7 @@ public class PivxModuleImp implements PivxModule {
     private BigDecimal pivInUsdHardcoded = new BigDecimal("1.5");
 
     public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore) throws IOException {
+        this.walletConfiguration = walletConfiguration;
         this.addressStore = addressStore;
         this.contactsStore = contactsStore;
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
@@ -93,6 +95,23 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Collection<Contact> getContacts(){
         return contactsStore.list();
+    }
+
+    @Override
+    public void saveContact(Contact contact) {
+        contactsStore.insert(contact);
+    }
+
+    @Override
+    public boolean chechAddress(String addressBase58) {
+        boolean result = false;
+        try {
+            Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
+            result = true;
+        }catch (Exception e){
+            // nothing..
+        }
+        return result;
     }
 
 

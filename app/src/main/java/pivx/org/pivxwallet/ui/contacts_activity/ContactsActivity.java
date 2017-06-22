@@ -7,9 +7,6 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import pivx.org.pivxwallet.contacts.Contact;
-import pivx.org.pivxwallet.ui.address_add_activity.AddressAddActivity;
+import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 
@@ -78,7 +75,7 @@ public class ContactsActivity extends BaseDrawerActivity {
         switch (item.getItemId())
         {
             case R.id.action_add:
-                Intent intent = new Intent(this, AddressAddActivity.class);
+                Intent intent = new Intent(this, AddContactActivity.class);
                 //      intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
                 return true;
@@ -88,7 +85,7 @@ public class ContactsActivity extends BaseDrawerActivity {
     }
 
     public void actionAdd(View view) {
-        Intent intent = new Intent(ContactsActivity.this, AddressAddActivity.class);
+        Intent intent = new Intent(ContactsActivity.this, AddContactActivity.class);
         startActivity(intent);
     }
 }

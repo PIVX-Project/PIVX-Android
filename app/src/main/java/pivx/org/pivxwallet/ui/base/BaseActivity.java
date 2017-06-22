@@ -35,9 +35,19 @@ public abstract class BaseActivity extends PivxActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onNavigationBackPressed();
                 onBackPressed();
             }
         });
+    }
+
+    /**
+     * Empty method to override.
+     *
+     * Launched when the user clicks on the toolbar navigation icon
+     */
+    protected void onNavigationBackPressed() {
+
     }
 
     /**

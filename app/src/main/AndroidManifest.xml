@@ -41,7 +41,7 @@
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"/>
         <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"/>
         <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"/>
-        <activity android:name=".ui.address_add_activity.AddressAddActivity"/>
+        <activity android:name=".ui.address_add_activity.AddContactActivity"/>
         <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"/>
         <activity android:name=".ui.start_activity.StartActivity"/>
 

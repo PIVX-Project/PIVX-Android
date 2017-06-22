@@ -37,9 +37,9 @@
                 android:textSize = "14sp" />
 
             <EditText
-                android:id = "@+id/amount"
+                android:id="@+id/edit_name"
                 android:ellipsize="start"
-                android:gravity="left"
+                android:gravity="start"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
                 android:padding="8dp"
@@ -67,18 +67,20 @@
                 android:layout_height="50dp" >
 
                 <EditText
-                    android:id = "@+id/address"
+                    android:id = "@+id/edit_address"
                     android:ellipsize="start"
                     android:gravity="left"
                     android:layout_width = "match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:padding="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="20dp"
                     android:background="@drawable/transaction_inputs"
                     android:hint="@string/set_address"
-                    android:text = ""
                     android:textColor = "#434343"
-                    android:textSize = "18sp"
+                    android:textSize = "17sp"
                     android:layout_alignParentBottom="true" />
 
 

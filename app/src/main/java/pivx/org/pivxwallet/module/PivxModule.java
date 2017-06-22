@@ -45,4 +45,8 @@ public interface PivxModule {
     BigDecimal getAvailableBalanceLocale();
 
     Collection<Contact> getContacts();
+
+    void saveContact(Contact contact);
+
+    boolean chechAddress(String addressBase58);
 }

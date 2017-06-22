@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 import pivx.org.pivxwallet.service.IntentsConstants;
+import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
@@ -191,11 +192,14 @@ public class WalletActivity extends BaseDrawerActivity {
                     //Toast.makeText(this,address,Toast.LENGTH_LONG).show();
                     PivxURI pivxUri = new PivxURI(address);
                     final DialogBuilder dialog = DialogBuilder.warn(this, R.string.scan_result_title);
-                    dialog.setMessage("Hey!, new address found: \n"+pivxUri.getAddress());
+                    dialog.setMessage("New address received: "+pivxUri.getAddress()+"\nDo you want to add this address as a contact?");
                     final String tempPubKey = pivxUri.getAddress().toBase58();
                     DialogInterface.OnClickListener rightListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
+                            Intent intent = new Intent(WalletActivity.this, AddContactActivity.class);
+                            intent.putExtra(AddContactActivity.ADDRESS_TO_ADD,tempPubKey);
+                            startActivity(intent);
                             dialog.dismiss();
                         }
                     };
