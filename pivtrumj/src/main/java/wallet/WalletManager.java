@@ -4,12 +4,14 @@ import com.google.protobuf.ByteString;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.crypto.LinuxSecureRandom;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Protos;
+import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.UnreadableWalletException;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.WalletFiles;
@@ -74,6 +76,10 @@ public class WalletManager {
      */
     public boolean isMarkedAddress() {
         return false;
+    }
+
+    public void completeSend(SendRequest sendRequest) throws InsufficientMoneyException {
+        wallet.completeTx(sendRequest);
     }
 
     // init

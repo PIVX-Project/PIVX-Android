@@ -1,6 +1,9 @@
 package pivx.org.pivxwallet.module;
 
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.Transaction;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -49,4 +52,6 @@ public interface PivxModule {
     void saveContact(Contact contact);
 
     boolean chechAddress(String addressBase58);
+
+    Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException;
 }

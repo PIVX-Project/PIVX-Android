@@ -3,6 +3,9 @@ package pivx.org.pivxwallet.module;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Context;
+import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.Transaction;
+import org.bitcoinj.wallet.SendRequest;
 
 import java.io.File;
 import java.io.IOException;
@@ -112,6 +115,15 @@ public class PivxModuleImp implements PivxModule {
             // nothing..
         }
         return result;
+    }
+
+    @Override
+    public Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException {
+        Address address = Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
+        SendRequest sendRequest = SendRequest.to(address,amount);
+        sendRequest.signInputs=true;
+        walletManager.completeSend(sendRequest);
+        return sendRequest.tx;
     }
 
 

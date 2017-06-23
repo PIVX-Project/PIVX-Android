@@ -34,7 +34,7 @@ public class SettingsActivity extends BaseDrawerActivity {
 
         textAbout = (TextView)findViewById(R.id.text_about);
         textAbout.setText("Hello");
-        String text = "MadeBy<br> <font color=#55476c>IoP Ventures LLC</font>  <br>Foundet <br> <font color=#55476c> By the Decentralized Society Foundation</font> <br>(c) PIVX Community";
+        String text = "Made by<br> <font color=#55476c>Furszy</font> <br>(c) PIVX Community";
         textAbout.setText(Html.fromHtml(text));
         // Open Backup Wallet
         buttonBackup = (Button) findViewById(R.id.btn_backup_wallet);

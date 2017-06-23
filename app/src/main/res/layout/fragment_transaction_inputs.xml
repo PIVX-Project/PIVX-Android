@@ -110,7 +110,7 @@
             android:textSize = "14sp" />
 
         <EditText
-            android:id = "@+id/description"
+            android:id = "@+id/edit_memo"
             android:ellipsize="start"
             android:gravity="center_horizontal"
             android:layout_width = "match_parent"

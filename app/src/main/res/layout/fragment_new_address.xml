@@ -78,9 +78,9 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="20dp"
                     android:background="@drawable/transaction_inputs"
-                    android:hint="@string/set_address"
+                    android:hint="@string/add_address"
                     android:textColor = "#434343"
-                    android:textSize = "17sp"
+                    android:textSize = "15sp"
                     android:layout_alignParentBottom="true" />
 
 

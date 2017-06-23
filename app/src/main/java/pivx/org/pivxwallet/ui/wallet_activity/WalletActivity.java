@@ -189,10 +189,9 @@ public class WalletActivity extends BaseDrawerActivity {
             if (resultCode==RESULT_OK) {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
-                    //Toast.makeText(this,address,Toast.LENGTH_LONG).show();
                     PivxURI pivxUri = new PivxURI(address);
-                    final DialogBuilder dialog = DialogBuilder.warn(this, R.string.scan_result_title);
-                    dialog.setMessage("New address received: "+pivxUri.getAddress()+"\nDo you want to add this address as a contact?");
+                    final DialogBuilder dialog = DialogBuilder.warn(this, R.string.scan_result_address_title);
+                    dialog.setMessage(pivxUri.getAddress()+"\n\nCreate contact?");
                     final String tempPubKey = pivxUri.getAddress().toBase58();
                     DialogInterface.OnClickListener rightListener = new DialogInterface.OnClickListener() {
                         @Override
