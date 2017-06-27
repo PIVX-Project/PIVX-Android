@@ -4,14 +4,19 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
+import org.bitcoinj.script.Script;
 import org.bitcoinj.wallet.SendRequest;
+import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
 
+import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import pivtrum.NetworkConf;
@@ -29,8 +34,10 @@ import wallet.WalletManager;
 
 public class PivxModuleImp implements PivxModule {
 
+    private ContextWrapper context;
     private WalletConfiguration walletConfiguration;
     private WalletManager walletManager;
+    private BlockchainManager blockchainManager;
     private PivtrumPeergroup peergroup;
     private AddressStore addressStore;
     private ContactsStore contactsStore;
@@ -39,18 +46,23 @@ public class PivxModuleImp implements PivxModule {
     private long availableBalance = 0;
     private BigDecimal pivInUsdHardcoded = new BigDecimal("1.5");
 
-    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore) throws IOException {
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore) {
+        this.context = contextWrapper;
         this.walletConfiguration = walletConfiguration;
         this.addressStore = addressStore;
         this.contactsStore = contactsStore;
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
-        walletManager.init();
+        blockchainManager = new BlockchainManager(context,walletManager,walletConfiguration);
         for (AddressBalance addressBalance : addressStore.listBalance()) {
             availableBalance+=addressBalance.getConfirmedBalance();
         }
     }
 
-    public void setPeergroup(PivtrumPeergroup peergroup){
+    public void start() throws IOException{
+        walletManager.init();
+    }
+
+    public void setPivtrumPeergroup(PivtrumPeergroup peergroup){
         peergroup.setAddressStore(addressStore);
         peergroup.setWalletManager(walletManager);
         this.peergroup = peergroup;
@@ -120,11 +132,38 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException {
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
-        SendRequest sendRequest = SendRequest.to(address,amount);
-        sendRequest.signInputs=true;
-        walletManager.completeSend(sendRequest);
-        return sendRequest.tx;
+        Transaction tx = new Transaction(walletConfiguration.getNetworkParams());
+
+        // first check if the wallet has available balance.
+        if (amount.isLessThan(Coin.valueOf(availableBalance))) throw new InsufficientMoneyException(amount,"Available amount: "+Coin.valueOf(availableBalance));
+        // now get the unspent tx
+
+        /*Script.createInputScript()
+        TransactionInput transactionInput = new TransactionInput(
+                walletConfiguration.getNetworkParams(),
+                tx,
+
+                );*/
+
+
+        return tx;
+    }
+
+    @Override
+    public WalletConfiguration getConf() {
+        return walletConfiguration;
     }
 
 
+    public BlockchainManager getBlockchainManager() {
+        return blockchainManager;
+    }
+
+    public void addCoinsReceivedEventListener(WalletCoinsReceivedEventListener coinReceiverListener) {
+        walletManager.addCoinsReceivedEventListener(coinReceiverListener);
+    }
+
+    public void removeCoinsReceivedEventListener(WalletCoinsReceivedEventListener coinReceiverListener) {
+        walletManager.removeCoinsReceivedEventListener(coinReceiverListener);
+    }
 }

@@ -3,8 +3,11 @@ package wallet;
 import com.google.protobuf.ByteString;
 
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.BlockChain;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.PeerGroup;
+import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.crypto.LinuxSecureRandom;
@@ -269,6 +272,42 @@ public class WalletManager {
 
     public List<Address> getWatchedAddresses() {
         return wallet.getWatchedAddresses();
+    }
+
+    public void reset() {
+        wallet.reset();
+    }
+
+    public long getEarliestKeyCreationTime() {
+        return wallet.getEarliestKeyCreationTime();
+    }
+
+    public void addWalletFrom(PeerGroup peerGroup){
+        peerGroup.addWallet(wallet);
+    }
+
+    public void addWalletFrom(BlockChain blockChain){
+        blockChain.addWallet(wallet);
+    }
+
+    public void removeWalletFrom(PeerGroup peerGroup) {
+        peerGroup.removeWallet(wallet);
+    }
+
+    public int getLastBlockSeenHeight() {
+        return wallet.getLastBlockSeenHeight();
+    }
+
+    public Transaction getTransaction(Sha256Hash hash) {
+        return wallet.getTransaction(hash);
+    }
+
+    public void addCoinsReceivedEventListener(WalletCoinsReceivedEventListener coinReceiverListener) {
+        wallet.addCoinsReceivedEventListener(coinReceiverListener);
+    }
+
+    public void removeCoinsReceivedEventListener(WalletCoinsReceivedEventListener coinReceiverListener) {
+        wallet.removeCoinsReceivedEventListener(coinReceiverListener);
     }
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

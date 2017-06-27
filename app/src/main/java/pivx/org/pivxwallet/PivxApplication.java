@@ -1,10 +1,13 @@
 package pivx.org.pivxwallet;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -18,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 
@@ -55,6 +59,9 @@ public class PivxApplication extends Application implements ContextWrapper {
     private AppConf appConf;
     private NetworkConf networkConf;
 
+    private ActivityManager activityManager;
+    private PackageInfo info;
+
     public static PivxApplication getInstance() {
         return instance;
     }
@@ -66,13 +73,19 @@ public class PivxApplication extends Application implements ContextWrapper {
         try {
             initLogging();
             log = LoggerFactory.getLogger(PivxApplication.class);
+            PackageManager manager = getPackageManager();
+            info = manager.getPackageInfo(this.getPackageName(), 0);
+            activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             // Default network conf for localhost test
-            networkConf = new NetworkConf(new InetSocketAddress("10.0.2.2",50001));
+            networkConf = new NetworkConf("10.0.2.2",50001);
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
-            WalletConfiguration walletConfiguration = new WalletConfImp();
+            WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
+            //todo: add this on the initial wizard..
+            walletConfiguration.saveTrustedNode("192.168.0.10",0);
             AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore);
+            pivxModule.start();
             // start service
             startPivxService();
         } catch (IOException e) {
@@ -156,7 +169,18 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     @Override
     public InputStream openAssestsStream(String name) throws IOException {
-        return null;
+        return getAssets().open(pivxModule.getConf().getCheckpointFilename());
+    }
+
+    @Override
+    public boolean isMemoryLow() {
+        final int memoryClass = activityManager.getMemoryClass();
+        return memoryClass<=pivxModule.getConf().getMinMemoryNeeded();
+    }
+
+    @Override
+    public String getVersionName() {
+        return info.versionName;
     }
 
     public NetworkConf getNetworkConf() {

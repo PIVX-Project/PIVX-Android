@@ -16,13 +16,13 @@ import java.io.File;
 
 public class PivxContext {
 
-    public static final boolean IS_TEST = true;
+    public static final boolean IS_TEST = false;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
     // report mail
-    public static final String REPORT_EMAIL = "matias.furszyfer@gmail.org";
+    public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.org";
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 
@@ -31,6 +31,9 @@ public class PivxContext {
 
         private static final String FILENAME_NETWORK_SUFFIX = NETWORK_PARAMETERS.getId();
 
+        public static final String BIP39_WORDLIST_FILENAME = "bip39-wordlist.txt";
+        /** Filename of the block store for storing the chain. */
+        public static final String BLOCKCHAIN_FILENAME = "blockchain" + FILENAME_NETWORK_SUFFIX;
         /** Filename of the wallet. */
         public static final String WALLET_FILENAME_PROTOBUF = "wallet-protobuf" + FILENAME_NETWORK_SUFFIX;
         /** How often the wallet is autosaved. */
@@ -44,6 +47,15 @@ public class PivxContext {
         /** Manual backups go here. */
         public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
+        /** Checkpoint filename */
+        public static final String CHECKPOINTS_FILENAME = "checkpoints";
+
     }
+
+    /** Minimum memory */
+    public static final int MEMORY_CLASS_LOWEND = 48;
+
+    public static final int PEER_DISCOVERY_TIMEOUT_MS = 10 * (int) DateUtils.SECOND_IN_MILLIS;
+    public static final int PEER_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
 
 }

@@ -1,5 +1,6 @@
 package pivtrum;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,21 +18,24 @@ public class NetworkConf {
     private static final String MAX_PROTOCOL_VERSION = "2.9.5";
     private static final String MIN_PROTOCOL_VERSION = "1.0";
     /** Trusted server selected on the first screen of the app */
-    private InetSocketAddress trustedServer;
+    private String trustedServerHost;
+    private int trustedServerPort;
     /** Known servers from the network */
     private List<InetSocketAddress> networkServers;
 
-    public NetworkConf(InetSocketAddress trustedServer) {
-        this.trustedServer = trustedServer;
+    public NetworkConf(String trustedServerHost,int trustedServerPort) {
+        this.trustedServerHost = trustedServerHost;
+        this.trustedServerPort = trustedServerPort;
         this.networkServers = new ArrayList<>();
     }
 
     public PivtrumPeerData getTrustedServer() {
-        return new PivtrumPeerData(trustedServer.getHostName(),trustedServer.getPort(),0);
+        return new PivtrumPeerData(trustedServerHost,trustedServerPort,0);
     }
 
-    public void setTrustedServer(InetSocketAddress trustedServer) {
-        this.trustedServer = trustedServer;
+    public void setTrustedServer(String trustedServerHost,int trustedServerPort) {
+        this.trustedServerHost = trustedServerHost;
+        this.trustedServerPort = trustedServerPort;
     }
 
     public void addAll(Collection<InetSocketAddress> networkServers){

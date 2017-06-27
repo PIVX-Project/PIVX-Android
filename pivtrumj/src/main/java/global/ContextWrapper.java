@@ -27,4 +27,9 @@ public interface ContextWrapper {
 
     InputStream openAssestsStream(String name) throws IOException;
 
+    String getPackageName();
+
+    boolean isMemoryLow();
+
+    String getVersionName();
 }

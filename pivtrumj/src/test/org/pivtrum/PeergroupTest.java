@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class PeergroupTest {
     public void connectPivtrumPeergroupTest() throws IOException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
-        NetworkConf networkConf = new NetworkConf(new InetSocketAddress("localhost",50001));
+        NetworkConf networkConf = new NetworkConf("localhost",50001);
         WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);
         walletManager.init();
         AddressStore addressStore = new AddressStoreImp();
@@ -59,7 +60,7 @@ public class PeergroupTest {
     public void pushAddressPivtrumPeergroupTest() throws IOException, CantInsertAddressException, ConnectionFailureException, InterruptedException {
         ContextWrapperImp contextWrapperImp = new ContextWrapperImp();
         WalletConfiguration walletConfiguration = new WalletConfigurationsImp();
-        NetworkConf networkConf = new NetworkConf(new InetSocketAddress("localhost",50001));
+        NetworkConf networkConf = new NetworkConf("localhost",50001);
         // fake non trusted peers to start testing..
         networkConf.addPeers(fakePeers());
         WalletManager walletManager = new WalletManager(contextWrapperImp,walletConfiguration);

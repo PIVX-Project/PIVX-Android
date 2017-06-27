@@ -37,6 +37,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -105,7 +106,8 @@ public class PivtrumPeer implements IoHandler{
     }
 
     /**
-     * Connect synchronized
+     * Connect
+     * todo: add future.
      */
     public void connect() throws ConnectionFailureException, InterruptedException {
         if (isInitilizing.compareAndSet(false,true) && !isRunning.get()) {
@@ -113,14 +115,13 @@ public class PivtrumPeer implements IoHandler{
             ioSessionConfImp.setProtocolDecoder(new JsonDecoder());
             ioSessionConfImp.setProtocolEncoder(new StringEncoder());
             ConnectFuture future = ioManager.connect(new InetSocketAddress(peerData.getHost(), peerData.getTcpPort()), null, this, ioSessionConfImp);
-            future = future.get(TimeUnit.SECONDS.toNanos(30));
-            if(future.isConnected()){
+            //future = future.get(TimeUnit.SECONDS.toNanos(30));
+            /*if(future.isConnected()){
                 session = future.getSession();
             }else {
                 log.info("Connection fail",future.getException());
                 throw new ConnectionFailureException(future.getException());
-            }
-
+            }*/
         }else {
             throw new IllegalStateException("PivtrumPeer already initializing");
         }

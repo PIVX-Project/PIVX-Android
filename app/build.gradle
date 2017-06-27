@@ -27,6 +27,12 @@ android {
         }
     }
 
+    sourceSets{
+        main{
+            assets.srcDirs = ['assets']
+        }
+    }
+
 }
 
 configurations.all { resolutionStrategy { force 'org.objenesis:objenesis:2.1' } }
