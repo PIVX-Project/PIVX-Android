@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
@@ -76,7 +77,7 @@ public class PincodeActivity extends BaseActivity {
                     // just save pincode
                     pivxApplication.getAppConf().savePincode(nam);
                     pivxApplication.getAppConf().setAppInit(true);
-                    Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
+                    Intent myIntent = new Intent(PincodeActivity.this,StartNodeActivity.class);
                     PincodeActivity.this.startActivity(myIntent);
                 }
                 Log.d("TAG", "onKey: screen key pressed");

@@ -9,53 +9,41 @@
     android:background="@color/bgPurple">
 
     <TextView
-        android:id="@+id/restoreMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/nodeMessage"
+        android:text="@string/node_selection_message"
+        style="@style/MessageTextStart"/>
+
+
+
+
+
+    <Spinner
+        android:gravity="center_vertical"
+        android:layout_below="@+id/nodeMessage"
+        android:id="@+id/spinner"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="60dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/restore_wallet_message"
-        android:textColor="@color/textColorWhite"
-        android:textSize="18sp" />
+        android:layout_width="314dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select"/>
 
     <Button
-        android:id="@+id/addFile"
+        android:id="@+id/openDialog"
         android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/restoreMessage"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/login_input"
-        android:drawableRight="@mipmap/ic_add_file"
-        android:elevation="2dp"
-        android:gravity="left|center_vertical"
-        android:onClick="addFile"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:text="@string/select_file"
-        android:textColor="@color/textColorWhite"
-        android:textSize="14sp" />
+        android:layout_marginTop="10dp"
+        android:elevation="0dp"
+        android:background="@color/transparent"
+        android:onClick="openDialog"
+        android:text="@string/btn_select_node"
+        android:textColor="#B7FFF9"
+        android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/addFile"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/bg_login_button"
-        android:gravity="left|center_vertical"
-        android:hint="@string/string_password"
-        android:inputType="textPassword"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:textColor="@color/textColorWhite"
-        android:textColorHint="@color/textColorWhite"
-        android:textSize="14sp" />
 
     <LinearLayout
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/openDialog"
         android:layout_weight="1"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
@@ -66,12 +54,10 @@
 
         <Button
             android:id="@+id/btnSelectNode"
-            android:layout_centerHorizontal="true"
             android:onClick="tryCreate"
-            android:text="@string/btn_restore_wallet"
-            android:textColor="@color/textColorPurple"
-            android:textSize="14sp"
+            android:text="@string/select_node"
             style="@style/ButtomWhite"/>
+
     </LinearLayout>
 
 </RelativeLayout>

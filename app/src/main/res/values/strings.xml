@@ -41,17 +41,22 @@
     <string name="scan_camera_permission_dialog_message">In order to scan QR codes, you need to grant permission to use the camera.</string>
     <string name="scan_result_title">Scanner result</string>
     <string name="scan_result_address_title">Address detected</string>
+    <string name="node_selection_message">You can select one of the nodes \n
+available or add one of your choice</string>
+    <string name="select_node">Select Node</string>
 
-
+    <string name="select">Select a node</string>
     <string name="text_version">Version</string>
     <string name="network_monitor">Network Monitor</string>
     <string name="send_message">You just send</string>
     <string name="save_message">Do you want to save the address?</string>
     <string name="confirm">Confirm</string>
     <string name="action_scan">scanner</string>
+    <string name="btn_select_node">Add your own node</string>
 
     <string name="title_no_trusted_peer_connection">Peer issue</string>
     <string name="message_no_trusted_peer_connection">Trusted peer connection fail</string>
     <string name="share_address_text">Share address</string>
     <string name="error_sending_coins">Send coins fail</string>
+
 </resources>

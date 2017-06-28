@@ -17,5 +17,5 @@
     <dimen name="scan_laser_width">4dp</dimen>
     <dimen name="scan_dot_size">8dp</dimen>
     <dimen name="btn_width">314dp</dimen>
-    <dimen name="btn_height">36dp</dimen>
+    <dimen name="btn_height">50dp</dimen>
 </resources>
