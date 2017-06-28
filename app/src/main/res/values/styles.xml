@@ -41,4 +41,27 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="MessageText">
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="ButtomWhite">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">@dimen/btn_width</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/bgWhite</item>
+        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">50dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
 </resources>
