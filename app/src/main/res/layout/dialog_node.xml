@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="20dp"
+    android:gravity="left"
+    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+
+
+    <TextView
+        android:text = "@string/host"
+        style="@style/Subtitles"/>
+
+    <EditText
+        android:id="@+id/hostText"
+        android:hint="@string/hint_host"
+        android:text = ""
+        style="@style/Inputs"/>
+
+    <TextView
+        android:text = "@string/tcp_port"
+        style="@style/Subtitles"/>
+
+    <EditText
+        android:id="@+id/tcpText"
+        android:hint="@string/hint_tcp_port"
+        android:text = ""
+        style="@style/Inputs"/>
+    <TextView
+        android:text = "@string/ssl_port"
+        style="@style/Subtitles"/>
+
+    <EditText
+        android:id="@+id/sslText"
+        android:hint="@string/hint_ssl_port"
+        android:text = ""
+        style="@style/Inputs"/>
+
+
+
+</LinearLayout>
