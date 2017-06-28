@@ -54,20 +54,24 @@
         android:textColorHint="@color/textColorWhite"
         android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="314dp"
-        android:layout_height="36dp"
+
+    <LinearLayout
         android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/button_selector"
-        android:elevation="2dp"
-        android:gravity="center_vertical|center_horizontal"
-        android:onClick="tryCreate"
-        android:text="@string/btn_restore_wallet"
-        android:textColor="@color/textColorPurple"
-        android:textSize="14sp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center|bottom">
+
+        <Button
+            android:id="@+id/btnCreate"
+            android:onClick="tryCreate"
+            android:text="@string/btn_restore_wallet"
+            style="@style/ButtomWhite"/>
+
+
+    </LinearLayout>
 
     </RelativeLayout>
