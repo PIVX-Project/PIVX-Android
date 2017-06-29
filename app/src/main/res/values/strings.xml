@@ -65,4 +65,5 @@ available or add one of your choice</string>
     <string name="hint_host">Add a Host</string>
     <string name="tcp_port">TCP port</string>
     <string name="hint_tcp_port">Add TCP port</string>
+    <string name="add_memo">Monthly payment</string>
 </resources>
