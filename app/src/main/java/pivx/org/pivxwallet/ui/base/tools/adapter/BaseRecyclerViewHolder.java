@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
- * ViewHolder Base Class
+ * TransactionViewHolderBase Base Class
  *
  */
-public abstract class RecyclerViewHolder extends RecyclerView.ViewHolder {
+public abstract class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private int holderId = 0;
     private int holderType;
@@ -19,7 +19,7 @@ public abstract class RecyclerViewHolder extends RecyclerView.ViewHolder {
      * @param itemView
      */
     @Deprecated
-    protected RecyclerViewHolder(View itemView) {
+    protected BaseRecyclerViewHolder(View itemView) {
         super(itemView);
     }
 
@@ -27,18 +27,18 @@ public abstract class RecyclerViewHolder extends RecyclerView.ViewHolder {
      * @param itemView
      * @param holderType
      */
-    protected RecyclerViewHolder(View itemView, int holderType) {
+    protected BaseRecyclerViewHolder(View itemView, int holderType) {
         super(itemView);
         this.holderType = holderType;
     }
 
-    protected RecyclerViewHolder(View itemView, int holderId, int holderType) {
+    protected BaseRecyclerViewHolder(View itemView, int holderId, int holderType) {
         super(itemView);
         this.holderId = holderId;
         this.holderType = holderType;
     }
 
-    public RecyclerViewHolder(View itemView, int holderId, int holderType, int holderLayoutRes) {
+    public BaseRecyclerViewHolder(View itemView, int holderId, int holderType, int holderLayoutRes) {
         super(itemView);
         this.holderId = holderId;
         this.holderType = holderType;

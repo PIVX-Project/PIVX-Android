@@ -3,12 +3,12 @@ package pivx.org.pivxwallet.ui.wallet_activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
 
 /**
@@ -16,7 +16,7 @@ import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActiv
  */
 
 
-public class ViewHolder extends RecyclerView.ViewHolder {
+public class TransactionViewHolderBase extends BaseRecyclerViewHolder {
 
     CardView cv;
     TextView title;
@@ -26,7 +26,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView;
     private final Context context;
 
-    public ViewHolder(View itemView) {
+    public TransactionViewHolderBase(View itemView) {
         super(itemView);
         context = itemView.getContext();
         itemView.setOnClickListener(new View.OnClickListener() {

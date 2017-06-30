@@ -42,6 +42,9 @@ import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission.CAMERA;
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
@@ -52,8 +55,9 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private static final int SCANNER_RESULT = 122;
 
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapter adapter;
+    private View root;
+    private View container_txs;
+
     private Button buttonSend;
     private Button buttonRequest;
 
@@ -71,6 +75,21 @@ public class WalletActivity extends BaseDrawerActivity {
         }
     };
 
+    private IntentFilter pivxServiceFilter = new IntentFilter(ACTION_NOTIFICATION);
+    private BroadcastReceiver pivxServiceReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ACTION_NOTIFICATION)){
+                if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_ON_COIN_RECEIVED)){
+                    Coin balance = pivxModule.getAvailableBalanceCoin();
+                    txt_value.setText(balance.toFriendlyString());
+                }
+            }
+
+        }
+    };
+
     @Override
     protected void beforeCreate(){
         if (!pivxApplication.getAppConf().isAppInit()){
@@ -82,21 +101,15 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         setTitle("My Wallet");
+        root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
 
-        txt_value = (TextView) findViewById(R.id.pivValue);
-        txt_local_value = (TextView) findViewById(R.id.pivValueLocal);
-
-        // Recicler view
-        List<TransactionData> data = fill_with_data();
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        adapter = new RecyclerViewAdapter(data, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        txt_value = (TextView) root.findViewById(R.id.pivValue);
+        txt_local_value = (TextView) root.findViewById(R.id.pivValueLocal);
+        container_txs = root.findViewById(R.id.container_txs);
 
         // Open Send
-        buttonSend = (Button) findViewById(R.id.btnSend);
+        buttonSend = (Button) root.findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +119,7 @@ public class WalletActivity extends BaseDrawerActivity {
         });
 
         // Open Request
-        buttonRequest = (Button) findViewById(R.id.btnRequest);
+        buttonRequest = (Button) root.findViewById(R.id.btnRequest);
         buttonRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +127,8 @@ public class WalletActivity extends BaseDrawerActivity {
                 startActivityForResult(myIntent, 0);
             }
         });
+
+
     }
 
     @Override
@@ -123,6 +138,7 @@ public class WalletActivity extends BaseDrawerActivity {
         setNavigationMenuItemChecked(0);
         // register
         localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
+        localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
 
         updateBalance();
     }
@@ -132,6 +148,7 @@ public class WalletActivity extends BaseDrawerActivity {
         super.onStop();
         // unregister
         localBroadcastManager.unregisterReceiver(localReceiver);
+        localBroadcastManager.unregisterReceiver(pivxServiceReceiver);
     }
 
     @Override

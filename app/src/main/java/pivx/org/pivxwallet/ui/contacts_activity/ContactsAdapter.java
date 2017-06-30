@@ -5,21 +5,21 @@ import android.view.View;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
-import pivx.org.pivxwallet.ui.base.tools.adapter.RecyclerAdapter;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Neoperol on 5/18/17.
  */
 
-public class ContactsAdapter extends RecyclerAdapter<Contact,ContactViewHolder> {
+public class ContactsAdapter extends BaseRecyclerAdapter<Contact,ContactViewHolderBase> {
 
     public ContactsAdapter(Context context) {
         super(context);
     }
 
     @Override
-    protected ContactViewHolder createHolder(View itemView, int type) {
-        return new ContactViewHolder(itemView);
+    protected ContactViewHolderBase createHolder(View itemView, int type) {
+        return new ContactViewHolderBase(itemView);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ContactsAdapter extends RecyclerAdapter<Contact,ContactViewHolder> 
     }
 
     @Override
-    protected void bindHolder(ContactViewHolder holder, Contact data, int position) {
+    protected void bindHolder(ContactViewHolderBase holder, Contact data, int position) {
         holder.address.setText(data.getAddresses().get(0));
         holder.name.setText(data.getName());
     }

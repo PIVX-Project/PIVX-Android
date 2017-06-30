@@ -13,17 +13,17 @@ import java.util.List;
  * Use with RecyclerView Widgets
  *
  */
-public abstract class RecyclerAdapter<M, H extends RecyclerViewHolder> extends RecyclerView.Adapter<H> {
+public abstract class BaseRecyclerAdapter<M, H extends BaseRecyclerViewHolder> extends RecyclerView.Adapter<H> {
 
     protected List<M> dataSet;
     protected Context context;
     protected ListItemListeners<M> eventListeners;
 
-    protected RecyclerAdapter(Context context) {
+    protected BaseRecyclerAdapter(Context context) {
         this.context = context;
     }
 
-    protected RecyclerAdapter(Context context, List<M> dataSet) {
+    protected BaseRecyclerAdapter(Context context, List<M> dataSet) {
         this.context = context;
         this.dataSet = dataSet;
     }
@@ -150,7 +150,7 @@ public abstract class RecyclerAdapter<M, H extends RecyclerViewHolder> extends R
      *
      * @param itemView View object
      * @param type     int type
-     * @return ViewHolder
+     * @return TransactionViewHolderBase
      */
     protected abstract H createHolder(View itemView, int type);
 
@@ -162,9 +162,9 @@ public abstract class RecyclerAdapter<M, H extends RecyclerViewHolder> extends R
     protected abstract int getCardViewResource(int type);
 
     /**
-     * Bind ViewHolder
+     * Bind TransactionViewHolderBase
      *
-     * @param holder   ViewHolder object
+     * @param holder   TransactionViewHolderBase object
      * @param data     Object data to render
      * @param position position to render
      */
