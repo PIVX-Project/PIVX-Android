@@ -9,9 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.List;
 
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 
 /**
  * Created by mati on 18/04/17.
@@ -29,13 +31,15 @@ public interface PivxModule {
      */
     void createWallet();
 
+    boolean backupWallet(File backupFile, String password) throws IOException;
+
     /**
      *
      *
      * @param backupFile
      * @param password
      */
-    void restoreWallet(File backupFile, String password);
+    void restoreWallet(File backupFile, String password) throws IOException;
 
     /**
      * If the wallet already exist
@@ -52,6 +56,8 @@ public interface PivxModule {
 
     long getAvailableBalance();
 
+    Coin getAvailableBalanceCoin();
+
     BigDecimal getAvailableBalanceLocale();
 
     Collection<Contact> getContacts();
@@ -63,5 +69,7 @@ public interface PivxModule {
     Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException;
 
     WalletConfiguration getConf();
+
+    List<TransactionWrapper> listTx();
 
 }

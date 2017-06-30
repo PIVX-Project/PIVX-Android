@@ -66,4 +66,8 @@ available or add one of your choice</string>
     <string name="tcp_port">TCP port</string>
     <string name="hint_tcp_port">Add TCP port</string>
     <string name="add_memo">Monthly payment</string>
+    <string name="backup_create">create</string>
+    <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
+    <string name="backup_completed">Backup completed</string>
+    <string name="backup_completed_text">Congratulations!, your wallet has beed succesfully backed.\\n\\nThe backup file is on</string>
 </resources>

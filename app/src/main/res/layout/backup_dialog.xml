@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_completed"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:textStyle="bold"
+        android:paddingBottom="9dp"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backup_completed_text"
+        android:paddingTop="20dp"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_backup_dir"
+        android:gravity="center"
+        tools:text="/dir/backup/wallet.dat"
+        android:paddingBottom="20dp"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_ok"
+        android:text="OK"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#50e3c2"
+        />
+
+</LinearLayout>

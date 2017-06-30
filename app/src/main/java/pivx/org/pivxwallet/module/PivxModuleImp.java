@@ -14,7 +14,9 @@ import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import chain.BlockchainManager;
 import global.ContextWrapper;
@@ -23,6 +25,8 @@ import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeergroup;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.contacts.ContactsStore;
+import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
+import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressNotFoundException;
 import store.AddressStore;
@@ -74,7 +78,14 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public void restoreWallet(File backupFile, String password) {
+    public boolean backupWallet(File backupFile, String password) throws IOException {
+        //todo: add the backup reminder here..
+        return walletManager.backupWallet(backupFile,password);
+
+    }
+
+    @Override
+    public void restoreWallet(File backupFile, String password) throws IOException {
 
     }
 
@@ -99,7 +110,12 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public long getAvailableBalance() {
-        return availableBalance;
+        return walletManager.getAvailableBalance().longValue();//availableBalance;
+    }
+
+    @Override
+    public Coin getAvailableBalanceCoin() {
+        return walletManager.getAvailableBalance();//availableBalance;
     }
 
     @Override
@@ -152,6 +168,11 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public WalletConfiguration getConf() {
         return walletConfiguration;
+    }
+
+    @Override
+    public List<TransactionWrapper> listTx() {
+        return new ArrayList<>();
     }
 
 

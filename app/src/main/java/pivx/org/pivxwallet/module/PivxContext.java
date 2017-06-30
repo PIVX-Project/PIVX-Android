@@ -16,7 +16,7 @@ import java.io.File;
 
 public class PivxContext {
 
-    public static final boolean IS_TEST = false;
+    public static final boolean IS_TEST = true;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
@@ -46,7 +46,9 @@ public class PivxContext {
         public static final String EXTERNAL_WALLET_BACKUP = "pivx-wallet-backup" +"_"+ FILENAME_NETWORK_SUFFIX;
         /** Manual backups go here. */
         public static final File EXTERNAL_WALLET_BACKUP_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
+        public static final String getExternalWalletBackupFileName(String appName){
+            return appName+"_"+EXTERNAL_WALLET_BACKUP;
+        }
         /** Checkpoint filename */
         public static final String CHECKPOINTS_FILENAME = "checkpoints";
 

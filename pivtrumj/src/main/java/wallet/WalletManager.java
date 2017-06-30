@@ -1,5 +1,6 @@
 package wallet;
 
+import com.google.common.base.Charsets;
 import com.google.protobuf.ByteString;
 
 import org.bitcoinj.core.Address;
@@ -23,18 +24,27 @@ import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.security.SecureRandom;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import global.ContextWrapper;
 import global.WalletConfiguration;
+
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Created by furszy on 6/4/17.
@@ -270,6 +280,46 @@ public class WalletManager {
         }
     }
 
+    /**
+     *
+     * Backup wallet file with a given password
+     *
+     * @param file
+     * @param password
+     * @throws IOException
+     */
+    public boolean backupWallet(File file,final String password) throws IOException {
+
+        final Protos.Wallet walletProto = new WalletProtobufSerializer().walletToProto(wallet);
+
+        Writer cipherOut = null;
+
+        try {
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            walletProto.writeTo(baos);
+            baos.close();
+            final byte[] plainBytes = baos.toByteArray();
+
+            cipherOut = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
+            cipherOut.write(Crypto.encrypt(plainBytes, password.toCharArray()));
+            cipherOut.flush();
+
+            logger.info("backed up wallet to: '" + file + "'");
+
+            return true;
+        }finally {
+            if (cipherOut != null)
+            {
+                try {
+                    cipherOut.close();
+                }
+                catch (final IOException x) {
+                    // swallow
+                }
+            }
+        }
+    }
+
     public List<Address> getWatchedAddresses() {
         return wallet.getWatchedAddresses();
     }
@@ -308,6 +358,10 @@ public class WalletManager {
 
     public void removeCoinsReceivedEventListener(WalletCoinsReceivedEventListener coinReceiverListener) {
         wallet.removeCoinsReceivedEventListener(coinReceiverListener);
+    }
+
+    public Coin getAvailableBalance() {
+        return wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE);
     }
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
