@@ -15,6 +15,8 @@ import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
+
 /**
  * Created by furszy on 6/8/17.
  */
@@ -25,7 +27,7 @@ public class PivxActivity extends AppCompatActivity {
     protected PivxModule pivxModule;
 
     protected LocalBroadcastManager localBroadcastManager;
-    IntentFilter intentFilter = new IntentFilter(IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL);
+    private IntentFilter intentFilter = new IntentFilter(IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL);
     private BroadcastReceiver trustedPeerConnectionDownReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {

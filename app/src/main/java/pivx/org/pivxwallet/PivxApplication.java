@@ -81,7 +81,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
             //todo: add this on the initial wizard..
-            walletConfiguration.saveTrustedNode("192.168.0.10",0);
+            walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
             AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore);

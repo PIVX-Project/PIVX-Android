@@ -12,6 +12,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.20'
     compile group: 'com.google.protobuf', name: 'protobuf-java', version: '2.6.1'
     compile group: 'com.google.guava', name: 'guava', version: '20.0'
+    compile group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
     compile 'com.madgag.spongycastle:core:1.54.0.0'
     compile project(':pivx-core-0.14.3-12.1')
     compile(project(':non-blocking-client'))
