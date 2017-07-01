@@ -94,16 +94,16 @@ public class BlockchainManager {
 
                 final long earliestKeyCreationTime = walletManager.getEarliestKeyCreationTime();
 
-                // todo: checkpoints
-                if (!blockChainFileExists && earliestKeyCreationTime > 0 && conf.getNetworkParams() instanceof MainNetParams) {
+                if (!blockChainFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
                     try {
+                        String filename = conf.getCheckpointFilename();
+                        String suffix = conf.getNetworkParams() instanceof MainNetParams ? "":"-testnet";
                         final Stopwatch watch = Stopwatch.createStarted();
-                        final InputStream checkpointsInputStream =  context.openAssestsStream(conf.getCheckpointFilename());
+                        final InputStream checkpointsInputStream =  context.openAssestsStream(filename+suffix);
                         CheckpointManager.checkpoint(conf.getNetworkParams(), checkpointsInputStream, blockStore, earliestKeyCreationTime);
                         watch.stop();
                         LOG.info("checkpoints loaded from '{}', took {}", conf.getCheckpointFilename(), watch);
-                    }
-                    catch (final IOException x) {
+                    }catch (final IOException x) {
                         LOG.error("problem reading checkpoints, continuing without", x);
                     }
                 }
@@ -300,9 +300,9 @@ public class BlockchainManager {
                 }
 
                 // init peergroup
-                peerGroup.addBlocksDownloadedEventListener(blockchainDownloadListener);
+                //peerGroup.addBlocksDownloadedEventListener(blockchainDownloadListener);
                 peerGroup.startAsync();
-                //peerGroup.startBlockChainDownload(blockchainDownloadListener);
+                peerGroup.startBlockChainDownload(blockchainDownloadListener);
 
             } else if (!impediments.isEmpty() && peerGroup != null) {
                 LOG.info("stopping peergroup");
