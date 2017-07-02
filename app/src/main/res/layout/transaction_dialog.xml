@@ -111,7 +111,7 @@
         android:textSize="14sp" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/edit_contact_name"
         android:ellipsize="start"
         android:gravity="center"
         android:layout_width = "match_parent"

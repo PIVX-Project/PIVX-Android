@@ -455,7 +455,9 @@ public class WalletManager {
         return getValueSentFromMe(transaction).longValue()>0;
     }
 
-
+    public void commitTx(Transaction transaction) {
+        wallet.maybeCommitTx(transaction);
+    }
 
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

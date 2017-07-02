@@ -62,7 +62,7 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // todo: this is just for now..
-        db.execSQL("DROP TABLE IF EXISTS "+DATABASE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
     }
 

@@ -48,4 +48,6 @@ public interface WalletConfiguration {
     int getMinMemoryNeeded();
 
     long getBackupMaxChars();
+
+    boolean isTest();
 }

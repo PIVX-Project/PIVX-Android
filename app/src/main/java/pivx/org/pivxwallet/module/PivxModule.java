@@ -74,6 +74,7 @@ public interface PivxModule {
 
     List<TransactionWrapper> listTx();
 
-    Coin getValueSentFromMe(Transaction transaction);
+    Coin getValueSentFromMe(Transaction transaction, boolean excludeChangeAddress);
 
+    void commitTx(Transaction transaction);
 }

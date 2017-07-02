@@ -2,13 +2,8 @@ package pivx.org.pivxwallet.module;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Context;
 import org.bitcoinj.core.InsufficientMoneyException;
-import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionInput;
-import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.script.Script;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 
@@ -22,14 +17,11 @@ import java.util.List;
 import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
-import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeergroup;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.contacts.ContactsStore;
-import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
-import store.AddressNotFoundException;
 import store.AddressStore;
 import wallet.WalletManager;
 
@@ -189,7 +181,7 @@ public class PivxModuleImp implements PivxModule {
             list.add(new TransactionWrapper(
                     transaction,
                     contact,
-                    isMine ? walletManager.getValueSentFromMe(transaction):walletManager.getValueSentToMe(transaction),
+                    isMine ? getValueSentFromMe(transaction,true):walletManager.getValueSentToMe(transaction),
                     isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE
                     )
             );
@@ -198,8 +190,16 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Coin getValueSentFromMe(Transaction transaction) {
-        return walletManager.getValueSentFromMe(transaction);
+    public Coin getValueSentFromMe(Transaction transaction, boolean excludeChangeAddress) {
+        if (excludeChangeAddress){
+            return transaction.getOutput(0).getValue();
+        }else
+            return walletManager.getValueSentFromMe(transaction);
+    }
+
+    @Override
+    public void commitTx(Transaction transaction) {
+        walletManager.commitTx(transaction);
     }
 
 

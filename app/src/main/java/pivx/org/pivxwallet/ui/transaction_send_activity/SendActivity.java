@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,8 +23,12 @@ import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
+import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
 
 /**
  * Created by Neoperol on 5/4/17.
@@ -36,6 +41,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private EditText edit_amount;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
+    private String addressStr;
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
@@ -86,13 +92,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private void send() {
         try {
             // create the tx
-            String addressStr = edit_address.getText().toString();
+            addressStr = edit_address.getText().toString();
             if (!pivxModule.chechAddress(addressStr))
                 throw new IllegalArgumentException("Address not valid");
             String amountStr = edit_amount.getText().toString();
             if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
             Coin amount = Coin.parseCoin(amountStr);
-            if (amount.isLessThan(Coin.valueOf(pivxModule.getAvailableBalance())))
+            if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insuficient balance");
             String memo = edit_memo.getText().toString();
             // build a tx with the default fee
@@ -105,19 +111,32 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void launchSendDialog(Transaction transaction){
+    private void launchSendDialog(final Transaction transaction){
         // create a Dialog component
         final Dialog dialog = new Dialog(context);
 
         //tell the Dialog to use the dialog.xml as it's layout description
         dialog.setContentView(R.layout.transaction_dialog);
+        final EditText edit_contact_name = (EditText) dialog.findViewById(R.id.edit_contact_name);
         dialog.setTitle("Send");
         TextView valuePivx = (TextView) dialog.findViewById(R.id.valuePivx);
-        valuePivx.setText(pivxModule.getValueSentFromMe(transaction).toFriendlyString());
+        valuePivx.setText(pivxModule.getValueSentFromMe(transaction,true).toFriendlyString());
         Button dialogButton = (Button) dialog.findViewById(R.id.btnConfirm);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String contactName = edit_contact_name.getText().toString();
+                if (contactName.length()>0){
+                    Contact contact = new Contact(contactName);
+                    contact.addAddress(addressStr);
+                    contact.addTx(transaction.getHash());
+                    pivxModule.saveContact(contact);
+                }
+                pivxModule.commitTx(transaction);
+                Intent intent = new Intent(v.getContext(), PivxWalletService.class);
+                intent.setAction(ACTION_BROADCAST_TRANSACTION);
+                intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
+                startService(intent);
                 dialog.dismiss();
             }
         });

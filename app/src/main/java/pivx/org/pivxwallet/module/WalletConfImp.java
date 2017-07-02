@@ -119,4 +119,9 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
         return PivxContext.BACKUP_MAX_CHARS;
     }
 
+    @Override
+    public boolean isTest() {
+        return PivxContext.IS_TEST;
+    }
+
 }
