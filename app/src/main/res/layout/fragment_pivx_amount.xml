@@ -16,6 +16,13 @@
         android:textColor = "@color/textColorWhite"
         android:textSize = "24sp" />
     <TextView
+        android:id = "@+id/txt_unnavailable"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "Unspendable: 0"
+        android:textColor = "@color/textColorLightPurple"
+        android:textSize = "16sp" />
+    <TextView
         android:id = "@+id/pivValueLocal"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"

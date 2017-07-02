@@ -2,8 +2,12 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +17,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.uri.PivxURI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +30,23 @@ import java.util.List;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.service.PivxWalletService;
+import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
+import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 5/4/17.
  */
 
 public class SendActivity extends BaseActivity implements View.OnClickListener {
+    private static final int SCANNER_RESULT = 122;
     final Context context = this;
     private Button buttonSend;
     private AutoCompleteTextView edit_address;
@@ -53,6 +65,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
         edit_amount = (EditText) findViewById(R.id.edit_amount);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
+        findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend.setOnClickListener(this);
     }
 
@@ -77,9 +90,39 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 e.printStackTrace();
                 showErrorDialog(e.getMessage());
             }
+        }else if (id == R.id.button_qr){
+            if (!checkPermission(CAMERA)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    int permsRequestCode = 200;
+                    String[] perms = {"android.permission.CAMERA"};
+                    requestPermissions(perms, permsRequestCode);
+                }
+            }
+            startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SCANNER_RESULT){
+            if (resultCode==RESULT_OK) {
+                try {
+                    String address = data.getStringExtra(INTENT_EXTRA_RESULT);
+                    PivxURI pivxUri = new PivxURI(address);
+                    final String tempPubKey = pivxUri.getAddress().toBase58();
+                    edit_address.setText(tempPubKey);
+                }catch (Exception e){
+                    Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
+                }
+            }
         }
 
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    private boolean checkPermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
     private void showErrorDialog(String message) {

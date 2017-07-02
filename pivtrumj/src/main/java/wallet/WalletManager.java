@@ -459,6 +459,10 @@ public class WalletManager {
         wallet.maybeCommitTx(transaction);
     }
 
+    public Coin getUnspensableBalance() {
+        return wallet.getBalance(Wallet.BalanceType.ESTIMATED_SPENDABLE).minus(wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE));
+    }
+
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

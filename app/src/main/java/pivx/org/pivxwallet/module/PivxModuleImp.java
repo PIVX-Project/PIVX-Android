@@ -119,6 +119,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public Coin getUnnavailableBalanceCoin() {
+        return walletManager.getUnspensableBalance();
+    }
+
+    @Override
     public BigDecimal getAvailableBalanceLocale() {
         return pivInUsdHardcoded.multiply(new BigDecimal(availableBalance));
     }

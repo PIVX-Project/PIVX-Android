@@ -61,6 +61,8 @@ public interface PivxModule {
 
     Coin getAvailableBalanceCoin();
 
+    Coin getUnnavailableBalanceCoin();
+
     BigDecimal getAvailableBalanceLocale();
 
     Collection<Contact> getContacts();
@@ -80,4 +82,6 @@ public interface PivxModule {
     void commitTx(Transaction transaction);
 
     List<Peer> listConnectedPeers();
+
+
 }

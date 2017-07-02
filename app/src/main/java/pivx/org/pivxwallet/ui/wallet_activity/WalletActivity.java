@@ -62,6 +62,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private Button buttonRequest;
 
     private TextView txt_value;
+    private TextView txt_unnavailable;
     private TextView txt_local_value;
 
     private TransactionsFragmentBase txsFragment;
@@ -108,6 +109,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
         txt_value = (TextView) root.findViewById(R.id.pivValue);
         txt_local_value = (TextView) root.findViewById(R.id.pivValueLocal);
+        txt_unnavailable = (TextView) root.findViewById(R.id.txt_unnavailable);
         container_txs = root.findViewById(R.id.container_txs);
 
         // Open Send
@@ -247,8 +249,10 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
     private void updateBalance() {
-        long availableBalance = pivxModule.getAvailableBalance();
-        txt_value.setText((availableBalance!=0)?Coin.valueOf(availableBalance).toFriendlyString():"0 Pivs");
+        Coin availableBalance = pivxModule.getAvailableBalanceCoin();
+        txt_value.setText((availableBalance.isZero())?availableBalance.toFriendlyString():"0 Pivs");
+        Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
+        txt_unnavailable.setText("Unspendable "+((unnavailableBalance.isZero())?unnavailableBalance.toFriendlyString():"0 Pivs"));
         BigDecimal amountInUsd = pivxModule.getAvailableBalanceLocale();
         NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
         usdCostFormat.setMinimumFractionDigits( 1 );
