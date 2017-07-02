@@ -5,9 +5,11 @@
     <color name="colorPrimaryDark">#45385a</color>
     <color name="colorAccent">#009688</color>
     <color name="bgPurple">#55476c</color>
+    <color name="mainGreen">#B7FFF9</color>
     <color name="colorPurple">#55476c</color>
     <color name="bgWhite">#ffffff</color>
     <color name="bgWhite30">#4Dffffff</color>
+    <color name="bgBlack30">#4D000000</color>
     <color name="textColorPurple">#55476c</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorLightPurple">#ffffff</color>

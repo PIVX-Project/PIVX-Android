@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="160dp"
     android:paddingTop="40dp"
-    android:paddingBottom="40dp"
     android:gravity="center_horizontal"
     android:background="@color/bgPurple">
+
     <TextView
         android:id = "@+id/pivValue"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:text = "13.135 PIV"
         android:textColor = "@color/textColorWhite"
         android:textSize = "24sp" />
     <TextView
-        android:id = "@+id/txt_unnavailable"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "Unspendable: 0"
-        android:textColor = "@color/textColorLightPurple"
-        android:textSize = "16sp" />
-    <TextView
+        android:layout_below="@+id/pivValue"
+        android:layout_centerHorizontal="true"
         android:id = "@+id/pivValueLocal"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
@@ -30,4 +25,33 @@
         android:textColor = "@color/textColorLightPurple"
         android:textSize = "16sp" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgBlack30"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unavailable"
+            android:textSize="14sp"
+            android:textColor="@color/bgWhite"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:id = "@+id/txt_unnavailable"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "Unspendable: 0"
+            android:textColor = "@color/mainGreen"
+            android:textSize = "14sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

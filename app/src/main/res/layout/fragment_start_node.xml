@@ -35,7 +35,7 @@
         android:background="@color/transparent"
         android:onClick="openDialog"
         android:text="@string/btn_select_node"
-        android:textColor="#B7FFF9"
+        android:textColor="@color/mainGreen"
         android:textSize="15sp" />
 
 
