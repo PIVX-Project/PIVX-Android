@@ -5,23 +5,12 @@
     android:background="@color/bgWhite">
 
     <LinearLayout
-        android:id="@+id/bg"
-        android:orientation="vertical"
-        android:layout_height="130dp"
-        android:layout_width="match_parent"
-        android:background="@drawable/bg_gradient" >
-
-    </LinearLayout>
-
-    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:background="@android:color/transparent"
-        android:gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:gravity="center_horizontal">
 
         <TextView
             android:id = "@+id/titleAmount"

@@ -24,21 +24,7 @@ public class SettingsNetworkActivity extends BaseActivity {
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_network, container);
         setTitle("Network Monitor");
-    }
-
-    //Create a list of Data objects
-    public List<NetworkData> fill_with_data() {
-
-        List<NetworkData> data = new ArrayList<>();
-
-        data.add(new NetworkData("237.120.211.120.bcludusercontent.com", "/Pivx:4.0.2.53/", "protocol:70014", "38123 Blocks", "140ms" ));
-        data.add(new NetworkData("237.120.211.120.bcludusercontent.com", "/Pivx:4.0.2.53/", "protocol:70014", "38123 Blocks", "140ms" ));
-        data.add(new NetworkData("237.120.211.120.bcludusercontent.com", "/Pivx:4.0.2.53/", "protocol:70014", "38123 Blocks", "140ms" ));
-        data.add(new NetworkData("237.120.211.120.bcludusercontent.com", "/Pivx:4.0.2.53/", "protocol:70014", "38123 Blocks", "140ms" ));
-        data.add(new NetworkData("237.120.211.120.bcludusercontent.com", "/Pivx:4.0.2.53/", "protocol:70014", "38123 Blocks", "140ms"));
-        data.add(new NetworkData("237.120.211.120.bcludusercontent.com", "/Pivx:4.0.2.53/", "protocol:70014", "38123 Blocks", "140ms"));
-
-
-        return data;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 }
