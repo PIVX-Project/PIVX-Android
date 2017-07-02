@@ -64,6 +64,8 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_value;
     private TextView txt_local_value;
 
+    private TransactionsFragmentBase txsFragment;
+
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
     private IntentFilter addressBalanceIntent = new IntentFilter(IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE);
@@ -128,7 +130,7 @@ public class WalletActivity extends BaseDrawerActivity {
             }
         });
 
-
+        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
     }
 
     @Override

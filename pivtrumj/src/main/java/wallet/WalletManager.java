@@ -41,6 +41,7 @@ import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -372,6 +373,10 @@ public class WalletManager {
         return transaction.getValueSentFromMe(wallet);
     }
 
+    public Coin getValueSentToMe(Transaction transaction) {
+        return transaction.getValueSentToMe(wallet);
+    }
+
 
     public void restoreWalletFromProtobuf(final File file) throws IOException {
         FileInputStream is = null;
@@ -437,6 +442,20 @@ public class WalletManager {
 
         logger.info("successfully restored encrypted wallet: {}", file);
     }
+
+    public Set<Transaction> listTransactions() {
+        return wallet.getTransactions(true);
+    }
+
+    /**
+     * Return true is this wallet instance built the transaction
+     * @param transaction
+     */
+    public boolean isMine(Transaction transaction) {
+        return getValueSentFromMe(transaction).longValue()>0;
+    }
+
+
 
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

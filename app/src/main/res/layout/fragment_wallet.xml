@@ -28,6 +28,13 @@
             android:layout_height="match_parent"
             android:id="@+id/container_txs">
 
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="pivx.org.pivxwallet.ui.wallet_activity.TransactionsFragmentBase"
+                android:id="@+id/transactions_fragment"
+                />
+
 
         </FrameLayout>
 

@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
+import android.graphics.Color;
 import android.view.View;
 
 import java.util.List;
@@ -22,9 +23,9 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     @Override
     protected BaseRecyclerAdapter<TransactionWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
-        return new BaseRecyclerAdapter<TransactionWrapper, BaseRecyclerViewHolder>(getActivity()) {
+        return new BaseRecyclerAdapter<TransactionWrapper, TransactionViewHolderBase>(getActivity()) {
             @Override
-            protected BaseRecyclerViewHolder createHolder(View itemView, int type) {
+            protected TransactionViewHolderBase createHolder(View itemView, int type) {
                 return new TransactionViewHolderBase(itemView);
             }
 
@@ -34,8 +35,12 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             }
 
             @Override
-            protected void bindHolder(BaseRecyclerViewHolder holder, TransactionWrapper data, int position) {
+            protected void bindHolder(TransactionViewHolderBase holder, TransactionWrapper data, int position) {
                 //todo: fill this..
+                holder.amount.setText(data.getAmount().toFriendlyString());
+                holder.description.setText(data.getTransaction().getMemo());
+                holder.cv.setBackgroundColor(data.isTxMine()? Color.RED:Color.GREEN);
+
             }
         };
     }

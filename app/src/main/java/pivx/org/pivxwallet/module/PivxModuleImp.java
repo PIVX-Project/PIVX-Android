@@ -7,6 +7,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
+import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -158,6 +159,7 @@ public class PivxModuleImp implements PivxModule {
         SendRequest sendRequest = SendRequest.to(address,amount);
         sendRequest.memo = memo;
         sendRequest.signInputs = true;
+        sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -171,7 +173,28 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public List<TransactionWrapper> listTx() {
-        return new ArrayList<>();
+        List<TransactionWrapper> list = new ArrayList<>();
+        for (Transaction transaction : walletManager.listTransactions()) {
+            boolean isMine = walletManager.isMine(transaction);
+            Contact contact = null;
+            if (isMine){
+                try {
+                    // if the tx is mine i know that the first output address is the sent and the second one is the change address
+                    contact = contactsStore.getContact(transaction.getOutput(0).getAddressFromP2SH(getConf().getNetworkParams()).toBase58());
+                }catch (Exception e){
+                    e.printStackTrace();
+                    //swallow this for now..
+                }
+            }
+            list.add(new TransactionWrapper(
+                    transaction,
+                    contact,
+                    isMine ? walletManager.getValueSentFromMe(transaction):walletManager.getValueSentToMe(transaction),
+                    isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE
+                    )
+            );
+        }
+        return list;
     }
 
     @Override
