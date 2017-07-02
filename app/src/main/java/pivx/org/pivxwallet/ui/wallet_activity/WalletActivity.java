@@ -133,6 +133,7 @@ public class WalletActivity extends BaseDrawerActivity {
         });
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+
     }
 
     @Override

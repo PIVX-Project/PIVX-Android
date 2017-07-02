@@ -78,4 +78,5 @@ available or add one of your choice</string>
     <string name="button_retry">Retry</string>
     <string name="restore_wallet_dialog_success">Wallet was restored</string>
     <string name="restore_wallet_dialog_success_replay">Your wallet was successfully restored. Its balance will be determined next. This will take some time.</string>
+    <string name="unavailable">Amount unavailable:</string>
 </resources>
