@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.module;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -172,7 +173,7 @@ public class PivxModuleImp implements PivxModule {
             if (isMine){
                 try {
                     // if the tx is mine i know that the first output address is the sent and the second one is the change address
-                    contact = contactsStore.getContact(transaction.getOutput(0).getAddressFromP2SH(getConf().getNetworkParams()).toBase58());
+                    contact = contactsStore.getContact(transaction.getOutput(0).getScriptPubKey().getToAddress(getConf().getNetworkParams()).toBase58());
                 }catch (Exception e){
                     e.printStackTrace();
                     //swallow this for now..
@@ -200,6 +201,11 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public void commitTx(Transaction transaction) {
         walletManager.commitTx(transaction);
+    }
+
+    @Override
+    public List<Peer> listConnectedPeers() {
+        return blockchainManager.listConnectedPeers();
     }
 
 

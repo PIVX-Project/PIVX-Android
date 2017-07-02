@@ -8,10 +8,11 @@
     android:background="@color/bgWhite"
     tools:context=".ui.settings_network_activity.SettingsNetworkActivity">
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/networkList"
+    <fragment
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:name="pivx.org.pivxwallet.ui.settings_network_activity.NetworkFragment"
+        android:id="@+id/peers_fragment"
+        />
 
 </LinearLayout>

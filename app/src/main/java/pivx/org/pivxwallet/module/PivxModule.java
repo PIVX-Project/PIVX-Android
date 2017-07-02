@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.module;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Transaction;
 
 import java.io.File;
@@ -77,4 +78,6 @@ public interface PivxModule {
     Coin getValueSentFromMe(Transaction transaction, boolean excludeChangeAddress);
 
     void commitTx(Transaction transaction);
+
+    List<Peer> listConnectedPeers();
 }

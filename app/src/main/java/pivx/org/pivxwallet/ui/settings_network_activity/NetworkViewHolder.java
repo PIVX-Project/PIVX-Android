@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 /**
  * Created by Neoperol on 6/8/17.
  */
 
-public class NetworkViewHolder extends RecyclerView.ViewHolder {
+public class NetworkViewHolder extends BaseRecyclerViewHolder {
 
     CardView cv;
     TextView address;

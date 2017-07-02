@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.ui.settings_network_activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -17,19 +18,12 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 
 public class SettingsNetworkActivity extends BaseActivity {
 
-    RecyclerView recyclerView;
-    private RecyclerNetworkViewAdapter adapter;
+    View root;
+
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        getLayoutInflater().inflate(R.layout.fragment_network, container);
+        root = getLayoutInflater().inflate(R.layout.fragment_network, container);
         setTitle("Network Monitor");
-
-        // Recicler view
-        List<NetworkData> data = fill_with_data();
-        recyclerView = (RecyclerView) findViewById(R.id.networkList);
-        adapter = new RecyclerNetworkViewAdapter(data, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     //Create a list of Data objects
