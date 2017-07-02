@@ -463,6 +463,10 @@ public class WalletManager {
         return wallet.getBalance(Wallet.BalanceType.ESTIMATED_SPENDABLE).minus(wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE));
     }
 
+    public boolean isAddressMine(Address address) {
+        return wallet.isPubKeyHashMine(address.getHash160());
+    }
+
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

@@ -5,6 +5,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 
@@ -175,19 +176,30 @@ public class PivxModuleImp implements PivxModule {
         for (Transaction transaction : walletManager.listTransactions()) {
             boolean isMine = walletManager.isMine(transaction);
             Contact contact = null;
+            Address address = null;
             if (isMine){
                 try {
+                    address = transaction.getOutput(0).getScriptPubKey().getToAddress(getConf().getNetworkParams());
                     // if the tx is mine i know that the first output address is the sent and the second one is the change address
-                    contact = contactsStore.getContact(transaction.getOutput(0).getScriptPubKey().getToAddress(getConf().getNetworkParams()).toBase58());
+                    contact = contactsStore.getContact(address.toBase58());
                 }catch (Exception e){
                     e.printStackTrace();
                     //swallow this for now..
+                }
+            }else {
+                for (TransactionOutput transactionOutput : transaction.getOutputs()) {
+                    Address addressToCheck = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+                    if(walletManager.isAddressMine(addressToCheck)){
+                        address = addressToCheck;
+                        break;
+                    }
                 }
             }
             list.add(new TransactionWrapper(
                     transaction,
                     contact,
                     isMine ? getValueSentFromMe(transaction,true):walletManager.getValueSentToMe(transaction),
+                    address,
                     isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE
                     )
             );

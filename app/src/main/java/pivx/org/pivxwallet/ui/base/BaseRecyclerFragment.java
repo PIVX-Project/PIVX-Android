@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private View container_empty_screen;
     private TextView txt_empty;
+    private ImageView imgEmptyView;
 
     private BaseRecyclerAdapter adapter;
     private List<T> list;
@@ -55,6 +57,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefresh);
         container_empty_screen = root.findViewById(R.id.container_empty_screen);
         txt_empty = (TextView) root.findViewById(R.id.txt_empty);
+        imgEmptyView = (ImageView) root.findViewById(R.id.img_empty_view);
         recycler.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);
@@ -161,6 +164,12 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     protected void setEmptyTextColor(int color){
         if (txt_empty!=null){
             txt_empty.setTextColor(color);
+        }
+    }
+
+    protected void setEmptyView(int imgRes){
+        if (imgEmptyView!=null){
+            imgEmptyView.setImageResource(imgRes);
         }
     }
 

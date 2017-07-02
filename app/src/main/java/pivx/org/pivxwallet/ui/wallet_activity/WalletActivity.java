@@ -253,7 +253,7 @@ public class WalletActivity extends BaseDrawerActivity {
         Coin availableBalance = pivxModule.getAvailableBalanceCoin();
         txt_value.setText((availableBalance.isZero())?availableBalance.toFriendlyString():"0 Pivs");
         Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
-        txt_unnavailable.setText("Unspendable "+((unnavailableBalance.isZero())?unnavailableBalance.toFriendlyString():"0 Pivs"));
+        txt_unnavailable.setText(!unnavailableBalance.isZero()?unnavailableBalance.toFriendlyString():"0 Pivs");
         BigDecimal amountInUsd = pivxModule.getAvailableBalanceLocale();
         NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
         usdCostFormat.setMinimumFractionDigits( 1 );

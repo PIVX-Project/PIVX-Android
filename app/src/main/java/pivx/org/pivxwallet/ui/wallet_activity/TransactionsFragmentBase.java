@@ -1,7 +1,10 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -15,6 +18,15 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
  */
 
 public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWrapper> {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        setEmptyView(R.drawable.img_address_empty);
+        setEmptyText("No transactions yet");
+        setEmptyTextColor(Color.parseColor("#cccccc"));
+        return view;
+    }
 
     @Override
     protected List<TransactionWrapper> onLoading() {
@@ -39,8 +51,21 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 //todo: fill this..
                 holder.amount.setText(data.getAmount().toFriendlyString());
                 holder.description.setText(data.getTransaction().getMemo());
-                holder.cv.setBackgroundColor(data.isTxMine()? Color.RED:Color.GREEN);
 
+                if (data.isTxMine()){
+                    //holder.cv.setBackgroundColor(Color.RED);Color.GREEN
+                    holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
+                }else {
+                    holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
+                }
+
+                if (data.getContact()!=null){
+                    holder.title.setText(data.getContact().getName());
+                }else {
+                    holder.title.setText(data.getAddress().toBase58());
+                }
+                String memo = data.getTransaction().getMemo();
+                holder.description.setText(memo!=null?memo:"No description");
             }
         };
     }

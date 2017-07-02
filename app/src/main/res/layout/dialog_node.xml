@@ -31,6 +31,7 @@
         android:id="@+id/tcpText"
         android:hint="@string/hint_tcp_port"
         android:text = ""
+        android:inputType="number"
         style="@style/Inputs"/>
     <TextView
         android:text = "@string/ssl_port"
@@ -40,6 +41,7 @@
         android:id="@+id/sslText"
         android:hint="@string/hint_ssl_port"
         android:text = ""
+        android:inputType="number"
         style="@style/Inputs"/>
 
 

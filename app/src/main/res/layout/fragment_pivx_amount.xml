@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="wrap_content"
     android:paddingTop="40dp"
-    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:gravity="center"
     android:background="@color/bgPurple">
 
     <TextView
@@ -23,7 +24,8 @@
         android:layout_height = "wrap_content"
         android:text = "14710 USD"
         android:textColor = "@color/textColorLightPurple"
-        android:textSize = "16sp" />
+        android:textSize = "16sp"
+        android:paddingBottom="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,4 +56,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

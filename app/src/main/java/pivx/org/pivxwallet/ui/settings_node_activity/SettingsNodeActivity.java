@@ -26,6 +26,8 @@ public class SettingsNodeActivity extends BaseActivity implements View.OnClickLi
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btnSelectNode = (Button) root.findViewById(R.id.btnSelectNode);
+        spinner = (Spinner) root.findViewById(R.id.spinner);
+
         btnSelectNode.setOnClickListener(this);
     }
 
