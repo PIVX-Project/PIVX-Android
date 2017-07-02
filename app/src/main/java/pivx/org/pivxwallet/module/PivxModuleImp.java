@@ -85,8 +85,14 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public void restoreWallet(File backupFile, String password) throws IOException {
+    public void restoreWallet(File backupFile) throws IOException {
+        // restore wallet and launch the restart of the blockchain...
+        walletManager.restoreWalletFromProtobuf(backupFile);
+    }
 
+    @Override
+    public void restoreWalletFromEncrypted(File file, String password) throws IOException {
+        walletManager.restoreWalletFromEncrypted(file,password);
     }
 
     @Override
@@ -148,21 +154,14 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException {
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
-        Transaction tx = new Transaction(walletConfiguration.getNetworkParams());
 
-        // first check if the wallet has available balance.
-        if (amount.isLessThan(Coin.valueOf(availableBalance))) throw new InsufficientMoneyException(amount,"Available amount: "+Coin.valueOf(availableBalance));
-        // now get the unspent tx
+        SendRequest sendRequest = SendRequest.to(address,amount);
+        sendRequest.memo = memo;
+        sendRequest.signInputs = true;
+        //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
+        walletManager.completeSend(sendRequest);
 
-        /*Script.createInputScript()
-        TransactionInput transactionInput = new TransactionInput(
-                walletConfiguration.getNetworkParams(),
-                tx,
-
-                );*/
-
-
-        return tx;
+        return sendRequest.tx;
     }
 
     @Override
@@ -173,6 +172,11 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public List<TransactionWrapper> listTx() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public Coin getValueSentFromMe(Transaction transaction) {
+        return walletManager.getValueSentFromMe(transaction);
     }
 
 

@@ -47,4 +47,5 @@ public interface WalletConfiguration {
 
     int getMinMemoryNeeded();
 
+    long getBackupMaxChars();
 }

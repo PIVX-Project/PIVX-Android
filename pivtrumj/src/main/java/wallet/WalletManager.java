@@ -24,6 +24,8 @@ import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -43,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 
 import global.ContextWrapper;
 import global.WalletConfiguration;
+import global.utils.Io;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -363,6 +367,77 @@ public class WalletManager {
     public Coin getAvailableBalance() {
         return wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE);
     }
+
+    public Coin getValueSentFromMe(Transaction transaction) {
+        return transaction.getValueSentFromMe(wallet);
+    }
+
+
+    public void restoreWalletFromProtobuf(final File file) throws IOException {
+        FileInputStream is = null;
+        try {
+            is = new FileInputStream(file);
+            restoreWallet(WalletUtils.restoreWalletFromProtobuf(is, conf.getNetworkParams()));
+            logger.info("successfully restored unencrypted wallet: {}", file);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                }
+                catch (final IOException x2) {
+                    // swallow
+                }
+            }
+        }
+    }
+
+    private void restoreWallet(final Wallet wallet) throws IOException {
+
+        replaceWallet(wallet);
+
+        //config.disarmBackupReminder();
+        // en vez de hacer esto acá hacerlo en el module..
+        /*if (listener!=null)
+            listener.onWalletRestored();*/
+
+    }
+
+    public void replaceWallet(final Wallet newWallet) throws IOException {
+        resetBlockchain();
+
+        try {
+            wallet.shutdownAutosaveAndWait();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        wallet = newWallet;
+        //conf.maybeIncrementBestChainHeightEver(newWallet.getLastBlockSeenHeight());
+        afterLoadWallet();
+
+        // todo: Nadie estaba escuchando esto.. Tengo que ver que deberia hacer despues
+//        final IntentWrapper intentWrapper = new IntentWrapperAndroid(WalletConstants.ACTION_WALLET_REFERENCE_CHANGED);
+//        intentWrapper.setPackage(context.getPackageName());
+//        context.sendLocalBroadcast(intentWrapper);
+    }
+
+    private void resetBlockchain() {
+        contextWrapper.stopBlockchain();
+    }
+
+    public void restoreWalletFromEncrypted(File file, String password) throws IOException {
+        final BufferedReader cipherIn = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
+        final StringBuilder cipherText = new StringBuilder();
+        Io.copy(cipherIn, cipherText, conf.getBackupMaxChars());
+        cipherIn.close();
+
+        final byte[] plainText = Crypto.decryptBytes(cipherText.toString(), password.toCharArray());
+        final InputStream is = new ByteArrayInputStream(plainText);
+
+        restoreWallet(WalletUtils.restoreWalletFromProtobufOrBase58(is, conf.getNetworkParams(),conf.getBackupMaxChars()));
+
+        logger.info("successfully restored encrypted wallet: {}", file);
+    }
+
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

@@ -20,8 +20,8 @@
         android:textColor="@color/mainText"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/addFile"
+    <Spinner
+        android:id="@+id/spinner_files"
         android:layout_width="260dp"
         android:layout_height="40dp"
         android:layout_below="@+id/restoreMessage"
@@ -32,18 +32,18 @@
         android:elevation="2dp"
         android:stateListAnimator="@null"
         android:gravity="left|center_vertical"
-        android:onClick="addFile"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"
+        android:prompt="@string/select_file"
         android:text="@string/select_file"
         android:textColor="@color/mainText"
         android:textSize="14sp" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/edit_password"
         android:layout_width="260dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/addFile"
+        android:layout_below="@+id/spinner_files"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_settings_input_bottom"
         android:gravity="left|center_vertical"

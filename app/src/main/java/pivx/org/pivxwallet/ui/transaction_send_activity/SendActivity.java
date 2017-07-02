@@ -113,7 +113,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         dialog.setContentView(R.layout.transaction_dialog);
         dialog.setTitle("Send");
         TextView valuePivx = (TextView) dialog.findViewById(R.id.valuePivx);
-        valuePivx.setText(transaction.getOutput(0).getValue().toFriendlyString());
+        valuePivx.setText(pivxModule.getValueSentFromMe(transaction).toFriendlyString());
         Button dialogButton = (Button) dialog.findViewById(R.id.btnConfirm);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override

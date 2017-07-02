@@ -16,6 +16,31 @@ public class WalletConfigurationsImp implements WalletConfiguration {
     public static Context context = new Context(networkParameters);
 
     @Override
+    public int getTrustedNodePort() {
+        return 0;
+    }
+
+    @Override
+    public String getTrustedNodeHost() {
+        return null;
+    }
+
+    @Override
+    public void saveTrustedNode(String host, int port) {
+
+    }
+
+    @Override
+    public void saveScheduleBlockchainService(long time) {
+
+    }
+
+    @Override
+    public long getScheduledBLockchainService() {
+        return 0;
+    }
+
+    @Override
     public String getMnemonicFilename() {
         return null;
     }
@@ -43,5 +68,35 @@ public class WalletConfigurationsImp implements WalletConfiguration {
     @Override
     public Context getWalletContext() {
         return context;
+    }
+
+    @Override
+    public String getBlockchainFilename() {
+        return null;
+    }
+
+    @Override
+    public String getCheckpointFilename() {
+        return null;
+    }
+
+    @Override
+    public int getPeerTimeoutMs() {
+        return 0;
+    }
+
+    @Override
+    public long getPeerDiscoveryTimeoutMs() {
+        return 0;
+    }
+
+    @Override
+    public int getMinMemoryNeeded() {
+        return 0;
+    }
+
+    @Override
+    public void getBackupMaxChars() {
+
     }
 }

@@ -18,7 +18,5 @@ public class SettingsRestoreActivity extends BaseActivity {
         setTitle("Restore Wallet");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 }

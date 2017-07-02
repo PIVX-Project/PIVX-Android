@@ -114,4 +114,9 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
         return PivxContext.MEMORY_CLASS_LOWEND;
     }
 
+    @Override
+    public long getBackupMaxChars() {
+        return PivxContext.BACKUP_MAX_CHARS;
+    }
+
 }

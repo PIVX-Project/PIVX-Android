@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.github.anrwatchdog.ANRWatchDog;
 import com.snappydb.SnappydbException;
 
 import org.slf4j.Logger;
@@ -44,6 +45,8 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.utils.AppConf;
 import store.AddressStore;
 
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
+
 /**
  * Created by mati on 18/04/17.
  */
@@ -76,6 +79,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            new ANRWatchDog().setIgnoreDebugger(true).start();
             // Default network conf for localhost test
             networkConf = new NetworkConf("10.0.2.2",50001);
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
@@ -169,7 +173,7 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     @Override
     public InputStream openAssestsStream(String name) throws IOException {
-        return getAssets().open(pivxModule.getConf().getCheckpointFilename());
+        return getAssets().open(name);
     }
 
     @Override
@@ -181,6 +185,13 @@ public class PivxApplication extends Application implements ContextWrapper {
     @Override
     public String getVersionName() {
         return info.versionName;
+    }
+
+    @Override
+    public void stopBlockchain() {
+        Intent intent = new Intent(this,PivxWalletService.class);
+        intent.setAction(ACTION_RESET_BLOCKCHAIN);
+        startService(intent);
     }
 
     public NetworkConf getNetworkConf() {

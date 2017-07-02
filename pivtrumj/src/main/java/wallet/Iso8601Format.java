@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.wallet;
+package wallet;
 
 import java.text.DateFormat;
 import java.text.ParseException;

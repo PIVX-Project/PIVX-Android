@@ -32,4 +32,6 @@ public interface ContextWrapper {
     boolean isMemoryLow();
 
     String getVersionName();
+
+    void stopBlockchain();
 }

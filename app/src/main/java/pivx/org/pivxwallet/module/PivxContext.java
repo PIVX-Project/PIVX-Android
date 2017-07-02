@@ -60,4 +60,6 @@ public class PivxContext {
     public static final int PEER_DISCOVERY_TIMEOUT_MS = 10 * (int) DateUtils.SECOND_IN_MILLIS;
     public static final int PEER_TIMEOUT_MS = 15 * (int) DateUtils.SECOND_IN_MILLIS;
 
+    /** Maximum size of backups. Files larger will be rejected. */
+    public static final long BACKUP_MAX_CHARS = 10000000;
 }

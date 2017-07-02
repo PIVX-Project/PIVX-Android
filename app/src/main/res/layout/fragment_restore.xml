@@ -56,22 +56,21 @@
 
 
     <LinearLayout
-        android:layout_below="@+id/password"
         android:layout_weight="1"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center|bottom">
+        android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
+        android:layout_below="@+id/password"
+        android:layout_alignParentStart="true">
 
         <Button
-            android:id="@+id/btnCreate"
-            android:onClick="tryCreate"
+            android:id="@+id/btn_restore"
             android:text="@string/btn_restore_wallet"
             style="@style/ButtomWhite"/>
 
 
     </LinearLayout>
 
-    </RelativeLayout>
+</RelativeLayout>

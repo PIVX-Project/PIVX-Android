@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
@@ -51,7 +52,7 @@ public class SettingsActivity extends BaseDrawerActivity {
         buttonRestore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), SettingsRestoreActivity.class);
+                Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });

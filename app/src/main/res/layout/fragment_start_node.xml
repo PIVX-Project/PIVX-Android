@@ -14,9 +14,6 @@
         style="@style/MessageTextStart"/>
 
 
-
-
-
     <Spinner
         android:gravity="center_vertical"
         android:layout_below="@+id/nodeMessage"
@@ -54,7 +51,6 @@
 
         <Button
             android:id="@+id/btnSelectNode"
-            android:onClick="tryCreate"
             android:text="@string/select_node"
             style="@style/ButtomWhite"/>
 

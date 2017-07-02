@@ -29,7 +29,6 @@
 
         </activity>
         <activity android:name=".ui.wallet_activity.WalletActivity">
-
             <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
 

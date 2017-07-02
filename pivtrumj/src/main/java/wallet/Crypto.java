@@ -284,8 +284,7 @@ public class Crypto {
 		return result;
 	}
 
-	public final static FileFilter OPENSSL_FILE_FILTER = new FileFilter()
-	{
+	public final static FileFilter OPENSSL_FILE_FILTER = new FileFilter() {
 		private final char[] buf = new char[OPENSSL_MAGIC_TEXT.length()];
 
 		@Override

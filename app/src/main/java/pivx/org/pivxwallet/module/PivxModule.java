@@ -14,6 +14,7 @@ import java.util.List;
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import wallet.exceptions.CantRestoreEncryptedWallet;
 
 /**
  * Created by mati on 18/04/17.
@@ -37,9 +38,10 @@ public interface PivxModule {
      *
      *
      * @param backupFile
-     * @param password
      */
-    void restoreWallet(File backupFile, String password) throws IOException;
+    void restoreWallet(File backupFile) throws IOException;
+
+    void restoreWalletFromEncrypted(File file, String password) throws CantRestoreEncryptedWallet, IOException;
 
     /**
      * If the wallet already exist
@@ -71,5 +73,7 @@ public interface PivxModule {
     WalletConfiguration getConf();
 
     List<TransactionWrapper> listTx();
+
+    Coin getValueSentFromMe(Transaction transaction);
 
 }
