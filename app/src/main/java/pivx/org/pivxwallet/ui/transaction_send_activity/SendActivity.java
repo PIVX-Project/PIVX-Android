@@ -47,7 +47,6 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 
 public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int SCANNER_RESULT = 122;
-    final Context context = this;
     private Button buttonSend;
     private AutoCompleteTextView edit_address;
     private EditText edit_amount;
@@ -156,7 +155,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private void launchSendDialog(final Transaction transaction){
         // create a Dialog component
-        final Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(this);
 
         //tell the Dialog to use the dialog.xml as it's layout description
         dialog.setContentView(R.layout.transaction_dialog);
@@ -180,6 +179,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 intent.setAction(ACTION_BROADCAST_TRANSACTION);
                 intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
                 startService(intent);
+                Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
+                onBackPressed();
                 dialog.dismiss();
             }
         });

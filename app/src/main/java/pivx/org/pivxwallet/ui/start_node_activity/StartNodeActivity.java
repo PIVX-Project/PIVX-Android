@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,16 +34,25 @@ import pivx.org.pivxwallet.utils.DialogBuilder;
  */
 
 public class StartNodeActivity extends BaseActivity {
+
     private Button openDialog;
     private Button btnSelectNode;
     private EditText tcpText;
     private EditText sslText;
     private EditText hostText;
+    private Spinner dropdown;
+    private List<String> hosts = new ArrayList<>();
 
     private List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts();
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
+
+        if (pivxApplication.getAppConf().getTrustedNode()==null){
+            goNext();
+            finish();
+        }
+
         getLayoutInflater().inflate(R.layout.fragment_start_node, container);
         setTitle("Select Node");
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -89,13 +100,17 @@ public class StartNodeActivity extends BaseActivity {
         btnSelectNode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), WalletActivity.class);
-                startActivity(intent);
+                int selected = dropdown.getSelectedItemPosition();
+                PivtrumPeerData selectedNode = trustedNodes.get(selected);
+                pivxApplication.setTrustedServer(selectedNode);
+                pivxApplication.getAppConf().setAppInit(true);
+                goNext();
+                finish();
             }
         });
 
-        Spinner dropdown = (Spinner)findViewById(R.id.spinner);
-        List<String> hosts = new ArrayList<>();
+        dropdown = (Spinner)findViewById(R.id.spinner);
+
         for (PivtrumPeerData trustedNode : trustedNodes) {
             hosts.add(trustedNode.getHost());
         }
@@ -106,8 +121,21 @@ public class StartNodeActivity extends BaseActivity {
                 view.setTextColor(Color.WHITE);
                 return view;
             }
+
+            @NonNull
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                CheckedTextView view = (CheckedTextView) super.getView(position, convertView, parent);
+                view.setTextColor(Color.WHITE);
+                return view;
+            }
         };
         dropdown.setAdapter(adapter);
+    }
+
+    private void goNext() {
+        Intent intent = new Intent(this, WalletActivity.class);
+        startActivity(intent);
     }
 
 }
