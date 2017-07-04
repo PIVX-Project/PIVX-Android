@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="16dp"
+        android:gravity="left">
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "match_parent"
+            android:text = "@string/title_pivx_send"
+            android:layout_marginBottom="4dp"
+            android:textColor = "@color/subtitle"
+            android:textSize = "14sp" />
+        <TextView
+            android:id = "@+id/text_pvix"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:text = "3.13532 PIV"
+            android:padding="8dp"
+            android:background="@drawable/transaction_inputs"
+            android:layout_marginBottom="14dp"
+            android:textColor = "#434343"
+            android:textSize = "22sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/title_currency"
+            android:layout_marginBottom="4dp"
+            android:textColor = "@color/subtitle"
+            android:textSize = "14sp" />
+
+        <TextView
+            android:id = "@+id/text_currency"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginBottom="14dp"
+            android:text = "14710 USD"
+            android:textColor = "#4c4c4c"
+            android:padding="8dp"
+            android:background="@drawable/transaction_inputs"
+            android:textSize = "16sp" />
+
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/title_fee"
+            android:layout_marginBottom="4dp"
+            android:textColor = "@color/subtitle"
+            android:textSize = "14sp" />
+
+
+        <TextView
+            android:id = "@+id/text_fee"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginBottom="14dp"
+            android:text = "0.13532 PIV"
+            android:textColor = "@color/mainText"
+            android:padding="8dp"
+            android:background="@drawable/transaction_inputs"
+            android:textSize = "16sp" />
+
+        <TextView
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/title_description"
+            android:layout_marginBottom="4dp"
+            android:textColor = "@color/subtitle"
+            android:textSize = "14sp" />
+
+
+
+        <TextView
+            android:id = "@+id/text_escription"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginBottom="20dp"
+            android:padding="8dp"
+            android:background="@drawable/transaction_inputs"
+            android:text = "@string/add_memo"
+            android:textColor = "@color/mainText"
+            android:textSize = "16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
