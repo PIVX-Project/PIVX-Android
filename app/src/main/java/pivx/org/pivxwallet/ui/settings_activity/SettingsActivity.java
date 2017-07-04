@@ -5,11 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
-
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
@@ -17,8 +20,7 @@ import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
-import pivx.org.pivxwallet.ui.settings_restore_activity.SettingsRestoreActivity;
-import pivx.org.pivxwallet.ui.start_activity.StartActivity;
+import pivx.org.pivxwallet.utils.DialogBuilder;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -66,20 +68,28 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
         buttonCurrency.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create();
-                alertDialog.setTitle("hi");
-                alertDialog.setMessage("this is my app");
+                LayoutInflater content = LayoutInflater.from(SettingsActivity.this);
+                View dialogView = content.inflate(R.layout.dialog_currency_picker, null);
+                DialogBuilder currencyDialog = new DialogBuilder(SettingsActivity.this);
+                currencyDialog.setView(dialogView);
+                CharSequence items[] = new CharSequence[] {"USD", "GB", "Third"};
+                currencyDialog.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
 
-                alertDialog.setButton("Continue..", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
+                    @Override
+                    public void onClick(DialogInterface d, int n) {
+                        // ...
                     }
-                });
 
-                alertDialog.show();
+                });
+                currencyDialog.setPositiveButton("Select", null);
+                currencyDialog.setNegativeButton("Cancel", null);
+                currencyDialog.show();
+
+
             }
 
         });
+
         
     }
 

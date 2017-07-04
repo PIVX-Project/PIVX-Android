@@ -21,9 +21,11 @@ public class QrActivity extends BaseActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        super.onCreateView(savedInstanceState, container);
-        getSupportActionBar().hide();
+        super.onCreateView(savedInstanceState, container);;
         root = getLayoutInflater().inflate(R.layout.qr_activity,container,true);
+        setTitle("Restore Wallet");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

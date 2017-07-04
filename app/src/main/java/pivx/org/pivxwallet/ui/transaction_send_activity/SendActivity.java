@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -32,6 +33,7 @@ import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -147,6 +149,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo);
             // dialog
             launchSendDialog(transaction);
+            LayoutInflater content = LayoutInflater.from(SendActivity.this);
+            View dialogView = content.inflate(R.layout.dialog_send_confirmation, null);
+            DialogBuilder sendDialog = new DialogBuilder(SendActivity.this);
+            sendDialog.setTitle("Transaction Information");
+            sendDialog.setView(dialogView);
+            sendDialog.setPositiveButton("OK", null);
+            sendDialog.show();
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Insuficient balance");

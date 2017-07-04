@@ -52,6 +52,10 @@
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
 
+    <style name="MessageTextDark" parent="MessageTextStart">
+        <item name="android:textColor">@color/mainText</item>
+    </style>
+
     <style name="Subtitles">
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_width">wrap_content</item>
