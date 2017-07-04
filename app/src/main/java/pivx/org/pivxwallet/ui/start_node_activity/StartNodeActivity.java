@@ -2,10 +2,12 @@ package pivx.org.pivxwallet.ui.start_node_activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ public class StartNodeActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
 
-        if (pivxApplication.getAppConf().getTrustedNode()==null){
+        if (pivxApplication.getAppConf().getTrustedNode()!=null){
             goNext();
             finish();
         }
@@ -104,6 +106,8 @@ public class StartNodeActivity extends BaseActivity {
                 PivtrumPeerData selectedNode = trustedNodes.get(selected);
                 pivxApplication.setTrustedServer(selectedNode);
                 pivxApplication.getAppConf().setAppInit(true);
+                // now that everything is good, start the service
+                pivxApplication.startPivxService();
                 goNext();
                 finish();
             }
@@ -114,11 +118,11 @@ public class StartNodeActivity extends BaseActivity {
         for (PivtrumPeerData trustedNode : trustedNodes) {
             hosts.add(trustedNode.getHost());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,hosts){
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item,hosts){
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 CheckedTextView view = (CheckedTextView) super.getDropDownView(position, convertView, parent);
-                view.setTextColor(Color.WHITE);
+                view.setTextColor(Color.BLACK);
                 return view;
             }
 
@@ -136,6 +140,10 @@ public class StartNodeActivity extends BaseActivity {
     private void goNext() {
         Intent intent = new Intent(this, WalletActivity.class);
         startActivity(intent);
+    }
+
+    public static int convertDpToPx(Resources resources, int dp){
+        return Math.round(dp*(resources.getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
 
 }

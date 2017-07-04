@@ -30,7 +30,7 @@ public class PincodeActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
 
-        if (pivxApplication.getAppConf().getPincode()==null){
+        if (pivxApplication.getAppConf().getPincode()!=null){
             goNext();
             finish();
         }
@@ -75,7 +75,6 @@ public class PincodeActivity extends BaseActivity {
                     i3.setImageResource(R.drawable.pin_circle_active);
                 } else if (s.length() == 4) {
                     pin[3]= s.charAt(3);
-                    pin[4] = -1;
                     i4.setImageResource(R.drawable.pin_circle_active);
                 }
             }
