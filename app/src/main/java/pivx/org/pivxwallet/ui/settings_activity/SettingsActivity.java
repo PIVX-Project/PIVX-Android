@@ -106,8 +106,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         txt_network_info.setText(
                 Html.fromHtml(
                         "Network<br><font color=#55476c>"+pivxModule.getConf().getNetworkParams().getId()+
-                                "<br>" +
-                                "Height<br><font color=#55476c>"+pivxModule.getChainHeight()
+                                "</font><br>" +
+                                "Height<br><font color=#55476c>"+pivxModule.getChainHeight()+"</font>"
                 )
         );
     }
