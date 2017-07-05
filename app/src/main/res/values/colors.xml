@@ -18,6 +18,7 @@
     <color name="subtitle">#757575</color>
     <color name="bgInput">#F5F6F7</color>
     <color name="hintInput">#979899</color>
+    <color name="red">#d0011b</color>
 
     <!-- scanner -->
     <color name="scan_mask">#60000000</color>
