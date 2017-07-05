@@ -43,6 +43,7 @@ public class StartNodeActivity extends BaseActivity {
     private EditText sslText;
     private EditText hostText;
     private Spinner dropdown;
+    private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
 
     private List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts();
@@ -78,6 +79,11 @@ public class StartNodeActivity extends BaseActivity {
                         String host = editHost.getText().toString();
                         String tcpPort = editTcp.getText().toString();
                         String sslPort = editSsl.getText().toString();
+                        trustedNodes.add(new PivtrumPeerData(host,Integer.valueOf(tcpPort),Integer.valueOf(sslPort)));
+                        hosts.add(host);
+                        adapter.clear();
+                        adapter.addAll(hosts);
+                        dropdown.setSelection(hosts.size()-1);
                         Toast.makeText(StartNodeActivity.this,"Add new node not implemented yet",Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
@@ -118,7 +124,7 @@ public class StartNodeActivity extends BaseActivity {
         for (PivtrumPeerData trustedNode : trustedNodes) {
             hosts.add(trustedNode.getHost());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item,hosts){
+        adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item,hosts){
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 CheckedTextView view = (CheckedTextView) super.getDropDownView(position, convertView, parent);
