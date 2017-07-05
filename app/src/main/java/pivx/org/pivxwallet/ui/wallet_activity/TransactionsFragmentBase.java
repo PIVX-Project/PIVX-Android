@@ -22,7 +22,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        setEmptyView(R.drawable.img_address_empty);
+        setEmptyView(R.drawable.img_transaction_empty);
         setEmptyText("No transactions yet");
         setEmptyTextColor(Color.parseColor("#cccccc"));
         return view;

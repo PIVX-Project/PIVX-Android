@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.ui.contacts_activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
@@ -28,6 +31,7 @@ public class ContactsActivity extends BaseDrawerActivity {
     private ContactsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private Collection<Contact> contacts;
+    private LinearLayout emptyView;
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_address, container);
@@ -38,6 +42,8 @@ public class ContactsActivity extends BaseDrawerActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ContactsAdapter(this);
         recyclerView.setAdapter(adapter);
+        emptyView = (LinearLayout) findViewById(R.id.empty_view);
+        emptyView.setVisibility(View.GONE);
     }
 
     @Override
@@ -57,7 +63,7 @@ public class ContactsActivity extends BaseDrawerActivity {
                 contacts = pivxModule.getContacts();
                 if (contacts!=null && !contacts.isEmpty())
                     adapter.changeDataSet(new ArrayList(contacts));
-                // Empty view..
+                    emptyView.setVisibility(View.VISIBLE);
             }
         }).start();
     }
