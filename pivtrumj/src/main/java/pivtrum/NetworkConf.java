@@ -18,24 +18,21 @@ public class NetworkConf {
     private static final String MAX_PROTOCOL_VERSION = "2.9.5";
     private static final String MIN_PROTOCOL_VERSION = "1.0";
     /** Trusted server selected on the first screen of the app */
-    private String trustedServerHost;
-    private int trustedServerPort;
+    private PivtrumPeerData trustedHost;
     /** Known servers from the network */
     private List<InetSocketAddress> networkServers;
 
-    public NetworkConf(String trustedServerHost,int trustedServerPort) {
-        this.trustedServerHost = trustedServerHost;
-        this.trustedServerPort = trustedServerPort;
+    public NetworkConf() {
         this.networkServers = new ArrayList<>();
     }
 
     public PivtrumPeerData getTrustedServer() {
-        return new PivtrumPeerData(trustedServerHost,trustedServerPort,0);
+        return trustedHost;
     }
 
-    public void setTrustedServer(String trustedServerHost,int trustedServerPort) {
-        this.trustedServerHost = trustedServerHost;
-        this.trustedServerPort = trustedServerPort;
+    public void setTrustedServer(PivtrumPeerData pivtrumPeerData) {
+        this.trustedHost = pivtrumPeerData;
+
     }
 
     public void addAll(Collection<InetSocketAddress> networkServers){

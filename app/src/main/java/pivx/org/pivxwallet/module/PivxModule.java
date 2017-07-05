@@ -83,5 +83,5 @@ public interface PivxModule {
 
     List<Peer> listConnectedPeers();
 
-
+    int getChainHeight();
 }

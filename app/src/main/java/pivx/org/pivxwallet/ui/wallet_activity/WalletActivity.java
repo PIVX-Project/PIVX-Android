@@ -85,8 +85,7 @@ public class WalletActivity extends BaseDrawerActivity {
             String action = intent.getAction();
             if (action.equals(ACTION_NOTIFICATION)){
                 if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_ON_COIN_RECEIVED)){
-                    Coin balance = pivxModule.getAvailableBalanceCoin();
-                    txt_value.setText(balance.toFriendlyString());
+                    updateBalance();
                 }
             }
 
@@ -251,7 +250,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private void updateBalance() {
         Coin availableBalance = pivxModule.getAvailableBalanceCoin();
-        txt_value.setText((availableBalance.isZero())?availableBalance.toFriendlyString():"0 Pivs");
+        txt_value.setText(!availableBalance.isZero()?availableBalance.toFriendlyString():"0 Pivs");
         Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
         txt_unnavailable.setText(!unnavailableBalance.isZero()?unnavailableBalance.toFriendlyString():"0 Pivs");
         BigDecimal amountInUsd = pivxModule.getAvailableBalanceLocale();

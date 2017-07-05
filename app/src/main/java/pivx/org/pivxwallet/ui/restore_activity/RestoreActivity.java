@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
@@ -177,6 +179,12 @@ public class RestoreActivity extends BaseActivity {
                 this.getString(R.string.restore_wallet_dialog_success_replay);
         DialogBuilder dialogBuilder = new DialogBuilder(this).setMessage(message);
         dialogBuilder.show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pivxApplication.startPivxService();
+            }
+        }, TimeUnit.SECONDS.toMillis(5));
     }
 
     private void init(){

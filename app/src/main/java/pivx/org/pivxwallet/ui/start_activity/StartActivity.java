@@ -34,7 +34,7 @@ public class StartActivity extends BaseActivity {
                 // Open Create Wallet
                 pivxModule.createWallet();
                 Intent myIntent = new Intent(v.getContext(), PincodeActivity.class);
-                startActivityForResult(myIntent, 0);
+                startActivity(myIntent);
             }
         });
 
@@ -44,7 +44,7 @@ public class StartActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
-                startActivityForResult(myIntent, 0);
+                startActivity(myIntent);
             }
         });
 

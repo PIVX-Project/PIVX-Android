@@ -29,6 +29,7 @@ import org.bitcoinj.core.listeners.AbstractPeerDataEventListener;
 import org.bitcoinj.core.listeners.PeerConnectedEventListener;
 import org.bitcoinj.core.listeners.PeerDataEventListener;
 import org.bitcoinj.core.listeners.PeerDisconnectedEventListener;
+import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.utils.BtcFormat;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -220,6 +221,21 @@ public class PivxWalletService extends Service{
         }
     };
 
+    private TransactionConfidenceEventListener transactionConfidenceEventListener = new TransactionConfidenceEventListener() {
+        @Override
+        public void onTransactionConfidenceChanged(Wallet wallet, Transaction transaction) {
+            org.bitcoinj.core.Context.propagate(CONTEXT);
+            if (transaction != null) {
+                if (transaction.getConfidence().getDepthInBlocks() > 1) {
+                    // update balance state
+                    Intent intent = new Intent(ACTION_NOTIFICATION);
+                    intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
+                    broadcastManager.sendBroadcast(intent);
+                }
+            }
+        }
+    };
+
     @Override
     public void onCreate() {
         serviceCreatedAt = System.currentTimeMillis();
@@ -249,6 +265,7 @@ public class PivxWalletService extends Service{
             blockchainManager.init();
 
             module.addCoinsReceivedEventListener(coinReceiverListener);
+            module.addOnTransactionConfidenceChange(transactionConfidenceEventListener);
 
             final IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -312,6 +329,7 @@ public class PivxWalletService extends Service{
 
             // remove listeners
             module.removeCoinsReceivedEventListener(coinReceiverListener);
+            module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
             blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
             // destroy the blockchain
             blockchainManager.destroy(resetBlockchainOnShutdown);

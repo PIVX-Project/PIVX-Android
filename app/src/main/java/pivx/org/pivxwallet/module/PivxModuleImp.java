@@ -6,6 +6,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
+import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 
@@ -225,6 +226,11 @@ public class PivxModuleImp implements PivxModule {
         return blockchainManager.listConnectedPeers();
     }
 
+    @Override
+    public int getChainHeight() {
+        return blockchainManager.getChainHeadHeight();
+    }
+
 
     public BlockchainManager getBlockchainManager() {
         return blockchainManager;
@@ -236,5 +242,13 @@ public class PivxModuleImp implements PivxModule {
 
     public void removeCoinsReceivedEventListener(WalletCoinsReceivedEventListener coinReceiverListener) {
         walletManager.removeCoinsReceivedEventListener(coinReceiverListener);
+    }
+
+    public void addOnTransactionConfidenceChange(TransactionConfidenceEventListener transactionConfidenceEventListener) {
+        walletManager.addOnTransactionsConfidenceChange(transactionConfidenceEventListener);
+    }
+
+    public void removeTransactionsConfidenceChange(TransactionConfidenceEventListener transactionConfidenceEventListener) {
+        walletManager.removeTransactionConfidenceChange(transactionConfidenceEventListener);
     }
 }

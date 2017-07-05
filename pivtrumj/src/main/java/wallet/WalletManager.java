@@ -11,6 +11,7 @@ import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.Utils;
+import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.LinuxSecureRandom;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.KeyChainGroup;
@@ -465,6 +466,14 @@ public class WalletManager {
 
     public boolean isAddressMine(Address address) {
         return wallet.isPubKeyHashMine(address.getHash160());
+    }
+
+    public void addOnTransactionsConfidenceChange(TransactionConfidenceEventListener transactionConfidenceEventListener) {
+        wallet.addTransactionConfidenceEventListener(transactionConfidenceEventListener);
+    }
+
+    public void removeTransactionConfidenceChange(TransactionConfidenceEventListener transactionConfidenceEventListener) {
+        wallet.removeTransactionConfidenceEventListener(transactionConfidenceEventListener);
     }
 
 

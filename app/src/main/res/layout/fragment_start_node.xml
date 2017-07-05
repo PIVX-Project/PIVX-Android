@@ -21,6 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:layout_width="314dp"
+
         android:layout_height="wrap_content"
         android:prompt="@string/select"/>
 

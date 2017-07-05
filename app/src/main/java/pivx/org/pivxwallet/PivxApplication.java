@@ -35,6 +35,7 @@ import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
 import pivtrum.NetworkConf;
+import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
@@ -81,17 +82,19 @@ public class PivxApplication extends Application implements ContextWrapper {
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             new ANRWatchDog().setIgnoreDebugger(true).start();
             // Default network conf for localhost test
-            networkConf = new NetworkConf("10.0.2.2",50001);
+            networkConf = new NetworkConf();
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
             //todo: add this on the initial wizard..
-            walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
+            //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
             AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore);
             pivxModule.start();
-            // start service
-            startPivxService();
+            if (appConf.isAppInit()) {
+                // start service
+                startPivxService();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SnappydbException e) {
@@ -101,7 +104,7 @@ public class PivxApplication extends Application implements ContextWrapper {
         }
     }
 
-    private void startPivxService() {
+    public void startPivxService() {
         Intent intent = new Intent(this,PivxWalletService.class);
         startService(intent);
     }
@@ -196,6 +199,12 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     public NetworkConf getNetworkConf() {
         return networkConf;
+    }
+
+    public void setTrustedServer(PivtrumPeerData trustedServer) {
+        networkConf.setTrustedServer(trustedServer);
+        pivxModule.getConf().saveTrustedNode(trustedServer.getHost(),0);
+        appConf.saveTrustedNode(trustedServer);
     }
 
 
