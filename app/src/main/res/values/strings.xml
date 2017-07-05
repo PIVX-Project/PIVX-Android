@@ -95,5 +95,6 @@ available or add one of your choice</string>
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
     <string name="title_pivx_send">Amount send</string>
+    <string name="empty_message_address">You don’t have \n address saved yet</string>
 
 </resources>

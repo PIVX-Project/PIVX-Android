@@ -33,4 +33,5 @@ public class ContactsAdapter extends BaseRecyclerAdapter<Contact,ContactViewHold
         holder.name.setText(data.getName());
     }
 
+
 }
