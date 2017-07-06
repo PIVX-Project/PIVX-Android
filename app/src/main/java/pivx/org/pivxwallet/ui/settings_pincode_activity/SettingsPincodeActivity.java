@@ -29,7 +29,7 @@ public class SettingsPincodeActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_settings_pincode, container);
-        setTitle("Create Pincode");
+        setTitle("Update Pincode");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         i1 = (ImageView) findViewById(R.id.imageview_circle1);
