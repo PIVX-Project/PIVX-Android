@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -68,15 +71,32 @@ public class AddContactActivity extends BaseActivity {
             }
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.save, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save:
+                name = edit_name.getText().toString();
+                if (name.length()>0 && address.length()>0) {
+                    Contact contact = new Contact(name);
+                    contact.addAddress(address);
+                    pivxModule.saveContact(contact);
+                    Toast.makeText(this, "Contact saved", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     protected void onNavigationBackPressed() {
         // save contact
-        name = edit_name.getText().toString();
-        if (name.length()>0 && address.length()>0) {
-            Contact contact = new Contact(name);
-            contact.addAddress(address);
-            pivxModule.saveContact(contact);
-            Toast.makeText(this, "Contact saved", Toast.LENGTH_LONG).show();
-        }
+
     }
 }
