@@ -27,6 +27,7 @@
     <string name="title_address">Address</string>
     <string name="title_name">Name</string>
     <string name="title_description">Description</string>
+    <string name="title_receiver_name">Receiver name</string>
     <string name="title_date">Date</string>
     <string name="set_address">Write address or contact name</string>
     <string name="add_address">Write address or contact name</string>
@@ -109,5 +110,6 @@ available or add one of your choice</string>
 
 
     <string name="tutorial_done">END</string>
+    <string name="hint_receiver_name">Name</string>
 
 </resources>

@@ -187,18 +187,61 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             // build a tx with the default fee
             Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo);
             // dialog
-            launchSendDialog(transaction);
-            LayoutInflater content = LayoutInflater.from(SendActivity.this);
-            View dialogView = content.inflate(R.layout.dialog_send_confirmation, null);
-            DialogBuilder sendDialog = new DialogBuilder(SendActivity.this);
-            sendDialog.setTitle("Transaction Information");
-            sendDialog.setView(dialogView);
-            sendDialog.setPositiveButton("OK", null);
-            sendDialog.show();
+            launchDialog(transaction);
+
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Insuficient balance");
         }
+    }
+
+    private void launchDialog(final Transaction transaction){
+        LayoutInflater content = LayoutInflater.from(SendActivity.this);
+        View dialogView = content.inflate(R.layout.dialog_send_confirmation, null);
+
+        DialogBuilder sendDialog = new DialogBuilder(SendActivity.this);
+        sendDialog.setTitle("Transaction Information");
+        sendDialog.setView(dialogView);
+        TextView txtAmount = (TextView) dialogView.findViewById(R.id.txt_amount);
+        TextView txt_local_currency = (TextView) dialogView.findViewById(R.id.txt_local_currency);
+        TextView txt_fee = (TextView) dialogView.findViewById(R.id.txt_fee);
+        TextView txt_memo = (TextView) dialogView.findViewById(R.id.txt_memo);
+        final EditText edit_receiver = (EditText) dialogView.findViewById(R.id.edit_receiver);
+
+        // init
+        Coin value = pivxModule.getValueSentFromMe(transaction,true);
+        txtAmount.setText(value.toFriendlyString());
+        if (pivxRate == null)
+            pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+        txt_local_currency.setText(
+                numberFormat.format(
+                        new BigDecimal(value.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                )
+                        + " "+pivxRate.getCoin()
+        );
+        txt_fee.setText(transaction.getFee().toFriendlyString());
+        txt_memo.setText(transaction.getMemo()!=null?transaction.getMemo():"No description");
+        sendDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String contactName = edit_receiver.getText().toString();
+                if (contactName.length()>0){
+                    Contact contact = new Contact(contactName);
+                    contact.addAddress(addressStr);
+                    contact.addTx(transaction.getHash());
+                    pivxModule.saveContact(contact);
+                }
+                pivxModule.commitTx(transaction);
+                Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
+                intent.setAction(ACTION_BROADCAST_TRANSACTION);
+                intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
+                startService(intent);
+                Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
+                onBackPressed();
+                dialog.dismiss();
+            }
+        });
+        sendDialog.show();
     }
 
     private void launchSendDialog(final Transaction transaction){
