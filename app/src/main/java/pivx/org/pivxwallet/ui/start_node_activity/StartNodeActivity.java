@@ -109,6 +109,7 @@ public class StartNodeActivity extends BaseActivity {
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 CheckedTextView view = (CheckedTextView) super.getDropDownView(position, convertView, parent);
                 view.setTextColor(Color.BLACK);
+                view.setPadding(16, 16, 16, 16);
                 return view;
             }
 
@@ -116,7 +117,8 @@ public class StartNodeActivity extends BaseActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 CheckedTextView view = (CheckedTextView) super.getView(position, convertView, parent);
-                view.setTextColor(Color.WHITE);
+                view.setTextColor(Color.BLACK);
+                view.setPadding(8, 8, 8, 8);
                 return view;
             }
         };
