@@ -27,4 +27,11 @@
     <color name="scan_result_view">#b0000000</color>
     <color name="scan_result_dots">#c099cc00</color>
 
+    <!-- Tutorial -->
+
+    <color name="slide_1">#55476c</color>
+    <color name="slide_2">#73bdc5</color>
+    <color name="slide_3">#ED8557</color>
+    <color name="slide_4">#ea2d6d</color>
+
 </resources>
