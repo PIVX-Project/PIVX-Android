@@ -18,6 +18,7 @@
     <color name="subtitle">#757575</color>
     <color name="bgInput">#F5F6F7</color>
     <color name="hintInput">#979899</color>
+    <color name="red">#d0011b</color>
 
     <!-- scanner -->
     <color name="scan_mask">#60000000</color>
@@ -25,5 +26,12 @@
     <color name="scan_dot">#ff6600</color>
     <color name="scan_result_view">#b0000000</color>
     <color name="scan_result_dots">#c099cc00</color>
+
+    <!-- Tutorial -->
+
+    <color name="slide_1">#55476c</color>
+    <color name="slide_2">#73bdc5</color>
+    <color name="slide_3">#ED8557</color>
+    <color name="slide_4">#ea2d6d</color>
 
 </resources>

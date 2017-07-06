@@ -95,7 +95,18 @@ available or add one of your choice</string>
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
     <string name="title_pivx_send">Amount send</string>
-    <string name="empty_message_address">There is no contact yet.</string>
+    <string name="empty_message_address">You don’t have \n address saved yet</string>
+    <string name="error_message">There seems to been an error \n with your transaction</string>
     <string name="change_trusted_node">Change trusted node</string>
+
+    <!-- Tutorial -->
+    <string name="start">Start</string>
+    <string name="tutorial_message">The best way to control \n  your PIVX</string>
+    <string name="slide_1_security_title">The most secure place to manage your PIVX</string>
+    <string name="slide_2_transfer">Worldwide transfer without problems</string>
+    <string name="slide_3_download_and_go">Security in all your transaction</string>
+
+
+    <string name="tutorial_done">END</string>
 
 </resources>
