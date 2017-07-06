@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.view.Gravity;
 import android.view.Menu;
@@ -32,6 +35,7 @@ public class ContactsActivity extends BaseDrawerActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Collection<Contact> contacts;
     private LinearLayout emptyView;
+    private ExecutorService executor;
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_address, container);
@@ -51,13 +55,25 @@ public class ContactsActivity extends BaseDrawerActivity {
         super.onResume();
         // check current activity in the navigation drawer
         setNavigationMenuItemChecked(1);
+        if (executor==null){
+            executor = Executors.newSingleThreadExecutor();
+        }
         // re load
         load();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (executor!=null){
+            executor.shutdownNow();
+            executor = null;
+        }
+    }
+
     private void load() {
         // add loading..
-        new Thread(new Runnable() {
+        executor.submit(new Runnable() {
             @Override
             public void run() {
                 contacts = pivxModule.getContacts();
@@ -65,7 +81,7 @@ public class ContactsActivity extends BaseDrawerActivity {
                     adapter.changeDataSet(new ArrayList(contacts));
                     emptyView.setVisibility(View.VISIBLE);
             }
-        }).start();
+        });
     }
 
     @Override
