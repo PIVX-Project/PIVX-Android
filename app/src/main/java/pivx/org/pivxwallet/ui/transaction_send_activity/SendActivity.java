@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,6 +42,7 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission_group.CAMERA;
@@ -63,6 +65,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private String addressStr;
     private PivxRate pivxRate;
     private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+
+    private AlertDialog errorDialog;
+
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
@@ -166,10 +171,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void showErrorDialog(String message) {
-        DialogBuilder dialogBuilder = new DialogBuilder(this);
-        dialogBuilder.setMessage(message);
-        dialogBuilder.setTitle(R.string.error_sending_coins);
-        dialogBuilder.show();
+        if (errorDialog==null){
+            errorDialog = DialogsUtil.buildErrorDialog(this,message);
+            errorDialog.setTitle("Invalid input");
+        }else {
+            errorDialog.setMessage(message);
+        }
+        errorDialog.show();
     }
 
     private void send() {

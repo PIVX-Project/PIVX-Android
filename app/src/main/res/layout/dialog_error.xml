@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@color/bgWhite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="20dp"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
@@ -19,14 +19,15 @@
         android:src="@drawable/img_error"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"/>
+
     <TextView
         android:id = "@+id/text_error_message"
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:layout_marginBottom="20dp"
         android:padding="8dp"
+        android:gravity="center"
         android:background="@drawable/transaction_inputs"
-        android:text = "@string/error_message"
+        android:hint = "@string/error_message"
         android:textColor = "@color/red"
         android:textSize = "16sp" />
 

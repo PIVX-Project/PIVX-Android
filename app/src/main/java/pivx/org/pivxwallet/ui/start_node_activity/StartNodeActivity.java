@@ -1,26 +1,19 @@
 package pivx.org.pivxwallet.ui.start_node_activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +23,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
-import pivx.org.pivxwallet.utils.Dialogs;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
  * Created by Neoperol on 6/27/17.
@@ -61,7 +54,7 @@ public class StartNodeActivity extends BaseActivity {
         openDialog = (Button) findViewById(R.id.openDialog);
         openDialog.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                DialogBuilder dialogBuilder = Dialogs.buildtrustedNodeDialog(view.getContext(), new Dialogs.TrustedNodeDialogListener() {
+                DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(view.getContext(), new DialogsUtil.TrustedNodeDialogListener() {
                     @Override
                     public void onNodeSelected(PivtrumPeerData pivtrumPeerData) {
                         trustedNodes.add(pivtrumPeerData);

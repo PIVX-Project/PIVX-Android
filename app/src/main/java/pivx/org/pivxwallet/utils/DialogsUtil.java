@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.utils;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,12 +12,19 @@ import android.widget.Toast;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 
 /**
  * Created by furszy on 7/5/17.
  */
 
-public class Dialogs {
+public class DialogsUtil {
+
+    public static AlertDialog buildErrorDialog(Context context,String text) {
+        DialogBuilder dialogBuilder = new DialogBuilder(context);
+        dialogBuilder.setMessage(text);
+        return dialogBuilder.create();
+    }
 
     public static interface TrustedNodeDialogListener{
 

@@ -1,6 +1,5 @@
 package pivx.org.pivxwallet.ui.settings_activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +7,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
@@ -25,7 +19,6 @@ import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
-import pivx.org.pivxwallet.utils.Dialogs;
 
 /**
  * Created by Neoperol on 5/11/17.
