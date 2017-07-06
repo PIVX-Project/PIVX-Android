@@ -67,12 +67,12 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
     }
 
     @Override
-    String getTableName() {
+    protected String getTableName() {
         return TABLE_NAME;
     }
 
     @Override
-    ContentValues buildContent(Contact obj) {
+    protected ContentValues buildContent(Contact obj) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME,obj.getName());
         contentValues.put(KEY_ADDRESS,obj.getAddresses().get(0));
@@ -82,7 +82,7 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
     }
 
     @Override
-    Contact buildFrom(Cursor cursor) {
+    protected Contact buildFrom(Cursor cursor) {
         try {
             int id = cursor.getInt(KEY_POS_ID);
             String name = cursor.getString(KEY_POS_NAME);

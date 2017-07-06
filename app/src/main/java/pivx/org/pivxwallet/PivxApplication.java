@@ -42,6 +42,7 @@ import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.module.store.SnappyStore;
+import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.utils.AppConf;
 import store.AddressStore;
@@ -89,7 +90,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
             AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
-            pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore);
+            pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
             pivxModule.start();
             if (appConf.isAppInit()) {
                 // start service
@@ -201,6 +202,10 @@ public class PivxApplication extends Application implements ContextWrapper {
         return networkConf;
     }
 
+    /**
+     *
+     * @param trustedServer
+     */
     public void setTrustedServer(PivtrumPeerData trustedServer) {
         networkConf.setTrustedServer(trustedServer);
         pivxModule.getConf().saveTrustedNode(trustedServer.getHost(),0);

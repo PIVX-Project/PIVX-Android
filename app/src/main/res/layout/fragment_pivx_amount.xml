@@ -19,7 +19,7 @@
     <TextView
         android:layout_below="@+id/pivValue"
         android:layout_centerHorizontal="true"
-        android:id = "@+id/pivValueLocal"
+        android:id = "@+id/txt_local_currency"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:text = "14710 USD"

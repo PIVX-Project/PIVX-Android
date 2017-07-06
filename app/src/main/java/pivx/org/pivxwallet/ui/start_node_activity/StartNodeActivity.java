@@ -30,6 +30,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.Dialogs;
 
 /**
  * Created by Neoperol on 6/27/17.
@@ -51,11 +52,6 @@ public class StartNodeActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
 
-        if (pivxApplication.getAppConf().getTrustedNode()!=null){
-            goNext();
-            finish();
-        }
-
         getLayoutInflater().inflate(R.layout.fragment_start_node, container);
         setTitle("Select Node");
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -65,36 +61,17 @@ public class StartNodeActivity extends BaseActivity {
         openDialog = (Button) findViewById(R.id.openDialog);
         openDialog.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                LayoutInflater content = LayoutInflater.from(StartNodeActivity.this);
-                View dialogView = content.inflate(R.layout.dialog_node, null);
-                DialogBuilder nodeDialog = new DialogBuilder(StartNodeActivity.this);
-                final EditText editHost = (EditText) dialogView.findViewById(R.id.hostText);
-                final EditText editTcp = (EditText) dialogView.findViewById(R.id.tcpText);
-                final EditText editSsl = (EditText) dialogView.findViewById(R.id.sslText);
-                nodeDialog.setTitle("Add your Node");
-                nodeDialog.setView(dialogView);
-                nodeDialog.setPositiveButton("Add Node", new DialogInterface.OnClickListener() {
+                DialogBuilder dialogBuilder = Dialogs.buildtrustedNodeDialog(view.getContext(), new Dialogs.TrustedNodeDialogListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String host = editHost.getText().toString();
-                        String tcpPort = editTcp.getText().toString();
-                        String sslPort = editSsl.getText().toString();
-                        trustedNodes.add(new PivtrumPeerData(host,Integer.valueOf(tcpPort),Integer.valueOf(sslPort)));
-                        hosts.add(host);
+                    public void onNodeSelected(PivtrumPeerData pivtrumPeerData) {
+                        trustedNodes.add(pivtrumPeerData);
+                        hosts.add(pivtrumPeerData.getHost());
                         adapter.clear();
                         adapter.addAll(hosts);
                         dropdown.setSelection(hosts.size()-1);
-                        Toast.makeText(StartNodeActivity.this,"Add new node not implemented yet",Toast.LENGTH_LONG).show();
-                        dialog.dismiss();
                     }
                 });
-                nodeDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                nodeDialog.show();
+                dialogBuilder.show();
             }
 
         });
@@ -110,6 +87,9 @@ public class StartNodeActivity extends BaseActivity {
             public void onClick(View v) {
                 int selected = dropdown.getSelectedItemPosition();
                 PivtrumPeerData selectedNode = trustedNodes.get(selected);
+                if (pivxApplication.getAppConf().getTrustedNode()!=null){
+                    pivxApplication.stopBlockchain();
+                }
                 pivxApplication.setTrustedServer(selectedNode);
                 pivxApplication.getAppConf().setAppInit(true);
                 // now that everything is good, start the service

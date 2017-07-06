@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +27,14 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.uri.PivxURI;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -51,23 +56,57 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int SCANNER_RESULT = 122;
     private Button buttonSend;
     private AutoCompleteTextView edit_address;
+    private TextView txt_local_currency;
     private EditText edit_amount;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
+    private PivxRate pivxRate;
+    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
         setTitle("Send");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        buttonSend = (Button) findViewById(R.id.btnSend);
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
         edit_amount = (EditText) findViewById(R.id.edit_amount);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
+        txt_local_currency = (TextView) findViewById(R.id.txt_local_currency);
         findViewById(R.id.button_qr).setOnClickListener(this);
+        buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
+
+        // number format
+        numberFormat.setMaximumFractionDigits(3);
+        numberFormat.setMinimumFractionDigits(3);
+        edit_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()>0) {
+                    Coin coin = Coin.parseCoin(s.toString());
+                    if (pivxRate == null)
+                        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+                    txt_local_currency.setText(
+                            numberFormat.format(
+                                    new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                            )
+                                    + " "+pivxRate.getCoin()
+                    );
+                }
+
+            }
+        });
     }
 
     @Override
