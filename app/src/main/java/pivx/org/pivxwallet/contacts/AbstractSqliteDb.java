@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import pivx.org.pivxwallet.rate.db.PivxRate;
+
 /**
  * Created by furszy on 6/6/17.
  */
@@ -65,6 +67,12 @@ public abstract class AbstractSqliteDb<T> extends SQLiteOpenHelper {
         db.update(getTableName(),contentValues,whereColumn+"=?",new String[]{whereValue});
     }
 
+    public void updateByKey(String whereColumn,String whereValue, T t) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = buildContent(t);
+        db.update(getTableName(),contentValues,whereColumn+"=?",new String[]{whereValue});
+    }
+
     public int updateFieldByKey(String whereColumn,String whereValue, String updateColumn, String updateValue) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -84,8 +92,9 @@ public abstract class AbstractSqliteDb<T> extends SQLiteOpenHelper {
                 new String[] { columnValue });
     }
 
-    abstract String getTableName();
-    abstract ContentValues buildContent(T obj);
-    abstract T buildFrom(Cursor cursor);
+    protected abstract String getTableName();
+    protected abstract ContentValues buildContent(T obj);
+    protected abstract T buildFrom(Cursor cursor);
+
 
 }
