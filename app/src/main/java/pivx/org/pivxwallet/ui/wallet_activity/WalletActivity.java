@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,9 +59,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private View root;
     private View container_txs;
-
-    private Button buttonSend;
-    private Button buttonRequest;
+    private FloatingActionButton fab_add;
 
     private TextView txt_value;
     private TextView txt_unnavailable;
@@ -117,24 +116,16 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
         // Open Send
-        buttonSend = (Button) root.findViewById(R.id.btnSend);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
+
+
+        fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
+        fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), SendActivity.class);
-                startActivity(myIntent);
+                startActivity(new Intent(v.getContext(), SendActivity.class));
             }
         });
 
-        // Open Request
-        buttonRequest = (Button) root.findViewById(R.id.btnRequest);
-        buttonRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), RequestActivity.class);
-                startActivity(myIntent);
-            }
-        });
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
 

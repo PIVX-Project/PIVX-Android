@@ -23,7 +23,7 @@ public class QrActivity extends BaseActivity {
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         super.onCreateView(savedInstanceState, container);;
         root = getLayoutInflater().inflate(R.layout.qr_activity,container,true);
-        setTitle("Restore Wallet");
+        setTitle("My Address");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

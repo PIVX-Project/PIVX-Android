@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/bgWhite"
     tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
@@ -34,38 +35,27 @@
                 android:id="@+id/transactions_fragment"
                 />
 
-
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:id="@+id/fab_add"
+                android:src="@drawable/ic_send_action"
+                app:layout_anchor="@id/container"
+                app:layout_anchorGravity="bottom|right|end"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                app:borderWidth="0dp"
+                android:clickable="true"
+                />
         </FrameLayout>
 
 
-        <LinearLayout
-            android:id="@+id/mLlayoutBottomButtons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btnRequest"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_button_left"
-                android:textColor="@color/bgWhite"
-                android:layout_weight="1"
-                android:text="Request" />
-
-            <Button
-                android:id="@+id/btnSend"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bgPurple"
-                android:layout_weight="1"
-                android:textColor="@color/bgWhite"
-                android:text="Send" />
-        </LinearLayout>
 
 
     </RelativeLayout>
+
 
 
 
