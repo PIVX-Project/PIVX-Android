@@ -184,7 +184,7 @@ public class RestoreActivity extends BaseActivity {
             public void run() {
                 pivxApplication.startPivxService();
             }
-        }, TimeUnit.SECONDS.toMillis(5));
+        }, TimeUnit.SECONDS.toMillis(2));
     }
 
     private void init(){

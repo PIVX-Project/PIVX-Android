@@ -19,6 +19,7 @@ import org.bitcoinj.net.discovery.PeerDiscovery;
 import org.bitcoinj.net.discovery.PeerDiscoveryException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.RegTestParams;
+import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.SPVBlockStore;
@@ -41,6 +42,8 @@ import org.slf4j.Logger;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import wallet.WalletManager;
+
+import static global.PivtrumGlobalData.FURSZY_TESTNET_SERVER;
 
 public class BlockchainManager {
 
@@ -166,7 +169,9 @@ public class BlockchainManager {
         final Transaction tx = walletManager.getTransaction(hash);
         if (peerGroup != null) {
             LOG.info("broadcasting transaction " + tx.getHashAsString());
-            TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(tx,(conf.getNetworkParams() instanceof RegTestParams)?1:2);
+            TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(
+                    tx,
+                    (conf.getNetworkParams() instanceof RegTestParams || conf.getNetworkParams() instanceof TestNet3Params)?1:2);
             return transactionBroadcast.broadcast();
         } else {
             LOG.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());
@@ -275,6 +280,11 @@ public class BlockchainManager {
                                 if (addr.getAddress() != null) {
                                     peers.add(addr);
                                     needsTrimPeersWorkaround = true;
+                                }
+                                if (conf.isTest()){
+                                    // add one more peer to validate tx
+                                    peers.add(new InetSocketAddress(FURSZY_TESTNET_SERVER,6444));
+                                    needsTrimPeersWorkaround = false;
                                 }
                             }
 

@@ -29,7 +29,11 @@
 
         </activity>
         <activity android:name=".ui.wallet_activity.WalletActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity android:name=".ui.start_activity.StartActivity">
@@ -53,11 +57,7 @@
         <activity android:name=".ui.transaction_request_activity.RequestActivity"></activity>
         <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"></activity>
         <activity android:name=".ui.tutorial_activity.TutorialActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
