@@ -18,6 +18,13 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/header_container"
+            app:layout_collapseMode="parallax"
+            android:visibility="gone"></FrameLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout android:id="@+id/content_frame"

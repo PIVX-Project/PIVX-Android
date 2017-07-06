@@ -14,6 +14,7 @@ import java.util.List;
 
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import wallet.exceptions.CantRestoreEncryptedWallet;
 
@@ -84,4 +85,7 @@ public interface PivxModule {
     List<Peer> listConnectedPeers();
 
     int getChainHeight();
+
+    PivxRate getRate(String selectedRateCoin);
+
 }

@@ -21,11 +21,13 @@ public class PivxContext {
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
+    public static final String DEFAULT_RATE_COIN = "USD";
+    public static final long RATE_UPDATE_TIME = 72000000;
+
     // report mail
     public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.org";
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
-
 
     public static final class Files{
 

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
@@ -63,9 +64,11 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private TextView txt_value;
     private TextView txt_unnavailable;
-    private TextView txt_local_value;
+    private TextView txt_local_currency;
+    private PivxRate pivxRate;
 
     private TransactionsFragmentBase txsFragment;
+    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
@@ -105,11 +108,13 @@ public class WalletActivity extends BaseDrawerActivity {
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         setTitle("My Wallet");
         root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
-
-        txt_value = (TextView) root.findViewById(R.id.pivValue);
-        txt_local_value = (TextView) root.findViewById(R.id.pivValueLocal);
-        txt_unnavailable = (TextView) root.findViewById(R.id.txt_unnavailable);
+        View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
+        header_container.setVisibility(View.VISIBLE);
+        txt_value = (TextView) containerHeader.findViewById(R.id.pivValue);
+        txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
         container_txs = root.findViewById(R.id.container_txs);
+        txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
+
 
         // Open Send
         buttonSend = (Button) root.findViewById(R.id.btnSend);
@@ -117,7 +122,7 @@ public class WalletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), SendActivity.class);
-                startActivityForResult(myIntent, 0);
+                startActivity(myIntent);
             }
         });
 
@@ -127,11 +132,15 @@ public class WalletActivity extends BaseDrawerActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), RequestActivity.class);
-                startActivityForResult(myIntent, 0);
+                startActivity(myIntent);
             }
         });
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+
+        // number format
+        numberFormat.setMaximumFractionDigits(3);
+        numberFormat.setMinimumFractionDigits(3);
 
     }
 
@@ -253,11 +262,17 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_value.setText(!availableBalance.isZero()?availableBalance.toFriendlyString():"0 Pivs");
         Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
         txt_unnavailable.setText(!unnavailableBalance.isZero()?unnavailableBalance.toFriendlyString():"0 Pivs");
-        BigDecimal amountInUsd = pivxModule.getAvailableBalanceLocale();
-        NumberFormat usdCostFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        usdCostFormat.setMinimumFractionDigits( 1 );
-        usdCostFormat.setMaximumFractionDigits( 2 );
-        txt_local_value.setText(usdCostFormat.format(amountInUsd.doubleValue()));
-
+        if (pivxRate == null)
+            pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+        if (pivxRate!=null) {
+            txt_local_currency.setText(
+                    numberFormat.format(
+                            new BigDecimal(availableBalance.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                    )
+                    + " "+pivxRate.getCoin()
+            );
+        }else {
+            txt_local_currency.setText("0 USD");
+        }
     }
 }

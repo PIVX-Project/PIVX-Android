@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 
 import pivtrum.PivtrumPeerData;
 
+import static pivx.org.pivxwallet.module.PivxContext.DEFAULT_RATE_COIN;
+
 /**
  * Created by furszy on 6/8/17.
  */
@@ -16,6 +18,8 @@ public class AppConf extends Configurations {
     private static final String TRUSTED_NODE_HOST = "trusted_node_host";
     private static final String TRUSTED_NODE_TCP = "trusted_node_tcp";
     private static final String TRUSTED_NODE_SSL = "trusted_node_ssl";
+
+    private static final String SELECTED_RATE_COIN = "selected_rate_coin";
 
     public AppConf(SharedPreferences prefs) {
         super(prefs);
@@ -51,6 +55,14 @@ public class AppConf extends Configurations {
             return new PivtrumPeerData(host,tcp,ssl);
         }else
             return null;
+    }
+
+    public void setSelectedRateCoin(String coin){
+        save(SELECTED_RATE_COIN,coin);
+    }
+
+    public String getSelectedRateCoin(){
+        return getString(SELECTED_RATE_COIN,DEFAULT_RATE_COIN);
     }
 
 }

@@ -97,5 +97,6 @@ available or add one of your choice</string>
     <string name="title_pivx_send">Amount send</string>
     <string name="empty_message_address">You don’t have \n address saved yet</string>
     <string name="error_message">There seems to been an error \n with your transaction</string>
+    <string name="change_trusted_node">Change trusted node</string>
 
 </resources>

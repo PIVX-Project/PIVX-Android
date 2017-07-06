@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +49,13 @@ import pivtrum.PivtrumPeergroup;
 import pivtrum.listeners.AddressListener;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModuleImp;
+import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
+import pivx.org.pivxwallet.rate.CoinTypes;
+import pivx.org.pivxwallet.rate.RequestPivxRateException;
+import pivx.org.pivxwallet.rate.db.PivxRate;
+import pivx.org.pivxwallet.utils.AppConf;
 
 import static pivx.org.pivxwallet.module.PivxContext.CONTEXT;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE;
@@ -162,6 +169,8 @@ public class PivxWalletService extends Service{
                 else
                     impediments.add(Impediment.NETWORK);
                 check();
+                // try to request coin rate
+                requestRateCoin();
             } else if (Intent.ACTION_DEVICE_STORAGE_LOW.equals(action)) {
                 log.info("device storage low");
 
@@ -276,6 +285,7 @@ public class PivxWalletService extends Service{
             // initilizing trusted node.
             //pivtrumPeergroup.start();
 
+
         } catch (IOException e) {
             e.printStackTrace();
         }catch (Exception e){
@@ -380,6 +390,26 @@ public class PivxWalletService extends Service{
             );
             // save
             module.getConf().saveScheduleBlockchainService(scheduleTime);
+        }
+    }
+
+    private void requestRateCoin(){
+        final AppConf appConf = pivxApplication.getAppConf();
+        PivxRate pivxRate = module.getRate(appConf.getSelectedRateCoin());
+        if (pivxRate==null || pivxRate.getTimestamp()+PivxContext.RATE_UPDATE_TIME<System.currentTimeMillis()){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        CoinMarketCapApiClient c = new CoinMarketCapApiClient();
+                        BigDecimal usdValue = c.getPivxPrice();
+                        PivxRate pivxRate = new PivxRate(CoinTypes.USD.name(),usdValue,System.currentTimeMillis(),"coinmarketcap");
+                        module.saveRate(pivxRate);
+                    } catch (RequestPivxRateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
     }
 

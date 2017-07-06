@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
@@ -20,7 +23,9 @@ import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
+import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.Dialogs;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -31,6 +36,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonBackup;
     private Button buttonRestore;
     private Button buttonChange;
+    private Button btn_change_node;
     private Button buttonCurrency;
     private TextView textAbout;
     private TextView txt_network_info;
@@ -59,6 +65,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         // Open Change Pincode
         buttonChange = (Button) findViewById(R.id.btn_change_pincode);
         buttonChange.setOnClickListener(this);
+
+        btn_change_node = (Button) findViewById(R.id.btn_change_node);
+        btn_change_node.setOnClickListener(this);
 
         // Open Network Monitor
         buttonChange = (Button) findViewById(R.id.btn_network);
@@ -123,9 +132,11 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(myIntent);
         }else if (id == R.id.btn_change_pincode){
             Intent myIntent = new Intent(v.getContext(), SettingsPincodeActivity.class);
-            startActivityForResult(myIntent, 0);
+            startActivity(myIntent);
         }else if (id == R.id.btn_network){
             startActivity(new Intent(v.getContext(),SettingsNetworkActivity.class));
+        }else if(id == R.id.btn_change_node){
+            startActivity(new Intent(v.getContext(),StartNodeActivity.class));
         }
     }
 }

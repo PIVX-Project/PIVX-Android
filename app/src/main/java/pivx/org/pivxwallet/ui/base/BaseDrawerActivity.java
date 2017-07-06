@@ -21,6 +21,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private FrameLayout frameLayout;
     private Toolbar toolbar;
     private DrawerLayout drawer;
+    protected FrameLayout header_container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         setSupportActionBar(toolbar);
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        header_container = (FrameLayout) findViewById(R.id.header_container);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);

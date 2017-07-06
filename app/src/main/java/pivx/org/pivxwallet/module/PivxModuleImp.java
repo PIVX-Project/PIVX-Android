@@ -23,6 +23,8 @@ import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.contacts.ContactsStore;
+import pivx.org.pivxwallet.rate.db.PivxRate;
+import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressStore;
@@ -41,16 +43,18 @@ public class PivxModuleImp implements PivxModule {
     private PivtrumPeergroup peergroup;
     private AddressStore addressStore;
     private ContactsStore contactsStore;
+    private RateDb rateDb;
 
     // cache balance
     private long availableBalance = 0;
     private BigDecimal pivInUsdHardcoded = new BigDecimal("1.5");
 
-    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore) {
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore,RateDb rateDb) {
         this.context = contextWrapper;
         this.walletConfiguration = walletConfiguration;
         this.addressStore = addressStore;
         this.contactsStore = contactsStore;
+        this.rateDb = rateDb;
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
         blockchainManager = new BlockchainManager(context,walletManager,walletConfiguration);
         for (AddressBalance addressBalance : addressStore.listBalance()) {
@@ -250,5 +254,13 @@ public class PivxModuleImp implements PivxModule {
 
     public void removeTransactionsConfidenceChange(TransactionConfidenceEventListener transactionConfidenceEventListener) {
         walletManager.removeTransactionConfidenceChange(transactionConfidenceEventListener);
+    }
+
+    public PivxRate getRate(String coin) {
+        return rateDb.getRate(coin);
+    }
+
+    public void saveRate(PivxRate pivxRate){
+        rateDb.insertOrUpdateIfExist(pivxRate);
     }
 }
