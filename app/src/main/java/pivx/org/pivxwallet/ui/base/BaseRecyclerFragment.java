@@ -92,7 +92,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         executor.execute(loadRunnable);
     }
 
-    protected void refresh(){
+    public void refresh(){
         load();
     }
 

@@ -79,7 +79,16 @@ public class ContactsActivity extends BaseDrawerActivity {
                 contacts = pivxModule.getContacts();
                 if (contacts!=null && !contacts.isEmpty())
                     adapter.changeDataSet(new ArrayList(contacts));
-                    emptyView.setVisibility(View.VISIBLE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (contacts.isEmpty()) {
+                            emptyView.setVisibility(View.VISIBLE);
+                        }else {
+                            emptyView.setVisibility(View.GONE);
+                        }
+                    }
+                });
             }
         });
     }

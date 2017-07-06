@@ -88,6 +88,7 @@ public class WalletActivity extends BaseDrawerActivity {
             if (action.equals(ACTION_NOTIFICATION)){
                 if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_ON_COIN_RECEIVED)){
                     updateBalance();
+                    txsFragment.refresh();
                 }
             }
 
