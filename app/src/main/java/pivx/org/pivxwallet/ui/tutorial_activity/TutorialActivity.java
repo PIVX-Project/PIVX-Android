@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
+import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 
 /**
  * Created by Neoperol on 7/6/17.
@@ -30,7 +31,7 @@ public class TutorialActivity extends AppCompatActivity {
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button btnSkip, btnNext, btn_node;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,8 @@ public class TutorialActivity extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+
     }
 
     public  void btnSkipClick(View v)
@@ -149,6 +152,7 @@ public class TutorialActivity extends AppCompatActivity {
             container.addView(view);
 
             return view;
+
         }
 
         @Override

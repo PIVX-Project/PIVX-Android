@@ -37,7 +37,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_title" />
         <Button
-            android:id="@+id/openDialog"
+            android:id="@+id/btn_node"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/spinner"
@@ -45,7 +45,6 @@
             android:layout_marginTop="40dp"
             android:elevation="0dp"
             android:background="@color/transparent"
-            android:onClick="openDialog"
             android:text="@string/btn_select_node"
             android:textColor="@color/mainGreen"
             android:textSize="15sp" />
