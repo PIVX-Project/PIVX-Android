@@ -104,7 +104,7 @@
             android:layout_height = "wrap_content"
             android:padding="8dp"
             android:background="@drawable/transaction_inputs"
-            android:hint = "@string/hint_receiver_name"
+            android:hint = "@string/title_receiver_name"
             android:textColor = "@color/mainText"
             android:textSize = "16sp" />
 

@@ -20,7 +20,7 @@
         <activity android:name=".ui.splash_activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme" android:noHistory="true">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +42,7 @@
         <activity android:name=".ui.contacts_activity.ContactsActivity"/>
         <activity android:name=".ui.settings_activity.SettingsActivity"/>
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"/>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"/>
+        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity" android:noHistory="true" />
         <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity" android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".ui.address_add_activity.AddContactActivity"/>
         <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"/>
