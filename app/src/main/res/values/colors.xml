@@ -29,9 +29,16 @@
 
     <!-- Tutorial -->
 
-    <color name="slide_1">#55476c</color>
-    <color name="slide_2">#73bdc5</color>
-    <color name="slide_3">#ED8557</color>
-    <color name="slide_4">#ea2d6d</color>
+    <color name="bg_screen1">#55476c</color>
+    <color name="bg_screen2">#73bdc5</color>
+    <color name="bg_screen3">#ed8557</color>
+
+
+    <!-- dots active colors -->
+    <color name="dot_active">#000000</color>
+
+
+    <!-- dots inactive colors -->
+    <color name="dot_inactive">#cccccc</color>
 
 </resources>

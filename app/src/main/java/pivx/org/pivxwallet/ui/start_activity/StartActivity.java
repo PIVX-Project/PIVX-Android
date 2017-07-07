@@ -12,6 +12,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
+import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 
 /**
  * Created by mati on 18/04/17.
@@ -33,8 +34,9 @@ public class StartActivity extends BaseActivity {
             public void onClick(View v) {
                 // Open Create Wallet
                 pivxModule.createWallet();
-                Intent myIntent = new Intent(v.getContext(), PincodeActivity.class);
+                Intent myIntent = new Intent(v.getContext(), TutorialActivity.class);
                 startActivity(myIntent);
+                finish();
             }
         });
 

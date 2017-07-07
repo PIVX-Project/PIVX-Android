@@ -20,16 +20,12 @@
         android:layout_alignParentTop = "true"
         android:layout_centerHorizontal = "true" />
 
+
     <TextView
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text = "USD 345"
-        android:id = "@+id/pivValue"
-        android:layout_below = "@+id/logoView"
-        android:layout_centerHorizontal = "true"
-        android:textColor = "@color/textColorWhite"
-        android:textSize = "24sp" />
+        android:layout_below="@+id/logoView"
+        android:id="@+id/tutorialMessage"
+        android:text="@string/tutorial_message"
+        style="@style/MessageTextStart"/>
 
     <Button
         android:id="@+id/btnCreate"
@@ -45,7 +41,7 @@
         android:stateListAnimator="@null"
         android:textColor = "@color/textColorPurple"
         android:textSize="14sp"
-        android:layout_below="@+id/pivValue"
+        android:layout_below="@+id/tutorialMessage"
         android:layout_centerHorizontal = "true"
         android:onClick="tryCreate"/>
 
