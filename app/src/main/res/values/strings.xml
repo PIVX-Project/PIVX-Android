@@ -36,7 +36,7 @@
     <string name="btn_send">Send</string>
     <string name="btn_request">Request</string>
     <string name="settings_subtitle_security">Security</string>
-    <string name="backup_wallet_message">Your backup will be encrypted\nand saved to the\nexternal storage drive</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with \n the password you choose and saved \n to an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore Wallet</string>
@@ -53,11 +53,11 @@
     <string name="scan_camera_permission_dialog_message">In order to scan QR codes, you need to grant permission to use the camera.</string>
     <string name="scan_result_title">Scanner result</string>
     <string name="scan_result_address_title">Address detected</string>
-    <string name="node_selection_message">You can select one of the nodes \n
-available or add one of your choice</string>
+    <string name="node_selection_message">You can select one of the node
+available or add one </string>
     <string name="select_node">Select Node</string>
 
-    <string name="select">Select a node</string>
+    <string name="select">Select a Node</string>
     <string name="text_version">Version</string>
     <string name="network_monitor">Network Monitor</string>
     <string name="send_message">Transaction details:</string>
@@ -81,7 +81,7 @@ available or add one of your choice</string>
     <string name="backup_create">create</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
-    <string name="backup_completed_text">Congratulations!, your wallet has beed succesfully backed.\\n\\nThe backup file is on</string>
+    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at:</string>
     <string name="import_keys_dialog_message">Select one of your backups files loaded from %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
@@ -96,20 +96,19 @@ available or add one of your choice</string>
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
     <string name="title_pivx_send">Amount send</string>
-    <string name="empty_message_address">You don’t have \n address saved yet</string>
+    <string name="empty_message_address">You don\'t have any addresses saved yet.</string>
     <string name="error_message">There seems to been an error \n with your transaction</string>
     <string name="change_trusted_node">Change trusted node</string>
     <string name="save">Save</string>
-    <string name="tutorial_message">Private Instant Verified Transaction, is a privacy-focused, decentralized, open source cryptocurrency run by a global community run by creators, innovators, and technology enthusiasts.</string>
-
+    <string name="tutorial_message">Private Instant Verified \n Transaction, is a privacy-focused, \n decentralized, open source \n cryptocurrency run by a global \n community comprised of creators, \n innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="start">Start</string>
-    <string name="title_slide1">pvix is secure</string>
+    <string name="title_slide1">Pivx is secure</string>
     <string name="desc_slide1">First coin with BIP38 Encryption and Decryption of Private Keys</string>
     <string name="title_slide2">60 SECOND BLOCK TIME</string>
-    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftTX are instant with ZERO confirmation wait time required. </string>
+    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required. </string>
     <string name="title_slide3">Extremely secure and private</string>
     <string name="desc_slide3">PIVX is aiming it’s sights on establishing the first truly anonymous crypto-currency.</string>
     <string name="title_slide4">Trusted nodes federation</string>

@@ -35,7 +35,7 @@ public class PincodeActivity extends BaseActivity {
             finish();
         }
         getLayoutInflater().inflate(R.layout.fragment_pincode, container);
-        setTitle("Create Pincode");
+        setTitle("Create PIN");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
