@@ -13,14 +13,14 @@
         android:layout_centerHorizontal = "true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_step_2"
-        android:layout_marginBottom="100dp"/>
+        android:src="@drawable/img_step_2" />
 
     <LinearLayout
         android:layout_below="@+id/tutorialImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:paddingTop="70dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
