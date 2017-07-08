@@ -25,7 +25,6 @@ public class StartActivity extends BaseActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        getSupportActionBar().hide();
         getLayoutInflater().inflate(R.layout.fragment_start, container);
 
         buttonCreate = (Button) findViewById(R.id.btnCreate);
@@ -50,5 +49,13 @@ public class StartActivity extends BaseActivity {
             }
         });
 
+    }
+
+    public boolean hasToolbar() {
+        return false;
+    }
+
+    public boolean isFullScreen(){
+        return true;
     }
 }

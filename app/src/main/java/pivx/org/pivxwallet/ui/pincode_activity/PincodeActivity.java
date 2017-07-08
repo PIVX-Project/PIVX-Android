@@ -35,7 +35,7 @@ public class PincodeActivity extends BaseActivity {
             finish();
         }
         getLayoutInflater().inflate(R.layout.fragment_pincode, container);
-        setTitle("Create Pincode");
+        setTitle("Create Pin");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -61,18 +61,22 @@ public class PincodeActivity extends BaseActivity {
 
                 if (s.length() == 0) {
                     pin[0] = -1;
+                    i1.setImageDrawable(getResources().getDrawable(R.drawable.pin_circle,null));
                 } else if (s.length() == 1) {
                     pin[0]= s.charAt(0);
                     pin[1] = -1;
                     i1.setImageResource(R.drawable.pin_circle_active);
+                    i2.setImageResource(R.drawable.pin_circle);
                 } else if (s.length() == 2) {
                     pin[1]= s.charAt(1);
                     pin[2] = -1;
                     i2.setImageResource(R.drawable.pin_circle_active);
+                    i3.setImageResource(R.drawable.pin_circle);
                 } else if (s.length() == 3) {
                     pin[2]= s.charAt(2);
                     pin[3] = -1;
                     i3.setImageResource(R.drawable.pin_circle_active);
+                    i4.setImageResource(R.drawable.pin_circle);
                 } else if (s.length() == 4) {
                     pin[3]= s.charAt(3);
                     i4.setImageResource(R.drawable.pin_circle_active);
@@ -89,7 +93,6 @@ public class PincodeActivity extends BaseActivity {
                     goNext();
                     finish();
                 }
-                Log.d("TAG", "onKey: screen key pressed");
                 i1.setImageResource(R.drawable.pin_circle_active);
             }
         });
