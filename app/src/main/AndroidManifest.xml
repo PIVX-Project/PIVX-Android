@@ -61,7 +61,7 @@
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
 
-        <service android:name=".service.PivxWalletService"/>
+        <service android:name=".service.PivxWalletService" />
 
     </application>
 

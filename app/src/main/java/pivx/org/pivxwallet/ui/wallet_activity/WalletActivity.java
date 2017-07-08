@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -30,6 +31,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.IntentsConstants;
@@ -67,7 +69,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private PivxRate pivxRate;
 
     private TransactionsFragmentBase txsFragment;
-    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
@@ -129,11 +131,8 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
-
-        // number format
-        numberFormat.setMaximumFractionDigits(3);
-        numberFormat.setMinimumFractionDigits(3);
-
+        // Start service if it's not started.
+        pivxApplication.startPivxService();
     }
 
     @Override
@@ -258,7 +257,7 @@ public class WalletActivity extends BaseDrawerActivity {
             pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         if (pivxRate!=null) {
             txt_local_currency.setText(
-                    numberFormat.format(
+                    pivxApplication.getCentralFormats().getNumberFormat().format(
                             new BigDecimal(availableBalance.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                     )
                     + " "+pivxRate.getCoin()

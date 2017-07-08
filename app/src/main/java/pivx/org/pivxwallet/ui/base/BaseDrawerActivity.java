@@ -98,11 +98,11 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         }
 
         if (id == R.id.nav_wallet) {
-            startActivity(new Intent(getApplicationContext(), WalletActivity.class));
+            startActivity(new Intent(this,WalletActivity.class));
         } else if (id == R.id.nav_address) {
-            startActivity(new Intent(getApplicationContext(), ContactsActivity.class));
+            startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_settings) {
-            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         drawer.closeDrawer(GravityCompat.START);

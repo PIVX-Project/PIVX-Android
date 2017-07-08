@@ -12,6 +12,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.List;
+import java.util.Random;
+
+import global.PivtrumGlobalData;
+import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
@@ -99,7 +104,17 @@ public class PincodeActivity extends BaseActivity {
     }
 
     private void goNext() {
+
+        if (pivxApplication.getAppConf().getTrustedNode()==null){
+            // select random trusted node
+            List<PivtrumPeerData> nodes = PivtrumGlobalData.listTrustedHosts();
+            Random random = new Random();
+            pivxApplication.setTrustedServer(nodes.get(random.nextInt(nodes.size())));
+            pivxApplication.stopBlockchain();
+        }
+
         Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
+        pivxApplication.getAppConf().setAppInit(true);
         startActivity(myIntent);
     }
 

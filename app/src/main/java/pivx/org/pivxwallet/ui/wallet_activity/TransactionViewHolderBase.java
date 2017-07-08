@@ -40,7 +40,7 @@ public class TransactionViewHolderBase extends BaseRecyclerViewHolder {
         title = (TextView) itemView.findViewById(R.id.title);
         description = (TextView) itemView.findViewById(R.id.description);
         amount = (TextView) itemView.findViewById(R.id.amount);
-        amountLocal = (TextView) itemView.findViewById(R.id.amountLocal);
+        amountLocal = (TextView) itemView.findViewById(R.id.txt_local_currency);
         imageView = (ImageView) itemView.findViewById(R.id.imageView);
     }
 

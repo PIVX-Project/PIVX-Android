@@ -64,8 +64,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
     private PivxRate pivxRate;
-    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-
     private AlertDialog errorDialog;
 
     @Override
@@ -82,9 +80,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
-        // number format
-        numberFormat.setMaximumFractionDigits(3);
-        numberFormat.setMinimumFractionDigits(3);
         edit_amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -103,7 +98,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     if (pivxRate == null)
                         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
                     txt_local_currency.setText(
-                            numberFormat.format(
+                            pivxApplication.getCentralFormats().getNumberFormat().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                             )
                                     + " "+pivxRate.getCoin()
@@ -222,7 +217,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         if (pivxRate == null)
             pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         txt_local_currency.setText(
-                numberFormat.format(
+                pivxApplication.getCentralFormats().getNumberFormat().format(
                         new BigDecimal(value.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                 )
                         + " "+pivxRate.getCoin()

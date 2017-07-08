@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.tutorial_activity.TutorialActivity">
 
+    <Button
+        android:id="@+id/btn_node"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:background="@color/transparent"
+        android:text="@string/btn_select_node"
+        android:textColor="@color/mainGreen"
+        android:layout_alignParentEnd="true"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:visibility="invisible"
+        android:textSize="15sp" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

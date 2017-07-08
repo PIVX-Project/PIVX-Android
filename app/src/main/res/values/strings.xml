@@ -64,7 +64,7 @@ available or add one </string>
     <string name="save_message">Do you want to save the address?</string>
     <string name="confirm">Confirm</string>
     <string name="action_scan">scanner</string>
-    <string name="btn_select_node">Add your own node</string>
+    <string name="btn_select_node">Add node</string>
 
     <string name="title_no_trusted_peer_connection">Peer issue</string>
     <string name="message_no_trusted_peer_connection">Trusted peer connection fail</string>
@@ -113,5 +113,6 @@ available or add one </string>
     <string name="desc_slide3">PIVX is aiming it’s sights on establishing the first truly anonymous crypto-currency.</string>
     <string name="title_slide4">Trusted nodes federation</string>
     <string name="desc_slide4">Trusted nodes federation which made this light PoS wallets possible, you can relay on them or create your own trusted node</string>
+    <string name="option_add_node">Add node</string>
 
 </resources>

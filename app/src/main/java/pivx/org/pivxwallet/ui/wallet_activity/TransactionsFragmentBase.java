@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
@@ -19,12 +21,15 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWrapper> {
 
+    private PivxRate pivxRate;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setEmptyView(R.drawable.img_transaction_empty);
         setEmptyText("You don't have any transfers yet.");
         setEmptyTextColor(Color.parseColor("#cccccc"));
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         return view;
     }
 
@@ -50,6 +55,19 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             protected void bindHolder(TransactionViewHolderBase holder, TransactionWrapper data, int position) {
                 //todo: fill this..
                 holder.amount.setText(data.getAmount().toFriendlyString());
+                String localCurrency = null;
+                if (pivxRate!=null) {
+                    localCurrency = pivxApplication.getCentralFormats().getNumberFormat().format(
+                                    new BigDecimal(data.getAmount().getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                                    )
+                                    + " " + pivxRate.getCoin();
+                    holder.amountLocal.setText(localCurrency);
+                    holder.amountLocal.setVisibility(View.VISIBLE);
+                }else {
+                    holder.amountLocal.setVisibility(View.INVISIBLE);
+                }
+
+
                 holder.description.setText(data.getTransaction().getMemo());
 
                 if (data.isTxMine()){

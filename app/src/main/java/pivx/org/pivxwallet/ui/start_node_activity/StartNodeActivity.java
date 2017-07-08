@@ -36,9 +36,6 @@ public class StartNodeActivity extends BaseActivity {
 
     private Button openDialog;
     private Button btnSelectNode;
-    private EditText tcpText;
-    private EditText sslText;
-    private EditText hostText;
     private Spinner dropdown;
     private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
@@ -77,10 +74,6 @@ public class StartNodeActivity extends BaseActivity {
 
         });
 
-        tcpText = (EditText) findViewById(R.id.tcpText);
-        sslText = (EditText) findViewById(R.id.sslText);
-        hostText = (EditText) findViewById(R.id.hostText);
-
         // Node selected
         btnSelectNode = (Button) findViewById(R.id.btnSelectNode);
         btnSelectNode.setOnClickListener(new View.OnClickListener() {
@@ -88,18 +81,19 @@ public class StartNodeActivity extends BaseActivity {
             public void onClick(View v) {
                 int selected = dropdown.getSelectedItemPosition();
                 PivtrumPeerData selectedNode = trustedNodes.get(selected);
-                if (pivxApplication.getAppConf().getTrustedNode()!=null){
-                    pivxApplication.stopBlockchain();
-                }
+                boolean isStarted = pivxApplication.getAppConf().getTrustedNode()!=null;
                 pivxApplication.setTrustedServer(selectedNode);
-                pivxApplication.getAppConf().setAppInit(true);
-                // now that everything is good, start the service
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pivxApplication.startPivxService();
-                    }
-                }, TimeUnit.SECONDS.toMillis(5));
+
+                if (isStarted){
+                    pivxApplication.stopBlockchain();
+                    // now that everything is good, start the service
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pivxApplication.startPivxService();
+                        }
+                    }, TimeUnit.SECONDS.toMillis(5));
+                }
                 goNext();
                 finish();
             }

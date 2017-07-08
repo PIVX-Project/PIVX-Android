@@ -30,7 +30,7 @@
                 android:text="Amout"
                 android:textSize="18sp" />
             <TextView
-                android:id="@+id/amountLocal"
+                android:id="@+id/txt_local_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#7f7f7f"

@@ -64,6 +64,8 @@ public class PivxApplication extends Application implements ContextWrapper {
     private AppConf appConf;
     private NetworkConf networkConf;
 
+    private CentralFormats centralFormats;
+
     private ActivityManager activityManager;
     private PackageInfo info;
 
@@ -82,9 +84,16 @@ public class PivxApplication extends Application implements ContextWrapper {
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             new ANRWatchDog().setIgnoreDebugger(true).start();
+            Thread.currentThread().setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread t, Throwable e) {
+                    e.printStackTrace();
+                }
+            });
             // Default network conf for localhost test
             networkConf = new NetworkConf();
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
+            centralFormats = new CentralFormats(appConf);
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
             //todo: add this on the initial wizard..
             //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
@@ -92,10 +101,10 @@ public class PivxApplication extends Application implements ContextWrapper {
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
             pivxModule.start();
-            if (appConf.isAppInit()) {
+            /*if (appConf.isAppInit()) {
                 // start service
                 startPivxService();
-            }
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SnappydbException e) {
@@ -212,7 +221,9 @@ public class PivxApplication extends Application implements ContextWrapper {
         appConf.saveTrustedNode(trustedServer);
     }
 
-
+    public CentralFormats getCentralFormats() {
+        return centralFormats;
+    }
 
     /*public ServiceConnection pivxServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder binder) {
