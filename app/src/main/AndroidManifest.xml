@@ -17,10 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
-        <activity android:name=".ui.splash_activity.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme" android:noHistory="true">
+        <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
 
 
         </activity>
