@@ -42,6 +42,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import chain.BlockchainManager;
 import chain.Impediment;
@@ -97,6 +98,7 @@ public class PivxWalletService extends Service{
     /**  */
     private final Set<Impediment> impediments = EnumSet.noneOf(Impediment.class);
 
+    private volatile long lastUpdateTime = System.currentTimeMillis();
 
     public class PivxBinder extends Binder {
         public PivxWalletService getService() {
@@ -196,9 +198,13 @@ public class PivxWalletService extends Service{
 
             int depthInBlocks = transaction.getConfidence().getDepthInBlocks();
 
-            Intent intent = new Intent(ACTION_NOTIFICATION);
-            intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
-            broadcastManager.sendBroadcast(intent);
+            long now = System.currentTimeMillis();
+            if (lastUpdateTime+3000<now) {
+                lastUpdateTime=now;
+                Intent intent = new Intent(ACTION_NOTIFICATION);
+                intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
+                broadcastManager.sendBroadcast(intent);
+            }
 
             //final Address address = WalletUtils.getWalletAddressOfReceived(WalletConstants.NETWORK_PARAMETERS,transaction, wallet);
             final Coin amount = transaction.getValue(wallet);
@@ -236,10 +242,14 @@ public class PivxWalletService extends Service{
             org.bitcoinj.core.Context.propagate(CONTEXT);
             if (transaction != null) {
                 if (transaction.getConfidence().getDepthInBlocks() > 1) {
-                    // update balance state
-                    Intent intent = new Intent(ACTION_NOTIFICATION);
-                    intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
-                    broadcastManager.sendBroadcast(intent);
+                    long now = System.currentTimeMillis();
+                    if (lastUpdateTime+3000<now) {
+                        lastUpdateTime=now;
+                        // update balance state
+                        Intent intent = new Intent(ACTION_NOTIFICATION);
+                        intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
+                        broadcastManager.sendBroadcast(intent);
+                    }
                 }
             }
         }

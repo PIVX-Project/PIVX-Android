@@ -281,11 +281,11 @@ public class BlockchainManager {
                                     peers.add(addr);
                                     needsTrimPeersWorkaround = true;
                                 }
-                                if (conf.isTest()){
+                                /*if (conf.isTest()){
                                     // add one more peer to validate tx
                                     peers.add(new InetSocketAddress(FURSZY_TESTNET_SERVER,6444));
                                     needsTrimPeersWorkaround = false;
-                                }
+                                }*/
                             }
 
                             if (!connectTrustedPeerOnly)
@@ -384,7 +384,7 @@ public class BlockchainManager {
     }
 
     public int getChainHeadHeight() {
-        return blockChain.getChainHead().getHeight();
+        return blockChain!=null? blockChain.getChainHead().getHeight():0;
     }
 
 

@@ -89,7 +89,8 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
      */
     private void load() {
         swipeRefreshLayout.setRefreshing(true);
-        executor.execute(loadRunnable);
+        if (executor!=null)
+            executor.execute(loadRunnable);
     }
 
     public void refresh(){

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import global.PivtrumGlobalData;
 import pivtrum.PivtrumPeerData;
@@ -57,10 +59,15 @@ public class StartNodeActivity extends BaseActivity {
                 DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(view.getContext(), new DialogsUtil.TrustedNodeDialogListener() {
                     @Override
                     public void onNodeSelected(PivtrumPeerData pivtrumPeerData) {
-                        trustedNodes.add(pivtrumPeerData);
-                        hosts.add(pivtrumPeerData.getHost());
+                        dropdown.setAdapter(null);
                         adapter.clear();
+                        hosts = new ArrayList<String>();
+                        trustedNodes.add(pivtrumPeerData);
+                        for (PivtrumPeerData trustedNode : trustedNodes) {
+                            hosts.add(trustedNode.getHost());
+                        }
                         adapter.addAll(hosts);
+                        dropdown.setAdapter(adapter);
                         dropdown.setSelection(hosts.size()-1);
                     }
                 });
@@ -86,7 +93,12 @@ public class StartNodeActivity extends BaseActivity {
                 pivxApplication.setTrustedServer(selectedNode);
                 pivxApplication.getAppConf().setAppInit(true);
                 // now that everything is good, start the service
-                pivxApplication.startPivxService();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pivxApplication.startPivxService();
+                    }
+                }, TimeUnit.SECONDS.toMillis(5));
                 goNext();
                 finish();
             }
