@@ -1,42 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="100dp"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/bg_screen1">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="230dp"
-            android:src="@drawable/img_step_1"
-            android:layout_marginBottom="40dp"/>
-
-        <TextView
+            android:id="@+id/tutorialImage"
+            android:layout_alignParentTop = "true"
+            android:layout_centerHorizontal = "true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_slide1"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_title"
-            android:textStyle="bold" />
+            android:src="@drawable/img_step_1" />
 
-        <TextView
+        <LinearLayout
+            android:layout_below="@+id/tutorialImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="@string/desc_slide1"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_title" />
+            android:paddingTop="70dp"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_slide1"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_title"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@string/desc_slide1"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_title" />
+        </LinearLayout>
+
 
 </RelativeLayout>
