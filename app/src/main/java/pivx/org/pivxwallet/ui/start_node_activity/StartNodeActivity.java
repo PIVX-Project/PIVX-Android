@@ -23,6 +23,7 @@ import global.PivtrumGlobalData;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
@@ -131,7 +132,13 @@ public class StartNodeActivity extends BaseActivity {
     }
 
     private void goNext() {
-        Intent intent = new Intent(this, WalletActivity.class);
+        Class clazz = null;
+        if (pivxApplication.getAppConf().getPincode()==null){
+            clazz = PincodeActivity.class;
+        }else {
+            clazz = WalletActivity.class;
+        }
+        Intent intent = new Intent(this, clazz);
         startActivity(intent);
     }
 

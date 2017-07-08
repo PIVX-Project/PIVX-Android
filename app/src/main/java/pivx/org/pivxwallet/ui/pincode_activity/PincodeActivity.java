@@ -99,8 +99,8 @@ public class PincodeActivity extends BaseActivity {
     }
 
     private void goNext() {
-        Intent myIntent = new Intent(PincodeActivity.this,StartNodeActivity.class);
-        PincodeActivity.this.startActivity(myIntent);
+        Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
+        startActivity(myIntent);
     }
 
 }
