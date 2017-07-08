@@ -16,29 +16,66 @@ import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 
 public class SplashActivity extends AppCompatActivity {
     VideoView videoView;
+    private boolean ispaused = false;
+
     @Override
-    public void  onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_splash);
-        videoView = (VideoView) findViewById(R.id.videoView);
 
-        Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash);
-        videoView.setVideoURI(video);
+        videoView = (VideoView) findViewById(R.id.video_view);
+        Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
+                + R.raw.splash_video);
 
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            public void onCompletion(MediaPlayer mp) {
-                startNextActivity();
-            }
-        });
+        if (videoView != null) {
+            videoView.setVideoURI(video);
+            videoView.setZOrderOnTop(true);
+            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                public void onCompletion(MediaPlayer mp) {
+                    jump();
+                }
+            });
 
-        videoView.start();
 
+            videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                @Override
+                public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                    jump();
+                    return false;
+                }
+            });
+
+            videoView.start();
+
+        }else{
+
+            jump();
+        }
     }
 
-    private void startNextActivity() {
-        if (isFinishing())
-            return;
-        startActivity(new Intent(this, StartActivity.class));
-        finish();
+
+    private void jump() {
+
+        // Jump to your Next Activity or MainActivity
+        Intent intent = new Intent(SplashActivity.this, StartActivity.class);
+        startActivity(intent);
+
+        SplashActivity.this.finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ispaused = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ispaused) {
+            jump();
+        }
+
     }
 }
