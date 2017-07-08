@@ -53,13 +53,13 @@
     <string name="scan_camera_permission_dialog_message">In order to scan QR codes, you need to grant permission to use the camera.</string>
     <string name="scan_result_title">Scanner result</string>
     <string name="scan_result_address_title">Address detected</string>
-    <string name="node_selection_message">You can select one of the node
-available or add one </string>
+    <string name="node_selection_message">You can select one of the node available or add one </string>
     <string name="select_node">Select Node</string>
 
     <string name="select">Select a Node</string>
     <string name="text_version">Version</string>
     <string name="network_monitor">Network Monitor</string>
+    <string name="settings_report">Report issue</string>
     <string name="send_message">Transaction details:</string>
     <string name="save_message">Do you want to save the address?</string>
     <string name="confirm">Confirm</string>
@@ -114,5 +114,18 @@ available or add one </string>
     <string name="title_slide4">Trusted nodes federation</string>
     <string name="desc_slide4">Trusted nodes federation which made this light PoS wallets possible, you can relay on them or create your own trusted node</string>
     <string name="option_add_node">Add node</string>
+    <string name="report_issue_dialog_description">Issue description</string>
+    <string name="report_issue_dialog_collect_device_info">Append device information</string>
+    <string name="report_issue_dialog_collect_application_log">Append application log</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Append wallet dump</string>
+    <string name="report_issue_dialog_collect_installed_packages">Append list of installed packages</string>
+    <string name="report_issue_dialog_collect_db_data">Append databases data</string>
+    <string name="report_issue_dialog_report">Report</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="report_issue_dialog_mail_intent_chooser">Send report using…</string>
+    <string name="report_issue_dialog_mail_intent_failed">Sending report failed.</string>
+    <string name="report_issue_dialog_message_issue">Please describe your issue precisely enough to be reproduced.</string>
+    <string name="report_issuea_dialog_title">Report issue</string>
+
 
 </resources>

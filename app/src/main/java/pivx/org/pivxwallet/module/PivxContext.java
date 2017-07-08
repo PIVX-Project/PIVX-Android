@@ -25,7 +25,7 @@ public class PivxContext {
     public static final long RATE_UPDATE_TIME = 72000000;
 
     // report mail
-    public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.org";
+    public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.com";
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 

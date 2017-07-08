@@ -45,6 +45,7 @@ import pivx.org.pivxwallet.module.store.SnappyStore;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.utils.AppConf;
+import pivx.org.pivxwallet.utils.CrashReporter;
 import store.AddressStore;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
@@ -59,6 +60,7 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     /** Singleton */
     private static PivxApplication instance;
+    public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();
 
     private PivxModule pivxModule;
     private AppConf appConf;
@@ -83,13 +85,8 @@ public class PivxApplication extends Application implements ContextWrapper {
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-            new ANRWatchDog().setIgnoreDebugger(true).start();
-            Thread.currentThread().setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(Thread t, Throwable e) {
-                    e.printStackTrace();
-                }
-            });
+            new ANRWatchDog().start();
+            CrashReporter.init(getCacheDir());
             // Default network conf for localhost test
             networkConf = new NetworkConf();
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
@@ -223,6 +220,14 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     public CentralFormats getCentralFormats() {
         return centralFormats;
+    }
+
+    public PackageInfo getPackageInfo() {
+        return info;
+    }
+
+    public static long getTimeCreateApplication() {
+        return TIME_CREATE_APPLICATION;
     }
 
     /*public ServiceConnection pivxServiceConnection = new ServiceConnection() {

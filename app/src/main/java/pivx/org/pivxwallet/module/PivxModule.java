@@ -5,6 +5,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.wallet.Wallet;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,4 +89,10 @@ public interface PivxModule {
 
     PivxRate getRate(String selectedRateCoin);
 
+    /**
+     * Don't use this..
+     * @return
+     */
+    @Deprecated
+    Wallet getWallet();
 }

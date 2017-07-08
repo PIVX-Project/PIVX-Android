@@ -8,6 +8,7 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.wallet.SendRequest;
+import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 
 import java.io.File;
@@ -258,6 +259,11 @@ public class PivxModuleImp implements PivxModule {
 
     public PivxRate getRate(String coin) {
         return rateDb.getRate(coin);
+    }
+
+    @Override
+    public Wallet getWallet() {
+        return walletManager.getWallet();
     }
 
     public void saveRate(PivxRate pivxRate){

@@ -476,6 +476,15 @@ public class WalletManager {
         wallet.removeTransactionConfidenceEventListener(transactionConfidenceEventListener);
     }
 
+    /**
+     * Don't use this, it's just for the ErrorReporter.
+     * @return
+     */
+    @Deprecated
+    public Wallet getWallet() {
+        return wallet;
+    }
+
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

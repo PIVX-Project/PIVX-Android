@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.ui.settings_activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import pivx.org.pivxwallet.BuildConfig;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
@@ -18,7 +22,9 @@ import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
+import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -31,6 +37,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonChange;
     private Button btn_change_node;
     private Button buttonCurrency;
+    private Button btn_report;
     private TextView textAbout;
     private TextView txt_network_info;
 
@@ -66,6 +73,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         buttonChange = (Button) findViewById(R.id.btn_network);
         buttonChange.setOnClickListener(this);
 
+        btn_report = (Button) findViewById(R.id.btn_report);
+        btn_report.setOnClickListener(this);
+
         // Open Dialog
         buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
         buttonCurrency.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +96,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                 currencyDialog.setPositiveButton("Select", null);
                 currencyDialog.setNegativeButton("Cancel", null);
                 currencyDialog.show();
-
-
             }
 
         });
@@ -100,7 +108,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         super.onResume();
         // to check current activity in the navigation drawer
         setNavigationMenuItemChecked(2);
-
         updateNetworkStatus();
     }
 
@@ -130,6 +137,52 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(new Intent(v.getContext(),SettingsNetworkActivity.class));
         }else if(id == R.id.btn_change_node){
             startActivity(new Intent(v.getContext(),StartNodeActivity.class));
+        }else if (id == R.id.btn_report){
+            launchReportDialog();
         }
+    }
+
+    private void launchReportDialog() {
+        ReportIssueDialogBuilder dialog = new ReportIssueDialogBuilder(
+                this,
+                "pivx.org.pivxwallet.myfileprovider",
+                R.string.report_issuea_dialog_title,
+                R.string.report_issue_dialog_message_issue)
+        {
+            @Nullable
+            @Override
+            protected CharSequence subject() {
+                return PivxContext.REPORT_SUBJECT_ISSUE+" "+pivxApplication.getVersionName();
+            }
+
+            @Nullable
+            @Override
+            protected CharSequence collectApplicationInfo() throws IOException {
+                final StringBuilder applicationInfo = new StringBuilder();
+                CrashReporter.appendApplicationInfo(applicationInfo, pivxApplication);
+                return applicationInfo;
+            }
+
+            @Nullable
+            @Override
+            protected CharSequence collectStackTrace() throws IOException {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            protected CharSequence collectDeviceInfo() throws IOException {
+                final StringBuilder deviceInfo = new StringBuilder();
+                CrashReporter.appendDeviceInfo(deviceInfo, SettingsActivity.this);
+                return deviceInfo;
+            }
+
+            @Nullable
+            @Override
+            protected CharSequence collectWalletDump() throws IOException {
+                return pivxModule.getWallet().toString(false,true,true,null);
+            }
+        };
+        dialog.show();
     }
 }
