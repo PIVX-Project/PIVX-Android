@@ -45,7 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/btnCreate"
@@ -65,7 +66,10 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
             android:gravity="center_vertical|center_horizontal"
             android:background="@android:color/transparent"
             android:text="@string/btn_restore_wallet"
@@ -76,10 +80,6 @@
 
 
     </LinearLayout>
-
-
-
-
 
 
 </RelativeLayout>

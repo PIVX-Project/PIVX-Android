@@ -40,8 +40,7 @@ public class DialogBuilder extends AlertDialog.Builder
 	private final ImageView iconView;
 	private final TextView titleView;
 
-	public static DialogBuilder warn(final Context context, final int titleResId)
-	{
+	public static DialogBuilder warn(final Context context, final int titleResId) {
 		final DialogBuilder builder = new DialogBuilder(context);
 		builder.setTitle(titleResId);
 		return builder;

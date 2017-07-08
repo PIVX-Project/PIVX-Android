@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import pivx.org.pivxwallet.R;
@@ -22,7 +24,13 @@ public abstract class BaseActivity extends PivxActivity {
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_base);
+        if (isFullScreen()) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            setContentView(R.layout.activity_base_without_toolbar);
+        } else{
+            setContentView(R.layout.activity_base);
+        }
         init();
         // onCreateChildMethod
         onCreateView(savedInstanceState,childContainer);
@@ -30,15 +38,25 @@ public abstract class BaseActivity extends PivxActivity {
 
     private void init(){
         childContainer = (FrameLayout) findViewById(R.id.content);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onNavigationBackPressed();
-                onBackPressed();
-            }
-        });
+        if (hasToolbar() && !isFullScreen()) {
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onNavigationBackPressed();
+                    onBackPressed();
+                }
+            });
+        }
+    }
+
+    public boolean hasToolbar() {
+        return true;
+    }
+
+    public boolean isFullScreen() {
+        return false;
     }
 
     /**
@@ -58,5 +76,6 @@ public abstract class BaseActivity extends PivxActivity {
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container){
 
     }
+
 
 }

@@ -23,11 +23,11 @@ public class DialogsUtil {
     public static AlertDialog buildErrorDialog(Context context,String text) {
         DialogBuilder dialogBuilder = new DialogBuilder(context);
         dialogBuilder.setMessage(text);
+        dialogBuilder.setView(R.layout.dialog_error);
         return dialogBuilder.create();
     }
 
-    public static interface TrustedNodeDialogListener{
-
+    public interface TrustedNodeDialogListener{
         void onNodeSelected(PivtrumPeerData pivtrumPeerData);
     }
 
@@ -46,7 +46,18 @@ public class DialogsUtil {
                 String host = editHost.getText().toString();
                 String tcpPort = editTcp.getText().toString();
                 String sslPort = editSsl.getText().toString();
-                trustedNodeDialogListener.onNodeSelected(new PivtrumPeerData(host,Integer.valueOf(tcpPort),Integer.valueOf(sslPort)));
+                if (tcpPort.length()<1){
+                    // todo: show error dialog..
+                }
+                if (sslPort.length()<1){
+                    // todo: show error dialog..
+                }
+                trustedNodeDialogListener.onNodeSelected(
+                        new PivtrumPeerData(
+                                host,
+                                Integer.valueOf(tcpPort),
+                                Integer.valueOf(sslPort))
+                );
                 dialog.dismiss();
             }
         });

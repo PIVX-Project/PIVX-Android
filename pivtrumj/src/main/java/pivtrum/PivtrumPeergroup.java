@@ -79,6 +79,7 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
     private int minBroadcastConnections = CoinDefinition.minBroadcastConnections;
     /** Address balance listener */
     private CopyOnWriteArrayList<AddressListener> addressListeners = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<PeerListener> peerConnectionListeners = new CopyOnWriteArrayList<>();
 
     public PivtrumPeergroup(NetworkConf networkConf, WalletManager walletManager, AddressStore addressStore) throws IOException {
         this.peers = new CopyOnWriteArrayList<>();
@@ -110,6 +111,14 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
 
     public void addAddressListener(AddressListener addressListener) {
         this.addressListeners.add(addressListener);
+    }
+
+    public void addPeerConnectionListener(PeerListener peerListener){
+        this.peerConnectionListeners.add(peerListener);
+    }
+
+    public void removePeerConnectionListener(PeerListener peerListener){
+        this.peerConnectionListeners.remove(peerListener);
     }
 
     /**
@@ -151,6 +160,12 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
                 log.info("trusted peer connected");
                 // trusted peer connected.
                 isRunning = true;
+
+                // notify -> todo: this should be on other thread.
+                for (PeerListener peerConnectionListener : peerConnectionListeners) {
+                    peerConnectionListener.onConnected(pivtrumPeer);
+                }
+
                 // Get more peers from the trusted server to use it later
                 trustedPeer.getPeers();
                 // Suscribe watched addresses to the trusted server

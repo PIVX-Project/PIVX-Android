@@ -25,18 +25,17 @@ public class SettingsPincodeActivity extends BaseActivity {
     EditText enter_main;
     ImageView i1, i2, i3, i4;
 
-    String nam = new String();
+    int[] pin = new int[4];
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_settings_pincode, container);
-        setTitle("Update PIN code");
+        setTitle("Update PIN");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         i1 = (ImageView) findViewById(R.id.imageview_circle1);
         i2 = (ImageView) findViewById(R.id.imageview_circle2);
         i3 = (ImageView) findViewById(R.id.imageview_circle3);
         i4 = (ImageView) findViewById(R.id.imageview_circle4);
-        nam ="1234";
 
         enter_main = (EditText) findViewById(R.id.editText_enter_mpin);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -54,28 +53,38 @@ public class SettingsPincodeActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (s.length() == 0) {
-
+                    pin[0] = -1;
+                    i1.setImageResource(R.drawable.pin_circle_white);
                 } else if (s.length() == 1) {
+                    pin[0]= s.charAt(0);
+                    pin[1] = -1;
                     i1.setImageResource(R.drawable.pin_circle_active);
+                    i2.setImageResource(R.drawable.pin_circle_white);
                 } else if (s.length() == 2) {
+                    pin[1]= s.charAt(1);
+                    pin[2] = -1;
                     i2.setImageResource(R.drawable.pin_circle_active);
+                    i3.setImageResource(R.drawable.pin_circle_white);
                 } else if (s.length() == 3) {
+                    pin[2]= s.charAt(2);
+                    pin[3] = -1;
                     i3.setImageResource(R.drawable.pin_circle_active);
+                    i4.setImageResource(R.drawable.pin_circle_white);
                 } else if (s.length() == 4) {
+                    pin[3]= s.charAt(3);
                     i4.setImageResource(R.drawable.pin_circle_active);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(enter_main.getText().toString().equals(nam) )
-                {
+                if(enter_main.getText().toString().length()==4 ) {
                     // Not null and OK, launch the activity
-                    Log.d("TAG", "onKey: screen key pressed");
-                    Intent myIntent = new Intent(SettingsPincodeActivity.this,SettingsActivity.class);
-                    SettingsPincodeActivity.this.startActivity(myIntent);
+                    // just save pincode
+                    String pincode = String.valueOf(pin[0])+String.valueOf(pin[1])+String.valueOf(pin[2])+String.valueOf(pin[3]);
+                    pivxApplication.getAppConf().savePincode(pincode);
+                    finish();
                 }
-                Log.d("TAG", "onKey: screen key pressed");
                 i1.setImageResource(R.drawable.pin_circle_active);
             }
 
