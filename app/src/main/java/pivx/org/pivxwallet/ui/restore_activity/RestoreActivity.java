@@ -39,7 +39,9 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 import wallet.Crypto;
 import wallet.WalletUtils;
 import wallet.exceptions.CantRestoreEncryptedWallet;
@@ -177,14 +179,16 @@ public class RestoreActivity extends BaseActivity {
         String message = this.getString(R.string.restore_wallet_dialog_success) +
                 "\n\n" +
                 this.getString(R.string.restore_wallet_dialog_success_replay);
-        DialogBuilder dialogBuilder = new DialogBuilder(this).setMessage(message);
-        dialogBuilder.show();
+
+        DialogsUtil.buildSimpleTextDialog(this,null,message)
+                .show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 pivxApplication.startPivxService();
             }
-        }, TimeUnit.SECONDS.toMillis(2));
+        }, TimeUnit.SECONDS.toMillis(5));
     }
 
     private void init(){

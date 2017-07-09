@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,8 +13,8 @@ import android.widget.Toast;
 
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
-import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 
 /**
  * Created by furszy on 7/5/17.
@@ -20,12 +22,41 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 
 public class DialogsUtil {
 
-    public static AlertDialog buildErrorDialog(Context context,String text) {
-        DialogBuilder dialogBuilder = new DialogBuilder(context);
-        dialogBuilder.setMessage(text);
-        dialogBuilder.setView(R.layout.dialog_error);
-        return dialogBuilder.create();
+
+    public static SimpleTextDialog buildSimpleErrorTextDialog(Context context, String title, String body){
+        final SimpleTextDialog dialog = SimpleTextDialog.newInstance();
+        dialog.setTitle(title);
+        dialog.setBody(body);
+        dialog.setOkBtnBackgroundColor(Color.RED);
+        dialog.setOkBtnTextColor(Color.WHITE);
+        dialog.setRootBackgroundRes(R.drawable.dialog_bg);
+        return dialog;
     }
+
+    public static SimpleTextDialog buildSimpleTextDialog(Context context, String title, String body){
+        final SimpleTextDialog dialog = SimpleTextDialog.newInstance();
+        dialog.setTitle(title);
+        dialog.setBody(body);
+        dialog.setOkBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen,null));
+        dialog.setOkBtnTextColor(Color.WHITE);
+        dialog.setRootBackgroundRes(R.drawable.dialog_bg);
+        return dialog;
+    }
+
+    public static SimpleTwoButtonsDialog buildSimpleTwoBtnsDialog(Context context, String title, String body, SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener simpleTwoBtnsDialogListener){
+        final SimpleTwoButtonsDialog dialog = SimpleTwoButtonsDialog.newInstance(context);
+        dialog.setTitle(title);
+        dialog.setTitleColor(Color.BLACK);
+        dialog.setBody(body);
+        dialog.setBodyColor(Color.BLACK);
+        dialog.setListener(simpleTwoBtnsDialogListener);
+        dialog.setContainerBtnsBackgroundColor(Color.WHITE);
+        dialog.setRightBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen,null));
+        dialog.setBtnsTextColor(Color.WHITE);
+        dialog.setRootBackgroundRes(R.drawable.dialog_bg);
+        return dialog;
+    }
+
 
     public interface TrustedNodeDialogListener{
         void onNodeSelected(PivtrumPeerData pivtrumPeerData);

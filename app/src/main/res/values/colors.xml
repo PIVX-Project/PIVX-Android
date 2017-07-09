@@ -6,6 +6,7 @@
     <color name="colorAccent">#009688</color>
     <color name="bgPurple">#55476c</color>
     <color name="mainGreen">#B7FFF9</color>
+    <color name="lightGreen">#50e3c2</color>
     <color name="colorPurple">#55476c</color>
     <color name="bgWhite">#ffffff</color>
     <color name="bgWhite30">#4Dffffff</color>
@@ -40,5 +41,6 @@
 
     <!-- dots inactive colors -->
     <color name="dot_inactive">#cccccc</color>
+    <color name="white">#ffffff</color>
 
 </resources>

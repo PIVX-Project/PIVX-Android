@@ -1,15 +1,12 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -29,7 +26,6 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.uri.PivxURI;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +33,8 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
-import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
-import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
-import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -64,7 +58,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
     private PivxRate pivxRate;
-    private AlertDialog errorDialog;
+    private SimpleTextDialog errorDialog;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
@@ -167,12 +161,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private void showErrorDialog(String message) {
         if (errorDialog==null){
-            errorDialog = DialogsUtil.buildErrorDialog(this,message);
-            errorDialog.setTitle("Invalid input");
+            errorDialog = DialogsUtil.buildSimpleErrorTextDialog(this,getResources().getString(R.string.invalid_inputs),message);
         }else {
-            errorDialog.setMessage(message);
+            errorDialog.setBody(message);
         }
-        errorDialog.show();
+        errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
     }
 
     private void send() {
@@ -247,45 +240,4 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         sendDialog.show();
     }
 
-    private void launchSendDialog(final Transaction transaction){
-        // create a Dialog component
-        final Dialog dialog = new Dialog(this);
-
-        //tell the Dialog to use the dialog.xml as it's layout description
-        dialog.setContentView(R.layout.transaction_dialog);
-        final EditText edit_contact_name = (EditText) dialog.findViewById(R.id.edit_contact_name);
-        dialog.setTitle("Send");
-        TextView valuePivx = (TextView) dialog.findViewById(R.id.valuePivx);
-        valuePivx.setText(pivxModule.getValueSentFromMe(transaction,true).toFriendlyString());
-        Button dialogButton = (Button) dialog.findViewById(R.id.btnConfirm);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String contactName = edit_contact_name.getText().toString();
-                if (contactName.length()>0){
-                    Contact contact = new Contact(contactName);
-                    contact.addAddress(addressStr);
-                    contact.addTx(transaction.getHash());
-                    pivxModule.saveContact(contact);
-                }
-                pivxModule.commitTx(transaction);
-                Intent intent = new Intent(v.getContext(), PivxWalletService.class);
-                intent.setAction(ACTION_BROADCAST_TRANSACTION);
-                intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
-                startService(intent);
-                Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
-                onBackPressed();
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        //Grab the window of the dialog, and change the width
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        Window window = dialog.getWindow();
-        lp.copyFrom(window.getAttributes());
-        //This makes the dialog take up the full width
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-    }
 }

@@ -126,6 +126,9 @@
     <string name="report_issue_dialog_mail_intent_failed">Sending report failed.</string>
     <string name="report_issue_dialog_message_issue">Please describe your issue precisely enough to be reproduced.</string>
     <string name="report_issuea_dialog_title">Report issue</string>
+    <string name="invalid_inputs">Invalid inputs</string>
+    <string name="send_error_dialog_tag">send error dialog tag</string>
+    <string name="restore_dialog_tag">restore dialog tag</string>
 
 
 </resources>
