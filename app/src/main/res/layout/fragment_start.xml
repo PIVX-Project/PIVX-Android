@@ -34,6 +34,8 @@
             android:id="@+id/tutorialMessage"
             android:paddingTop="40dp"
             android:text="@string/tutorial_message"
+            android:layout_gravity="center"
+            android:gravity="center"
             style="@style/MessageTextStart"
             />
 
