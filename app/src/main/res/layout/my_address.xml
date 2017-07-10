@@ -1,70 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgPurple">
+    android:background="@color/bgPurple"
+    android:padding="32dp">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="64dp"
-        android:padding="20dp"
-        android:orientation="vertical"
-        android:background="#fff">
+        android:layout_height="match_parent"
+        android:background="@color/bgPurple"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="225dp"
-            android:layout_height="225dp"
-            android:id="@+id/img_qr"
-            android:layout_gravity="center"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingStart="7dp"
-        android:paddingEnd="7dp"
-        android:orientation="vertical"
-        android:background="#fff">
-
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            tools:text="1p2csad3113rgdv223r31edwqsa213dw213caxsad23"
-            android:textSize="14sp"
-            android:id="@+id/txt_address"/>
+            android:background="#fff"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/img_qr"
+                android:layout_width="225dp"
+                android:layout_height="225dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingTop="9dp"
+                android:paddingEnd="9dp"
+                android:paddingStart="9dp"
+                android:textSize="14sp"
+                tools:text="1p2csad3113rgdv223r31edwqsa213dw213caxsad23" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_share"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:id="@+id/btn_share"
-        android:layout_marginTop="44dp"
-        android:text="Share"
-        android:textSize="20sp"
-        android:textAlignment="center"
+        android:background="#fff"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:text="Share"
+        android:textAlignment="center"
         android:textColor="@color/bgPurple"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:background="#fff"/>
+        android:textSize="20sp" />
 
-
-</LinearLayout>
+</RelativeLayout>

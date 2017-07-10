@@ -96,7 +96,7 @@
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
     <string name="title_pivx_send">Amount send</string>
-    <string name="empty_message_address">You don\'t have any addresses saved yet.</string>
+    <string name="empty_message_address">You don\'t have any saved addresses yet.</string>
     <string name="error_message">There seems to been an error \n with your transaction</string>
     <string name="change_trusted_node">Change trusted node</string>
     <string name="save">Save</string>
@@ -129,6 +129,7 @@
     <string name="invalid_inputs">Invalid inputs</string>
     <string name="send_error_dialog_tag">send error dialog tag</string>
     <string name="restore_dialog_tag">restore dialog tag</string>
+    <string name="restore_dialog_error">restore dialog error</string>
 
 
 </resources>

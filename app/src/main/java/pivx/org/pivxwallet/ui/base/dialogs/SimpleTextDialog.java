@@ -31,6 +31,7 @@ public class SimpleTextDialog extends DialogFragment {
     private int bodyColor = -1;
     private int okBtnBackgroundColor;
     private int okBtnTextColor;
+    private View.OnClickListener okBtnClickListener;
 
     private int imgAlertRes;
 
@@ -71,6 +72,9 @@ public class SimpleTextDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 actionCompleted = true;
+                if (okBtnClickListener!=null){
+                    okBtnClickListener.onClick(v);
+                }
                 dismiss();
             }
         });
@@ -163,8 +167,14 @@ public class SimpleTextDialog extends DialogFragment {
         this.okBtnBackgroundColor = okBtnBackgroundColor;
     }
 
-    public void setRootBackgroundRes(int rootBackgroundRes) {
+    public SimpleTextDialog setOkBtnClickListener(View.OnClickListener okBtnClickListener) {
+        this.okBtnClickListener = okBtnClickListener;
+        return this;
+    }
+
+    public SimpleTextDialog setRootBackgroundRes(int rootBackgroundRes) {
         this.rootBackgroundRes = rootBackgroundRes;
+        return this;
     }
 
     public void setAlignBody(Align alignBody) {

@@ -335,7 +335,6 @@ public class PivxWalletService extends Service{
         }else {
             log.warn("service restart, although it was started as non-sticky");
         }
-        // todo: check what not sticky is..
         return START_NOT_STICKY;
     }
 

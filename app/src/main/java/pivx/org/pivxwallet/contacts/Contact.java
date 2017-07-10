@@ -57,6 +57,9 @@ public class Contact implements Serializable{
     }
 
     public void addAllTx(Set<String> txHashes) {
+        if (txHashes==null){
+            txHashes = new HashSet<>();
+        }
         txHashes.addAll(txHashes);
     }
 }

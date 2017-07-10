@@ -39,6 +39,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
@@ -152,7 +153,7 @@ public class RestoreActivity extends BaseActivity {
                     pivxModule.restoreWalletFromEncrypted(file, password);
                     showRestoreSucced();
                 } catch (CantRestoreEncryptedWallet x) {
-                    final DialogBuilder warnDialog = DialogBuilder.warn(this, R.string.import_export_keys_dialog_failure_title);
+                   /* final DialogBuilder warnDialog = DialogBuilder.warn(this, R.string.import_export_keys_dialog_failure_title);
                     warnDialog.setMessage(getString(R.string.import_keys_dialog_failure, x.getMessage()));
                     warnDialog.setPositiveButton(R.string.button_dismiss, null);
                     warnDialog.setNegativeButton(R.string.button_retry, new DialogInterface.OnClickListener() {
@@ -162,7 +163,19 @@ public class RestoreActivity extends BaseActivity {
                             dialog.dismiss();
                         }
                     });
-                    warnDialog.show();
+                    warnDialog.show();*/
+
+                    DialogsUtil.buildSimpleErrorTextDialog(
+                            this,
+                            getString( R.string.import_export_keys_dialog_failure_title),
+                            getString(R.string.import_keys_dialog_failure, x.getMessage())
+                    ).setOkBtnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            restore();
+                        }
+                    }).show(getFragmentManager(),getString(R.string.restore_dialog_error));
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Error, please check logs", Toast.LENGTH_LONG).show();
