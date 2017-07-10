@@ -7,10 +7,12 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -24,6 +26,18 @@ import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 public class SettingsPincodeActivity extends BaseActivity {
     EditText enter_main;
     ImageView i1, i2, i3, i4;
+    TextView key_0;
+    TextView key_1;
+    TextView key_2;
+    TextView key_3;
+    TextView key_4;
+    TextView key_5;
+    TextView key_6;
+    TextView key_7;
+    TextView key_8;
+    TextView key_9;
+    TextView key_clear;
+    ImageView key_back;
 
     int[] pin = new int[4];
     @Override
@@ -36,6 +50,18 @@ public class SettingsPincodeActivity extends BaseActivity {
         i2 = (ImageView) findViewById(R.id.imageview_circle2);
         i3 = (ImageView) findViewById(R.id.imageview_circle3);
         i4 = (ImageView) findViewById(R.id.imageview_circle4);
+        key_0 = (TextView) findViewById(R.id.anti_theft_t9_key_0);
+        key_1 = (TextView) findViewById(R.id.anti_theft_t9_key_1);
+        key_2 = (TextView) findViewById(R.id.anti_theft_t9_key_2);
+        key_3 = (TextView) findViewById(R.id.anti_theft_t9_key_3);
+        key_4 = (TextView) findViewById(R.id.anti_theft_t9_key_4);
+        key_5 = (TextView) findViewById(R.id.anti_theft_t9_key_5);
+        key_6 = (TextView) findViewById(R.id.anti_theft_t9_key_6);
+        key_7 = (TextView) findViewById(R.id.anti_theft_t9_key_7);
+        key_8 = (TextView) findViewById(R.id.anti_theft_t9_key_8);
+        key_9 = (TextView) findViewById(R.id.anti_theft_t9_key_9);
+        key_clear = (TextView) findViewById(R.id.anti_theft_t9_key_clear);
+        key_back = (ImageView) findViewById(R.id.anti_theft_t9_key_backspace);
 
         enter_main = (EditText) findViewById(R.id.editText_enter_mpin);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -91,5 +117,55 @@ public class SettingsPincodeActivity extends BaseActivity {
 
         });
 
+    }
+
+
+    private void onT9KeyClicked(int key) {
+        switch (key) {
+            case R.id.anti_theft_t9_key_0:
+                enter_main.append("0");
+                break;
+            case R.id.anti_theft_t9_key_1:
+                enter_main.append("1");
+                break;
+            case R.id.anti_theft_t9_key_2:
+                enter_main.append("2");
+                break;
+            case R.id.anti_theft_t9_key_3:
+                enter_main.append("3");
+                break;
+            case R.id.anti_theft_t9_key_4:
+                enter_main.append("4");
+                break;
+            case R.id.anti_theft_t9_key_5:
+                enter_main.append("5");
+                break;
+            case R.id.anti_theft_t9_key_6:
+                enter_main.append("6");
+                break;
+            case R.id.anti_theft_t9_key_7:
+                enter_main.append("7");
+                break;
+            case R.id.anti_theft_t9_key_8:
+                enter_main.append("8");
+                break;
+            case R.id.anti_theft_t9_key_9:
+                enter_main.append("9");
+                break;
+            case R.id.anti_theft_t9_key_backspace: {
+                // delete one character
+                String passwordStr = enter_main.getText().toString();
+                if (passwordStr.length() > 0) {
+                    String newPasswordStr = new StringBuilder(passwordStr)
+                            .deleteCharAt(passwordStr.length() - 1).toString();
+                    enter_main.setText(newPasswordStr);
+                }
+            }
+            break;
+            case R.id.anti_theft_t9_key_clear:
+                // clear password field
+                enter_main.setText(null);
+                break;
+        }
     }
 }

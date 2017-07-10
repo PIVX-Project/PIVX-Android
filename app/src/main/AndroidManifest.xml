@@ -22,28 +22,31 @@
         </activity>
         <activity android:name=".ui.wallet_activity.WalletActivity">
 
-
         </activity>
 
         <activity android:name=".ui.start_activity.StartActivity">
+
+        </activity>
+        <activity android:name=".ui.contacts_activity.ContactsActivity"/>
+        <activity android:name=".ui.settings_activity.SettingsActivity"/>
+        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"/>
+        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity" android:noHistory="true" />
+        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.contacts_activity.ContactsActivity"/>
-        <activity android:name=".ui.settings_activity.SettingsActivity"/>
-        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"/>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity" android:noHistory="true" />
-        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity" android:windowSoftInputMode="stateVisible"/>
+
         <activity android:name=".ui.address_add_activity.AddContactActivity"/>
         <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"/>
         <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"/>
         <activity android:name=".ui.start_node_activity.StartNodeActivity"/>
         <activity android:name=".ui.restore_activity.RestoreActivity"/>
-        <activity android:name=".ui.pincode_activity.PincodeActivity"
-                    android:windowSoftInputMode="stateVisible">
+        <activity android:name=".ui.pincode_activity.PincodeActivity">
+
         </activity>
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"></activity>
