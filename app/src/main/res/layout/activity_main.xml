@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/img_nav_logo"  />
             <TextView
-                android:id="@+id/appVer"
+                android:id="@+id/txt_app_version"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:gravity="center"

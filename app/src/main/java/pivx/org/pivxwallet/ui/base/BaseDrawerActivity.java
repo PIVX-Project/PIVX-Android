@@ -10,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
@@ -22,6 +25,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private Toolbar toolbar;
     private DrawerLayout drawer;
     protected FrameLayout header_container;
+    private TextView txt_app_version;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        txt_app_version = (TextView) navigationView.findViewById(R.id.txt_app_version);
+        txt_app_version.setText(BuildConfig.VERSION_NAME);
 
         onCreateView(savedInstanceState,frameLayout);
 

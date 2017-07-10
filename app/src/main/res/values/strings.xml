@@ -112,7 +112,7 @@
     <string name="title_slide3">Extremely secure and private</string>
     <string name="desc_slide3">PIVX is aiming it’s sights on establishing the first truly anonymous crypto-currency.</string>
     <string name="title_slide4">Trusted nodes federation</string>
-    <string name="desc_slide4">Trusted nodes federation which made this light PoS wallets possible, you can relay on them or create your own trusted node</string>
+    <string name="desc_slide4">Trusted nodes federation make light PoS wallets possible, you can rely on them or create your own trusted node!</string>
     <string name="option_add_node">Add node</string>
     <string name="report_issue_dialog_description">Issue description</string>
     <string name="report_issue_dialog_collect_device_info">Append device information</string>
@@ -130,6 +130,8 @@
     <string name="send_error_dialog_tag">send error dialog tag</string>
     <string name="restore_dialog_tag">restore dialog tag</string>
     <string name="restore_dialog_error">restore dialog error</string>
+    <string name="settings_support">Support</string>
+    <string name="support_subject">PIVX wallet support</string>
 
 
 </resources>

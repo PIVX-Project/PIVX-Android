@@ -18,24 +18,18 @@
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
         <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
-
-
-        </activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.wallet_activity.WalletActivity">
+
 
         </activity>
 
         <activity android:name=".ui.start_activity.StartActivity">
-            <!--<intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
         </activity>
         <activity android:name=".ui.contacts_activity.ContactsActivity"/>
         <activity android:name=".ui.settings_activity.SettingsActivity"/>
@@ -54,7 +48,7 @@
         <activity android:name=".ui.transaction_send_activity.SendActivity"></activity>
         <activity android:name=".ui.transaction_request_activity.RequestActivity"></activity>
         <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"></activity>
-        <activity android:name=".ui.tutorial_activity.TutorialActivity"/>
+        <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
 

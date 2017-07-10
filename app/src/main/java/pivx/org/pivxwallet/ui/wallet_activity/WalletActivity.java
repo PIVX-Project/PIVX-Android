@@ -131,6 +131,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+
         // Start service if it's not started.
         pivxApplication.startPivxService();
     }

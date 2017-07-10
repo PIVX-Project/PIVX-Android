@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.VideoView;
 
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 6/13/17.
@@ -57,11 +59,16 @@ public class SplashActivity extends AppCompatActivity {
 
     private void jump() {
 
-        // Jump to your Next Activity or MainActivity
-        Intent intent = new Intent(SplashActivity.this, StartActivity.class);
-        startActivity(intent);
-
-        SplashActivity.this.finish();
+        if (PivxApplication.getInstance().getAppConf().isAppInit()){
+            Intent intent = new Intent(this, WalletActivity.class);
+            startActivity(intent);
+        }else {
+            // Jump to your Next Activity or MainActivity
+            Intent intent = new Intent(SplashActivity.this, StartActivity.class);
+            startActivity(intent);
+            SplashActivity.this.finish();
+        }
+        finish();
     }
 
     @Override

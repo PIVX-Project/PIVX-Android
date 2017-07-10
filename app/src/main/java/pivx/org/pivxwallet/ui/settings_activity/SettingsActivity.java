@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.ui.settings_activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.module.PivxContext;
@@ -24,6 +26,7 @@ import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.IntentsUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
 
 /**
@@ -38,6 +41,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button btn_change_node;
     private Button buttonCurrency;
     private Button btn_report;
+    private Button btn_support;
     private TextView textAbout;
     private TextView txt_network_info;
 
@@ -75,6 +79,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         btn_report = (Button) findViewById(R.id.btn_report);
         btn_report.setOnClickListener(this);
+
+        btn_support = (Button) findViewById(R.id.btn_support);
+        btn_support.setOnClickListener(this);
 
         // Open Dialog
         buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
@@ -139,6 +146,13 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(new Intent(v.getContext(),StartNodeActivity.class));
         }else if (id == R.id.btn_report){
             launchReportDialog();
+        }else if(id == R.id.btn_support){
+            IntentsUtils.startSend(
+                    this,
+                    getString(R.string.support_subject),
+                    getString(R.string.report_issue_dialog_message_issue),
+                    new ArrayList<Uri>()
+            );
         }
     }
 
@@ -185,4 +199,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         };
         dialog.show();
     }
+
+
 }
