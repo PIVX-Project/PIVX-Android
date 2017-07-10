@@ -18,11 +18,7 @@
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
         <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.wallet_activity.WalletActivity">
 
@@ -30,6 +26,11 @@
         </activity>
 
         <activity android:name=".ui.start_activity.StartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.contacts_activity.ContactsActivity"/>
         <activity android:name=".ui.settings_activity.SettingsActivity"/>

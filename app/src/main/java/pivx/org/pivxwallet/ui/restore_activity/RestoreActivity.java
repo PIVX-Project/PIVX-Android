@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -55,7 +56,7 @@ public class RestoreActivity extends BaseActivity {
     private static final int OPTIONS_RESTORE = 1;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL = 502;
     private View root;
-    private EditText edit_password;
+    private TextInputEditText edit_password;
     private Spinner spinnerFiles;
     private TextView restoreMessage;
     private Button btn_restore;
@@ -86,7 +87,7 @@ public class RestoreActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
-        edit_password = (EditText) root.findViewById(R.id.edit_password);
+        edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
         spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
         fileAdapter = new FileAdapter(this) {
             @Override
