@@ -40,7 +40,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonRestore;
     private Button buttonChange;
     private Button btn_change_node;
-    private Button buttonCurrency;
     private Button btn_report;
     private Button btn_support;
     private Button buttonTutorial;
@@ -89,31 +88,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         buttonTutorial = (Button) findViewById(R.id.btn_tutorial);
         buttonTutorial.setOnClickListener(this);
 
-        // Open Dialog
-        buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
-        buttonCurrency.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                LayoutInflater content = LayoutInflater.from(SettingsActivity.this);
-                View dialogView = content.inflate(R.layout.dialog_currency_picker, null);
-                DialogBuilder currencyDialog = new DialogBuilder(SettingsActivity.this);
-                currencyDialog.setView(dialogView);
-                CharSequence items[] = new CharSequence[] {"USD", "GB", "Third"};
-                currencyDialog.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface d, int n) {
-                        // ...
-                    }
-
-                });
-                currencyDialog.setPositiveButton("Select", null);
-                currencyDialog.setNegativeButton("Cancel", null);
-                currencyDialog.show();
-            }
-
-        });
-
-        
     }
 
     @Override
