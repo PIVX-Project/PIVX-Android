@@ -93,18 +93,5 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
-    <style name="anti_theft_t9_key">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:paddingTop">20dp</item>
-        <item name="android:paddingBottom">20dp</item>
-        <item name="android:textColor">@color/mainText</item>
-        <item name="android:clickable">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:scaleType">centerInside</item>
-        <item name="android:background">@color/transparent</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-    </style>
 
 </resources>

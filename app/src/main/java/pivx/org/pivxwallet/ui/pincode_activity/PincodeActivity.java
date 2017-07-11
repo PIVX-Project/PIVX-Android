@@ -7,10 +7,12 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.Random;
@@ -26,10 +28,21 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
  * Created by Neoperol on 4/20/17.
  */
 
-public class PincodeActivity extends BaseActivity {
+public class PincodeActivity extends BaseActivity implements View.OnClickListener {
     EditText enter_main;
     ImageView i1, i2, i3, i4;
-
+    TextView key_0;
+    TextView key_1;
+    TextView key_2;
+    TextView key_3;
+    TextView key_4;
+    TextView key_5;
+    TextView key_6;
+    TextView key_7;
+    TextView key_8;
+    TextView key_9;
+    TextView key_clear;
+    ImageView key_back;
     int[] pin = new int[4];
 
     @Override
@@ -48,13 +61,31 @@ public class PincodeActivity extends BaseActivity {
         i2 = (ImageView) findViewById(R.id.imageview_circle2);
         i3 = (ImageView) findViewById(R.id.imageview_circle3);
         i4 = (ImageView) findViewById(R.id.imageview_circle4);
-
+        key_0 = (TextView) findViewById(R.id.key_0);
+        key_0.setOnClickListener(this);
+        key_1 = (TextView) findViewById(R.id.key_1);
+        key_1.setOnClickListener(this);
+        key_2 = (TextView) findViewById(R.id.key_2);
+        key_2.setOnClickListener(this);
+        key_3 = (TextView) findViewById(R.id.key_3);
+        key_3.setOnClickListener(this);
+        key_4 = (TextView) findViewById(R.id.key_4);
+        key_4.setOnClickListener(this);
+        key_5 = (TextView) findViewById(R.id.key_5);
+        key_5.setOnClickListener(this);
+        key_6 = (TextView) findViewById(R.id.key_6);
+        key_6.setOnClickListener(this);
+        key_7 = (TextView) findViewById(R.id.key_7);
+        key_7.setOnClickListener(this);
+        key_8 = (TextView) findViewById(R.id.key_8);
+        key_8.setOnClickListener(this);
+        key_9 = (TextView) findViewById(R.id.key_9);
+        key_9.setOnClickListener(this);
+        key_clear = (TextView) findViewById(R.id.key_clear);
+        key_clear.setOnClickListener(this);
+        key_back = (ImageView) findViewById(R.id.key_backspace);
+        key_back.setOnClickListener(this);
         enter_main = (EditText) findViewById(R.id.editText_enter_mpin);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(enter_main, InputMethodManager.SHOW_IMPLICIT);
-        enter_main.requestFocus();
-        enter_main.setInputType(InputType.TYPE_CLASS_NUMBER);
-        enter_main.setFocusableInTouchMode(true);
 
         enter_main.addTextChangedListener(new TextWatcher() {
             @Override
@@ -116,6 +147,44 @@ public class PincodeActivity extends BaseActivity {
         Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
         pivxApplication.getAppConf().setAppInit(true);
         startActivity(myIntent);
+    }
+
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.key_0){
+            enter_main.append("0");
+        }else if (id == R.id.key_1){
+            enter_main.append("1");
+        }else if (id == R.id.key_2){
+            enter_main.append("2");
+        }else if (id == R.id.key_3){
+            enter_main.append("3");
+        }else if (id == R.id.key_4){
+            enter_main.append("4");
+        }else if (id == R.id.key_5){
+            enter_main.append("5");
+        }else if (id == R.id.key_6){
+            enter_main.append("6");
+        }else if (id == R.id.key_7){
+            enter_main.append("7");
+        }else if (id == R.id.key_8){
+            enter_main.append("8");
+        }else if (id == R.id.key_9){
+            enter_main.append("9");
+        }else if (id == R.id.key_0){
+            enter_main.append("0");
+        }else if (id == R.id.key_clear){
+            // clear password field
+            enter_main.setText(null);
+        }else if (id == R.id.key_backspace){
+            String passwordStr = enter_main.getText().toString();
+            if (passwordStr.length() > 0) {
+                String newPasswordStr = new StringBuilder(passwordStr)
+                        .deleteCharAt(passwordStr.length() - 1).toString();
+                enter_main.setText(newPasswordStr);
+            }
+        }
+
     }
 
 }
