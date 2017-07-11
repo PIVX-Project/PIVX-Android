@@ -62,18 +62,138 @@
     </LinearLayout>
 
     <EditText android:id="@+id/editText_enter_mpin"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
+        android:layout_below="@+id/pin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/pin_layout"
         android:background="@null"
         android:cursorVisible="false"
         android:inputType="number"
         android:password="true"
         android:maxLength="4"
-        android:textColor="#00000000"
+        android:textColor="@color/mainText"
         />
+
+    <TableLayout
+        android:layout_below="@+id/editText_enter_mpin"
+        android:id="@+id/anti_theft_t9_grid"
+        android:paddingTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:divider="@android:color/darker_gray"
+        android:orientation="vertical"
+        android:showDividers="middle|beginning|end" >
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/darker_gray"
+            android:gravity="center"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_1"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_one"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_2"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_two"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_3"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_three"
+                android:textIsSelectable="false" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/darker_gray"
+            android:gravity="center"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_4"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_four"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_5"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_five"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_6"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_six"
+                android:textIsSelectable="false" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/darker_gray"
+            android:gravity="center"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_7"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_seven"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_8"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_eight"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_9"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_nine"
+                android:textIsSelectable="false" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/darker_gray"
+            android:gravity="center"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_clear"
+                style="@style/anti_theft_t9_key"
+                android:text="clear"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/anti_theft_t9_key_0"
+                style="@style/anti_theft_t9_key"
+                android:text="@string/number_zero"
+                android:textIsSelectable="false" />
+            <ImageView
+                android:id="@+id/anti_theft_t9_key_backspace"
+                style="@style/anti_theft_t9_key"
+                android:contentDescription="@string/btn_clear"
+                android:src="@drawable/ic_keyboard_back"
+                android:textIsSelectable="false" />
+
+
+        </TableRow>
+
+    </TableLayout>
 
 </RelativeLayout>
 
