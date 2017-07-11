@@ -58,6 +58,11 @@ public class ContactsActivity extends BaseDrawerActivity {
         if (executor==null){
             executor = Executors.newSingleThreadExecutor();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         // re load
         load();
     }
@@ -82,7 +87,7 @@ public class ContactsActivity extends BaseDrawerActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (contacts.isEmpty()) {
+                        if (contacts==null || contacts.isEmpty()) {
                             emptyView.setVisibility(View.VISIBLE);
                         }else {
                             emptyView.setVisibility(View.GONE);
@@ -101,8 +106,7 @@ public class ContactsActivity extends BaseDrawerActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
             case R.id.action_add:
