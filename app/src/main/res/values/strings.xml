@@ -151,4 +151,5 @@
     <string name="insert_new_pin">Insert new PIN</string>
     <string name="invalid_pincode">Invalid PIN</string>
     <string name="contact_already_exist">Contact address already exist</string>
+    <string name="invalid_input_address">Invalid address</string>
 </resources>

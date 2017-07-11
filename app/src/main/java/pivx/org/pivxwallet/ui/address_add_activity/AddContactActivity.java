@@ -84,6 +84,10 @@ public class AddContactActivity extends BaseActivity {
                 name = edit_name.getText().toString();
                 if (name.length()>0 && address.length()>0) {
                     try {
+                        if (!pivxModule.chechAddress(address)){
+                            Toast.makeText(this,R.string.invalid_input_address,Toast.LENGTH_LONG).show();
+                            return true;
+                        }
                         Contact contact = new Contact(name);
                         contact.addAddress(address);
                         pivxModule.saveContact(contact);
