@@ -12,14 +12,6 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/bg"
-            android:orientation="vertical"
-            android:layout_height="130dp"
-            android:layout_width="match_parent"
-            android:background="@drawable/bg_gradient" >
-
-        </LinearLayout>
-        <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,22 +54,21 @@
                 android:textColor = "#757575"
                 android:textSize = "14sp" />
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:background="@drawable/transaction_inputs">
 
                 <EditText
                     android:id = "@+id/edit_address"
                     android:ellipsize="start"
                     android:gravity="left"
-                    android:layout_width = "match_parent"
+                    android:layout_weight="1"
+                    android:layout_width = "0dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="20dp"
+                    android:maxLines="4"
+                    android:padding="8dp"
                     android:background="@color/transparent"
                     android:hint="@string/add_address"
                     android:textColor = "#434343"
@@ -96,7 +87,7 @@
                     android:layout_marginRight="5dp"
                     android:text="Button"/>
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
