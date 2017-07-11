@@ -24,6 +24,7 @@ import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
+import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.IntentsUtils;
@@ -42,6 +43,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonCurrency;
     private Button btn_report;
     private Button btn_support;
+    private Button buttonTutorial;
     private TextView textAbout;
     private TextView txt_network_info;
 
@@ -82,6 +84,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         btn_support = (Button) findViewById(R.id.btn_support);
         btn_support.setOnClickListener(this);
+
+        // Open Tutorial
+        buttonTutorial = (Button) findViewById(R.id.btn_tutorial);
+        buttonTutorial.setOnClickListener(this);
 
         // Open Dialog
         buttonCurrency = (Button) findViewById(R.id.btn_local_currency);
@@ -133,6 +139,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         int id = v.getId();
         if (id == R.id.btn_backup_wallet){
             Intent myIntent = new Intent(v.getContext(), SettingsBackupActivity.class);
+            startActivity(myIntent);
+
+        }else if (id == R.id.btn_tutorial){
+            Intent myIntent = new Intent(v.getContext(), TutorialActivity.class);
             startActivity(myIntent);
         }else if (id == R.id.btn_restore_wallet){
             Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
