@@ -67,6 +67,9 @@
             android:layout_below="@+id/title"
             android:layout_toRightOf="@+id/imageView"
             android:text="Description"
+            android:maxLines="1"
+            android:maxLength="10"
+            android:ellipsize="end"
             android:textSize="14sp"/>
 
 
