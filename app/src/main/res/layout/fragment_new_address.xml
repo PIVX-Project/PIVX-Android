@@ -64,7 +64,8 @@
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp" >
+                android:layout_height="wrap_content"
+                android:background="@drawable/transaction_inputs">
 
                 <EditText
                     android:id = "@+id/edit_address"
@@ -77,7 +78,7 @@
                     android:paddingBottom="8dp"
                     android:paddingStart="8dp"
                     android:paddingEnd="20dp"
-                    android:background="@drawable/transaction_inputs"
+                    android:background="@color/transparent"
                     android:hint="@string/add_address"
                     android:textColor = "#434343"
                     android:textSize = "15sp"
