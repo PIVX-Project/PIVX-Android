@@ -1,4 +1,4 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,15 +6,16 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     android:background="@color/bgWhite">
 
     <TextView
         android:id = "@+id/pincodeMessage"
-        android:layout_width = "wrap_content"
+        android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:paddingTop="30dp"
+        android:paddingBottom="10dp"
         android:text = "@string/pincode_message"
         android:layout_centerHorizontal = "true"
         android:textColor = "@color/mainText"
@@ -27,7 +28,8 @@
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/pincodeMessage"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/imageview_circle1"
@@ -61,24 +63,15 @@
 
     </LinearLayout>
 
-    <EditText android:id="@+id/editText_enter_mpin"
-        android:layout_below="@+id/pin_layout"
+    <fragment
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"
-        android:background="@null"
-        android:cursorVisible="false"
-        android:inputType="number"
-        android:password="true"
-        android:maxLength="4"
-        android:textColor="@color/mainText"
+        android:layout_height="match_parent"
+        android:name="pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment"
+        android:id="@+id/fragment_keyboard"
+        android:layout_gravity="center|bottom"
+
         />
 
-    <include layout="@layout/keyboard"
-        android:background="@android:color/transparent">
 
-    </include>
-
-</RelativeLayout>
+</LinearLayout>
 

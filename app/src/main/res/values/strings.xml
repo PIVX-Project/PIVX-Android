@@ -146,4 +146,8 @@
     <string name="number_nine">9</string>
     <string name="btn_clear">Clear</string>
     <string name="btn_backspace">Back</string>
+    <string name="pincode_saved">New pin saved</string>
+    <string name="insert_old_pin">Insert your current PIN</string>
+    <string name="insert_new_pin">Insert new PIN</string>
+    <string name="invalid_pincode">Invalid PIN</string>
 </resources>

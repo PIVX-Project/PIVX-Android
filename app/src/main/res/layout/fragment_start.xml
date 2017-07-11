@@ -30,7 +30,7 @@
            />
 
 
-        <pivx.org.pivxwallet.utils.CustomFontTextView
+        <TextView
             android:id="@+id/tutorialMessage"
             android:paddingTop="40dp"
             android:text="@string/tutorial_message"

@@ -19,11 +19,10 @@ public class BaseFragment extends Fragment {
     protected PivxApplication pivxApplication;
     protected PivxModule pivxModule;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.pivxApplication = PivxApplication.getInstance();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        pivxApplication = PivxApplication.getInstance();
         pivxModule = pivxApplication.getModule();
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 }
