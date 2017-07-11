@@ -31,6 +31,7 @@ import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.module.ContactAlreadyExistException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -225,7 +226,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     Contact contact = new Contact(contactName);
                     contact.addAddress(addressStr);
                     contact.addTx(transaction.getHash());
-                    pivxModule.saveContact(contact);
+                    try {
+                        pivxModule.saveContact(contact);
+                    } catch (ContactAlreadyExistException e) {
+                        e.printStackTrace();
+                        Toast.makeText(SendActivity.this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
+                        return;
+                    }
                 }
                 pivxModule.commitTx(transaction);
                 Intent intent = new Intent(SendActivity.this, PivxWalletService.class);

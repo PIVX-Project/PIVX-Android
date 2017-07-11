@@ -17,6 +17,7 @@ import org.bitcoinj.core.Address;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.module.ContactAlreadyExistException;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 
 /**
@@ -73,7 +74,6 @@ public class AddContactActivity extends BaseActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.save, menu);
         return true;
     }
@@ -83,10 +83,15 @@ public class AddContactActivity extends BaseActivity {
             case R.id.save:
                 name = edit_name.getText().toString();
                 if (name.length()>0 && address.length()>0) {
-                    Contact contact = new Contact(name);
-                    contact.addAddress(address);
-                    pivxModule.saveContact(contact);
-                    Toast.makeText(this, "Contact saved", Toast.LENGTH_LONG).show();
+                    try {
+                        Contact contact = new Contact(name);
+                        contact.addAddress(address);
+                        pivxModule.saveContact(contact);
+                        Toast.makeText(this, "Contact saved", Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    } catch (ContactAlreadyExistException e) {
+                        Toast.makeText(this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
+                    }
                 }
                 return true;
             default:

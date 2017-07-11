@@ -141,7 +141,8 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public void saveContact(Contact contact) {
+    public void saveContact(Contact contact) throws ContactAlreadyExistException {
+        if (contactsStore.getContact(contact.getAddresses().get(0))==null) throw new ContactAlreadyExistException();
         contactsStore.insert(contact);
     }
 

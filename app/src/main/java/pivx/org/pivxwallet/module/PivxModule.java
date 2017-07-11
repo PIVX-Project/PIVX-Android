@@ -69,7 +69,7 @@ public interface PivxModule {
 
     Collection<Contact> getContacts();
 
-    void saveContact(Contact contact);
+    void saveContact(Contact contact) throws ContactAlreadyExistException;
 
     boolean chechAddress(String addressBase58);
 
