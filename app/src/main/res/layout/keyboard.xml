@@ -23,13 +23,11 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
             android:gravity="center"
             android:scaleType="centerInside"
             android:elevation="40dp"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_one"
             android:textIsSelectable="false" />
 
@@ -44,7 +42,7 @@
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_two"
             android:textIsSelectable="false" />
 
@@ -53,12 +51,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_three"
             android:textIsSelectable="false" />
     </TableRow>
@@ -76,12 +72,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_four"
             android:textIsSelectable="false" />
 
@@ -90,13 +84,11 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
             android:gravity="center"
             android:background="@drawable/btn_box"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_five"
             android:textIsSelectable="false" />
 
@@ -110,7 +102,7 @@
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_six"
             android:textIsSelectable="false" />
     </TableRow>
@@ -133,24 +125,24 @@
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_seven"
             android:textIsSelectable="false" />
 
         <TextView
             android:id="@+id/key_8"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingTop="14dp"
+            android:layout_weight="1"
             android:background="@drawable/btn_box"
-            android:paddingBottom="14dp"
             android:gravity="center"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
             android:scaleType="centerInside"
-            android:textColor="@color/mainText"
-            android:textSize="22sp"
             android:text="@string/number_eight"
-            android:textIsSelectable="false" />
+            android:textColor="@color/mainText"
+            android:textIsSelectable="false"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/key_9"
@@ -162,7 +154,7 @@
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_nine"
             android:textIsSelectable="false" />
     </TableRow>
@@ -185,7 +177,7 @@
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="clear"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -201,7 +193,7 @@
             android:background="@drawable/btn_box"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:text="@string/number_zero"
             android:textIsSelectable="false" />
         <ImageView
@@ -209,12 +201,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
             android:gravity="center"
             android:scaleType="centerInside"
             android:textColor="@color/mainText"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:contentDescription="@string/btn_clear"
             android:src="@drawable/ic_keyboard_back"
             android:textIsSelectable="false" />

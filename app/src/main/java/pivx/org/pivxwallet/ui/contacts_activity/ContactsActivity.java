@@ -55,9 +55,7 @@ public class ContactsActivity extends BaseDrawerActivity {
         super.onResume();
         // check current activity in the navigation drawer
         setNavigationMenuItemChecked(1);
-        if (executor==null){
-            executor = Executors.newSingleThreadExecutor();
-        }
+
     }
 
     @Override
@@ -78,6 +76,9 @@ public class ContactsActivity extends BaseDrawerActivity {
 
     private void load() {
         // add loading..
+        if (executor==null){
+            executor = Executors.newSingleThreadExecutor();
+        }
         executor.submit(new Runnable() {
             @Override
             public void run() {
