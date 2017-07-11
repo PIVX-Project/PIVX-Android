@@ -58,9 +58,9 @@ public class AddContactActivity extends BaseActivity {
                 String temp = s.toString();
                 if(pivxModule.chechAddress(temp)){
                     address = temp;
-                    edit_address.setTextColor(Color.GREEN);
+                    edit_address.setTextColor(Color.parseColor("#55476c"));;
                 }else {
-                    edit_address.setTextColor(Color.RED);
+                    edit_address.setTextColor(Color.parseColor("#4d4d4d"));;
                 }
             }
         });
