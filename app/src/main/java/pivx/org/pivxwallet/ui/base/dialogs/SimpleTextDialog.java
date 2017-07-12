@@ -131,10 +131,10 @@ public class SimpleTextDialog extends DialogFragment {
     }
 
     private void initOkBtn(TextView btn_ok){
-        if (okBtnBackgroundColor>0){
+        if (okBtnBackgroundColor!=0){
             btn_ok.setBackgroundColor(okBtnBackgroundColor);
         }
-        if (okBtnTextColor>0){
+        if (okBtnTextColor!=0){
             btn_ok.setTextColor(okBtnTextColor);
         }
     }

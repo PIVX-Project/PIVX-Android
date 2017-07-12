@@ -37,6 +37,7 @@ import global.ContextWrapper;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
@@ -61,6 +62,7 @@ public class PivxApplication extends Application implements ContextWrapper {
     /** Singleton */
     private static PivxApplication instance;
     public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();
+    private long lastTimeRequestBackup;
 
     private PivxModule pivxModule;
     private AppConf appConf;
@@ -97,13 +99,22 @@ public class PivxApplication extends Application implements ContextWrapper {
             AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
-            pivxModule.start();
-            /*if (appConf.isAppInit()) {
-                // start service
-                startPivxService();
-            }*/
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
+                        pivxModule.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        CrashReporter.saveBackgroundTrace(e,getPackageInfo());
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        CrashReporter.saveBackgroundTrace(e,getPackageInfo());
+                    }
+                }
+            }).start();
         } catch (SnappydbException e) {
             e.printStackTrace();
         } catch (Exception e){
@@ -228,6 +239,14 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     public static long getTimeCreateApplication() {
         return TIME_CREATE_APPLICATION;
+    }
+
+    public long getLastTimeRequestedBackup() {
+        return lastTimeRequestBackup;
+    }
+
+    public void setLastTimeBackupRequested(long lastTimeBackupRequested) {
+        this.lastTimeRequestBackup = lastTimeBackupRequested;
     }
 
     /*public ServiceConnection pivxServiceConnection = new ServiceConnection() {

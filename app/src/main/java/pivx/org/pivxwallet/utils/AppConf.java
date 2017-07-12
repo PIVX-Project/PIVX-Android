@@ -20,6 +20,7 @@ public class AppConf extends Configurations {
     private static final String TRUSTED_NODE_SSL = "trusted_node_ssl";
 
     private static final String SELECTED_RATE_COIN = "selected_rate_coin";
+    private static final String USER_HAS_BACKUP = "user_has_backup";
 
     public AppConf(SharedPreferences prefs) {
         super(prefs);
@@ -64,5 +65,14 @@ public class AppConf extends Configurations {
     public String getSelectedRateCoin(){
         return getString(SELECTED_RATE_COIN,DEFAULT_RATE_COIN);
     }
+
+    public boolean hasBackup() {
+        return getBoolean(USER_HAS_BACKUP,false);
+    }
+
+    public void setHasBackup(boolean hasBackup){
+        save(USER_HAS_BACKUP,hasBackup);
+    }
+
 
 }

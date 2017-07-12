@@ -1,9 +1,13 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -36,6 +40,7 @@ import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -120,7 +125,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         int id = v.getId();
         if (id == R.id.btnSend){
             try {
-                send();
+                if (checkConnectivity()){
+                    send();
+                }
             }catch (IllegalArgumentException e){
                 e.printStackTrace();
                 showErrorDialog(e.getMessage());
@@ -136,6 +143,46 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
         }
     }
+
+    private boolean checkConnectivity() {
+        if (!isOnline()){
+            SimpleTwoButtonsDialog noConnectivityDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                    this,
+                    getString(R.string.error_no_connectivity_title),
+                    getString(R.string.error_no_connectivity_body),
+                    new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                        @Override
+                        public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                            send();
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                            dialog.dismiss();
+                        }
+                    }
+            );
+            noConnectivityDialog.setLeftBtnTextColor(Color.WHITE)
+                    .setLeftBtnBackgroundColor(getColor(R.color.lightGreen))
+                    .setRightBtnTextColor(Color.BLACK)
+                    .setRightBtnBackgroundColor(Color.WHITE)
+                    .setLeftBtnText(getString(R.string.button_cancel))
+                    .setRightBtnText(getString(R.string.button_ok))
+                    .show();
+
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

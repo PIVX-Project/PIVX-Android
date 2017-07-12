@@ -42,6 +42,7 @@ import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import wallet.Crypto;
@@ -53,6 +54,7 @@ import wallet.exceptions.CantRestoreEncryptedWallet;
  */
 
 public class RestoreActivity extends BaseActivity {
+    public static final String ACTION_RESTORE_AND_JUMP_TO_WIZARD = "jump_to_wizard";
     private static final int OPTIONS_RESTORE = 1;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL = 502;
     private View root;
@@ -62,6 +64,8 @@ public class RestoreActivity extends BaseActivity {
     private Button btn_restore;
     private FileAdapter fileAdapter;
     private List<File> files = new LinkedList<File>();
+
+    private boolean jumpToWizard = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,6 +90,11 @@ public class RestoreActivity extends BaseActivity {
         setTitle("Restore wallet");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getIntent()!=null){
+            if (getIntent().getAction().equals(ACTION_RESTORE_AND_JUMP_TO_WIZARD)){
+                jumpToWizard = true;
+            }
+        }
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
         edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
         spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
@@ -154,18 +163,6 @@ public class RestoreActivity extends BaseActivity {
                     pivxModule.restoreWalletFromEncrypted(file, password);
                     showRestoreSucced();
                 } catch (CantRestoreEncryptedWallet x) {
-                   /* final DialogBuilder warnDialog = DialogBuilder.warn(this, R.string.import_export_keys_dialog_failure_title);
-                    warnDialog.setMessage(getString(R.string.import_keys_dialog_failure, x.getMessage()));
-                    warnDialog.setPositiveButton(R.string.button_dismiss, null);
-                    warnDialog.setNegativeButton(R.string.button_retry, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            restore();
-                            dialog.dismiss();
-                        }
-                    });
-                    warnDialog.show();*/
-
                     DialogsUtil.buildSimpleErrorTextDialog(
                             this,
                             getString( R.string.import_export_keys_dialog_failure_title),
@@ -197,12 +194,18 @@ public class RestoreActivity extends BaseActivity {
         DialogsUtil.buildSimpleTextDialog(this,null,message)
                 .show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pivxApplication.startPivxService();
-            }
-        }, TimeUnit.SECONDS.toMillis(5));
+        if (jumpToWizard){
+            startActivity(new Intent(this, TutorialActivity.class));
+            finish();
+        }else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    pivxApplication.startPivxService();
+                }
+            }, TimeUnit.SECONDS.toMillis(5));
+        }
+
     }
 
     private void init(){

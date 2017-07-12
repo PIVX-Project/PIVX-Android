@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,11 +39,14 @@ import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
+import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission.CAMERA;
@@ -129,11 +133,38 @@ public class WalletActivity extends BaseDrawerActivity {
             }
         });
 
-
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
 
         // Start service if it's not started.
         pivxApplication.startPivxService();
+
+        if (!pivxApplication.getAppConf().hasBackup()){
+            long now = System.currentTimeMillis();
+            if (pivxApplication.getLastTimeRequestedBackup()+1800000L<now) {
+                pivxApplication.setLastTimeBackupRequested(now);
+                SimpleTwoButtonsDialog reminderDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                        this,
+                        getString(R.string.reminder_backup),
+                        getString(R.string.reminder_backup_body),
+                        new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                            @Override
+                            public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                startActivity(new Intent(WalletActivity.this, SettingsBackupActivity.class));
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                reminderDialog.setLeftBtnText(getString(R.string.button_dismiss));
+                reminderDialog.setLeftBtnTextColor(Color.BLACK);
+                reminderDialog.setRightBtnText(getString(R.string.button_ok));
+                reminderDialog.show();
+            }
+        }
     }
 
     @Override

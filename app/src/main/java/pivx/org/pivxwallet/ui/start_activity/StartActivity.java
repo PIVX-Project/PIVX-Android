@@ -14,6 +14,8 @@ import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 
+import static pivx.org.pivxwallet.ui.restore_activity.RestoreActivity.ACTION_RESTORE_AND_JUMP_TO_WIZARD;
+
 /**
  * Created by mati on 18/04/17.
  */
@@ -45,6 +47,7 @@ public class StartActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
+                myIntent.setAction(ACTION_RESTORE_AND_JUMP_TO_WIZARD);
                 startActivity(myIntent);
             }
         });

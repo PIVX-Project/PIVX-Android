@@ -81,7 +81,7 @@
     <string name="backup_create">create</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
-    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at:</string>
+    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at\n %s </string>
     <string name="import_keys_dialog_message">Select one of your backups files loaded from %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
@@ -152,4 +152,10 @@
     <string name="invalid_pincode">Invalid PIN</string>
     <string name="contact_already_exist">Contact address already exist</string>
     <string name="invalid_input_address">Invalid address</string>
+    <string name="reminder_backup">Backup reminder</string>
+    <string name="reminder_backup_body">One of the most important part of a mobile wallet is the backup, do you want to do it now?</string>
+    <string name="button_ok">Ok</string>
+    <string name="backup_succed_dialog">backup_succed_dialog</string>
+    <string name="error_no_connectivity_title">No internet connection</string>
+    <string name="error_no_connectivity_body">The app is going to save your transaction until the connection back.\nDo you want to continue?</string>
 </resources>

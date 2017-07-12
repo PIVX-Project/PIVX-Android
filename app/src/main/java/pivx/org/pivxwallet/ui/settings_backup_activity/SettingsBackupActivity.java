@@ -21,6 +21,8 @@ import java.io.IOException;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
  * Created by Neoperol on 5/18/17.
@@ -85,23 +87,19 @@ public class SettingsBackupActivity extends BaseActivity {
     }
 
     private void showSuccedBackupDialog(final String backupAbsolutePath){
-        Dialog dialog = new Dialog(this){
+        SimpleTextDialog succedDialog = DialogsUtil.buildSimpleTextDialog(
+                this,
+                getString(R.string.backup_completed),
+                getString(R.string.backup_completed_text,backupAbsolutePath)
+                );
+        succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
+        succedDialog.setOkBtnClickListener(new View.OnClickListener() {
             @Override
-            protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.backup_dialog);
-                findViewById(R.id.txt_ok).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dismiss();
-                        onBackPressed();
-                    }
-                });
-                TextView textView = (TextView) findViewById(R.id.txt_backup_dir);
-                textView.setText(backupAbsolutePath);
+            public void onClick(View v) {
+                onBackPressed();
             }
-        };
-        dialog.show();
+        });
+        succedDialog.show(getFragmentManager(),getString(R.string.backup_succed_dialog));
     }
 
     private void checkPermissions() {

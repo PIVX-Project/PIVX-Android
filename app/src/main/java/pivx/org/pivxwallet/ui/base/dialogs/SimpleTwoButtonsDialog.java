@@ -31,6 +31,7 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
     private int leftBtnTextColor;
     private int rightBtnTextColor;
     private int rightBtnBackgroundColor;
+    private int leftBtnBackgroundColor;
     private int rootBackgroundRes;
 
     private int imgAlertRes;
@@ -131,6 +132,9 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
 
         if (leftBtnText!=null){
             btn_left.setText(leftBtnText);
+            if (leftBtnBackgroundColor!=0){
+                btn_left.setBackgroundColor(leftBtnBackgroundColor);
+            }
         }
 
         if (rightBtnText!=null){
@@ -189,12 +193,14 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
         this.containerBtnsBackgroundColor = containerBtnsBackgroundColor;
     }
 
-    public void setLeftBtnTextColor(int leftBtnTextColor) {
+    public SimpleTwoButtonsDialog setLeftBtnTextColor(int leftBtnTextColor) {
         this.leftBtnTextColor = leftBtnTextColor;
+        return this;
     }
 
-    public void setRightBtnTextColor(int rightBtnTextColor) {
+    public SimpleTwoButtonsDialog setRightBtnTextColor(int rightBtnTextColor) {
         this.rightBtnTextColor = rightBtnTextColor;
+        return this;
     }
 
     public void setBtnsTextColor(int color){
@@ -212,8 +218,14 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
         return this;
     }
 
-    public void setRightBtnBackgroundColor(int rightBtnBackgroundColor) {
+    public SimpleTwoButtonsDialog setRightBtnBackgroundColor(int rightBtnBackgroundColor) {
         this.rightBtnBackgroundColor = rightBtnBackgroundColor;
+        return this;
+    }
+
+    public SimpleTwoButtonsDialog setLeftBtnBackgroundColor(int leftBtnBackgroundColor) {
+        this.leftBtnBackgroundColor = leftBtnBackgroundColor;
+        return this;
     }
 
     public void setRootBackgroundRes(int rootBackgroundRes) {
