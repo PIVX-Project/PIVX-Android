@@ -91,8 +91,10 @@ public class RestoreActivity extends BaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (getIntent()!=null){
-            if (getIntent().getAction().equals(ACTION_RESTORE_AND_JUMP_TO_WIZARD)){
-                jumpToWizard = true;
+            if (getIntent().getAction()!=null) {
+                if (getIntent().getAction().equals(ACTION_RESTORE_AND_JUMP_TO_WIZARD)){
+                    jumpToWizard = true;
+                }
             }
         }
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);

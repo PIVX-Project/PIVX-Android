@@ -99,22 +99,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
-                        pivxModule.start();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        CrashReporter.saveBackgroundTrace(e,getPackageInfo());
-                    } catch (Exception e){
-                        e.printStackTrace();
-                        CrashReporter.saveBackgroundTrace(e,getPackageInfo());
-                    }
-                }
-            }).start();
+            pivxModule.start();
         } catch (SnappydbException e) {
             e.printStackTrace();
         } catch (Exception e){
