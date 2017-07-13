@@ -61,7 +61,6 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     }
 
     private void goNext() {
-
         if (pivxApplication.getAppConf().getTrustedNode()==null){
             // select random trusted node
             List<PivtrumPeerData> nodes = PivtrumGlobalData.listTrustedHosts();
@@ -73,30 +72,33 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
         Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
         pivxApplication.getAppConf().setAppInit(true);
         startActivity(myIntent);
+        finish();
     }
 
 
     @Override
     public void onKeyClicked(KeyboardFragment.KEYS key) {
-        if (key.getValue()<10){
-            pin[lastPos] = key.getValue();
-            activeCheck(lastPos);
-            lastPos++;
-            if (lastPos==4){
-                String pincode = String.valueOf(pin[0])+String.valueOf(pin[1])+String.valueOf(pin[2])+String.valueOf(pin[3]);
-                pivxApplication.getAppConf().savePincode(pincode);
-                Toast.makeText(this,R.string.pincode_saved,Toast.LENGTH_SHORT).show();
-                goNext();
+        if (lastPos<4) {
+            if (key.getValue() < 10) {
+                pin[lastPos] = key.getValue();
+                activeCheck(lastPos);
+                lastPos++;
+                if (lastPos == 4) {
+                    String pincode = String.valueOf(pin[0]) + String.valueOf(pin[1]) + String.valueOf(pin[2]) + String.valueOf(pin[3]);
+                    pivxApplication.getAppConf().savePincode(pincode);
+                    Toast.makeText(this, R.string.pincode_saved, Toast.LENGTH_SHORT).show();
+                    goNext();
+                }
+            } else if (key == KeyboardFragment.KEYS.DELETE) {
+                lastPos--;
+                unactiveCheck(lastPos);
+            } else if (key == KeyboardFragment.KEYS.CLEAR) {
+                unactiveCheck(0);
+                unactiveCheck(1);
+                unactiveCheck(2);
+                unactiveCheck(3);
+                lastPos = 0;
             }
-        }else if (key == KeyboardFragment.KEYS.DELETE){
-            lastPos--;
-            unactiveCheck(lastPos);
-        }else if (key == KeyboardFragment.KEYS.CLEAR){
-            unactiveCheck(0);
-            unactiveCheck(1);
-            unactiveCheck(2);
-            unactiveCheck(3);
-            lastPos = 0;
         }
     }
 

@@ -44,14 +44,13 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
                     jump();
-                    return false;
+                    return true;
                 }
             });
 
             videoView.start();
 
         }else{
-
             jump();
         }
     }

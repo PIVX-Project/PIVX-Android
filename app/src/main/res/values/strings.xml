@@ -100,7 +100,7 @@
     <string name="error_message">There seems to been an error \n with your transaction</string>
     <string name="change_trusted_node">Change trusted node</string>
     <string name="save">Save</string>
-    <string name="tutorial_message">Private Instant Verified \n Transaction, is a privacy-focused, \n decentralized, open source \n cryptocurrency run by a global \n community comprised of creators, \n innovators, and technology enthusiasts.</string>
+    <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
     <string name="next">Next</string>
     <string name="skip">Skip</string>

@@ -62,13 +62,24 @@
 
     </LinearLayout>
 
-    <fragment
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment"
-        android:id="@+id/fragment_keyboard"
-        android:layout_gravity="center|bottom"
-        />
+        android:layout_gravity="center|bottom">
+
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment"
+            android:id="@+id/fragment_keyboard"
+            android:layout_centerInParent="true"
+            />
+
+
+    </RelativeLayout>
+
+
 
 
 </LinearLayout>

@@ -87,7 +87,8 @@ public class PivxApplication extends Application implements ContextWrapper {
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-            new ANRWatchDog().start();
+            if (BuildConfig.DEBUG)
+                new ANRWatchDog().start();
             CrashReporter.init(getCacheDir());
             // Default network conf for localhost test
             networkConf = new NetworkConf();

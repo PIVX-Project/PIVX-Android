@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -36,6 +37,8 @@
             android:text="@string/tutorial_message"
             android:layout_gravity="center"
             android:gravity="center"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             style="@style/MessageTextStart"
             />
 
