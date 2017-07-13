@@ -25,33 +25,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity">
+        <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.start_activity.StartActivity">
+        <activity android:name=".ui.start_activity.StartActivity"  android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".ui.contacts_activity.ContactsActivity"/>
-        <activity android:name=".ui.settings_activity.SettingsActivity"/>
-        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"/>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity" android:noHistory="true" />
-        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity">
+        <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
 
           
         </activity>
 
-        <activity android:name=".ui.address_add_activity.AddContactActivity"/>
-        <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"/>
-        <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"/>
-        <activity android:name=".ui.start_node_activity.StartNodeActivity"/>
-        <activity android:name=".ui.restore_activity.RestoreActivity"/>
-        <activity android:name=".ui.pincode_activity.PincodeActivity">
+        <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.start_node_activity.StartNodeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.restore_activity.RestoreActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.pincode_activity.PincodeActivity"  android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.transaction_send_activity.SendActivity"></activity>
-        <activity android:name=".ui.transaction_request_activity.RequestActivity"></activity>
+        <activity android:name=".ui.transaction_send_activity.SendActivity"  android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.transaction_request_activity.RequestActivity"  android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"></activity>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
