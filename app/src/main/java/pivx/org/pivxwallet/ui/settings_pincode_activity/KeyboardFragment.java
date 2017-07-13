@@ -28,7 +28,7 @@ public class KeyboardFragment extends BaseFragment implements View.OnClickListen
     private TextView key_7;
     private TextView key_8;
     private TextView key_9;
-    private TextView key_clear;
+    private ImageView key_clear;
     private ImageView key_back;
 
     private onKeyListener onKeyListener;
@@ -90,7 +90,7 @@ public class KeyboardFragment extends BaseFragment implements View.OnClickListen
         key_8.setOnClickListener(this);
         key_9 = (TextView) root.findViewById(R.id.key_9);
         key_9.setOnClickListener(this);
-        key_clear = (TextView) root.findViewById(R.id.key_clear);
+        key_clear = (ImageView) root.findViewById(R.id.key_clear);
         key_clear.setOnClickListener(this);
         key_back = (ImageView) root.findViewById(R.id.key_backspace);
         key_back.setOnClickListener(this);
