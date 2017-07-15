@@ -21,9 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.apache.commons.codec.Charsets;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -178,7 +176,7 @@ public class RestoreActivity extends BaseActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(this, "Error, please check logs", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.cannot_restore_wallet, Toast.LENGTH_LONG).show();
                 }
             }
         } catch (IOException e) {

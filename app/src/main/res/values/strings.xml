@@ -161,4 +161,5 @@
     <string name="backup_succed_dialog">backup_succed_dialog</string>
     <string name="error_no_connectivity_title">No internet connection</string>
     <string name="error_no_connectivity_body">The app is going to save your transaction until the connection back.\nDo you want to continue?</string>
+    <string name="cannot_restore_wallet">Error, cannot restore wallet\\nplease check your password</string>
 </resources>

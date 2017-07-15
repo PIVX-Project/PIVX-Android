@@ -1,8 +1,11 @@
 package pivx.org.pivxwallet.ui.address_add_activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -11,27 +14,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.bitcoinj.core.Address;
+import org.bitcoinj.uri.PivxURI;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.module.ContactAlreadyExistException;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.utils.scanner.ScanActivity;
+
+import static android.Manifest.permission_group.CAMERA;
+import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 6/8/17.
  */
 
-public class AddContactActivity extends BaseActivity {
+public class AddContactActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String ADDRESS_TO_ADD = "address";
+    private static final int SCANNER_RESULT = 122;
 
     private View root;
     private EditText edit_name;
     private EditText edit_address;
-
+    private ImageView imgQr;
     private String address;
     private String name;
 
@@ -43,6 +53,8 @@ public class AddContactActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         edit_name = (EditText) root.findViewById(R.id.edit_name);
         edit_address = (EditText) root.findViewById(R.id.edit_address);
+        imgQr = (ImageView) root.findViewById(R.id.img_qr);
+        imgQr.setOnClickListener(this);
         edit_address.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -107,5 +119,42 @@ public class AddContactActivity extends BaseActivity {
     protected void onNavigationBackPressed() {
         // save contact
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId()==R.id.img_qr){
+            if (!checkPermission(CAMERA)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    int permsRequestCode = 200;
+                    String[] perms = {"android.permission.CAMERA"};
+                    requestPermissions(perms, permsRequestCode);
+                }
+            }
+            startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SCANNER_RESULT){
+            if (resultCode==RESULT_OK) {
+                try {
+                    String address = data.getStringExtra(INTENT_EXTRA_RESULT);
+                    PivxURI pivxUri = new PivxURI(address);
+                    final String tempPubKey = pivxUri.getAddress().toBase58();
+                    edit_address.setText(tempPubKey);
+                }catch (Exception e){
+                    Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private boolean checkPermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 }
