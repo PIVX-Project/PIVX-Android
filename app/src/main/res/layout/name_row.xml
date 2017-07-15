@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_name"
         android:paddingTop="5dp"
+        android:paddingStart="5dp"
         android:paddingBottom="5dp"/>
 
 </LinearLayout>
