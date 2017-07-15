@@ -96,8 +96,8 @@
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
     <string name="title_pivx_send">Amount send</string>
-    <string name="empty_message_address">You don\'t have any saved addresses yet.</string>
-    <string name="error_message">There seems to been an error \n with your transaction</string>
+    <string name="empty_message_address">You don\'t have any saved address yet.</string>
+    <string name="error_message">There seems to been an error\nwith your transaction</string>
     <string name="change_trusted_node">Change trusted node</string>
     <string name="save">Save</string>
     <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
