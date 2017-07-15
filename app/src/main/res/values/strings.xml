@@ -133,6 +133,9 @@
     <string name="settings_support">Support</string>
     <string name="support_subject">PIVX wallet support</string>
     <string name="tutorial">Tutorial</string>
+    <string name="copy">Copy</string>
+    <string name="share">Share</string>
+    <string name="copy_message">Your address has been saved to the clipboard</string>
 
     <string name="number_zero">0</string>
     <string name="number_one">1</string>

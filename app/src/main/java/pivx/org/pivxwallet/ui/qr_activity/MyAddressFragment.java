@@ -44,6 +44,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
     private View root;
     private TextView txt_address;
     private Button btn_share;
+    private Button btn_copy;
     private ImageView img_qr;
 
     private Address address;
@@ -61,6 +62,8 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         root = inflater.inflate(R.layout.my_address,null);
         txt_address = (TextView) root.findViewById(R.id.txt_address);
         btn_share = (Button) root.findViewById(R.id.btn_share);
+        btn_copy = (Button) root.findViewById(R.id.btn_copy);
+        btn_copy.setOnClickListener(this);
         img_qr = (ImageView) root.findViewById(R.id.img_qr);
         btn_share.setOnClickListener(this);
         img_qr.setOnClickListener(this);
@@ -132,7 +135,10 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
             share(address.toBase58());
         }else if(id == R.id.img_qr){
             copyToClipboard(address.toBase58());
-            Toast.makeText(v.getContext(),"Address copied",Toast.LENGTH_LONG).show();
+            Toast.makeText(v.getContext(), R.string.copy_message,Toast.LENGTH_LONG).show();
+        }else if (id == R.id.btn_copy){
+            copyToClipboard(address.toBase58());
+            Toast.makeText(v.getContext(), R.string.copy_message, Toast.LENGTH_LONG).show();
         }
     }
 }
