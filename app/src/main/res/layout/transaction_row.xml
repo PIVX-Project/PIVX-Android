@@ -54,7 +54,7 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imageView"
             android:lines="1"
-            android:maxWidth="200dp"
+            android:maxWidth="180dp"
             android:ellipsize="end"
             android:text="Title"
             android:textColor="@color/bgPurple"
