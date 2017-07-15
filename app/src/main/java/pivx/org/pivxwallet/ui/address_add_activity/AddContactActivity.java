@@ -94,20 +94,24 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
         switch (item.getItemId()) {
             case R.id.save:
                 name = edit_name.getText().toString();
-                if (name.length()>0 && address.length()>0) {
-                    try {
-                        if (!pivxModule.chechAddress(address)){
-                            Toast.makeText(this,R.string.invalid_input_address,Toast.LENGTH_LONG).show();
-                            return true;
+                if (address!=null) {
+                    if (name.length() > 0 && address.length() > 0) {
+                        try {
+                            if (!pivxModule.chechAddress(address)) {
+                                Toast.makeText(this, R.string.invalid_input_address, Toast.LENGTH_LONG).show();
+                                return true;
+                            }
+                            Contact contact = new Contact(name);
+                            contact.addAddress(address);
+                            pivxModule.saveContact(contact);
+                            Toast.makeText(this, "Contact saved", Toast.LENGTH_LONG).show();
+                            onBackPressed();
+                        } catch (ContactAlreadyExistException e) {
+                            Toast.makeText(this, R.string.contact_already_exist, Toast.LENGTH_LONG).show();
                         }
-                        Contact contact = new Contact(name);
-                        contact.addAddress(address);
-                        pivxModule.saveContact(contact);
-                        Toast.makeText(this, "Contact saved", Toast.LENGTH_LONG).show();
-                        onBackPressed();
-                    } catch (ContactAlreadyExistException e) {
-                        Toast.makeText(this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
                     }
+                }else {
+                    Toast.makeText(this,R.string.invalid_input_address,Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:
