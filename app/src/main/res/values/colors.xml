@@ -11,6 +11,8 @@
     <color name="bgWhite">#ffffff</color>
     <color name="bgWhite30">#4Dffffff</color>
     <color name="bgBlack30">#4D000000</color>
+    <color name="bgBlack10">#1A000000</color>
+    <color name="bgBlack05">#0D000000</color>
     <color name="textColorPurple">#55476c</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorLightPurple">#ffffff</color>

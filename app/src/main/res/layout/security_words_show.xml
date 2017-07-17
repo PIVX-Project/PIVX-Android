@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="30dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/secureMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/security_message"
+        android:textColor="@color/mainText"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_below="@id/secureMessage"
+        android:id="@+id/securityWords"
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:layout_height="150dp"
+        android:background="@color/bgBlack05">
+
+        <TextView
+            android:id="@+id/text_words"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainText"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@string/lorem_ipsum"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
+        android:layout_below="@+id/securityWords"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:textColor="@color/mainText"
+            android:textSize="16sp"
+            android:text="@string/security_message_confirmation"/>
+
+
+        <Button
+            android:id="@+id/btn_secure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/bg_button_border"
+            android:text="@string/btn_secure"
+            android:elevation="2dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:translationZ="2dp"
+            android:stateListAnimator="@null"
+            android:textColor = "@color/textColorPurple"
+            android:textSize="14sp"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
