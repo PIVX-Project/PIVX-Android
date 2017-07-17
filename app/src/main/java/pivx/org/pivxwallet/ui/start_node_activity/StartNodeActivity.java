@@ -28,6 +28,8 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
+import static global.PivtrumGlobalData.FURSZY_TESTNET_SERVER;
+
 /**
  * Created by Neoperol on 6/27/17.
  */
@@ -62,7 +64,10 @@ public class StartNodeActivity extends BaseActivity {
                         hosts = new ArrayList<String>();
                         trustedNodes.add(pivtrumPeerData);
                         for (PivtrumPeerData trustedNode : trustedNodes) {
-                            hosts.add(trustedNode.getHost());
+                            if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)){
+                                hosts.add("pivt.furszy.tech");
+                            }else
+                                hosts.add(trustedNode.getHost());
                         }
                         adapter.addAll(hosts);
                         dropdown.setAdapter(adapter);
@@ -102,7 +107,10 @@ public class StartNodeActivity extends BaseActivity {
         dropdown = (Spinner)findViewById(R.id.spinner);
 
         for (PivtrumPeerData trustedNode : trustedNodes) {
-            hosts.add(trustedNode.getHost());
+            if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)){
+                hosts.add("pivt.furszy.tech");
+            }else
+                hosts.add(trustedNode.getHost());
         }
         adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item,hosts){
             @Override
