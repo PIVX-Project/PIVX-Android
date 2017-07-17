@@ -94,7 +94,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    Coin coin = Coin.parseCoin(s.toString());
+                    String valueStr = s.toString();
+                    if (valueStr.charAt(0)=='.'){
+                        valueStr = "0"+valueStr;
+                    }
+                    Coin coin = Coin.parseCoin(valueStr);
                     if (pivxRate == null)
                         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
                     txt_local_currency.setText(
@@ -224,6 +228,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 throw new IllegalArgumentException("Address not valid");
             String amountStr = edit_amount.getText().toString();
             if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
+            if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException("Amount not valid");
+            if (amountStr.charAt(0)=='.'){
+                amountStr = "0"+amountStr;
+            }
             Coin amount = Coin.parseCoin(amountStr);
             if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insuficient balance");
