@@ -80,6 +80,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+
         edit_amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -99,18 +101,20 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         valueStr = "0"+valueStr;
                     }
                     Coin coin = Coin.parseCoin(valueStr);
-                    if (pivxRate == null)
-                        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
                     txt_local_currency.setText(
                             pivxApplication.getCentralFormats().getNumberFormat().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                             )
                                     + " "+pivxRate.getCoin()
                     );
+                }else {
+                    txt_local_currency.setText("0 "+pivxRate.getCoin());
                 }
 
             }
         });
+
+
     }
 
     @Override
@@ -233,6 +237,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 amountStr = "0"+amountStr;
             }
             Coin amount = Coin.parseCoin(amountStr);
+            if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
+            if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
             if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insuficient balance");
             String memo = edit_memo.getText().toString();
