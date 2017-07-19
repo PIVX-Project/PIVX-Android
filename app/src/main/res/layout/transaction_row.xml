@@ -56,7 +56,8 @@
             android:lines="1"
             android:maxWidth="200dp"
             android:ellipsize="end"
-            android:text="Title"
+            android:maxLength="30"
+            android:text="address"
             android:textColor="@color/bgPurple"
             android:textSize="18sp" />
 
