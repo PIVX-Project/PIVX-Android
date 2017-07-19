@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 
@@ -76,19 +77,21 @@ public class DialogsUtil {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String host = editHost.getText().toString();
-                String tcpPort = editTcp.getText().toString();
-                String sslPort = editSsl.getText().toString();
-                if (tcpPort.length()<1){
-                    // todo: show error dialog..
+                String tcpPortStr = editTcp.getText().toString();
+                String sslPortStr = editSsl.getText().toString();
+                int tcpPort = PivxContext.NETWORK_PARAMETERS.getPort();
+                int sslPort = 0;
+                if (tcpPortStr.length()>0){
+                    tcpPort = Integer.valueOf(tcpPortStr);
                 }
-                if (sslPort.length()<1){
-                    // todo: show error dialog..
+                if (sslPortStr.length()>0){
+                    sslPort = Integer.valueOf(sslPortStr);
                 }
                 trustedNodeDialogListener.onNodeSelected(
                         new PivtrumPeerData(
                                 host,
-                                Integer.valueOf(tcpPort),
-                                Integer.valueOf(sslPort))
+                                tcpPort,
+                                sslPort)
                 );
                 dialog.dismiss();
             }
