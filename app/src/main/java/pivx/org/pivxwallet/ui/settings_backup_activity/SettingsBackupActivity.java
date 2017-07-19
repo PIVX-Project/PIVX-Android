@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.ui.settings_backup_activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
+import pivx.org.pivxwallet.ui.security_words_activity.SecurityWordsActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
@@ -30,7 +33,6 @@ import pivx.org.pivxwallet.utils.DialogsUtil;
 
 public class SettingsBackupActivity extends BaseActivity {
 
-    private static final int OPTIONS_CREATE = 1;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL = 500;
 
     private View root;
@@ -49,18 +51,25 @@ public class SettingsBackupActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.add(0,OPTIONS_CREATE,0,R.string.backup_create);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        super.onCreateOptionsMenu(menu);
+
+        menu.add(0,0,0,R.string.backup_create);
+        menu.add(0,1,0, R.string.backup_words);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == OPTIONS_CREATE){
-            checkPermissions();
-            backup();
-            return true;
+
+        switch (item.getItemId()) {
+            case 0:
+                checkPermissions();
+                backup();
+                return true;
+            case 1:
+                Intent myIntent = new Intent(getApplicationContext(), SecurityWordsActivity.class);
+                startActivity(myIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
