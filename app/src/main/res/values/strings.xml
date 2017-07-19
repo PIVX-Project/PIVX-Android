@@ -72,11 +72,11 @@
     <string name="error_sending_coins">Send coins fail</string>
 
     <string name="ssl_port">SSL port</string>
-    <string name="hint_ssl_port">Add SSL port</string>
+    <string name="hint_ssl_port">Default SSL port</string>
     <string name="host">Host</string>
     <string name="hint_host">Add a Host</string>
     <string name="tcp_port">TCP port</string>
-    <string name="hint_tcp_port">Add TCP port</string>
+    <string name="hint_tcp_port">Default TCP port</string>
     <string name="add_memo">Monthly payment</string>
     <string name="backup_create">create</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
