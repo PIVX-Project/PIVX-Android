@@ -169,9 +169,13 @@ public class BlockchainManager {
         final Transaction tx = walletManager.getTransaction(hash);
         if (peerGroup != null) {
             LOG.info("broadcasting transaction " + tx.getHashAsString());
+            boolean onlyTrustedNode =
+                    (conf.getNetworkParams() instanceof RegTestParams || conf.getNetworkParams() instanceof TestNet3Params)
+                    ||
+                    conf.getTrustedNodeHost()!=null;
             TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(
                     tx,
-                    (conf.getNetworkParams() instanceof RegTestParams || conf.getNetworkParams() instanceof TestNet3Params)?1:2);
+                    onlyTrustedNode?1:2);
             return transactionBroadcast.broadcast();
         } else {
             LOG.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());

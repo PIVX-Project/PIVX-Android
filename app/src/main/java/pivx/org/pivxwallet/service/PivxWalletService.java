@@ -210,29 +210,28 @@ public class PivxWalletService extends Service{
             final Coin amount = transaction.getValue(wallet);
             final TransactionConfidence.ConfidenceType confidenceType = transaction.getConfidence().getConfidenceType();
 
-            if (depthInBlocks>1) {
-                if (amount.isGreaterThan(Coin.ZERO)) {
-                    //notificationCount++;
-                    notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
-                    Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
-                    resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
-                    deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                                    .setContentTitle("Pivs received!")
-                                    .setContentText("Coins received for a value of " + BtcFormat.getInstance().format(notificationAccumulatedAmount.getValue()))
-                                    .setAutoCancel(false)
-                                    .setSmallIcon(R.mipmap.ic_launcher)
-                                    .setColor(
-                                            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
-                                                    getResources().getColor(R.color.bgPurple,null)
-                                                    :
-                                                    ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
-                                    .setDeleteIntent(deleteIntent);
-                    nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
-                }else {
-                    log.error("transaction with a value lesser than zero arrives..");
-                }
+            if (amount.isGreaterThan(Coin.ZERO)) {
+                //notificationCount++;
+                notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
+                Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
+                resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
+                deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                                .setContentTitle("Pivs received!")
+                                .setContentText("Coins received for a value of " + BtcFormat.getInstance().format(notificationAccumulatedAmount.getValue()))
+                                .setAutoCancel(false)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setColor(
+                                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
+                                                getResources().getColor(R.color.bgPurple,null)
+                                                :
+                                                ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
+                                .setDeleteIntent(deleteIntent);
+                nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
+            }else {
+                log.error("transaction with a value lesser than zero arrives..");
             }
+
         }
     };
 

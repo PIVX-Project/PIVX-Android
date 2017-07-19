@@ -96,7 +96,12 @@ public class WalletConfigurationsImp implements WalletConfiguration {
     }
 
     @Override
-    public void getBackupMaxChars() {
+    public long getBackupMaxChars() {
+        return 0;
+    }
 
+    @Override
+    public boolean isTest() {
+        return false;
     }
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
@@ -27,6 +29,7 @@ import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.IntentsUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
 
@@ -40,6 +43,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonRestore;
     private Button buttonChange;
     private Button btn_change_node;
+    private Button btn_reset_blockchain;
     private Button btn_report;
     private Button btn_support;
     private Button buttonTutorial;
@@ -73,6 +77,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         btn_change_node = (Button) findViewById(R.id.btn_change_node);
         btn_change_node.setOnClickListener(this);
+
+        btn_reset_blockchain = (Button) findViewById(R.id.btn_reset_blockchain);
+        btn_reset_blockchain.setOnClickListener(this);
 
         // Open Network Monitor
         buttonChange = (Button) findViewById(R.id.btn_network);
@@ -126,8 +133,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(myIntent);
         }else if (id == R.id.btn_network){
             startActivity(new Intent(v.getContext(),SettingsNetworkActivity.class));
-        }else if(id == R.id.btn_change_node){
-            startActivity(new Intent(v.getContext(),StartNodeActivity.class));
+        }else if(id == R.id.btn_change_node) {
+            startActivity(new Intent(v.getContext(), StartNodeActivity.class));
+        }else if(id == R.id.btn_reset_blockchain){
+            launchResetBlockchainDialog();
         }else if (id == R.id.btn_report){
             launchReportDialog();
         }else if(id == R.id.btn_support){
@@ -138,6 +147,30 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                     new ArrayList<Uri>()
             );
         }
+    }
+
+    private void launchResetBlockchainDialog() {
+        SimpleTwoButtonsDialog dialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                this,
+                getString(R.string.dialog_reset_blockchain_title),
+                getString(R.string.dialog_reset_blockchain_body),
+                new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                    @Override
+                    public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                        pivxApplication.stopBlockchain();
+                        Toast.makeText(SettingsActivity.this,R.string.reseting_blockchain,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+        dialog.setLeftBtnText(R.string.button_cancel)
+                .setRightBtnText(R.string.button_ok);
+        dialog.show();
     }
 
     private void launchReportDialog() {

@@ -54,7 +54,7 @@ public class DialogsUtil {
         dialog.setContainerBtnsBackgroundColor(Color.WHITE);
         dialog.setRightBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen,null));
         dialog.setLeftBtnTextColor(Color.BLACK);
-        dialog.setBtnsTextColor(Color.WHITE);
+        dialog.setRightBtnTextColor(Color.WHITE);
         dialog.setRootBackgroundRes(R.drawable.dialog_bg);
         return dialog;
     }

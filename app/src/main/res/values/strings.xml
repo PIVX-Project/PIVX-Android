@@ -98,7 +98,8 @@
     <string name="title_pivx_send">Amount send</string>
     <string name="empty_message_address">You don\'t have any saved address yet.</string>
     <string name="error_message">There seems to been an error\nwith your transaction</string>
-    <string name="change_trusted_node">Change trusted node</string>
+    <string name="settings_change_trusted_node">Change trusted node</string>
+    <string name="settings_reset_blockchain">Reset blockchain</string>
     <string name="save">Save</string>
     <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
@@ -167,4 +168,7 @@
     <string name="error_no_connectivity_title">No internet connection</string>
     <string name="error_no_connectivity_body">The app is going to save your transaction until the connection back.\nDo you want to continue?</string>
     <string name="cannot_restore_wallet">Error, cannot restore wallet\nplease verify your password</string>
+    <string name="dialog_reset_blockchain_title">Reset Blockchain</string>
+    <string name="dialog_reset_blockchain_body">Your blockchain file is going to be reseted.\nThe synchronization could take a while.\n\nAre you sure?</string>
+    <string name="reseting_blockchain">Reseting blockchain..</string>
 </resources>

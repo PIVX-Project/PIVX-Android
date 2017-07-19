@@ -213,8 +213,18 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
         return this;
     }
 
+    public SimpleTwoButtonsDialog setLeftBtnText(int resLeftBtnText) {
+        this.leftBtnText = getContext().getString(resLeftBtnText);
+        return this;
+    }
+
     public SimpleTwoButtonsDialog setRightBtnText(String rightBtnText) {
         this.rightBtnText = rightBtnText;
+        return this;
+    }
+
+    public SimpleTwoButtonsDialog setRightBtnText(int resRightBtnText) {
+        this.rightBtnText = getContext().getString(resRightBtnText);
         return this;
     }
 
