@@ -80,6 +80,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+
         edit_amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -94,19 +96,25 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    Coin coin = Coin.parseCoin(s.toString());
-                    if (pivxRate == null)
-                        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+                    String valueStr = s.toString();
+                    if (valueStr.charAt(0)=='.'){
+                        valueStr = "0"+valueStr;
+                    }
+                    Coin coin = Coin.parseCoin(valueStr);
                     txt_local_currency.setText(
                             pivxApplication.getCentralFormats().getNumberFormat().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                             )
                                     + " "+pivxRate.getCoin()
                     );
+                }else {
+                    txt_local_currency.setText("0 "+pivxRate.getCoin());
                 }
 
             }
         });
+
+
     }
 
     @Override
@@ -224,7 +232,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 throw new IllegalArgumentException("Address not valid");
             String amountStr = edit_amount.getText().toString();
             if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
+            if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException("Amount not valid");
+            if (amountStr.charAt(0)=='.'){
+                amountStr = "0"+amountStr;
+            }
             Coin amount = Coin.parseCoin(amountStr);
+            if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
+            if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
             if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insuficient balance");
             String memo = edit_memo.getText().toString();
