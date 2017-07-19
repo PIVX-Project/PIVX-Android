@@ -12,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +25,6 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.security_words_activity.SecurityWordsActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
@@ -38,6 +39,7 @@ public class SettingsBackupActivity extends BaseActivity {
     private View root;
     private EditText edit_password;
     private EditText edit_repeat_password;
+    private Button btn_backup;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -47,14 +49,21 @@ public class SettingsBackupActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         edit_password = (EditText) root.findViewById(R.id.edit_password);
         edit_repeat_password = (EditText) root.findViewById(R.id.edit_repeat_password);
+
+        btn_backup = (Button) findViewById(R.id.btn_backup);
+        btn_backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPermissions();
+                backup();
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-
-        menu.add(0,0,0,R.string.backup_create);
-        menu.add(0,1,0, R.string.backup_words);
+        menu.add(0,0,0, R.string.backup_words);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -63,10 +72,6 @@ public class SettingsBackupActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case 0:
-                checkPermissions();
-                backup();
-                return true;
-            case 1:
                 Intent myIntent = new Intent(getApplicationContext(), SecurityWordsActivity.class);
                 startActivity(myIntent);
                 return true;

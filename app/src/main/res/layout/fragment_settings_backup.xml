@@ -55,5 +55,33 @@
         android:textColorHint="@color/hintInput"
         android:textSize="14sp" />
 
+    <LinearLayout
+        android:layout_below="@+id/edit_repeat_password"
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="40dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_backup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_button_border"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="@string/backup_wallet"
+            android:textColor="@color/textColorPurple"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
