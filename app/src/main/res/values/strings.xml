@@ -104,8 +104,11 @@
     <string name="save">Save</string>
     <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
+    <string name="next_words">Next 6 words</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="restore">Restore</string>
     <string name="start">Start</string>
     <string name="title_slide1">Pivx is secure</string>
     <string name="desc_slide1">First coin with BIP38 Encryption and Decryption of Private Keys</string>
@@ -172,4 +175,8 @@
     <string name="error_no_connectivity_title">No internet connection</string>
     <string name="error_no_connectivity_body">The app is going to save your transaction until the connection back.\nDo you want to continue?</string>
     <string name="cannot_restore_wallet">Error, cannot restore wallet\\nplease check your password</string>
+
+    <string name="restore_words_1">To restore your wallet you most write your 12, write your security words in the right order from number 1 to 6.</string>
+    <string name="restore_from_words">Restore from words</string>
+    <string name="restore_words_2">Now write your security words in the right order from number 7 to 12</string>
 </resources>

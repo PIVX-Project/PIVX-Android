@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="180dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="60dp"
+    android:background="@color/bgWhite">
+
+    <TextView
+        android:id="@+id/restoreMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/restore_words_1"
+        android:textColor="@color/mainText"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/wordsLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="40dp">
+
+            <EditText
+                android:id="@+id/text_word1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mainText"
+                android:padding="8dp"
+                android:maxLines="1"
+                android:layout_marginRight="4dp"/>
+
+            <EditText
+                android:id="@+id/text_word2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/bg_inputs"
+                android:textColor="@color/mainText"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/wordsLayout2"
+            android:layout_marginBottom="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/text_word3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="@color/mainText"
+                android:maxLines="1"
+                android:layout_marginRight="4dp"/>
+
+            <EditText
+                android:id="@+id/text_word4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/mainText"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/text_word5"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="@color/mainText"
+                android:maxLines="1"
+                android:layout_marginRight="4dp"/>
+
+            <EditText
+                android:id="@+id/text_word6"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/mainText"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

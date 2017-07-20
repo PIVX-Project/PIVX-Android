@@ -33,13 +33,13 @@
 
         </activity>
         <activity android:name=".ui.security_words_activity.SecurityWordsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
         <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
 
-          
         </activity>
 
         <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="portrait"/>

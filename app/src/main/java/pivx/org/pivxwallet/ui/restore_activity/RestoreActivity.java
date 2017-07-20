@@ -10,14 +10,11 @@ import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,12 +33,9 @@ import java.util.concurrent.TimeUnit;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
-import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
-import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
-import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
-import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.ui.words_restore_activity.RestoreWordsActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import wallet.Crypto;
 import wallet.WalletUtils;
@@ -67,8 +61,7 @@ public class RestoreActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.add(0,OPTIONS_RESTORE,0,R.string.backup_restore);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        MenuItem menuItem = menu.add(0,OPTIONS_RESTORE,0,R.string.restore_from_words);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,7 +69,8 @@ public class RestoreActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == OPTIONS_RESTORE){
-            restore();
+            Intent myIntent = new Intent(getApplicationContext(), RestoreWordsActivity.class);
+            startActivity(myIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -95,6 +89,14 @@ public class RestoreActivity extends BaseActivity {
                 }
             }
         }
+
+        btn_restore = (Button) findViewById(R.id.btn_restore);
+        btn_restore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restore();
+            }
+        });
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
         edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
         spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
