@@ -18,11 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
@@ -56,15 +59,17 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 
 public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int SCANNER_RESULT = 122;
-    private Button buttonSend;
+    private Button buttonSend, addAllCurrency, addAllPiv;
     private AutoCompleteTextView edit_address;
-    private TextView txt_local_currency;
-    private EditText edit_amount;
+    private TextView txt_local_currency , txtShowPiv;
+    private EditText edit_amount, editCurrency;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
     private PivxRate pivxRate;
     private SimpleTextDialog errorDialog;
+    private ImageButton btnSwap;
+    private ViewFlipper amountSwap;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
@@ -80,6 +85,27 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
+        //Swap type of ammounts
+        amountSwap = (ViewFlipper) findViewById( R.id.viewFlipper );
+        amountSwap.setInAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_in_left));
+        amountSwap.setOutAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_out_right));
+        btnSwap = (ImageButton) findViewById(R.id.btn_swap);
+        btnSwap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amountSwap.showNext();
+            }
+        });
+
+        //Sending amount currency
+        editCurrency = (EditText) findViewById(R.id.edit_amount_currency);
+        txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
+        addAllCurrency =  (Button) findViewById(R.id.btn_add_all_currency);
+
+        //Sending amount piv
+        addAllPiv =  (Button) findViewById(R.id.btn_add_all_piv);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         edit_amount.addTextChangedListener(new TextWatcher() {

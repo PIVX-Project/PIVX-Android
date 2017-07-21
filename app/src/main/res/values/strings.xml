@@ -23,6 +23,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="set_amount">Write amount to send</string>
+    <string name="set_amount_piv">PIV</string>
+    <string name="set_amount_usd">USD</string>
+    <string name="add_all">ADD ALL</string>
     <string name="title_amount">Amount</string>
     <string name="title_address">Address</string>
     <string name="title_name">Name</string>
