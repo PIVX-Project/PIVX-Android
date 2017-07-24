@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    android:paddingTop="60dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/donationMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/donation_message"
+            android:textColor="@color/mainText"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/img_love"/>
+
+        <TextView
+            android:id = "@+id/titleDonation"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/donation_title"
+            android:layout_marginBottom="10dp"
+            android:textColor = "#757575"
+            android:textSize = "18sp" />
+
+        <EditText
+            android:id = "@+id/edit_amount"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:padding="8dp"
+            android:paddingBottom="11dp"
+            android:paddingTop="11dp"
+            android:inputType="numberDecimal"
+            android:background="@drawable/transaction_inputs"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:layout_marginBottom="10dp"
+            android:maxLines="1"
+            android:maxLength="8"
+            android:hint="@string/set_amount"
+            android:text = ""
+            android:textColor = "#434343"
+            android:textSize = "15sp" />
+
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:paddingRight="40dp"
+        android:paddingLeft="40dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnDonation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/bg_button_border"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="@string/btn_donate"
+            android:textColor="@color/textColorPurple"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
