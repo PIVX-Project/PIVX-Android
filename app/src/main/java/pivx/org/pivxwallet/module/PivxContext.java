@@ -29,6 +29,9 @@ public class PivxContext {
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 
+    /** Donation address */
+    public static final String DONATE_ADDRESS = "DLwFC1qQbUzFZJg1vnvdAXBunRPh6anceK";
+
     public static final class Files{
 
         private static final String FILENAME_NETWORK_SUFFIX = NETWORK_PARAMETERS.getId();

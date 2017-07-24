@@ -175,4 +175,5 @@
     <string name="donation_message">Donations help with the maintenance and development of the app, Thanks in advance.</string>
     <string name="donation_title">I’m going to donate</string>
     <string name="btn_donate">Donate</string>
+    <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
 </resources>

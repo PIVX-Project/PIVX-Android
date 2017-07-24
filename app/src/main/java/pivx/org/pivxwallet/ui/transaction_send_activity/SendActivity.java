@@ -161,8 +161,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                         @Override
                         public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
-                            send();
+                            try {
+                                send();
+                            }catch (Exception e){
+                                showErrorDialog(e.getMessage());
+                            }
                             dialog.dismiss();
+
                         }
 
                         @Override

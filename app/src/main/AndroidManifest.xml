@@ -57,6 +57,7 @@
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
+        <activity android:name=".ui.donate.DonateActivity"/>
 
         <service android:name=".service.PivxWalletService" />
 
