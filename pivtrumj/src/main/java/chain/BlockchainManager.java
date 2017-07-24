@@ -279,8 +279,13 @@ public class BlockchainManager {
 
                             if (hasTrustedPeer) {
                                 LOG.info("trusted peer '" + trustedPeerHost + "'" + (connectTrustedPeerOnly ? " only" : ""));
+                                final InetSocketAddress addr;
+                                if (trustedPeerHost.equals(FURSZY_TESTNET_SERVER)){
+                                    addr = new InetSocketAddress(trustedPeerHost, 8443);
+                                }else {
+                                    addr = new InetSocketAddress(trustedPeerHost, conf.getNetworkParams().getPort());
+                                }
 
-                                final InetSocketAddress addr = new InetSocketAddress(trustedPeerHost, conf.getNetworkParams().getPort());
                                 if (addr.getAddress() != null) {
                                     peers.add(addr);
                                     needsTrimPeersWorkaround = true;
