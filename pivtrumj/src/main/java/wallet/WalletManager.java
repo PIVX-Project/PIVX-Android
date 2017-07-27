@@ -181,7 +181,7 @@ public class WalletManager {
             // coinomi compatibility..
             List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
 
-            DeterministicSeed seed = new DeterministicSeed(words, null, "", 0);
+            DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
             wallet = Wallet.fromSeed(conf.getNetworkParams(), seed);
 
             saveWallet();

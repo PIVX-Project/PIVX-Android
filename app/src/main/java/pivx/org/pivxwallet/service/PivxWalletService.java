@@ -139,8 +139,8 @@ public class PivxWalletService extends Service{
 
         @Override
         public void onBlocksDownloaded(final Peer peer, final Block block, final FilteredBlock filteredBlock, final int blocksLeft) {
-            log.info("############# on Blockcs downloaded ###########");
-            log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
+            /*log.info("############# on Blockcs downloaded ###########");
+            log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);*/
 
             /*if (PivxContext.IS_TEST)
                 showBlockchainSyncNotification(blocksLeft);*/
