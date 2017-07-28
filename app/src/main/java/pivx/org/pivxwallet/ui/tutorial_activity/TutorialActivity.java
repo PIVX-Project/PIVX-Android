@@ -3,7 +3,9 @@ package pivx.org.pivxwallet.ui.tutorial_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
@@ -130,12 +133,23 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(getResources().getColor(R.color.dot_inactive));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                dots[i].setTextColor(getColor(R.color.dot_inactive));
+            }else {
+                dots[i].setTextColor(ContextCompat.getColor(this, R.color.dot_inactive));
+            }
+
             dotsLayout.addView(dots[i]);
         }
 
-        if (dots.length > 0)
-            dots[currentPage].setTextColor(getResources().getColor(R.color.dot_active,null));
+        if (dots.length > 0) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                dots[currentPage].setTextColor(getResources().getColor(R.color.dot_active, null));
+            }else {
+                dots[currentPage].setTextColor(ContextCompat.getColor(this, R.color.dot_inactive));
+            }
+
+        }
     }
 
 

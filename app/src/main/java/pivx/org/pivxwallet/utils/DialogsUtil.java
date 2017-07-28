@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -52,7 +54,11 @@ public class DialogsUtil {
         dialog.setBodyColor(Color.BLACK);
         dialog.setListener(simpleTwoBtnsDialogListener);
         dialog.setContainerBtnsBackgroundColor(Color.WHITE);
-        dialog.setRightBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen,null));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            dialog.setRightBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen, null));
+        }else {
+            dialog.setRightBtnBackgroundColor(ContextCompat.getColor(context,R.color.lightGreen));
+        }
         dialog.setLeftBtnTextColor(Color.BLACK);
         dialog.setRightBtnTextColor(Color.WHITE);
         dialog.setRootBackgroundRes(R.drawable.dialog_bg);
