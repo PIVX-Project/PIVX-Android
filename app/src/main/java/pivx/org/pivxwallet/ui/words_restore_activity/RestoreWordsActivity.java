@@ -26,6 +26,7 @@ public class RestoreWordsActivity extends BaseActivity {
     private int[] layouts;
     private Button btnBack, btnNext;
     private EditText txtWord1, txtWord2, txtWord3, txtWord4, txtWord5, txtWord6, txtWord7, txtWord8 , txtWord9, txtWord10, txtWord11, txtWord12 ;
+    private EditText txtWord13, txtWord14, txtWord15, txtWord16, txtWord17, txtWord18 , txtWord19, txtWord20, txtWord21, txtWord22, txtWord23, txtWord24;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -41,7 +42,8 @@ public class RestoreWordsActivity extends BaseActivity {
 
         layouts = new int[]{
                 R.layout.words_slide1,
-                R.layout.words_slide2};
+                R.layout.words_slide2,
+                R.layout.words_slide3};
 
         viewPagerAdapter = new RestoreWordsActivity.ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
@@ -60,6 +62,18 @@ public class RestoreWordsActivity extends BaseActivity {
         txtWord10 = (EditText) findViewById(R.id.text_word10);
         txtWord11 = (EditText) findViewById(R.id.text_word11);
         txtWord12 = (EditText) findViewById(R.id.text_word12);
+        txtWord13 = (EditText) findViewById(R.id.text_word13);
+        txtWord14 = (EditText) findViewById(R.id.text_word14);
+        txtWord15 = (EditText) findViewById(R.id.text_word15);
+        txtWord16 = (EditText) findViewById(R.id.text_word16);
+        txtWord17 = (EditText) findViewById(R.id.text_word17);
+        txtWord18 = (EditText) findViewById(R.id.text_word18);
+        txtWord19 = (EditText) findViewById(R.id.text_word19);
+        txtWord20 = (EditText) findViewById(R.id.text_word20);
+        txtWord21 = (EditText) findViewById(R.id.text_word21);
+        txtWord22 = (EditText) findViewById(R.id.text_word22);
+        txtWord23 = (EditText) findViewById(R.id.text_word23);
+        txtWord24 = (EditText) findViewById(R.id.text_word24);
 
 
     }
@@ -92,12 +106,21 @@ public class RestoreWordsActivity extends BaseActivity {
         public void onPageSelected(int position) {
 
             // changing the next button text 'NEXT' / 'GOT IT'
-            if (position == 0) {
+            if (position == 0  ) {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.next_words));
                 btnNext.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_next, 0);
                 btnBack.setVisibility(View.GONE);
-            } else {
+
+
+            }
+            else if ( position == 1) {
+                btnNext.setText(getString(R.string.next_words));
+                btnNext.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_next, 0);
+                btnBack.setVisibility(View.VISIBLE);
+            }
+
+            else {
                 // still pages are left
                 btnNext.setText(getString(R.string.restore));
                 btnNext.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);

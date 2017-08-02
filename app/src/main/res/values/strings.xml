@@ -179,7 +179,8 @@
     <string name="error_no_connectivity_body">The app is going to save your transaction until the connection back.\nDo you want to continue?</string>
     <string name="cannot_restore_wallet">Error, cannot restore wallet\\nplease check your password</string>
 
-    <string name="restore_words_1">To restore your wallet you most write your 12, write your security words in the right order from number 1 to 6.</string>
+    <string name="restore_words_1">To restore your wallet you most write your 12, write your security words in the right order from number 1 to 8.</string>
     <string name="restore_from_words">Restore from words</string>
-    <string name="restore_words_2">Now write your security words in the right order from number 7 to 12</string>
+    <string name="restore_words_2">Now write your security words in the right order \n from number 9 to 16</string>
+    <string name="restore_words_3">Now write your security words in the right order \n from number 17 to 24</string>
 </resources>

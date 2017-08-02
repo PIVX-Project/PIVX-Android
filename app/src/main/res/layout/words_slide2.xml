@@ -1,10 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="180dp"
+    android:paddingBottom="120dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="60dp"
+    android:paddingTop="30dp"
     android:background="@color/bgWhite">
 
     <TextView
@@ -35,7 +35,7 @@
             android:layout_marginBottom="40dp">
 
             <EditText
-                android:id="@+id/text_word7"
+                android:id="@+id/text_word9"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_inputs"
@@ -46,7 +46,7 @@
                 android:layout_marginRight="4dp"/>
 
             <EditText
-                android:id="@+id/text_word8"
+                android:id="@+id/text_word10"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
@@ -67,7 +67,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/text_word9"
+                android:id="@+id/text_word11"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_inputs"
@@ -78,7 +78,38 @@
                 android:layout_marginRight="4dp"/>
 
             <EditText
-                android:id="@+id/text_word10"
+                android:id="@+id/text_word12"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="4dp"
+                android:textColor="@color/mainText"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:padding="8dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/text_word13"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_inputs"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="@color/mainText"
+                android:maxLines="1"
+                android:layout_marginRight="4dp"/>
+
+            <EditText
+                android:id="@+id/text_word14"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
@@ -97,7 +128,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/text_word11"
+                android:id="@+id/text_word15"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_inputs"
@@ -108,7 +139,7 @@
                 android:layout_marginRight="4dp"/>
 
             <EditText
-                android:id="@+id/text_word12"
+                android:id="@+id/text_word16"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
