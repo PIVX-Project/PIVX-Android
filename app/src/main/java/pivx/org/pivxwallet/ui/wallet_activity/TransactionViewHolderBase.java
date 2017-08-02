@@ -24,6 +24,7 @@ public class TransactionViewHolderBase extends BaseRecyclerViewHolder {
     TextView amount;
     TextView amountLocal;
     ImageView imageView;
+    TextView txt_scale;
     private final Context context;
 
     public TransactionViewHolderBase(View itemView) {
@@ -40,6 +41,7 @@ public class TransactionViewHolderBase extends BaseRecyclerViewHolder {
         title = (TextView) itemView.findViewById(R.id.title);
         description = (TextView) itemView.findViewById(R.id.description);
         amount = (TextView) itemView.findViewById(R.id.amount);
+        txt_scale = (TextView) itemView.findViewById(R.id.txt_scale);
         amountLocal = (TextView) itemView.findViewById(R.id.txt_local_currency);
         imageView = (ImageView) itemView.findViewById(R.id.imageView);
     }

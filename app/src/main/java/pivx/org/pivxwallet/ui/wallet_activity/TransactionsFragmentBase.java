@@ -6,6 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.bitcoinj.core.Coin;
+import org.bitcoinj.utils.BtcFormat;
+import org.bitcoinj.utils.MonetaryFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -21,7 +27,11 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWrapper> {
 
+    private static final Logger logger = LoggerFactory.getLogger(TransactionsFragmentBase.class);
+
     private PivxRate pivxRate;
+    private MonetaryFormat coinFormat = MonetaryFormat.BTC;
+    private int scale = 3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +64,16 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             @Override
             protected void bindHolder(TransactionViewHolderBase holder, TransactionWrapper data, int position) {
                 //todo: fill this..
-                holder.amount.setText(data.getAmount().toFriendlyString());
+                String amount = data.getAmount().toFriendlyString();
+                if (amount.length()<=10){
+                    holder.txt_scale.setVisibility(View.GONE);
+                    holder.amount.setText(amount);
+                }else {
+                    // format amount
+                    holder.txt_scale.setVisibility(View.VISIBLE);
+                    holder.amount.setText(parseToCoinWith4Decimals(amount).toFriendlyString());
+                }
+
                 String localCurrency = null;
                 if (pivxRate!=null) {
                     localCurrency = pivxApplication.getCentralFormats().getNumberFormat().format(
@@ -86,5 +105,46 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 holder.description.setText(memo!=null?memo:"No description");
             }
         };
+    }
+
+    /**
+     * Converts to a coin with max. 4 decimal places. Last place gets rounded.
+     * 0.01234 -> 0.0123
+     * 0.01235 -> 0.0124
+     *
+     * @param input
+     * @return
+     */
+    public Coin parseToCoinWith4Decimals(String input) {
+        try {
+            return Coin.valueOf(new BigDecimal(parseToCoin(cleanInput(input)).value).setScale(-scale - 1,
+                    BigDecimal.ROUND_HALF_UP).setScale(scale + 1).toBigInteger().longValue());
+        } catch (Throwable t) {
+            if (input != null && input.length() > 0)
+                logger.warn("Exception at parseToCoinWith4Decimals: " + t.toString());
+            return Coin.ZERO;
+        }
+    }
+
+    public  Coin parseToCoin(String input) {
+        if (input != null && input.length() > 0) {
+            try {
+                return coinFormat.parse(cleanInput(input));
+            } catch (Throwable t) {
+                logger.warn("Exception at parseToBtc: " + t.toString());
+                return Coin.ZERO;
+            }
+        } else {
+            return Coin.ZERO;
+        }
+    }
+
+    private  String cleanInput(String input) {
+        input = input.replace(",", ".");
+        // don't use String.valueOf(Double.parseDouble(input)) as return value as it gives scientific
+        // notation (1.0E-6) which screw up coinFormat.parse
+        //noinspection ResultOfMethodCallIgnored
+        Double.parseDouble(input);
+        return input;
     }
 }
