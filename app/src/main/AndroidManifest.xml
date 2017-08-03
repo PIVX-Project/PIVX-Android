@@ -19,27 +19,27 @@
         android:theme="@style/AppTheme"
         android:name=".PivxApplication">
         <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait">
-
-        </activity>
 
         <activity android:name=".ui.start_activity.StartActivity"  android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".ui.security_words_activity.SecurityWordsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
         <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
 
-          
         </activity>
 
         <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="portrait"/>

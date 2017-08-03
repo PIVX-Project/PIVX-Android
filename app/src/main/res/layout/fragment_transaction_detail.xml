@@ -17,7 +17,7 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:id = "@+id/transactionType"
+                android:id = "@+id/text_transactionType"
                 android:layout_marginTop="10dp"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
@@ -27,7 +27,7 @@
                 android:textSize = "14sp" />
 
             <TextView
-                android:id = "@+id/valueAmount"
+                android:id = "@+id/text_amount_pivx"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text = "- 3.13532 PIV"
@@ -39,23 +39,12 @@
 
 
             <TextView
-                android:id = "@+id/valueCurrecy"
+                android:id = "@+id/text_amount_currency"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text = "14710 USD"
                 android:textColor = "#4c4c4c"
                 android:textSize = "16sp" />
-
-            <TextView
-                android:id = "@+id/status"
-                android:layout_marginTop="10dp"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text = "Status"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
-
 
         </LinearLayout>
 
@@ -78,7 +67,7 @@
 
 
             <TextView
-                android:id = "@+id/date"
+                android:id = "@+id/text_date"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
@@ -99,7 +88,7 @@
 
 
             <TextView
-                android:id = "@+id/valueAddress"
+                android:id = "@+id/text_address"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
@@ -130,6 +119,47 @@
                 android:textColor = "@color/mainText"
                 android:textSize = "16sp" />
 
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/transaction_hash"
+                android:layout_marginBottom="10dp"
+                android:textColor = "@color/subtitle"
+                android:textSize = "14sp" />
+
+
+
+            <TextView
+                android:id = "@+id/text_transaction_hash"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"
+                android:background="@drawable/transaction_inputs"
+                android:text = "@string/transaction_hash"
+                android:textColor = "@color/mainText"
+                android:textSize = "16sp" />
+
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@string/title_fee"
+                android:layout_marginBottom="10dp"
+                android:textColor = "@color/subtitle"
+                android:textSize = "14sp" />
+
+
+
+            <TextView
+                android:id = "@+id/text_fee"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"
+                android:background="@drawable/transaction_inputs"
+                android:text = "@string/title_fee"
+                android:textColor = "@color/mainText"
+                android:textSize = "16sp" />
 
 
         </LinearLayout>
