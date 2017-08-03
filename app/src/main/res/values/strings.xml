@@ -172,8 +172,9 @@
     <string name="dialog_reset_blockchain_body">Your blockchain file is going to be reseted.\nThe synchronization could take a while.\n\nAre you sure?</string>
     <string name="reseting_blockchain">Reseting blockchain..</string>
     <string name="donations">Donations</string>
-    <string name="donation_message">Donations help with the maintenance and development of the app, Thanks in advance.</string>
+    <string name="donation_message">Donations help with the maintenance and development of the app.\nThanks in advance.</string>
     <string name="donation_title">I’m going to donate</string>
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
+    <string name="bad_pin_code">Invalid Pin</string>
 </resources>

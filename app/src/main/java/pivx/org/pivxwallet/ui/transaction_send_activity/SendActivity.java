@@ -41,6 +41,7 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -55,6 +56,8 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
  */
 
 public class SendActivity extends BaseActivity implements View.OnClickListener {
+
+    private static final int PIN_RESULT = 121;
     private static final int SCANNER_RESULT = 122;
     private Button buttonSend;
     private AutoCompleteTextView edit_address;
@@ -65,6 +68,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private String addressStr;
     private PivxRate pivxRate;
     private SimpleTextDialog errorDialog;
+
+    private Transaction transaction;
+    private String contactName;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
@@ -210,6 +216,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
                 }
             }
+        }else if(requestCode == PIN_RESULT){
+            if (resultCode==RESULT_OK) {
+                // pin ok, send the tx now
+                sendConfirmed();
+            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -248,7 +259,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 throw new IllegalArgumentException("Insuficient balance");
             String memo = edit_memo.getText().toString();
             // build a tx with the default fee
-            Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo);
+            transaction = pivxModule.buildSendTx(addressStr, amount, memo);
             // dialog
             launchDialog(transaction);
 
@@ -287,30 +298,39 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         sendDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String contactName = edit_receiver.getText().toString();
-                if (contactName.length()>0){
-                    Contact contact = new Contact(contactName);
-                    contact.addAddress(addressStr);
-                    contact.addTx(transaction.getHash());
-                    try {
-                        pivxModule.saveContact(contact);
-                    } catch (ContactAlreadyExistException e) {
-                        e.printStackTrace();
-                        Toast.makeText(SendActivity.this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-                pivxModule.commitTx(transaction);
-                Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
-                intent.setAction(ACTION_BROADCAST_TRANSACTION);
-                intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
-                startService(intent);
-                Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
-                onBackPressed();
+                contactName = edit_receiver.getText().toString();
+
                 dialog.dismiss();
+                // start pin
+                Intent intent = new Intent(SendActivity.this, PincodeActivity.class);
+                intent.putExtra(PincodeActivity.CHECK_PIN,true);
+                startActivityForResult(intent,PIN_RESULT);
             }
         });
         sendDialog.show();
+    }
+
+
+    private void sendConfirmed(){
+        if (contactName.length()>0){
+            Contact contact = new Contact(contactName);
+            contact.addAddress(addressStr);
+            contact.addTx(transaction.getHash());
+            try {
+                pivxModule.saveContact(contact);
+            } catch (ContactAlreadyExistException e) {
+                e.printStackTrace();
+                Toast.makeText(SendActivity.this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        pivxModule.commitTx(transaction);
+        Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
+        intent.setAction(ACTION_BROADCAST_TRANSACTION);
+        intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
+        startService(intent);
+        Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
+        onBackPressed();
     }
 
 }

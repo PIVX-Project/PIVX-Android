@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.pincode_activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,19 +34,28 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 public class PincodeActivity extends BaseActivity implements KeyboardFragment.onKeyListener {
 
-    ImageView i1, i2, i3, i4;
-    int[] pin = new int[4];
-    int lastPos = 0;
+    public static final String CHECK_PIN = "check_pin";
 
-    KeyboardFragment keyboardFragment;
+    private boolean checkPin = false;
+
+    private ImageView i1, i2, i3, i4;
+    private int[] pin = new int[4];
+    private int lastPos = 0;
+
+    private KeyboardFragment keyboardFragment;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
 
-        if (pivxApplication.getAppConf().getPincode()!=null){
+        if (getIntent()!=null && getIntent().hasExtra(CHECK_PIN)){
+            checkPin = true;
+        }
+
+        if (pivxApplication.getAppConf().getPincode()!=null && !checkPin){
             goNext();
             finish();
         }
+
         getLayoutInflater().inflate(R.layout.fragment_pincode, container);
         setTitle("Create Pin");
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -85,21 +95,34 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
                 lastPos++;
                 if (lastPos == 4) {
                     String pincode = String.valueOf(pin[0]) + String.valueOf(pin[1]) + String.valueOf(pin[2]) + String.valueOf(pin[3]);
-                    pivxApplication.getAppConf().savePincode(pincode);
-                    Toast.makeText(this, R.string.pincode_saved, Toast.LENGTH_SHORT).show();
-                    goNext();
+
+                    if (!checkPin) {
+                        pivxApplication.getAppConf().savePincode(pincode);
+                        Toast.makeText(this, R.string.pincode_saved, Toast.LENGTH_SHORT).show();
+                        goNext();
+                    }else {
+                        // check pin and return result
+                        if(pivxApplication.getAppConf().getPincode().equals(pincode)){
+                            Intent intent = new Intent();
+                            setResult(Activity.RESULT_OK, intent);
+                            finish();
+                        }else {
+                            Toast.makeText(this,R.string.bad_pin_code,Toast.LENGTH_LONG).show();
+                            clear();
+                        }
+                    }
                 }
             } else if (key == KeyboardFragment.KEYS.DELETE) {
                 lastPos--;
                 unactiveCheck(lastPos);
             } else if (key == KeyboardFragment.KEYS.CLEAR) {
-                unactiveCheck(0);
-                unactiveCheck(1);
-                unactiveCheck(2);
-                unactiveCheck(3);
-                lastPos = 0;
+                clear();
             }
         }
+    }
+
+    private void clear(){
+
     }
 
     private void activeCheck(int pos){

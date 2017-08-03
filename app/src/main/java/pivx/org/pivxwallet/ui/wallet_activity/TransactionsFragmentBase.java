@@ -63,7 +63,6 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
             @Override
             protected void bindHolder(TransactionViewHolderBase holder, TransactionWrapper data, int position) {
-                //todo: fill this..
                 String amount = data.getAmount().toFriendlyString();
                 if (amount.length()<=10){
                     holder.txt_scale.setVisibility(View.GONE);
