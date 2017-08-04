@@ -3,4 +3,6 @@
 
     <item android:id="@+id/option_fee" android:title="Custom fee"/>
 
+    <item android:id="@+id/option_multiple_addresses" android:title="Custom addresses"/>
+
 </menu>

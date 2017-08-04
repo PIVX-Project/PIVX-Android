@@ -53,6 +53,7 @@
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"  android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity" android:screenOrientation="portrait"/>
 
 
         <activity android:name=".ui.transaction_request_activity.RequestActivity"  android:screenOrientation="portrait"></activity>

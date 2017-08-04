@@ -44,6 +44,8 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
 
     private String emptyText;
 
+    private boolean refreshSwipeEnabled = true;
+
     public BaseRecyclerFragment() {
         // Required empty public constructor
     }
@@ -64,14 +66,18 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         adapter = initAdapter();
         if (adapter==null) throw new IllegalStateException("Base adapter cannot be null");
         recycler.setAdapter(adapter);
-        swipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        load();
+        if (refreshSwipeEnabled){
+            swipeRefreshLayout.setEnabled(false);
+        }else {
+            swipeRefreshLayout.setOnRefreshListener(
+                    new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            load();
+                        }
                     }
-                }
-        );
+            );
+        }
         return root;
     }
 
@@ -155,6 +161,10 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         }
     };
 
+    protected void setSwipeRefresh(boolean enable){
+        this.refreshSwipeEnabled = enable;
+    }
+
     protected void setEmptyText(String text){
         this.emptyText = text;
         if (txt_empty!=null){
@@ -174,7 +184,6 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         }
     }
 
-
     private void showEmptyScreen(){
 //        if (container_empty_screen!=null)
 //            AnimationUtils.fadeInView(container_empty_screen,300);
@@ -188,4 +197,12 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
 //            AnimationUtils.fadeOutView(container_empty_screen,300);
     }
 
+
+    public RecyclerView getRecycler() {
+        return recycler;
+    }
+
+    public BaseRecyclerAdapter getAdapter() {
+        return adapter;
+    }
 }

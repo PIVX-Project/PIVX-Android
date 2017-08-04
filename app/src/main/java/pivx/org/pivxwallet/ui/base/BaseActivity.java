@@ -1,7 +1,9 @@
 package pivx.org.pivxwallet.ui.base;
 
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,11 @@ public abstract class BaseActivity extends PivxActivity {
      */
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container){
 
+    }
+
+    protected boolean checkPermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 
 

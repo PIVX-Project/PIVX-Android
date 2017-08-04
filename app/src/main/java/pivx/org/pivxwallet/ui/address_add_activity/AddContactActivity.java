@@ -157,8 +157,4 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private boolean checkPermission(String permission) {
-        int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
-        return result == PackageManager.PERMISSION_GRANTED;
-    }
 }

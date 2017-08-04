@@ -1,8 +1,10 @@
 package pivx.org.pivxwallet.ui.base;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,5 +26,10 @@ public class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         pivxApplication = PivxApplication.getInstance();
         pivxModule = pivxApplication.getModule();
+    }
+
+    protected boolean checkPermission(String permission) {
+        int result = ContextCompat.checkSelfPermission(getActivity(),permission);
+        return result == PackageManager.PERMISSION_GRANTED;
     }
 }
