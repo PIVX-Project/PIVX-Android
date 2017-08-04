@@ -2,6 +2,7 @@ package pivx.org.pivxwallet.ui.settings_backup_activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.security_words_activity.SecurityWordsActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
@@ -30,12 +34,12 @@ import pivx.org.pivxwallet.utils.DialogsUtil;
 
 public class SettingsBackupActivity extends BaseActivity {
 
-    private static final int OPTIONS_CREATE = 1;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL = 500;
 
     private View root;
     private EditText edit_password;
     private EditText edit_repeat_password;
+    private Button btn_backup;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -45,22 +49,32 @@ public class SettingsBackupActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         edit_password = (EditText) root.findViewById(R.id.edit_password);
         edit_repeat_password = (EditText) root.findViewById(R.id.edit_repeat_password);
+
+        btn_backup = (Button) findViewById(R.id.btn_backup);
+        btn_backup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkPermissions();
+                backup();
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.add(0,OPTIONS_CREATE,0,R.string.backup_create);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        super.onCreateOptionsMenu(menu);
+        menu.add(0,0,0, R.string.backup_words);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == OPTIONS_CREATE){
-            checkPermissions();
-            backup();
-            return true;
+
+        switch (item.getItemId()) {
+            case 0:
+                Intent myIntent = new Intent(getApplicationContext(), SecurityWordsActivity.class);
+                startActivity(myIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

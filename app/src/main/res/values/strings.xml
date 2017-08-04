@@ -23,6 +23,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="set_amount">Write amount to send</string>
+    <string name="set_amount_piv">PIV</string>
+    <string name="set_amount_usd">USD</string>
+    <string name="add_all">ADD ALL</string>
     <string name="title_amount">Amount</string>
     <string name="title_address">Address</string>
     <string name="title_name">Name</string>
@@ -78,7 +81,9 @@
     <string name="tcp_port">TCP port</string>
     <string name="hint_tcp_port">Default TCP port</string>
     <string name="add_memo">Monthly payment</string>
-    <string name="backup_create">create</string>
+    <string name="backup_create">Create Backup</string>
+    <string name="transaction_hash">Transaction Hash</string>
+    <string name="explorer">Explorer</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
     <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at\n %s </string>
@@ -103,8 +108,11 @@
     <string name="save">Save</string>
     <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
+    <string name="next_words">Next 6 words</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="restore">Restore</string>
     <string name="start">Start</string>
     <string name="title_slide1">Pivx is secure</string>
     <string name="desc_slide1">First coin with BIP38 Encryption and Decryption of Private Keys</string>
@@ -141,6 +149,8 @@
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
+    <string name="reveal_words">Reveal words</string>
+    <string name="backup_words">Words Selectiong</string>
     <string name="btn_secure">Already noted</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
     <string name="number_zero">0</string>
@@ -177,4 +187,18 @@
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
+    <string name="restore_words_1">To restore your wallet you most write your 12, write your security words in the right order from number 1 to 8.</string>
+    <string name="restore_from_words">Restore from words</string>
+    <string name="restore_words_2">Now write your security words in the right order \n from number 9 to 16</string>
+    <string name="restore_words_3">Now write your security words in the right order \n from number 17 to 24</string>
+    <string name="fee_recommended">Recommended</string>
+    <string name="fee_custom">Custom</string>
+    <string name="confirmation_time">Confirmation time</string>
+    <string name="fee_normal">Normal</string>
+    <string name="fee_fast">Fast</string>
+    <string name="per_kilobyte">per kilobyte</string>
+    <string name="total_at_least">Total at least</string>
+    <string name="fee">Fee</string>
+    <string name="minimum_fee">Pay only the minimum fee of 0.00010000 Piv/kB</string>
+
 </resources>

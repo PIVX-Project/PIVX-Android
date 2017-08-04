@@ -14,15 +14,20 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
@@ -42,6 +47,7 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -59,18 +65,23 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int PIN_RESULT = 121;
     private static final int SCANNER_RESULT = 122;
-    private Button buttonSend;
+    private static final int CUSTOM_FEE_RESULT = 123;
+
+    private Button buttonSend, addAllCurrency, addAllPiv;
     private AutoCompleteTextView edit_address;
-    private TextView txt_local_currency;
-    private EditText edit_amount;
+    private TextView txt_local_currency , txtShowPiv;
+    private EditText edit_amount, editCurrency;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
     private PivxRate pivxRate;
     private SimpleTextDialog errorDialog;
+    private ImageButton btnSwap;
+    private ViewFlipper amountSwap;
 
     private Transaction transaction;
     private String contactName;
+
 
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
@@ -86,6 +97,27 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
 
+        //Swap type of ammounts
+        amountSwap = (ViewFlipper) findViewById( R.id.viewFlipper );
+        amountSwap.setInAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_in_left));
+        amountSwap.setOutAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_out_right));
+        btnSwap = (ImageButton) findViewById(R.id.btn_swap);
+        btnSwap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amountSwap.showNext();
+            }
+        });
+
+        //Sending amount currency
+        editCurrency = (EditText) findViewById(R.id.edit_amount_currency);
+        txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
+        addAllCurrency =  (Button) findViewById(R.id.btn_add_all_currency);
+
+        //Sending amount piv
+        addAllPiv =  (Button) findViewById(R.id.btn_add_all_piv);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         edit_amount.addTextChangedListener(new TextWatcher() {
@@ -119,8 +151,22 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.send_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.option_fee){
+            startActivityForResult(new Intent(this, CustomFeeActivity.class),CUSTOM_FEE_RESULT);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
