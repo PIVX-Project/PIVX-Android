@@ -48,6 +48,7 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
 import pivx.org.pivxwallet.utils.DialogBuilder;
@@ -58,7 +59,6 @@ import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
-import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_TOTAL_AMOUNT;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
@@ -66,6 +66,8 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
  */
 
 public class SendActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final String INTENT_EXTRA_TOTAL_AMOUNT = "total_amount";
 
     private static final int PIN_RESULT = 121;
     private static final int SCANNER_RESULT = 122;
@@ -182,6 +184,15 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this,R.string.invalid_amount_value,Toast.LENGTH_LONG).show();
             }
             return true;
+        }else if(id == R.id.option_select_inputs){
+            String amountStr = edit_amount.getText().toString();
+            if (amountStr.length()>0){
+                Intent intent = new Intent(this, InputsActivity.class);
+                intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
+                startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
+            }else {
+                Toast.makeText(this,R.string.invalid_amount_value,Toast.LENGTH_LONG).show();
+            }
         }
         return super.onOptionsItemSelected(item);
     }

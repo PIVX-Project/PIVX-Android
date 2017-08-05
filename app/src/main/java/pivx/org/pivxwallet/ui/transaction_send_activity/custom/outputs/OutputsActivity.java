@@ -15,13 +15,14 @@ import java.util.List;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 
+import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
+
 /**
  * Created by furszy on 8/4/17.
  */
 
 public class OutputsActivity extends BaseActivity {
 
-    public static final String INTENT_EXTRA_TOTAL_AMOUNT = "total_amount";
     public static final String INTENT_EXTRA_OUTPUTS_WRAPPERS = "output_wrappers";
 
     private View root;

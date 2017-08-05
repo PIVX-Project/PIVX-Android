@@ -272,9 +272,9 @@ public class PivxWalletService extends Service{
             module = (PivxModuleImp) pivxApplication.getModule();
             blockchainManager = module.getBlockchainManager();
             // connect to pivtrum node
-            pivtrumPeergroup = new PivtrumPeergroup(pivxApplication.getNetworkConf());
+            /*pivtrumPeergroup = new PivtrumPeergroup(pivxApplication.getNetworkConf());
             pivtrumPeergroup.addAddressListener(addressListener);
-            module.setPivtrumPeergroup(pivtrumPeergroup);
+            module.setPivtrumPeergroup(pivtrumPeergroup);*/
 
             // Schedule service
             tryScheduleService();
@@ -296,9 +296,7 @@ public class PivxWalletService extends Service{
             //pivtrumPeergroup.start();
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e){
             // todo: I have to handle the connection refused..
             e.printStackTrace();
             // for now i just launch a notification
@@ -353,9 +351,9 @@ public class PivxWalletService extends Service{
             // destroy the blockchain
             blockchainManager.destroy(resetBlockchainOnShutdown);
 
-            if (pivtrumPeergroup.isRunning()) {
+            /*if (pivtrumPeergroup.isRunning()) {
                 pivtrumPeergroup.shutdown();
-            }
+            }*/
 
             if (wakeLock.isHeld()) {
                 log.debug("wakelock still held, releasing");

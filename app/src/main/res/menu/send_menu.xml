@@ -5,4 +5,6 @@
 
     <item android:id="@+id/option_multiple_addresses" android:title="Custom addresses"/>
 
+    <item android:id="@+id/option_select_inputs" android:title="Custom inputs"/>
+
 </menu>
