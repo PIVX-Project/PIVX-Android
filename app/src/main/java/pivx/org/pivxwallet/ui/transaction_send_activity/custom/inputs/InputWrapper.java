@@ -1,7 +1,8 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.TransactionInput;
+import org.bitcoinj.core.TransactionOutput;
+
+import pivx.org.pivxwallet.contacts.Contact;
 
 /**
  * Created by furszy on 8/4/17.
@@ -9,27 +10,23 @@ import org.bitcoinj.core.TransactionInput;
 
 public class InputWrapper {
 
-    private TransactionInput input;
-    private String addressLabel;
+    private TransactionOutput unspent;
+    private Contact contact;
 
-    public InputWrapper(TransactionInput input, String addressLabel) {
-        this.input = input;
-        this.addressLabel = addressLabel;
+    public InputWrapper(TransactionOutput unspent, Contact contact) {
+        this.unspent = unspent;
+        this.contact = contact;
     }
 
-    public TransactionInput getInput() {
-        return input;
+    public TransactionOutput getUnspent() {
+        return unspent;
     }
 
-    public void setInput(TransactionInput input) {
-        this.input = input;
+    public void setUnspent(TransactionOutput unspent) {
+        this.unspent = unspent;
     }
 
-    public String getAddressLabel() {
-        return addressLabel;
-    }
-
-    public void setAddressLabel(String addressLabel) {
-        this.addressLabel = addressLabel;
+    public Contact getContact() {
+        return contact;
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -31,27 +32,27 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     private List<InputWrapper> list;
     private BaseRecyclerAdapter adapter;
 
+    private boolean selectAll = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         list = new ArrayList<>();
-
-        if (list.isEmpty()){
-            list.add(new InputWrapper(
-                    null,
-                    null
-            ));
-            list.add(new InputWrapper(
-                    null,
-                    null
-            ));
-        }
-
     }
 
     @Override
     protected List<InputWrapper> onLoading() {
+
+        list.clear();
+
+        list.add(new InputWrapper(
+                null,
+                null
+        ));
+
+        list.addAll(pivxModule.listUnspentWrappers());
+
         return list;
     }
 
@@ -84,8 +85,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
                     inputHolder.radio_select.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            /*RadioButton radioButton = (RadioButton) v;
-                            radioButton.setChecked(!radioButton.isChecked());*/
+
                         }
                     });
                 }
@@ -99,19 +99,20 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     }
 
     private void selectAll(){
+        selectAll = !selectAll;
         for (int i=1;i<list.size();i++){
             InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
-            inputHolder.radio_select.setChecked(true);
+            inputHolder.radio_select.setChecked(selectAll);
         }
     }
 
     private class SelectorHolder extends BaseRecyclerViewHolder{
 
-        RadioButton radio_select;
+        CheckBox radio_select;
 
         protected SelectorHolder(View itemView, int holderType) {
             super(itemView, holderType);
-            this.radio_select = (RadioButton) itemView.findViewById(R.id.radio_select);
+            this.radio_select = (CheckBox) itemView.findViewById(R.id.radio_select);
         }
 
 

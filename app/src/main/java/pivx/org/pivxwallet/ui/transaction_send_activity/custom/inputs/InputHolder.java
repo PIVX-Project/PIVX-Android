@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -15,7 +16,7 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 public class InputHolder extends BaseRecyclerViewHolder{
 
-    RadioButton radio_select;
+    CheckBox radio_select;
     TextView txt_amount;
     TextView txt_address;
     TextView txt_confirmations_amount;
@@ -24,7 +25,7 @@ public class InputHolder extends BaseRecyclerViewHolder{
     public InputHolder(View itemView, int holderType) {
         super(itemView, holderType);
         txt_amount = (TextView) itemView.findViewById(R.id.txt_amount);
-        radio_select = (RadioButton) itemView.findViewById(R.id.radio_select);
+        radio_select = (CheckBox) itemView.findViewById(R.id.radio_select);
         txt_address = (TextView) itemView.findViewById(R.id.txt_address);
         txt_confirmations_amount = (TextView) itemView.findViewById(R.id.txt_confirmations_amount);
         txt_date = (TextView) itemView.findViewById(R.id.txt_date);
