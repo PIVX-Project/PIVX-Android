@@ -82,7 +82,7 @@ Subscribe to a bitcoin address.
        hash in hexadecimal, *height* the height of the block it is in.
        Next, with mempool transactions in any order, append a string
        that is the same, but where *height* is `-1` if the transaction
-       has at least one unconfirmed input, and `0` if all inputs are
+       has at least one unconfirmed unspent, and `0` if all inputs are
        confirmed.  The *status* is the **sha256** hash of this string
        expressed as a hexadecimal string.
 

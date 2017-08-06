@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.module;
 
+import android.content.Context;
+
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
@@ -26,6 +28,7 @@ import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.rate.db.RateDb;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressStore;
@@ -265,6 +268,24 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Wallet getWallet() {
         return walletManager.getWallet();
+    }
+
+    @Override
+    public List<InputWrapper> listUnspentWrappers() {
+        List<InputWrapper> inputWrappers = new ArrayList<>();
+        for (TransactionOutput transactionOutput : walletManager.listUnspent()) {
+            Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+            // if the tx is mine i know that the first output address is the sent and the second one is the change address
+            Contact contact = contactsStore.getContact(address.toBase58());
+            inputWrappers.add(
+                    new InputWrapper(
+                            transactionOutput,
+                            contact
+                    )
+
+            );
+        }
+        return inputWrappers;
     }
 
     public void saveRate(PivxRate pivxRate){

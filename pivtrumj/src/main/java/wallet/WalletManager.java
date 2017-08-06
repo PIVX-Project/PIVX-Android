@@ -11,6 +11,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.LinuxSecureRandom;
@@ -530,6 +531,10 @@ public class WalletManager {
     @Deprecated
     public Wallet getWallet() {
         return wallet;
+    }
+
+    public List<TransactionOutput> listUnspent() {
+        return wallet.getUnspents();
     }
 
 

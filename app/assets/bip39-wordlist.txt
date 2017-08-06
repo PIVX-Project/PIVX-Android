@@ -931,7 +931,7 @@ injury
 inmate
 inner
 innocent
-input
+unspent
 inquiry
 insane
 insect
