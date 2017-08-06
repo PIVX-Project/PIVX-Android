@@ -145,7 +145,7 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
-    <string name="security_message">Please write this words carefully</string>
+    <string name="security_message">Please write this in a safe place \n you\'ll need them to restore your wallet</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
@@ -207,5 +207,9 @@
     <string name="bad_address">Bad address</string>
     <string name="invalid_amount_value">Invalid amount value</string>
     <string name="select_all">Select all</string>
+    <string name="total_amount">Total:</string>
+    <string name="send_amount_address_error">You most set an amount to send first to send to more than one address.</string>
+    <string name="send_amount_input_error">You most set an amount to add custom inputs.</string>
+
 
 </resources>
