@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="120dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="30dp"
@@ -12,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:layout_marginBottom="40dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/restore_words_3"
@@ -23,7 +22,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:paddingTop="30dp"
+        android:layout_below="@+id/restoreMessage"
         android:orientation="vertical">
 
         <LinearLayout
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="20dp">
 
             <EditText
                 android:id="@+id/text_word17"
@@ -60,7 +60,7 @@
 
         <LinearLayout
             android:id="@+id/wordsLayout2"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
 
         <LinearLayout
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

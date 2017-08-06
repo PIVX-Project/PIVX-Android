@@ -1,10 +1,12 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity.custom;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +53,12 @@ public class CustomFeeActivity extends BaseActivity implements View.OnClickListe
         int id = v.getId();
         if (id == R.id.txt_fee_recommended){
             viewPager.setCurrentItem(0);
+            txt_fee_recommended.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_button_border_curce));
+            txt_fee_custom.setBackgroundColor(Color.parseColor("#00000000"));
         }else if (id == R.id.txt_fee_custom){
             viewPager.setCurrentItem(1);
+            txt_fee_custom.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_button_border_curce));
+            txt_fee_recommended.setBackgroundColor(Color.parseColor("#00000000"));
         }
     }
 
