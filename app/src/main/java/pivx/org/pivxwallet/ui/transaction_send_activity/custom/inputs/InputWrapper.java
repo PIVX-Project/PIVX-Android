@@ -2,13 +2,15 @@ package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
 
 import org.bitcoinj.core.TransactionOutput;
 
+import java.io.Serializable;
+
 import pivx.org.pivxwallet.contacts.Contact;
 
 /**
  * Created by furszy on 8/4/17.
  */
 
-public class InputWrapper {
+public class InputWrapper implements Serializable{
 
     private TransactionOutput unspent;
     private Contact contact;

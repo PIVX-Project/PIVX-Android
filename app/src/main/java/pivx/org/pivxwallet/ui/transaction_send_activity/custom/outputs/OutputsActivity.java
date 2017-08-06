@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import org.bitcoinj.core.Coin;
 
+import java.io.Serializable;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
@@ -68,8 +69,8 @@ public class OutputsActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.option_ok){
             Intent intent = new Intent();
-            // todo: complete
-            //intent.putExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS,outputWrappers);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
             setResult(RESULT_OK,intent);
             finish();
             return true;
