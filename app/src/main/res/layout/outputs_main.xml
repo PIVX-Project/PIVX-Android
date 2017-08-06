@@ -2,12 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txt_total_amount"
-        android:text="Total: 3.13 PIV"/>
+        android:background="#F1F1F1"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_amount"
+            android:layout_marginRight="4dp"
+            android:textColor="@color/mainText"
+            android:textSize="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_total_amount"
+            android:text="3.13 PIV"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +35,7 @@
             android:paddingBottom="12dp"
             android:paddingTop="12dp"
             android:text="@string/several_outputs_add_address"
+            android:textColor="@color/colorPurple"
             android:textStyle="bold" />
 
     </LinearLayout>

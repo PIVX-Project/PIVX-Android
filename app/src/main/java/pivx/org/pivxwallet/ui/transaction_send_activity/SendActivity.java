@@ -181,7 +181,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
             startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
             }else {
-                Toast.makeText(this,R.string.invalid_amount_value,Toast.LENGTH_LONG).show();
+                Toast.makeText(this,R.string.send_amount_address_error,Toast.LENGTH_LONG).show();
             }
             return true;
         }else if(id == R.id.option_select_inputs){
