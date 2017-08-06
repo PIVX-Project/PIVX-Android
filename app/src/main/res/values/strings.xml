@@ -206,5 +206,6 @@
     <string name="inputs_explanation">Select inputs to use</string>
     <string name="bad_address">Bad address</string>
     <string name="invalid_amount_value">Invalid amount value</string>
+    <string name="select_all">Select all</string>
 
 </resources>

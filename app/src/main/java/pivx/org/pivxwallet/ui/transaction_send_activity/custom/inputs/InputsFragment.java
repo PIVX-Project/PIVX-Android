@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
@@ -23,6 +24,9 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
  */
 
 public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
+
+    private static final int TYPE_INIT = 0;
+    private static final int TYPE_NORMAL = 1;
 
     private List<InputWrapper> list;
     private BaseRecyclerAdapter adapter;
@@ -53,23 +57,64 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
 
     @Override
     protected BaseRecyclerAdapter<InputWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
-        adapter = new BaseRecyclerAdapter<InputWrapper, InputHolder>(getActivity()) {
+
+        adapter = new BaseRecyclerAdapter<InputWrapper, BaseRecyclerViewHolder>(getActivity()) {
             @Override
-            protected InputHolder createHolder(View itemView, int type) {
-                return new InputHolder(itemView,type);
+            protected BaseRecyclerViewHolder createHolder(View itemView, int type) {
+                return type==TYPE_NORMAL?new InputHolder(itemView,type):new SelectorHolder(itemView,type);
             }
 
             @Override
             protected int getCardViewResource(int type) {
-                return R.layout.input_row;
+                return type==TYPE_NORMAL? R.layout.input_row : R.layout.layout_input_row_first;
             }
 
             @Override
-            protected void bindHolder(final InputHolder holder, InputWrapper data, int position) {
-
+            protected void bindHolder(final BaseRecyclerViewHolder holder, InputWrapper data, int position) {
+                if (position==0){
+                    SelectorHolder selectorHolder = (SelectorHolder) holder;
+                    selectorHolder.radio_select.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            selectAll();
+                        }
+                    });
+                }else {
+                    InputHolder inputHolder = (InputHolder) holder;
+                    inputHolder.radio_select.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            /*RadioButton radioButton = (RadioButton) v;
+                            radioButton.setChecked(!radioButton.isChecked());*/
+                        }
+                    });
+                }
+            }
+            @Override
+            public int getItemViewType(int position) {
+                return position==0?TYPE_INIT:TYPE_NORMAL;
             }
         };
         return adapter;
+    }
+
+    private void selectAll(){
+        for (int i=1;i<list.size();i++){
+            InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
+            inputHolder.radio_select.setChecked(true);
+        }
+    }
+
+    private class SelectorHolder extends BaseRecyclerViewHolder{
+
+        RadioButton radio_select;
+
+        protected SelectorHolder(View itemView, int holderType) {
+            super(itemView, holderType);
+            this.radio_select = (RadioButton) itemView.findViewById(R.id.radio_select);
+        }
+
+
     }
 
 }
