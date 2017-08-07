@@ -25,7 +25,7 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 public class CustomFeeActivity extends BaseActivity implements View.OnClickListener {
 
     private View root;
-    private TextView txt_fee_recommended;
+    private TextView txt_fee_recommended, txt_default;
     private TextView txt_fee_custom;
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -40,9 +40,11 @@ public class CustomFeeActivity extends BaseActivity implements View.OnClickListe
         viewPager = (ViewPager) root.findViewById(R.id.view_pager);
         txt_fee_recommended = (TextView) root.findViewById(R.id.txt_fee_recommended);
         txt_fee_custom = (TextView) root.findViewById(R.id.txt_fee_custom);
+        txt_default = (TextView) root.findViewById(R.id.txt_default);
 
         txt_fee_custom.setOnClickListener(this);
         txt_fee_recommended.setOnClickListener(this);
+        txt_default.setOnClickListener(this);
 
         setupViewPager(viewPager);
     }
@@ -60,6 +62,12 @@ public class CustomFeeActivity extends BaseActivity implements View.OnClickListe
             txt_fee_custom.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_button_border_curce));
             txt_fee_recommended.setBackgroundColor(Color.parseColor("#00000000"));
         }
+        else if (id == R.id.txt_default){
+            viewPager.setCurrentItem(0);
+            txt_fee_recommended.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_button_border_curce));
+            txt_fee_custom.setBackgroundColor(Color.parseColor("#00000000"));
+        }
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
