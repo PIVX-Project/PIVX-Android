@@ -149,6 +149,7 @@
             android:background="@drawable/transaction_inputs"
             android:layout_marginBottom="20dp">
 
+
             <AutoCompleteTextView
                 android:id = "@+id/edit_address"
                 android:ellipsize="start"
@@ -216,8 +217,32 @@
         android:layout_gravity="center"
         android:padding="20dp"
         android:gravity="center"
+        android:orientation="vertical"
         android:background="@android:color/transparent"
         android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_coin_selection"
+            android:text="@string/coin_selection"
+            android:gravity="center"
+            android:textColor="#d0011b"
+            android:textStyle="bold"
+            android:paddingBottom="12dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_custom_fee"
+            android:text="@string/custom_fee"
+            android:gravity="center"
+            android:textColor="#d0011b"
+            android:textStyle="bold"
+            android:paddingBottom="12dp"
+            />
 
         <Button
             android:id="@+id/btnSend"

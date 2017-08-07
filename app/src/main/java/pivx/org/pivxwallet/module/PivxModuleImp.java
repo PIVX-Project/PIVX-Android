@@ -6,7 +6,10 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
+import org.bitcoinj.core.ScriptException;
+import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.wallet.SendRequest;
@@ -18,7 +21,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import chain.BlockchainManager;
 import global.ContextWrapper;
@@ -185,13 +190,27 @@ public class PivxModuleImp implements PivxModule {
         List<TransactionWrapper> list = new ArrayList<>();
         for (Transaction transaction : walletManager.listTransactions()) {
             boolean isMine = walletManager.isMine(transaction);
-            Contact contact = null;
+            Map<Integer,Contact> outputsLabeled = new HashMap<>();
+            Map<Integer,Contact> inputsLabeled = new HashMap<>();
             Address address = null;
             if (isMine){
                 try {
-                    address = transaction.getOutput(0).getScriptPubKey().getToAddress(getConf().getNetworkParams());
-                    // if the tx is mine i know that the first output address is the sent and the second one is the change address
-                    contact = contactsStore.getContact(address.toBase58());
+                    for (TransactionOutput transactionOutput : transaction.getOutputs()) {
+                        address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+                        // if the tx is mine i know that the first output address is the sent and the second one is the change address
+                        outputsLabeled.put(transactionOutput.getIndex(),contactsStore.getContact(address.toBase58()));
+                    }
+
+                    for (TransactionInput transactionInput : transaction.getInputs()) {
+                        try {
+                            address = transactionInput.getScriptSig().getToAddress(getConf().getNetworkParams());
+                            // if the tx is mine i know that the first output address is the sent and the second one is the change address
+                            inputsLabeled.put((int) transactionInput.getOutpoint().getIndex(), contactsStore.getContact(address.toBase58()));
+                        }catch (ScriptException e){
+                            e.printStackTrace();
+                        }
+                    }
+
                 }catch (Exception e){
                     e.printStackTrace();
                     //swallow this for now..
@@ -204,12 +223,18 @@ public class PivxModuleImp implements PivxModule {
                         break;
                     }
                 }
+
+                for (TransactionOutput transactionOutput : transaction.getOutputs()) {
+                    address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+                    // if the tx is mine i know that the first output address is the sent and the second one is the change address
+                    outputsLabeled.put(transactionOutput.getIndex(),contactsStore.getContact(address.toBase58()));
+                }
             }
             list.add(new TransactionWrapper(
                     transaction,
-                    contact,
+                    inputsLabeled,
+                    outputsLabeled,
                     isMine ? getValueSentFromMe(transaction,true):walletManager.getValueSentToMe(transaction),
-                    address,
                     isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE
                     )
             );
@@ -286,6 +311,11 @@ public class PivxModuleImp implements PivxModule {
             );
         }
         return inputWrappers;
+    }
+
+    @Override
+    public Transaction getTx(Sha256Hash txId) {
+        return walletManager.getTransaction(txId);
     }
 
     public void saveRate(PivxRate pivxRate){

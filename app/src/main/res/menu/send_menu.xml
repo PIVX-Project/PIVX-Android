@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/option_select_inputs" android:title="Coin selection"/>
+
+    <item android:id="@+id/option_multiple_addresses" android:title="Multi outputs"/>
+
     <item android:id="@+id/option_fee" android:title="Custom fee"/>
-
-    <item android:id="@+id/option_multiple_addresses" android:title="Custom addresses"/>
-
-    <item android:id="@+id/option_select_inputs" android:title="Custom inputs"/>
-
 </menu>

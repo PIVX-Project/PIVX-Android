@@ -18,26 +18,12 @@ import pivx.org.pivxwallet.ui.security_words_activity.SecurityWordsActivity;
 
 public class TransactionDetailActivity extends BaseActivity {
 
-    private TextView text_transactionType;
-    private TextView text_amount_Pivx;
-    private TextView text_amount_currency;
-    private TextView text_date;
-    private TextView text_address;
-    private TextView text_fee;
-    private TextView text_transaction_hash;
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        getLayoutInflater().inflate(R.layout.fragment_transaction_detail, container);
+        getLayoutInflater().inflate(R.layout.transaction_detail_main, container);
         setTitle("Transaction Detail");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        text_transactionType = (TextView) findViewById(R.id.text_transactionType);
-        text_amount_Pivx = (TextView) findViewById(R.id.text_transactionType);
-        text_amount_currency = (TextView) findViewById(R.id.text_transactionType);
-        text_date = (TextView) findViewById(R.id.text_transactionType);
-        text_address = (TextView) findViewById(R.id.text_transactionType);
-        text_fee = (TextView) findViewById(R.id.text_fee);
-        text_transaction_hash = (TextView) findViewById(R.id.text_transaction_hash);
 
 
     }
