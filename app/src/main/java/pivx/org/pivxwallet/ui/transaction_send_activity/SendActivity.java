@@ -47,11 +47,13 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
+import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -59,6 +61,9 @@ import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
@@ -76,10 +81,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int CUSTOM_FEE_RESULT = 123;
     private static final int MULTIPLE_ADDRESSES_SEND_RESULT = 124;
     private static final int CUSTOM_INPUTS = 125;
+    private static final int SEND_DETAIL = 126;
 
     private Button buttonSend, addAllCurrency, addAllPiv;
     private AutoCompleteTextView edit_address;
-    private TextView txt_local_currency , txtShowPiv;
+    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txtShowPiv;
     private EditText edit_amount, editCurrency;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
@@ -295,7 +301,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
                 }
             }
-        }else if(requestCode == PIN_RESULT){
+        }else if(requestCode == SEND_DETAIL){
             if (resultCode==RESULT_OK) {
                 // pin ok, send the tx now
                 sendConfirmed();
@@ -343,8 +349,17 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             String memo = edit_memo.getText().toString();
             // build a tx with the default fee
             transaction = pivxModule.buildSendTx(addressStr, amount, memo);
-            // dialog
-            launchDialog(transaction);
+
+            TransactionWrapper transactionWrapper = new TransactionWrapper(transaction,null,null,amount, TransactionWrapper.TransactionUse.SENT_SINGLE);
+
+            // Confirmation screen
+            Intent intent = new Intent(this,SendTxDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(TX_WRAPPER,transactionWrapper);
+            bundle.putSerializable(TX,transaction.bitcoinSerialize());
+            intent.putExtras(bundle);
+            startActivityForResult(intent,SEND_DETAIL);
+            //launchDialog(transaction);
 
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();

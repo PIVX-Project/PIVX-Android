@@ -82,7 +82,7 @@
     <string name="hint_tcp_port">Default TCP port</string>
     <string name="add_memo">Monthly payment</string>
     <string name="backup_create">Create Backup</string>
-    <string name="transaction_hash">Transaction Hash</string>
+    <string name="transaction_hash">Transaction ID</string>
     <string name="explorer">Explorer</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
@@ -210,6 +210,15 @@
     <string name="total_amount">Total:</string>
     <string name="send_amount_address_error">You most set an amount to send first to send to more than one address.</string>
     <string name="send_amount_input_error">You most set an amount to add custom inputs.</string>
+    <string name="tx_detail_amount">Total amount</string>
+    <string name="tx_detail_inputs_title">Source coins</string>
+    <string name="tx_detail_inputs">0 inputs</string>
+    <string name="txt_detail_confirmations">Confirmations amount</string>
+    <string name="tx_detail_no_memo">No description</string>
+    <string name="tx_detail_addresses">Outputs</string>
+    <string name="custom_fee">Custom fee</string>
+    <string name="coin_selection">Coin selection</string>
+
 
 
 </resources>

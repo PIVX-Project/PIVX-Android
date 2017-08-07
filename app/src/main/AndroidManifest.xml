@@ -51,13 +51,14 @@
 
         </activity>
 
+        <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity" android:screenOrientation="portrait"/>
+
         <activity android:name=".ui.transaction_send_activity.SendActivity"  android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.transaction_send_activity.custom.inputs.InputsActivity" android:screenOrientation="portrait"/>
-
+        <activity android:name=".ui.transaction_send_activity.SendTxDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.transaction_request_activity.RequestActivity"  android:screenOrientation="portrait"></activity>
-        <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"></activity>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>

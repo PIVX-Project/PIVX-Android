@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,10 +17,16 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
+import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
+
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
 
 /**
  * Created by furszy on 6/29/17.
@@ -50,7 +57,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     @Override
     protected BaseRecyclerAdapter<TransactionWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
-        return new BaseRecyclerAdapter<TransactionWrapper, TransactionViewHolderBase>(getActivity()) {
+        BaseRecyclerAdapter<TransactionWrapper, TransactionViewHolderBase> adapter = new BaseRecyclerAdapter<TransactionWrapper, TransactionViewHolderBase>(getActivity()) {
             @Override
             protected TransactionViewHolderBase createHolder(View itemView, int type) {
                 return new TransactionViewHolderBase(itemView);
@@ -95,15 +102,40 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
                 }
 
-                if (data.getContact()!=null){
-                    holder.title.setText(data.getContact().getName());
+                if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
+                    Contact contact = data.getOutputLabels().get(0);
+                    if (contact!=null) {
+                        if (contact.getName() != null)
+                            holder.title.setText(contact.getName());
+                        else
+                            holder.title.setText(contact.getAddresses().get(0));
+                    }else {
+                        holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
+                    }
                 }else {
-                    holder.title.setText(data.getAddress().toBase58());
+                    holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
                 }
                 String memo = data.getTransaction().getMemo();
                 holder.description.setText(memo!=null?memo:"No description");
             }
         };
+        adapter.setListEventListener(new ListItemListeners<TransactionWrapper>() {
+            @Override
+            public void onItemClickListener(TransactionWrapper data, int position) {
+                Intent intent = new Intent(getActivity(), TransactionDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(TX_WRAPPER,data);
+                bundle.putBoolean(IS_DETAIL,true);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongItemClickListener(TransactionWrapper data, int position) {
+
+            }
+        });
+        return adapter;
     }
 
     /**

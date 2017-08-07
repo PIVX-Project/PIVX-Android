@@ -4,6 +4,7 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
+import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.wallet.Wallet;
 
@@ -98,4 +99,6 @@ public interface PivxModule {
     Wallet getWallet();
 
     List<InputWrapper> listUnspentWrappers();
+
+    Transaction getTx(Sha256Hash txId);
 }
