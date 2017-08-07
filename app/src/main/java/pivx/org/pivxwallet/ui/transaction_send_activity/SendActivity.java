@@ -48,6 +48,7 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
@@ -58,6 +59,7 @@ import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
@@ -73,6 +75,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int SCANNER_RESULT = 122;
     private static final int CUSTOM_FEE_RESULT = 123;
     private static final int MULTIPLE_ADDRESSES_SEND_RESULT = 124;
+    private static final int CUSTOM_INPUTS = 125;
 
     private Button buttonSend, addAllCurrency, addAllPiv;
     private AutoCompleteTextView edit_address;
@@ -90,6 +93,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private String contactName;
     /** Several outputs */
     private List<OutputWrapper> outputWrappers;
+    /** Custom inputs */
+    private List<InputWrapper> unspent;
 
 
     @Override
@@ -189,7 +194,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (amountStr.length()>0){
                 Intent intent = new Intent(this, InputsActivity.class);
                 intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
-                startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
+                startActivityForResult(intent,CUSTOM_INPUTS);
             }else {
                 Toast.makeText(this,R.string.send_amount_input_error,Toast.LENGTH_LONG).show();
             }
@@ -299,6 +304,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (resultCode == RESULT_OK){
                 outputWrappers = (List<OutputWrapper>) data.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
             }
+        }else if (requestCode == CUSTOM_INPUTS){
+            if (resultCode == RESULT_OK) {
+                unspent = (List<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+            }
+
         }
 
         super.onActivityResult(requestCode, resultCode, data);
