@@ -515,7 +515,7 @@ public class PivxWalletService extends Service{
 
     private void broadcastBlockchainStateIntent(){
         final long now = System.currentTimeMillis();
-        if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(15)) {
+        if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(10)) {
             Intent intent = new Intent(ACTION_NOTIFICATION);
             intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE);
             intent.putExtra(INTENT_EXTRA_BLOCKCHAIN_STATE,blockchainState);

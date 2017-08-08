@@ -9,6 +9,8 @@
         android:background="@color/bgWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
 
 
