@@ -23,9 +23,11 @@ public class IntentsConstants {
 
     public static final String ACTION_NOTIFICATION = "service_not";
     public static final String INTENT_BROADCAST_DATA_TYPE = "service_not_type";
+    public static final String INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE = "blockchain_state";
 
     // Data
     public static final String DATA_TRANSACTION_HASH = "tx_hash";
+    public static final String INTENT_EXTRA_BLOCKCHAIN_STATE = "blockchain_state_data";
 
     // Notifications types
     public static final String INTENT_BROADCAST_DATA_ON_COIN_RECEIVED = "on_coin_received";

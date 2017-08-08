@@ -145,12 +145,12 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
-    <string name="security_message">Please write this in a safe place \n you\'ll need them to restore your wallet</string>
+    <string name="security_message">Please write this in a safe place\nyou\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!.</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
     <string name="reveal_words">Reveal words</string>
-    <string name="backup_words">Words Selectiong</string>
+    <string name="backup_words">Mnemonic Code</string>
     <string name="btn_secure">Already noted</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
     <string name="number_zero">0</string>
@@ -220,7 +220,9 @@
     <string name="coin_selection">Coin selection</string>
     <string name="set_default">Set default</string>
     <string name="delete_addresses">DELETE ADDRESSES</string>
-
+    <string name="sync">Synched</string>
+    <string name="syncing">Syncing</string>
+    <string name="not_connection">Not connection</string>
 
 
 </resources>

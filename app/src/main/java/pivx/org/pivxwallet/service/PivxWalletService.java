@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -45,6 +46,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import chain.BlockchainManager;
+import chain.BlockchainState;
 import chain.Impediment;
 import pivtrum.PivtrumPeergroup;
 import pivtrum.listeners.AddressListener;
@@ -66,8 +68,10 @@ import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_SCHEDULE_SERVICE;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_BLOCKCHAIN_ALERT;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_COINS_RECEIVED;
 
@@ -98,7 +102,11 @@ public class PivxWalletService extends Service{
     /**  */
     private final Set<Impediment> impediments = EnumSet.noneOf(Impediment.class);
 
+    private Handler delayHandler;
+    private BlockchainState blockchainState = BlockchainState.NOT_CONNECTION;
+
     private volatile long lastUpdateTime = System.currentTimeMillis();
+    private volatile long lastMessageTime = System.currentTimeMillis();
 
     public class PivxBinder extends Binder {
         public PivxWalletService getService() {
@@ -139,9 +147,10 @@ public class PivxWalletService extends Service{
 
         @Override
         public void onBlocksDownloaded(final Peer peer, final Block block, final FilteredBlock filteredBlock, final int blocksLeft) {
-            log.debug("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
+            log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
             /*log.info("############# on Blockcs downloaded ###########");
             log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);*/
+
 
             /*if (PivxContext.IS_TEST)
                 showBlockchainSyncNotification(blocksLeft);*/
@@ -149,15 +158,33 @@ public class PivxWalletService extends Service{
             //delayHandler.removeCallbacksAndMessages(null);
 
 
-            /*final long now = System.currentTimeMillis();
-            if (now-lastMessageTime.get()> TimeUnit.SECONDS.toMillis(15)) {
-                if (now - lastMessageTime.get() > BLOCKCHAIN_STATE_BROADCAST_THROTTLE_MS)
-                    delayHandler.post(new RunnableBlockChecker(block));
-                else
-                    delayHandler.postDelayed(new RunnableBlockChecker(block), BLOCKCHAIN_STATE_BROADCAST_THROTTLE_MS);
-            }*/
+            final long now = System.currentTimeMillis();
+            if (now-lastMessageTime > TimeUnit.SECONDS.toMillis(15)) {
+                if (blocksLeft<6){
+                    blockchainState = BlockchainState.SYNC;
+                }else {
+                    blockchainState = BlockchainState.SYNCING;
+                }
+                broadcastBlockchainState(true);
+            }
         }
     };
+
+    private class RunnableBlockChecker implements Runnable{
+
+        private Block block;
+
+        public RunnableBlockChecker(Block block) {
+            this.block = block;
+        }
+
+        @Override
+        public void run() {
+            org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
+            lastMessageTime = System.currentTimeMillis();
+            broadcastBlockchainState(false);
+        }
+    }
 
     private final BroadcastReceiver connectivityReceiver = new BroadcastReceiver() {
         @Override
@@ -267,6 +294,7 @@ public class PivxWalletService extends Service{
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             broadcastManager = LocalBroadcastManager.getInstance(this);
+            delayHandler = new Handler();
             // Pivx
             pivxApplication = PivxApplication.getInstance();
             module = (PivxModuleImp) pivxApplication.getModule();
@@ -437,9 +465,6 @@ public class PivxWalletService extends Service{
                 //todo: ver si conviene esto..
                 broadcastBlockchainState(true);
                 isChecking.set(false);
-            }else {
-                log.error("check method called twice..");
-                broadcastBlockchainState(false);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -449,9 +474,8 @@ public class PivxWalletService extends Service{
     }
 
     private void broadcastBlockchainState(boolean isCheckOk) {
+        boolean showNotif = false;
         if (!impediments.isEmpty()) {
-
-            boolean showNotif = false;
 
             StringBuilder stringBuilder = new StringBuilder();
             for (Impediment impediment : impediments) {
@@ -485,19 +509,18 @@ public class PivxWalletService extends Service{
         }
 
         if (isCheckOk){
-            // todo: notify activities..
-            //broadcastBlockchainStateIntent();
+            broadcastBlockchainStateIntent();
         }
     }
 
-    /*private void broadcastBlockchainStateIntent(){
+    private void broadcastBlockchainStateIntent(){
         final long now = System.currentTimeMillis();
-        if (now-lastMessageTime.get()> TimeUnit.SECONDS.toMillis(15)) {
+        if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(15)) {
             Intent intent = new Intent(ACTION_NOTIFICATION);
-            intent.putExtra(INTENT_BROADCAST_TYPE, INTENT_DATA);
             intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE);
-            localBroadcast.sendBroadcast(intent);
+            intent.putExtra(INTENT_EXTRA_BLOCKCHAIN_STATE,blockchainState);
+            broadcastManager.sendBroadcast(intent);
         }
-    }*/
+    }
 
 }

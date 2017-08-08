@@ -1,23 +1,36 @@
 package pivx.org.pivxwallet.ui.base;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import chain.BlockchainState;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
 public class BaseDrawerActivity extends PivxActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +40,27 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private DrawerLayout drawer;
     protected FrameLayout header_container;
     private TextView txt_app_version;
+    private TextView txt_sync_status;
+    private ImageView img_sync;
+
+    private BlockchainState blockchainState = BlockchainState.NOT_CONNECTION;
+
+    private BroadcastReceiver walletServiceReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.hasExtra(INTENT_BROADCAST_DATA_TYPE)){
+                BlockchainState blockchainStateNew = (BlockchainState) intent.getSerializableExtra(INTENT_EXTRA_BLOCKCHAIN_STATE);
+                if (blockchainStateNew==null){
+                    Log.e("APP","blockchain state null..");
+                    return;
+                }
+                if (blockchainState == null || blockchainState!=blockchainStateNew){
+                    blockchainState = blockchainStateNew;
+                    updateBlockchainState();
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +79,29 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerLayout = navigationView.getHeaderView(0);
+        txt_sync_status = (TextView) headerLayout.findViewById(R.id.txt_sync_status);
+        img_sync = (ImageView) headerLayout.findViewById(R.id.img_sync);
         txt_app_version = (TextView) navigationView.findViewById(R.id.txt_app_version);
         txt_app_version.setText(BuildConfig.VERSION_NAME);
 
         onCreateView(savedInstanceState,frameLayout);
 
+        localBroadcastManager.registerReceiver(walletServiceReceiver,new IntentFilter(ACTION_NOTIFICATION));
+
+        updateBlockchainState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        localBroadcastManager.unregisterReceiver(walletServiceReceiver);
     }
 
     /**
@@ -121,6 +173,39 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     protected void setNavigationMenuItemChecked(int pos){
         navigationView.getMenu().getItem(pos).setChecked(true);
     }
+
+    private void updateBlockchainState() {
+        if (txt_sync_status!=null) {
+            String text = null;
+            int color = 0;
+            int imgSrc = 0;
+            switch (blockchainState) {
+                case SYNC:
+                    text = getString(R.string.sync);
+                    color = Color.parseColor("#ffffffff");
+                    imgSrc = 0;
+                    break;
+                case SYNCING:
+                    text = getString(R.string.syncing);
+                    color = Color.parseColor("#f6a623");
+                    imgSrc = R.drawable.ic_header_unsynced;
+                    break;
+                case NOT_CONNECTION:
+                    text = getString(R.string.not_connection);
+                    color = Color.parseColor("#f6a623");
+                    imgSrc = R.drawable.ic_header_unsynced;
+                    break;
+            }
+            txt_sync_status.setText(text);
+            txt_sync_status.setTextColor(color);
+            if (imgSrc!=0) {
+                img_sync.setImageResource(imgSrc);
+                img_sync.setVisibility(View.VISIBLE);
+            }else
+                img_sync.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
 
 }

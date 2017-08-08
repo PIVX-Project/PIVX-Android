@@ -1,7 +1,6 @@
 package pivx.org.pivxwallet.ui.settings_backup_activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,7 +22,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.ui.security_words_activity.SecurityWordsActivity;
+import pivx.org.pivxwallet.ui.security_words_activity.MnemonicActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
@@ -72,7 +69,7 @@ public class SettingsBackupActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case 0:
-                Intent myIntent = new Intent(getApplicationContext(), SecurityWordsActivity.class);
+                Intent myIntent = new Intent(getApplicationContext(), MnemonicActivity.class);
                 startActivity(myIntent);
                 return true;
         }
@@ -91,6 +88,7 @@ public class SettingsBackupActivity extends BaseActivity {
             boolean result = pivxModule.backupWallet(backupFile, firstPassword);
 
             if (result){
+                pivxApplication.getAppConf().setHasBackup(true);
                 showSuccedBackupDialog(backupFile.getAbsolutePath());
             }else {
                 Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();

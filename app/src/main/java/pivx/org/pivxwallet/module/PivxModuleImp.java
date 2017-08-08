@@ -1,7 +1,5 @@
 package pivx.org.pivxwallet.module;
 
-import android.content.Context;
-
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
@@ -12,6 +10,7 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
+import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -201,7 +200,7 @@ public class PivxModuleImp implements PivxModule {
                         outputsLabeled.put(transactionOutput.getIndex(),contactsStore.getContact(address.toBase58()));
                     }
 
-                    for (TransactionInput transactionInput : transaction.getInputs()) {
+                    /*for (TransactionInput transactionInput : transaction.getInputs()) {
                         try {
                             address = transactionInput.getScriptSig().getToAddress(getConf().getNetworkParams());
                             // if the tx is mine i know that the first output address is the sent and the second one is the change address
@@ -209,7 +208,7 @@ public class PivxModuleImp implements PivxModule {
                         }catch (ScriptException e){
                             e.printStackTrace();
                         }
-                    }
+                    }*/
 
                 }catch (Exception e){
                     e.printStackTrace();
@@ -316,6 +315,16 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public Transaction getTx(Sha256Hash txId) {
         return walletManager.getTransaction(txId);
+    }
+
+    @Override
+    public List<String> getMnemonic() {
+        return walletManager.getMnemonic();
+    }
+
+    @Override
+    public DeterministicKey getKeyPairForAddress(Address address) {
+        return walletManager.getKeyPairForAddress(address);
     }
 
     public void saveRate(PivxRate pivxRate){

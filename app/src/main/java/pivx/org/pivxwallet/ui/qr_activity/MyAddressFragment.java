@@ -78,6 +78,8 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
             boolean flag = false;
             if (address == null || module.isAddressUsed(address)) {
                 address = module.getAddress();
+                // todo: cleanup this
+                module.getKeyPairForAddress(address);
                 flag = true;
             }
             if (flag) {

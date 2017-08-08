@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="30dp"
+            android:visibility="gone"
             android:paddingRight="30dp"
             android:orientation="vertical"
             android:layout_alignParentBottom="true"
@@ -69,10 +70,9 @@
                 android:id="@+id/btn_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:background="@color/transparent"
-                android:src="@drawable/ic_show_words"
-                />
+                android:gravity="center"
+                android:src="@drawable/ic_show_words" />
 
 
         </LinearLayout>

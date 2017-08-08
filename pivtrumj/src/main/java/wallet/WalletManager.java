@@ -7,6 +7,7 @@ import com.google.protobuf.ByteString;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.BlockChain;
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Sha256Hash;
@@ -14,6 +15,7 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
+import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.LinuxSecureRandom;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
@@ -535,6 +537,17 @@ public class WalletManager {
 
     public List<TransactionOutput> listUnspent() {
         return wallet.getUnspents();
+    }
+
+    public List<String> getMnemonic() {
+        return wallet.getActiveKeyChain().getMnemonicCode();
+    }
+
+    public DeterministicKey getKeyPairForAddress(Address address) {
+        DeterministicKey deterministicKey = wallet.getActiveKeyChain().findKeyFromPubHash(address.getHash160());
+        logger.info("Key pub: "+deterministicKey.getPublicKeyAsHex());
+        logger.info("Key priv: "+deterministicKey.getPrivateKeyEncoded(conf.getNetworkParams()));
+        return deterministicKey;
     }
 
 

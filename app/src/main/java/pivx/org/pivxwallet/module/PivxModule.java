@@ -6,6 +6,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.wallet.Wallet;
 
 import java.io.File;
@@ -101,4 +102,8 @@ public interface PivxModule {
     List<InputWrapper> listUnspentWrappers();
 
     Transaction getTx(Sha256Hash txId);
+
+    List<String> getMnemonic();
+
+    DeterministicKey getKeyPairForAddress(Address address);
 }
