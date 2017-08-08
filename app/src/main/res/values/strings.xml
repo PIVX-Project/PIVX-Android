@@ -218,6 +218,8 @@
     <string name="tx_detail_addresses">Outputs</string>
     <string name="custom_fee">Custom fee</string>
     <string name="coin_selection">Coin selection</string>
+    <string name="set_default">Set default</string>
+
 
 
 </resources>

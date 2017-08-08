@@ -26,15 +26,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
         android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txt_add_address"
+            android:background="@drawable/bg_button_border"
+            android:gravity="center"
             android:paddingBottom="12dp"
             android:paddingTop="12dp"
             android:text="@string/several_outputs_add_address"
+            android:textSize="14sp"
             android:textColor="@color/colorPurple"
             android:textStyle="bold" />
 

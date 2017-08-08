@@ -4,6 +4,22 @@
     android:layout_height="match_parent"
     android:paddingEnd="25dp"
     android:paddingStart="25dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/txt_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_default"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPurple"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
