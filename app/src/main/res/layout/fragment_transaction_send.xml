@@ -62,14 +62,6 @@
                     android:textColor = "#858585"
                     android:textSize = "16sp" />
 
-                <Button
-                    android:id="@+id/btn_add_all_piv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:textColor="@color/colorPurple"
-                    android:text="@string/add_all"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -83,6 +75,7 @@
                 <TextView
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
+                    android:id="@+id/txt_currency_amount"
                     android:text = "@string/title_amount"
                     android:layout_marginBottom="10dp"
                     android:textColor = "#757575"
@@ -117,19 +110,22 @@
                     android:textColor = "#858585"
                     android:textSize = "16sp" />
 
-                <Button
-                    android:id="@+id/btn_add_all_currency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:textColor="@color/colorPurple"
-                    android:text="@string/add_all"/>
-
             </LinearLayout>
         </ViewFlipper>
 
-        <LinearLayout
+        <Button
+            android:id="@+id/btn_add_all"
             android:layout_below="@+id/viewFlipper"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:textColor="@color/colorPurple"
+            android:text="@string/add_all"/>
+
+        <LinearLayout
+            android:layout_below="@+id/btn_add_all"
             android:id="@+id/layoutDescription"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -147,8 +143,23 @@
                 android:textColor = "#757575"
                 android:textSize = "14sp" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_multiple_outputs"
+                android:background="@drawable/transaction_inputs"
+                android:layout_marginBottom="20dp"
+                tools:text="Sending to 5 different addresses"
+                android:gravity="center"
+                android:padding="7dp"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:textColor="#d0011b"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/transaction_inputs"
                 android:layout_marginBottom="20dp">
@@ -233,6 +244,7 @@
                 android:text="@string/coin_selection"
                 android:gravity="center"
                 android:textColor="#d0011b"
+                android:visibility="gone"
                 android:textStyle="bold"
                 android:paddingBottom="12dp"
                 />
@@ -243,6 +255,7 @@
                 android:id="@+id/txt_custom_fee"
                 android:text="@string/custom_fee"
                 android:gravity="center"
+                android:visibility="gone"
                 android:textColor="#d0011b"
                 android:textStyle="bold"
                 android:paddingBottom="12dp"
