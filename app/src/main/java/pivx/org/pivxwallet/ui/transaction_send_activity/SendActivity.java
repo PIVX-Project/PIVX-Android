@@ -83,9 +83,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int CUSTOM_INPUTS = 125;
     private static final int SEND_DETAIL = 126;
 
-    private Button buttonSend, addAllCurrency, addAllPiv;
+    private View root;
+    private Button buttonSend, addAllPiv;
     private AutoCompleteTextView edit_address;
     private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txtShowPiv;
+    private TextView txt_multiple_outputs, txt_currency_amount;
     private EditText edit_amount, editCurrency;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
@@ -95,6 +97,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private ImageButton btnSwap;
     private ViewFlipper amountSwap;
 
+    private boolean inPivs = true;
     private Transaction transaction;
     private String contactName;
     /** Several outputs */
@@ -105,7 +108,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
-        getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
+        root = getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
         setTitle("Send");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -113,6 +116,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         edit_amount = (EditText) findViewById(R.id.edit_amount);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
         txt_local_currency = (TextView) findViewById(R.id.txt_local_currency);
+        txt_multiple_outputs = (TextView) root.findViewById(R.id.txt_multiple_outputs);
+        txt_coin_selection = (TextView) root.findViewById(R.id.txt_coin_selection);
+        txt_custom_fee = (TextView) root.findViewById(R.id.txt_custom_fee);
         findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
@@ -124,20 +130,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         amountSwap.setOutAnimation(AnimationUtils.loadAnimation(this,
                 android.R.anim.slide_out_right));
         btnSwap = (ImageButton) findViewById(R.id.btn_swap);
-        btnSwap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                amountSwap.showNext();
-            }
-        });
+        btnSwap.setOnClickListener(this);
 
         //Sending amount currency
         editCurrency = (EditText) findViewById(R.id.edit_amount_currency);
+        txt_currency_amount = (TextView) root.findViewById(R.id.txt_currency_amount);
         txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
-        addAllCurrency =  (Button) findViewById(R.id.btn_add_all_currency);
 
         //Sending amount piv
-        addAllPiv =  (Button) findViewById(R.id.btn_add_all_piv);
+        addAllPiv =  (Button) findViewById(R.id.btn_add_all);
+        addAllPiv.setOnClickListener(this);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         edit_amount.addTextChangedListener(new TextWatcher() {
@@ -240,6 +242,28 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
             startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
+        }else if(id == R.id.btn_add_all){
+            Coin coin = pivxModule.getAvailableBalanceCoin();
+            if (inPivs){
+                edit_amount.setText(coin.toPlainString());
+                txt_local_currency.setText(
+                        pivxApplication.getCentralFormats().getNumberFormat().format(
+                                new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                        )
+                                + " "+pivxRate.getCoin()
+                );
+            }else {
+                editCurrency.setText(
+                        pivxApplication.getCentralFormats().getNumberFormat().format(
+                                new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                        )
+                                + " "+pivxRate.getCoin()
+                );
+                txtShowPiv.setText(coin.toFriendlyString());
+            }
+        }else if(id == R.id.btn_swap){
+            inPivs = !inPivs;
+            amountSwap.showNext();
         }
     }
 

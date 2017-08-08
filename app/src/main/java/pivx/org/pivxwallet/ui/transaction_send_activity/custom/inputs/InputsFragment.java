@@ -122,13 +122,14 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
                         }
                     });
                 }else {
-                    InputHolder inputHolder = (InputHolder) holder;
-                    inputHolder.radio_select.setOnClickListener(new View.OnClickListener() {
+                    final InputHolder inputHolder = (InputHolder) holder;
+                    inputHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            inputHolder.radio_select.setChecked(true);
                         }
                     });
+
                 }
             }
             @Override
