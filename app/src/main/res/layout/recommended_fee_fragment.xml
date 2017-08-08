@@ -9,7 +9,8 @@
         android:id="@+id/txt_amount_per_kb"
         android:text="0.000000 Piv/kB"
         android:paddingTop="16dp"
-        android:textSize="15sp"
+        android:textColor="@color/mainText"
+        android:textSize="20sp"
         android:gravity="center"
         />
 
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/confirmation_time"
+        android:textColor="@color/subtitle"
         android:paddingTop="16dp"
         android:gravity="center"/>
     
@@ -31,7 +33,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:textColor="@color/mainText"
             android:text="@string/fee_normal"/>
 
         <SeekBar
@@ -47,7 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fee_fast"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:textColor="@color/mainText"
             android:layout_alignParentEnd="true"/>
         
         

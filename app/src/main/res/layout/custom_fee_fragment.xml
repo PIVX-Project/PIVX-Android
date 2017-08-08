@@ -17,12 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/per_kilobyte"
+            android:textColor="@color/mainText"
             android:layout_marginEnd="12dp"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:textColor="@color/mainText"
             android:text="@string/total_at_least"/>
 
     </RadioGroup>
@@ -47,9 +49,9 @@
             android:text="0.0000001 PIV"
             android:hint="0.0000001 PIV"
             android:layout_centerHorizontal="true"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:inputType="numberDecimal"
-            android:textColor="#434343"
+            android:textColor="@color/mainText"
             android:paddingTop="7dp"
             android:gravity="center"/>
 
@@ -60,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
+        android:textColor="@color/mainText"
         android:text="@string/minimum_fee"/>
 
 

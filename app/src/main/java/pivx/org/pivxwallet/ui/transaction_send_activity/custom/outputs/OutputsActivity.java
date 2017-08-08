@@ -28,7 +28,7 @@ public class OutputsActivity extends BaseActivity {
 
     private View root;
     private MultipleOutputsFragment multiple_addresses_fragment;
-    private TextView txt_add_address;
+    private TextView txt_add_address,txt_delete_address;
     private TextView txt_total_amount;
 
     private List<OutputWrapper> outputWrappers;
@@ -57,6 +57,12 @@ public class OutputsActivity extends BaseActivity {
                 multiple_addresses_fragment.addOutput();
             }
         });
+
+        // DELETE ADDRESSES
+
+        txt_delete_address = (TextView) root.findViewById(R.id.txt_delete_address);
+        txt_delete_address.setVisibility(View.GONE);
+
     }
 
     @Override
