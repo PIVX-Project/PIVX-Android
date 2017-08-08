@@ -219,6 +219,7 @@
     <string name="custom_fee">Custom fee</string>
     <string name="coin_selection">Coin selection</string>
     <string name="set_default">Set default</string>
+    <string name="delete_addresses">DELETE ADDRESSES</string>
 
 
 
