@@ -33,12 +33,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/transaction_inputs"
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:gravity="center"
         >
 
         <EditText
+            android:background="@color/transparent"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -50,7 +52,8 @@
             android:maxLength="58"
             android:hint="eg: DB6xr1b9zgMnpBEG3hhUP22WDKydyevaM2"
             android:inputType="text"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:textColor="@color/mainText"
             />
 
         <LinearLayout
@@ -74,17 +77,25 @@
     </LinearLayout>
 
     <EditText
+        android:background="@drawable/transaction_inputs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Amount"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:textSize="15sp"
+        android:textColor="@color/mainText"
         android:id="@+id/edit_amount"/>
 
     <EditText
+        android:background="@drawable/transaction_inputs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:hint="Address label"
         android:textSize="15sp"
+        android:textColor="@color/mainText"
         android:id="@+id/edit_address_label"/>
 
 </LinearLayout>
