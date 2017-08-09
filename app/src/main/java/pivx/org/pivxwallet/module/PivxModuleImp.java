@@ -327,6 +327,11 @@ public class PivxModuleImp implements PivxModule {
         return walletManager.getKeyPairForAddress(address);
     }
 
+    @Override
+    public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) {
+        return walletManager.getUnspent(parentTxHash,index);
+    }
+
     public void saveRate(PivxRate pivxRate){
         rateDb.insertOrUpdateIfExist(pivxRate);
     }

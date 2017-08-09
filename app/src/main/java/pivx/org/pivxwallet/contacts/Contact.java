@@ -62,4 +62,8 @@ public class Contact implements Serializable{
         }
         txHashes.addAll(txHashes);
     }
+
+    public String toLabel() {
+        return (name!=null)?name:addresses.get(0);
+    }
 }

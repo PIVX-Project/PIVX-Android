@@ -43,7 +43,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private TextView txt_sync_status;
     private ImageView img_sync;
 
-    private BlockchainState blockchainState = BlockchainState.NOT_CONNECTION;
+    private BlockchainState blockchainState = BlockchainState.SYNCING;
 
     private BroadcastReceiver walletServiceReceiver = new BroadcastReceiver() {
         @Override

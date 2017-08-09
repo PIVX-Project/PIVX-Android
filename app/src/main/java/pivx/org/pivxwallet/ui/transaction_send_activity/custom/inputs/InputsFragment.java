@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -40,12 +41,25 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     private List<InputWrapper> list;
     private BaseRecyclerAdapter adapter;
 
+    private List<InputWrapper> selectedList = new ArrayList<>();
+
     private boolean selectAll = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         list = new ArrayList<>();
+        setHasOptionsMenu(true);
+        Intent intent = getActivity().getIntent();
+        if (intent!=null){
+            if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)){
+                selectedList = (List<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                for (InputWrapper inputWrapper : selectedList) {
+                    inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(),inputWrapper.getIndex()));
+                }
+            }
+        }
+        setSwipeRefresh(false);
     }
 
     @Override
@@ -63,6 +77,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) unspent);
+                intent.putExtras(bundle);
                 getActivity().setResult(Activity.RESULT_OK,intent);
                 getActivity().finish();
                 return true;
@@ -72,14 +87,16 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     }
 
     private List<InputWrapper> listSelected() {
-        List<InputWrapper> unspent = new ArrayList<>();
+        /*List<InputWrapper> unspent = new ArrayList<>();
         for (int i=1;i<adapter.getItemCount();i++){
             InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
-            if (inputHolder.radio_select.isChecked()){
-                unspent.add(list.get(i));
+            if (inputHolder!=null) {
+                if (inputHolder.radio_select.isChecked()) {
+                    unspent.add(list.get(i));
+                }
             }
-        }
-        return null;
+        }*/
+        return selectedList;
     }
 
     @Override
@@ -99,8 +116,10 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
 
     @Override
     protected BaseRecyclerAdapter<InputWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
-
         adapter = new BaseRecyclerAdapter<InputWrapper, BaseRecyclerViewHolder>(getActivity()) {
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+
             @Override
             protected BaseRecyclerViewHolder createHolder(View itemView, int type) {
                 return type==TYPE_NORMAL?new InputHolder(itemView,type):new SelectorHolder(itemView,type);
@@ -112,7 +131,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
             }
 
             @Override
-            protected void bindHolder(final BaseRecyclerViewHolder holder, InputWrapper data, int position) {
+            protected void bindHolder(final BaseRecyclerViewHolder holder, final InputWrapper data, int position) {
                 if (position==0){
                     SelectorHolder selectorHolder = (SelectorHolder) holder;
                     selectorHolder.radio_select.setOnClickListener(new View.OnClickListener() {
@@ -126,10 +145,28 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
                     inputHolder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            inputHolder.radio_select.setChecked(true);
+                            boolean selected = !inputHolder.radio_select.isChecked();
+                            inputHolder.radio_select.setChecked(selected);
+                            if (selected){
+                                selectedList.add(data);
+                            }else {
+                                selectedList.remove(data);
+                            }
                         }
                     });
 
+                    for (InputWrapper inputWrapper : selectedList) {
+                        if (inputWrapper.getParentTxHash().equals(data.getParentTxHash())
+                                &&
+                                inputWrapper.getIndex() == data.getIndex()){
+                            inputHolder.radio_select.setChecked(true);
+                            break;
+                        }
+                    }
+                    inputHolder.txt_address.setText(data.getLabel());
+                    inputHolder.txt_amount.setText(data.getUnspent().getValue().toFriendlyString());
+                    inputHolder.txt_confirmations_amount.setText(data.getUnspent().getParentTransactionDepthInBlocks()+" "+getString(R.string.confimations));
+                    inputHolder.txt_date.setText(simpleDateFormat.format(data.getUnspent().getParentTransaction().getUpdateTime()));
                 }
             }
             @Override
@@ -144,7 +181,8 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
         selectAll = !selectAll;
         for (int i=1;i<list.size();i++){
             InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
-            inputHolder.radio_select.setChecked(selectAll);
+            if (inputHolder!=null)
+                inputHolder.radio_select.setChecked(selectAll);
         }
     }
 

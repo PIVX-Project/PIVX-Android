@@ -550,6 +550,10 @@ public class WalletManager {
         return deterministicKey;
     }
 
+    public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) {
+        return wallet.getTransaction(parentTxHash).getOutput(index);
+    }
+
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

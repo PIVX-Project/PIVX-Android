@@ -85,7 +85,7 @@ public class PivxWalletService extends Service{
 
     private PivxApplication pivxApplication;
     private PivxModuleImp module;
-    private PivtrumPeergroup pivtrumPeergroup;
+    //private PivtrumPeergroup pivtrumPeergroup;
     private BlockchainManager blockchainManager;
 
     private PeerConnectivityListener peerConnectivityListener;
@@ -483,6 +483,7 @@ public class PivxWalletService extends Service{
                     stringBuilder.append("\n");
                 }
                 if (impediment == Impediment.NETWORK){
+                    blockchainState = BlockchainState.NOT_CONNECTION;
                     stringBuilder.append("No peer connection");
                 }else if(impediment == Impediment.STORAGE){
                     stringBuilder.append("No available storage");

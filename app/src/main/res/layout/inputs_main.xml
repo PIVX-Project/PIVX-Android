@@ -22,27 +22,13 @@
             android:id="@+id/txt_amount"
             android:text="3.13 PIV"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:orientation="vertical"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/txt_default"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/set_default"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPurple"/>
-    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/inputs_explanation"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:gravity="center"
         android:textColor="@color/mainText"
         android:textSize="16sp"/>

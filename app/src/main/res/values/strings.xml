@@ -203,13 +203,13 @@
     <string name="several_outputs_add_address">ADD ADDRESS</string>
     <string name="address_num">Address %d </string>
     <string name="invalid_last_amount">Invalid last address amount</string>
-    <string name="inputs_explanation">Select inputs to use</string>
+    <string name="inputs_explanation">Select coins to consume in the transaction</string>
     <string name="bad_address">Bad address</string>
     <string name="invalid_amount_value">Invalid amount value</string>
     <string name="select_all">Select all</string>
     <string name="total_amount">Total:</string>
     <string name="send_amount_address_error">You most set an amount to send first to send to more than one address.</string>
-    <string name="send_amount_input_error">You most set an amount to add custom inputs.</string>
+    <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
     <string name="tx_detail_amount">Total amount</string>
     <string name="tx_detail_inputs_title">Source coins</string>
     <string name="tx_detail_inputs">0 inputs</string>
@@ -223,6 +223,8 @@
     <string name="sync">Synched</string>
     <string name="syncing">Syncing</string>
     <string name="not_connection">Not connection</string>
+    <string name="confimations">Confirmations</string>
+    <string name="multiple_address_send">Sending to %d addresses</string>
 
 
 </resources>

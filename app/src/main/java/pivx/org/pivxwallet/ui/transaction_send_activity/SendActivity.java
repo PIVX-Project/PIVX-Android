@@ -34,6 +34,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.uri.PivxURI;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private AutoCompleteTextView edit_address;
     private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txtShowPiv;
     private TextView txt_multiple_outputs, txt_currency_amount;
+    private View container_address;
     private EditText edit_amount, editCurrency;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
@@ -115,9 +117,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
         edit_amount = (EditText) findViewById(R.id.edit_amount);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
+        container_address = root.findViewById(R.id.container_address);
         txt_local_currency = (TextView) findViewById(R.id.txt_local_currency);
         txt_multiple_outputs = (TextView) root.findViewById(R.id.txt_multiple_outputs);
+        txt_multiple_outputs.setOnClickListener(this);
         txt_coin_selection = (TextView) root.findViewById(R.id.txt_coin_selection);
+        txt_coin_selection.setOnClickListener(this);
         txt_custom_fee = (TextView) root.findViewById(R.id.txt_custom_fee);
         findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend = (Button) findViewById(R.id.btnSend);
@@ -188,26 +193,42 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startActivityForResult(new Intent(this, CustomFeeActivity.class),CUSTOM_FEE_RESULT);
             return true;
         }else if(id == R.id.option_multiple_addresses){
-            String amountStr = edit_amount.getText().toString();
-            if (amountStr.length()>0){
-            Intent intent = new Intent(this, OutputsActivity.class);
-            intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
-            startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
-            }else {
-                Toast.makeText(this,R.string.send_amount_address_error,Toast.LENGTH_LONG).show();
-            }
+            startMultiAddressSendActivity(outputWrappers);
             return true;
         }else if(id == R.id.option_select_inputs){
-            String amountStr = edit_amount.getText().toString();
-            if (amountStr.length()>0){
-                Intent intent = new Intent(this, InputsActivity.class);
-                intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
-                startActivityForResult(intent,CUSTOM_INPUTS);
-            }else {
-                Toast.makeText(this,R.string.send_amount_input_error,Toast.LENGTH_LONG).show();
-            }
+            startCoinControlActivity(unspent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startMultiAddressSendActivity(List<OutputWrapper> outputWrappers) {
+        String amountStr = edit_amount.getText().toString();
+        if (amountStr.length()>0){
+            Intent intent = new Intent(this, OutputsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
+            if (outputWrappers!=null)
+                bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
+            intent.putExtras(bundle);
+            startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
+        }else {
+            Toast.makeText(this,R.string.send_amount_address_error,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void startCoinControlActivity(List<InputWrapper> unspent) {
+        String amountStr = edit_amount.getText().toString();
+        if (amountStr.length()>0){
+            Intent intent = new Intent(this, InputsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
+            if (unspent!=null)
+                bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) unspent);
+            intent.putExtras(bundle);
+            startActivityForResult(intent,CUSTOM_INPUTS);
+        }else {
+            Toast.makeText(this,R.string.send_amount_input_error,Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -264,6 +285,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }else if(id == R.id.btn_swap){
             inPivs = !inPivs;
             amountSwap.showNext();
+        }else if (id == R.id.txt_coin_selection){
+            startCoinControlActivity(unspent);
+        }else if(id == R.id.txt_multiple_outputs){
+            startMultiAddressSendActivity(outputWrappers);
         }
     }
 
@@ -333,10 +358,18 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }else if(requestCode == MULTIPLE_ADDRESSES_SEND_RESULT){
             if (resultCode == RESULT_OK){
                 outputWrappers = (List<OutputWrapper>) data.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
+                txt_multiple_outputs.setText(getString(R.string.multiple_address_send,outputWrappers.size()));
+                txt_multiple_outputs.setVisibility(View.VISIBLE);
+                container_address.setVisibility(View.GONE);
             }
         }else if (requestCode == CUSTOM_INPUTS){
             if (resultCode == RESULT_OK) {
-                unspent = (List<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                List<InputWrapper> unspents = (List<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                for (InputWrapper inputWrapper : unspents) {
+                    inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(),inputWrapper.getIndex()));
+                }
+                unspent = unspents;
+                txt_coin_selection.setVisibility(View.VISIBLE);
             }
 
         }

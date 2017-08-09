@@ -15,6 +15,7 @@ import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
 
@@ -63,6 +64,14 @@ public class OutputsActivity extends BaseActivity {
         txt_delete_address = (TextView) root.findViewById(R.id.txt_delete_address);
         txt_delete_address.setVisibility(View.GONE);
 
+        Intent intent = getIntent();
+        if (intent!=null){
+            if (intent.hasExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS)){
+                outputWrappers = (List<OutputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
+                multiple_addresses_fragment.setOutputsWrappers(outputWrappers);
+            }
+        }
+
     }
 
     @Override
@@ -75,11 +84,19 @@ public class OutputsActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.option_ok){
-            Intent intent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
-            setResult(RESULT_OK,intent);
-            finish();
+            try {
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                outputWrappers = multiple_addresses_fragment.getList();
+                bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
+                intent.putExtras(bundle);
+                setResult(RESULT_OK, intent);
+                finish();
+            } catch (InvalidFieldException e) {
+                e.printStackTrace();
+                DialogsUtil.buildSimpleErrorTextDialog(this,getString(R.string.invalid_inputs),e.getMessage())
+                        .show(getFragmentManager(),"invalid_fields_outputs");
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

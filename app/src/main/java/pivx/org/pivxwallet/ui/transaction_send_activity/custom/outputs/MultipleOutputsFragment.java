@@ -21,6 +21,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputHolder;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission_group.CAMERA;
@@ -77,7 +78,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
 
             @Override
             protected void bindHolder(final OutputHolder holder, final OutputWrapper data, int position) {
-                holder.txt_address_number.setText(getString(R.string.address_num,position));
+                holder.txt_address_number.setText(getString(R.string.address_num,position+1));
                 if(position==0) {
                     holder.img_cancel.setVisibility(View.GONE);
                 }else {
@@ -109,7 +110,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                     holder.edit_address_label.setText(data.getAddressLabel());
                 }
                 if (data.getAmount()!=null){
-                    holder.edit_amount.setText(data.getAmount().toFriendlyString());
+                    holder.edit_amount.setText(data.getAmount().toPlainString());
                 }
                 holder.edit_address.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -219,4 +220,42 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
     }
 
 
+    public void setOutputsWrappers(List<OutputWrapper> outputsWrappers) {
+        this.list = outputsWrappers;
+        adapter.changeDataSet(list);
+    }
+
+    public void addOutputsWrappers(List<OutputWrapper> outputWrappers){
+        this.list.addAll(outputWrappers);
+    }
+
+    public List<OutputWrapper> getList() throws InvalidFieldException {
+        List<OutputWrapper> ret = new ArrayList<>();
+        for (int i=0;i<list.size();i++){
+            OutputHolder outputHolder = (OutputHolder) getRecycler().findViewHolderForAdapterPosition(i);
+            if (outputHolder!=null){
+                String address;
+                String amountStr;
+                address = outputHolder.edit_address.getText().toString();
+                amountStr = outputHolder.edit_amount.getText().toString();
+                boolean checkAddress = !pivxModule.chechAddress(address);
+                boolean checkAmount = amountStr.length() == 0;
+                if (i!=list.size()-1) {
+                    if (checkAddress)
+                        throw new InvalidFieldException("Address not valid");
+                    if (checkAmount)
+                        throw new InvalidFieldException("Amount not valid");
+                }else {
+                    if (checkAddress || checkAmount){
+                        break;
+                    }
+                }
+                Coin amount = Coin.parseCoin(amountStr);
+                String addressLabel = outputHolder.edit_address_label.getText().toString();
+                OutputWrapper outputWrapper = new OutputWrapper(i,address,amount,addressLabel);
+                ret.add(outputWrapper);
+            }
+        }
+        return ret;
+    }
 }

@@ -20,7 +20,7 @@ public class InputsActivity extends BaseActivity {
 
     private View root;
     private InputsFragment input_fragment;
-    private TextView txt_amount, txt_default;
+    private TextView txt_amount;
 
     private Coin totalAmount;
 
@@ -35,7 +35,6 @@ public class InputsActivity extends BaseActivity {
         root = getLayoutInflater().inflate(R.layout.inputs_main,container);
         input_fragment = (InputsFragment) getSupportFragmentManager().findFragmentById(R.id.inputs_fragment);
         txt_amount = (TextView) root.findViewById(R.id.txt_amount);
-        txt_default = (TextView) root.findViewById(R.id.txt_default);
 
         txt_amount.setText(totalAmount.toFriendlyString());
     }

@@ -163,6 +163,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/container_address"
                 android:background="@drawable/transaction_inputs"
                 android:layout_marginBottom="20dp">
 
