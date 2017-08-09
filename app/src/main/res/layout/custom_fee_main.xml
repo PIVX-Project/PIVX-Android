@@ -21,60 +21,13 @@
             android:textColor="@color/colorPurple"/>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
-        <LinearLayout
-            android:background="@drawable/bg_round_selection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center">
 
-
-            <TextView
-                android:layout_width="155dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_fee_recommended"
-                android:gravity="center"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingBottom="9dp"
-                android:textStyle="bold"
-                android:paddingTop="9dp"
-                android:text="@string/fee_recommended"
-                android:textColor="#55476c"
-                android:background="@drawable/bg_button_border_curce"
-                />
-
-            <TextView
-                android:layout_width="155dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_fee_custom"
-                android:gravity="center"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:paddingBottom="9dp"
-                android:paddingTop="9dp"
-                android:text="@string/fee_custom"
-                android:textColor="#55476c"
-
-                />
-
-        </LinearLayout>
-    </RelativeLayout>
-
-
-
-    <android.support.v4.view.ViewPager
+    <fragment
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/view_pager">
-
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        android:name="pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment"
+        android:id="@+id/fragment_custom_fee"
+        />
 
 
 

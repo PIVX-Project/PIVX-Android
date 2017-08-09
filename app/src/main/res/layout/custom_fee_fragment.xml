@@ -10,12 +10,14 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/radio_group"
         android:orientation="horizontal"
         android:gravity="center">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/radio_per_kb"
             android:text="@string/per_kilobyte"
             android:textColor="@color/mainText"
             android:layout_marginEnd="12dp"/>
@@ -23,6 +25,7 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/radio_total_at_least"
             android:layout_marginStart="12dp"
             android:textColor="@color/mainText"
             android:text="@string/total_at_least"/>
@@ -35,9 +38,8 @@
         android:text="@string/fee"
         android:textSize="14sp"
         android:textColor="#757575"
-        android:paddingTop="7dp"
+        android:paddingTop="12dp"
         android:gravity="center"/>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -46,8 +48,9 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.0000001 PIV"
-            android:hint="0.0000001 PIV"
+            android:id="@+id/edit_fee"
+            android:hint="0.0000001"
+            android:minWidth="150dp"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
             android:inputType="numberDecimal"
@@ -55,17 +58,38 @@
             android:paddingTop="7dp"
             android:gravity="center"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PIV"
+            android:textSize="20sp"
+            android:paddingTop="7dp"
+            android:layout_toRightOf="@+id/edit_fee"
+            />
+
     </RelativeLayout>
 
 
     <CheckBox
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/check_pay_minimum"
         android:layout_marginTop="7dp"
         android:textColor="@color/mainText"
         android:text="@string/minimum_fee"/>
 
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_fee_explanation"
+        android:textSize="14sp"
+        android:text="@string/fee_explanation"
+        android:textColor="#757575"
+        android:paddingTop="50dp"
+        android:paddingBottom="20dp"
+        android:gravity="center"/>
 
 
 </LinearLayout>

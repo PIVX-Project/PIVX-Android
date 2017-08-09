@@ -50,6 +50,7 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
@@ -65,6 +66,11 @@ import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_FEE_PER_KB;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_MINIMUM_FEE;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_TOTAL_FEE;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
@@ -106,6 +112,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private List<OutputWrapper> outputWrappers;
     /** Custom inputs */
     private List<InputWrapper> unspent;
+    /** Custom fee selector */
+    private CustomFeeFragment.FeeSelector customFee;
 
 
     @Override
@@ -124,6 +132,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         txt_coin_selection = (TextView) root.findViewById(R.id.txt_coin_selection);
         txt_coin_selection.setOnClickListener(this);
         txt_custom_fee = (TextView) root.findViewById(R.id.txt_custom_fee);
+        txt_custom_fee.setOnClickListener(this);
         findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
@@ -190,7 +199,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.option_fee){
-            startActivityForResult(new Intent(this, CustomFeeActivity.class),CUSTOM_FEE_RESULT);
+            startCustomFeeActivity(customFee);
             return true;
         }else if(id == R.id.option_multiple_addresses){
             startMultiAddressSendActivity(outputWrappers);
@@ -199,6 +208,17 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startCoinControlActivity(unspent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startCustomFeeActivity(CustomFeeFragment.FeeSelector customFee) {
+        Intent intent = new Intent(this, CustomFeeActivity.class);
+        if (customFee != null) {
+            intent.putExtra(INTENT_EXTRA_IS_FEE_PER_KB, customFee.isFeePerKbSelected());
+            intent.putExtra(INTENT_EXTRA_IS_TOTAL_FEE, !customFee.isFeePerKbSelected());
+            intent.putExtra(INTENT_EXTRA_IS_MINIMUM_FEE, customFee.isPayMinimum());
+            intent.putExtra(INTENT_EXTRA_FEE, customFee.getAmunt());
+        }
+        startActivityForResult(intent,CUSTOM_FEE_RESULT);
     }
 
     private void startMultiAddressSendActivity(List<OutputWrapper> outputWrappers) {
@@ -289,6 +309,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startCoinControlActivity(unspent);
         }else if(id == R.id.txt_multiple_outputs){
             startMultiAddressSendActivity(outputWrappers);
+        }else if(id == R.id.txt_custom_fee){
+            startCustomFeeActivity(customFee);
         }
     }
 
@@ -371,7 +393,20 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 unspent = unspents;
                 txt_coin_selection.setVisibility(View.VISIBLE);
             }
-
+        }else if (requestCode == CUSTOM_FEE_RESULT){
+            if (resultCode == RESULT_OK){
+                if (data.hasExtra(INTENT_EXTRA_CLEAR)){
+                    customFee = null;
+                    txt_custom_fee.setVisibility(View.GONE);
+                }else {
+                    boolean isPerKb = data.getBooleanExtra(INTENT_EXTRA_IS_FEE_PER_KB, false);
+                    boolean isTotal = data.getBooleanExtra(INTENT_EXTRA_IS_TOTAL_FEE, false);
+                    boolean isMinimum = data.getBooleanExtra(INTENT_EXTRA_IS_MINIMUM_FEE, false);
+                    Coin feeAmount = (Coin) data.getSerializableExtra(INTENT_EXTRA_FEE);
+                    customFee = new CustomFeeFragment.FeeSelector(isPerKb, feeAmount, isMinimum);
+                    txt_custom_fee.setVisibility(View.VISIBLE);
+                }
+            }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
