@@ -15,8 +15,11 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
+import org.bitcoinj.core.TransactionOutPoint;
 import org.bitcoinj.core.TransactionOutput;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +28,16 @@ import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 
 /**
  * Created by furszy on 8/7/17.
  */
 
-public class FragmentTxDetail extends BaseFragment {
+public class FragmentTxDetail extends BaseFragment implements View.OnClickListener {
 
     public static final String TX = "tx";
     public static final String TX_WRAPPER = "tx_wrapper";
@@ -80,8 +86,9 @@ public class FragmentTxDetail extends BaseFragment {
         txt_confirmations = (TextView) root.findViewById(R.id.txt_confirmations);
         container_confirmations = (TextView) root.findViewById(R.id.container_confirmations);
 
-        try {
+        txt_inputs.setOnClickListener(this);
 
+        try {
             loadTx();
         }catch (Exception e){
             e.printStackTrace();
@@ -107,7 +114,13 @@ public class FragmentTxDetail extends BaseFragment {
         if(transactionWrapper.getTransaction().getFee()!=null) {
             fee = transactionWrapper.getTransaction().getFee();
         }else {
-            fee = transactionWrapper.getTransaction().getInputSum().minus(transactionWrapper.getTransaction().getOutputSum());
+            // Fee calculation with low performance, have to check why the fee is null here..
+            Coin inputsSum = Coin.ZERO;
+            for (TransactionInput input : transactionWrapper.getTransaction().getInputs()) {
+                TransactionOutPoint unspent = input.getOutpoint();
+                inputsSum = inputsSum.plus(pivxModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex()));
+            }
+            fee = inputsSum.minus(transactionWrapper.getTransaction().getOutputSum());
         }
         txt_fee.setText(fee.toFriendlyString());
         if (transactionWrapper.getTransaction().getMemo()!=null && transactionWrapper.getTransaction().getMemo().length()>0){
@@ -117,6 +130,8 @@ public class FragmentTxDetail extends BaseFragment {
         }
 
         txt_confirmations.setText(String.valueOf(transactionWrapper.getTransaction().getConfidence().getDepthInBlocks()));
+
+        txt_inputs.setText(getString(R.string.tx_detail_inputs,transactionWrapper.getTransaction().getInputs().size()));
 
         List<OutputUtil> list = new ArrayList<>();
 
@@ -140,8 +155,8 @@ public class FragmentTxDetail extends BaseFragment {
             list.add(
                     new OutputUtil(
                             transactionOutput.getIndex(),
-                            label,
-                            transactionWrapper.getAmount()
+                            transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58(), // for now.. //label,
+                            transactionOutput.getValue()
                     )
             );
         }
@@ -174,6 +189,19 @@ public class FragmentTxDetail extends BaseFragment {
             }
 
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.txt_inputs){
+            Intent intent = new Intent(getActivity(), InputsActivity.class);
+            Bundle bundle = new Bundle();
+            // todo: wrap inputs before sending them to the activity..
+            //bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) transactionWrapper.getTransaction().getInputs());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     private class OutputUtil{

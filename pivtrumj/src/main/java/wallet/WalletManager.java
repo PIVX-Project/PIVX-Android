@@ -12,6 +12,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.PeerGroup;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.Utils;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
@@ -46,6 +47,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.security.SecureRandom;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -552,6 +554,35 @@ public class WalletManager {
 
     public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) {
         return wallet.getTransaction(parentTxHash).getOutput(index);
+    }
+
+    public List<TransactionOutput> getRandomListUnspentNotInListToFullCoins(List<TransactionInput> inputs,Coin amount) throws InsufficientInputsException {
+        List<TransactionOutput> list = new ArrayList<>();
+        Coin total = Coin.ZERO;
+        for (TransactionOutput transactionOutput : wallet.getUnspents()) {
+            boolean found = false;
+            if (inputs!=null) {
+                for (TransactionInput input : inputs) {
+                    if (input.getConnectedOutput().equals(transactionOutput)) {
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                if (total.isLessThan(amount)) {
+                    list.add(transactionOutput);
+                    total = total.add(transactionOutput.getValue());
+                }
+                if (total.isGreaterThan(amount)){
+                    return list;
+                }
+            }
+        }
+        throw new InsufficientInputsException("No unspent available");
+    }
+
+    public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
+        return wallet.getTransaction(parentTransactionHash).getOutput(index).getValue();
     }
 
 

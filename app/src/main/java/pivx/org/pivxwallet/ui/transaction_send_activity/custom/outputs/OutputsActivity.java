@@ -26,10 +26,11 @@ import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTE
 public class OutputsActivity extends BaseActivity {
 
     public static final String INTENT_EXTRA_OUTPUTS_WRAPPERS = "output_wrappers";
+    public static final String INTENT_EXTRA_OUTPUTS_CLEAR= "clear_outputs";
 
     private View root;
     private MultipleOutputsFragment multiple_addresses_fragment;
-    private TextView txt_add_address,txt_delete_address;
+    private TextView txt_add_address;
     private TextView txt_total_amount;
 
     private List<OutputWrapper> outputWrappers;
@@ -59,10 +60,6 @@ public class OutputsActivity extends BaseActivity {
             }
         });
 
-        // DELETE ADDRESSES
-
-        txt_delete_address = (TextView) root.findViewById(R.id.txt_delete_address);
-        txt_delete_address.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         if (intent!=null){
@@ -76,7 +73,7 @@ public class OutputsActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.save_menu,menu);
+        getMenuInflater().inflate(R.menu.save_menu_default,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -98,6 +95,11 @@ public class OutputsActivity extends BaseActivity {
                         .show(getFragmentManager(),"invalid_fields_outputs");
             }
             return true;
+        }else if (id == R.id.option_default){
+            Intent intent = new Intent();
+            intent.putExtra(INTENT_EXTRA_OUTPUTS_CLEAR,true);
+            setResult(RESULT_OK, intent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

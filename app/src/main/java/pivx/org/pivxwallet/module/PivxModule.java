@@ -6,6 +6,7 @@ import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.wallet.Wallet;
@@ -21,6 +22,7 @@ import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import wallet.InsufficientInputsException;
 import wallet.exceptions.CantRestoreEncryptedWallet;
 
 /**
@@ -109,4 +111,10 @@ public interface PivxModule {
     DeterministicKey getKeyPairForAddress(Address address);
 
     TransactionOutput getUnspent(Sha256Hash parentTxHash, int index);
+
+    List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException;
+
+    Transaction completeTx(Transaction transaction) throws InsufficientMoneyException;
+
+    Coin getUnspentValue(Sha256Hash parentTransactionHash, int index);
 }

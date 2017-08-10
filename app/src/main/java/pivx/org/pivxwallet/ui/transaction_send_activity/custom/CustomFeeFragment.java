@@ -139,12 +139,12 @@ public class CustomFeeFragment extends BaseFragment {
     public static class FeeSelector{
 
         private boolean isFeePerKbSelected;
-        private Coin amunt;
+        private Coin amount;
         private boolean payMinimum = false;
 
-        public FeeSelector(boolean isFeePerKbSelected, Coin amunt, boolean payMinimum) {
+        public FeeSelector(boolean isFeePerKbSelected, Coin amount, boolean payMinimum) {
             this.isFeePerKbSelected = isFeePerKbSelected;
-            this.amunt = amunt;
+            this.amount = amount;
             this.payMinimum = payMinimum;
         }
 
@@ -152,8 +152,8 @@ public class CustomFeeFragment extends BaseFragment {
             return isFeePerKbSelected;
         }
 
-        public Coin getAmunt() {
-            return amunt;
+        public Coin getAmount() {
+            return amount;
         }
 
         public boolean isPayMinimum() {

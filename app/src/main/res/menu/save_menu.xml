@@ -3,5 +3,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/option_ok" android:title="ok" app:showAsAction="always"/>
-
 </menu>

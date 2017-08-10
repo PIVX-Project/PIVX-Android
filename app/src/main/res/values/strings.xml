@@ -212,7 +212,7 @@
     <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
     <string name="tx_detail_amount">Total amount</string>
     <string name="tx_detail_inputs_title">Source coins</string>
-    <string name="tx_detail_inputs">0 inputs</string>
+    <string name="tx_detail_inputs">%d inputs</string>
     <string name="txt_detail_confirmations">Confirmations amount</string>
     <string name="tx_detail_no_memo">No description</string>
     <string name="tx_detail_addresses">Outputs</string>

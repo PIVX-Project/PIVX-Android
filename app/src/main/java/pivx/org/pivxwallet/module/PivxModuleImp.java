@@ -4,7 +4,6 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
-import org.bitcoinj.core.ScriptException;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
@@ -36,6 +35,7 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapp
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressStore;
+import wallet.InsufficientInputsException;
 import wallet.WalletManager;
 
 /**
@@ -177,6 +177,22 @@ public class PivxModuleImp implements PivxModule {
         walletManager.completeSend(sendRequest);
 
         return sendRequest.tx;
+    }
+
+    @Override
+    public Transaction completeTx(Transaction transaction) throws InsufficientMoneyException {
+        SendRequest sendRequest = SendRequest.forTx(transaction);
+        sendRequest.signInputs = true;
+        sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
+        //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
+        walletManager.completeSend(sendRequest);
+
+        return sendRequest.tx;
+    }
+
+    @Override
+    public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
+        return walletManager.getUnspentValue(parentTransactionHash,index);
     }
 
     @Override
@@ -331,6 +347,12 @@ public class PivxModuleImp implements PivxModule {
     public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) {
         return walletManager.getUnspent(parentTxHash,index);
     }
+
+    @Override
+    public List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException {
+        return walletManager.getRandomListUnspentNotInListToFullCoins(inputs,amount);
+    }
+
 
     public void saveRate(PivxRate pivxRate){
         rateDb.insertOrUpdateIfExist(pivxRate);

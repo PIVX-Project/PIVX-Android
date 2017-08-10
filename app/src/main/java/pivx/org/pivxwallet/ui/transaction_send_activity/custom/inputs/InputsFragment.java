@@ -38,6 +38,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
 
     public static final String INTENT_EXTRA_UNSPENT_WRAPPERS = "unspent_wrappers";
 
+
     private List<InputWrapper> list;
     private BaseRecyclerAdapter adapter;
 
