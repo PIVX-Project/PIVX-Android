@@ -28,9 +28,12 @@ import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import wallet.TxNotFoundException;
 
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity.INTENT_NO_TOTAL_AMOUNT;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 
 /**
@@ -195,12 +198,16 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.txt_inputs){
-            Intent intent = new Intent(getActivity(), InputsActivity.class);
-            Bundle bundle = new Bundle();
-            // todo: wrap inputs before sending them to the activity..
-            //bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) transactionWrapper.getTransaction().getInputs());
-            intent.putExtras(bundle);
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(getActivity(), InputsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(INTENT_NO_TOTAL_AMOUNT, true);
+                bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) pivxModule.convertFrom(transactionWrapper.getTransaction().getInputs()));
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } catch (TxNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

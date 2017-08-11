@@ -26,6 +26,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import wallet.TxNotFoundException;
 
 /**
  * Created by furszy on 8/4/17.
@@ -49,18 +50,24 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        list = new ArrayList<>();
-        setHasOptionsMenu(true);
-        Intent intent = getActivity().getIntent();
-        if (intent!=null){
-            if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)){
-                selectedList = (List<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
-                for (InputWrapper inputWrapper : selectedList) {
-                    inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(),inputWrapper.getIndex()));
+        try {
+            list = new ArrayList<>();
+            setHasOptionsMenu(true);
+            Intent intent = getActivity().getIntent();
+            if (intent != null) {
+                if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)) {
+                    selectedList = (List<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                    for (InputWrapper inputWrapper : selectedList) {
+                        inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+                    }
                 }
             }
+            setSwipeRefresh(false);
+        } catch (TxNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(),R.string.invalid_inputs,Toast.LENGTH_SHORT).show();
+            getActivity().onBackPressed();
         }
-        setSwipeRefresh(false);
     }
 
     @Override

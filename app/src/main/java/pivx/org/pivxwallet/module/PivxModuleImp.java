@@ -36,6 +36,7 @@ import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressStore;
 import wallet.InsufficientInputsException;
+import wallet.TxNotFoundException;
 import wallet.WalletManager;
 
 /**
@@ -315,7 +316,6 @@ public class PivxModuleImp implements PivxModule {
         List<InputWrapper> inputWrappers = new ArrayList<>();
         for (TransactionOutput transactionOutput : walletManager.listUnspent()) {
             Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
-            // if the tx is mine i know that the first output address is the sent and the second one is the change address
             Contact contact = contactsStore.getContact(address.toBase58());
             inputWrappers.add(
                     new InputWrapper(
@@ -326,6 +326,26 @@ public class PivxModuleImp implements PivxModule {
             );
         }
         return inputWrappers;
+    }
+
+    @Override
+    public List<InputWrapper> convertFrom(List<TransactionInput> list) throws TxNotFoundException {
+        List<InputWrapper> ret = new ArrayList<>();
+        for (TransactionInput input : list) {
+            TransactionOutput transactionOutput = input.getConnectedOutput();
+            if (transactionOutput==null){
+                transactionOutput = getUnspent(input.getOutpoint().getHash(), (int) input.getOutpoint().getIndex());
+            }
+            Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+            Contact contact = contactsStore.getContact(address.toBase58());
+            ret.add(
+                    new InputWrapper(
+                            transactionOutput,
+                            contact
+                            )
+            );
+        }
+        return ret;
     }
 
     @Override
@@ -344,7 +364,7 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) {
+    public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException {
         return walletManager.getUnspent(parentTxHash,index);
     }
 

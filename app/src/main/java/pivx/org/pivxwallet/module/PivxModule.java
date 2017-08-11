@@ -23,6 +23,7 @@ import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import wallet.InsufficientInputsException;
+import wallet.TxNotFoundException;
 import wallet.exceptions.CantRestoreEncryptedWallet;
 
 /**
@@ -104,13 +105,15 @@ public interface PivxModule {
 
     List<InputWrapper> listUnspentWrappers();
 
+    List<InputWrapper> convertFrom(List<TransactionInput> list) throws TxNotFoundException;
+
     Transaction getTx(Sha256Hash txId);
 
     List<String> getMnemonic();
 
     DeterministicKey getKeyPairForAddress(Address address);
 
-    TransactionOutput getUnspent(Sha256Hash parentTxHash, int index);
+    TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException;
 
     List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException;
 

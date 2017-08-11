@@ -552,8 +552,10 @@ public class WalletManager {
         return deterministicKey;
     }
 
-    public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) {
-        return wallet.getTransaction(parentTxHash).getOutput(index);
+    public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException {
+        Transaction tx = wallet.getTransaction(parentTxHash);
+        if (tx==null) throw new TxNotFoundException("tx "+parentTxHash.toString()+" not found");
+        return tx.getOutput(index);
     }
 
     public List<TransactionOutput> getRandomListUnspentNotInListToFullCoins(List<TransactionInput> inputs,Coin amount) throws InsufficientInputsException {

@@ -54,6 +54,7 @@ import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.InsufficientInputsException;
+import wallet.TxNotFoundException;
 
 import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
@@ -387,12 +388,17 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             }
         }else if (requestCode == CUSTOM_INPUTS){
             if (resultCode == RESULT_OK) {
-                List<InputWrapper> unspents = (List<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
-                for (InputWrapper inputWrapper : unspents) {
-                    inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(),inputWrapper.getIndex()));
+                try {
+                    List<InputWrapper> unspents = (List<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                    for (InputWrapper inputWrapper : unspents) {
+                        inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
+                    }
+                    unspent = unspents;
+                    txt_coin_selection.setVisibility(View.VISIBLE);
+                } catch (TxNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
                 }
-                unspent = unspents;
-                txt_coin_selection.setVisibility(View.VISIBLE);
             }
         }else if (requestCode == CUSTOM_FEE_RESULT){
             if (resultCode == RESULT_OK){
