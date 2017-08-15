@@ -114,7 +114,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
                 }else {
-                    holder.imageView.setImageResource(R.mipmap.ic_transfer);
+                    holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
                 }
                 holder.title.setText(getAddressOrContact(pivxModule,data));
 
