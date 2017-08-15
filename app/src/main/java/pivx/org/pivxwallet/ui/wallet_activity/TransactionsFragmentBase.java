@@ -8,12 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.ScriptException;
 import org.bitcoinj.utils.BtcFormat;
 import org.bitcoinj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
@@ -27,6 +31,7 @@ import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActiv
 
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
+import static pivx.org.pivxwallet.utils.TxUtils.getAddressOrContact;
 
 /**
  * Created by furszy on 6/29/17.
@@ -52,7 +57,15 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     @Override
     protected List<TransactionWrapper> onLoading() {
-        return pivxModule.listTx();
+        List<TransactionWrapper> list = pivxModule.listTx();
+        Collections.sort(list, new Comparator<TransactionWrapper>(){
+            public int compare(TransactionWrapper o1, TransactionWrapper o2){
+                if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
+                    return 0;
+                return o1.getTransaction().getUpdateTime().getTime() > o2.getTransaction().getUpdateTime().getTime() ? -1 : 1;
+            }
+        });
+        return list;
     }
 
     @Override
@@ -77,7 +90,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }else {
                     // format amount
                     holder.txt_scale.setVisibility(View.VISIBLE);
-                    holder.amount.setText(parseToCoinWith4Decimals(amount).toFriendlyString());
+                    holder.amount.setText(parseToCoinWith4Decimals(data.getAmount().toPlainString()).toFriendlyString());
                 }
 
                 String localCurrency = null;
@@ -95,14 +108,17 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
                 holder.description.setText(data.getTransaction().getMemo());
 
-                if (data.isTxMine()){
+                if (data.isSent()){
                     //holder.cv.setBackgroundColor(Color.RED);Color.GREEN
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
-                }else {
+                }else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
+                }else {
+                    holder.imageView.setImageResource(R.mipmap.ic_transfer);
                 }
+                holder.title.setText(getAddressOrContact(pivxModule,data));
 
-                if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
+                /*if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
                     Contact contact = data.getOutputLabels().get(0);
                     if (contact!=null) {
                         if (contact.getName() != null)
@@ -114,7 +130,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     }
                 }else {
                     holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
-                }
+                }*/
                 String memo = data.getTransaction().getMemo();
                 holder.description.setText(memo!=null?memo:"No description");
             }

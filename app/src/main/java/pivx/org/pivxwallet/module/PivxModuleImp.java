@@ -4,15 +4,19 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.Peer;
+import org.bitcoinj.core.ScriptException;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.script.Script;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +48,8 @@ import wallet.WalletManager;
  */
 
 public class PivxModuleImp implements PivxModule {
+
+    private static final Logger logger = LoggerFactory.getLogger(PivxModuleImp.class);
 
     private ContextWrapper context;
     private WalletConfiguration walletConfiguration;
@@ -181,10 +187,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Transaction completeTx(Transaction transaction) throws InsufficientMoneyException {
+    public Transaction completeTx(Transaction transaction,Coin fee) throws InsufficientMoneyException {
         SendRequest sendRequest = SendRequest.forTx(transaction);
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
+        sendRequest.feePerKb = fee;
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -192,8 +199,40 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public Transaction completeTxWithCustomFee(Transaction transaction,Coin fee) throws InsufficientMoneyException{
+        SendRequest sendRequest = SendRequest.forTx(transaction);
+        sendRequest.signInputs = true;
+        sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
+        sendRequest.feePerKb = fee;
+        sendRequest.changeAddress = walletManager.newFreshReceiveAddress();
+        walletManager.completeSend(sendRequest);
+        // if the fee is different to the custom fee and the tx size is lower than 1kb (1000 bytes in pivx core)
+        /*if(!sendRequest.tx.getFee().equals(fee) && sendRequest.tx.unsafeBitcoinSerialize().length<1000){
+            // re acomodate outputs to include the selected fee
+            List<TransactionOutput> oldOutputs = sendRequest.tx.getOutputs();
+            sendRequest.tx.clearOutputs();
+            for (TransactionOutput oldOutput : oldOutputs) {
+                if (oldOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams()).equals(sendRequest.changeAddress)){
+                    //nothing
+                }else {
+                    sendRequest.tx.addOutput(oldOutput);
+                }
+            }
+
+
+        }*/
+
+        return sendRequest.tx;
+    }
+
+    @Override
     public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
         return walletManager.getUnspentValue(parentTransactionHash,index);
+    }
+
+    @Override
+    public boolean isAnyPeerConnected() {
+        return (blockchainManager != null && blockchainManager.getConnectedPeers() != null) && !blockchainManager.getConnectedPeers().isEmpty();
     }
 
     @Override
@@ -206,15 +245,32 @@ public class PivxModuleImp implements PivxModule {
         List<TransactionWrapper> list = new ArrayList<>();
         for (Transaction transaction : walletManager.listTransactions()) {
             boolean isMine = walletManager.isMine(transaction);
+            boolean isStaking = false;
             Map<Integer,Contact> outputsLabeled = new HashMap<>();
             Map<Integer,Contact> inputsLabeled = new HashMap<>();
             Address address = null;
             if (isMine){
                 try {
                     for (TransactionOutput transactionOutput : transaction.getOutputs()) {
-                        address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
-                        // if the tx is mine i know that the first output address is the sent and the second one is the change address
-                        outputsLabeled.put(transactionOutput.getIndex(),contactsStore.getContact(address.toBase58()));
+                        Script script = transactionOutput.getScriptPubKey();
+                        if (script.isSentToAddress() || script.isPayToScriptHash()) {
+                            try {
+                                address = script.getToAddress(getConf().getNetworkParams(),true);
+                                // if the tx is mine i know that the first output address is the sent and the second one is the change address
+                                outputsLabeled.put(transactionOutput.getIndex(), contactsStore.getContact(address.toBase58()));
+                            }catch (ScriptException e){
+                                logger.warn("unknown tx output, "+script.toString()+", is tx coinbase: "+transaction.isCoinBase());
+                                e.printStackTrace();
+                            }
+                        }else if (script.isSentToRawPubKey()){
+                            // is the staking reward
+                            address = script.getToAddress(getConf().getNetworkParams(),true);
+                            // if the tx is mine i know that the first output address is the sent and the second one is the change address
+                            outputsLabeled.put(transactionOutput.getIndex(), contactsStore.getContact(address.toBase58()));
+                            isStaking = true;
+                        }else {
+                            logger.warn("unknown tx output, "+script.toString()+", is tx coinbase: "+transaction.isCoinBase());
+                        }
                     }
 
                     /*for (TransactionInput transactionInput : transaction.getInputs()) {
@@ -232,28 +288,39 @@ public class PivxModuleImp implements PivxModule {
                     //swallow this for now..
                 }
             }else {
-                for (TransactionOutput transactionOutput : transaction.getOutputs()) {
+                /*for (TransactionOutput transactionOutput : transaction.getOutputs()) {
                     Address addressToCheck = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
                     if(walletManager.isAddressMine(addressToCheck)){
                         address = addressToCheck;
                         break;
                     }
-                }
+                }*/
 
                 for (TransactionOutput transactionOutput : transaction.getOutputs()) {
-                    address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+                    address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams(),true);
                     // if the tx is mine i know that the first output address is the sent and the second one is the change address
                     outputsLabeled.put(transactionOutput.getIndex(),contactsStore.getContact(address.toBase58()));
                 }
             }
-            list.add(new TransactionWrapper(
-                    transaction,
-                    inputsLabeled,
-                    outputsLabeled,
-                    isMine ? getValueSentFromMe(transaction,true):walletManager.getValueSentToMe(transaction),
-                    isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE
-                    )
-            );
+            TransactionWrapper wrapper;
+            if (!isStaking){
+                wrapper = new TransactionWrapper(
+                        transaction,
+                        inputsLabeled,
+                        outputsLabeled,
+                        isMine ? getValueSentFromMe(transaction,true):walletManager.getValueSentToMe(transaction),
+                        isMine ? TransactionWrapper.TransactionUse.SENT_SINGLE: TransactionWrapper.TransactionUse.RECEIVE
+                        );
+            }else {
+                wrapper = new TransactionWrapper(
+                        transaction,
+                        inputsLabeled,
+                        outputsLabeled,
+                        walletManager.getValueSentToMe(transaction),
+                        TransactionWrapper.TransactionUse.STAKE
+                );
+            }
+            list.add(wrapper);
         }
         return list;
     }
@@ -315,7 +382,7 @@ public class PivxModuleImp implements PivxModule {
     public List<InputWrapper> listUnspentWrappers() {
         List<InputWrapper> inputWrappers = new ArrayList<>();
         for (TransactionOutput transactionOutput : walletManager.listUnspent()) {
-            Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+            Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams(),true);
             Contact contact = contactsStore.getContact(address.toBase58());
             inputWrappers.add(
                     new InputWrapper(
@@ -336,7 +403,7 @@ public class PivxModuleImp implements PivxModule {
             if (transactionOutput==null){
                 transactionOutput = getUnspent(input.getOutpoint().getHash(), (int) input.getOutpoint().getIndex());
             }
-            Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams());
+            Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams(),true);
             Contact contact = contactsStore.getContact(address.toBase58());
             ret.add(
                     new InputWrapper(

@@ -67,4 +67,7 @@ public class PivxContext {
 
     /** Maximum size of backups. Files larger will be rejected. */
     public static final long BACKUP_MAX_CHARS = 10000000;
+
+    /** MAX TIME WAITED TO SAY THAT THE APP IS NOT SYNCHED ANYMORE.. in millis*/
+    public static final long OUT_OF_SYNC_TIME = 60000; // 1 minute
 }

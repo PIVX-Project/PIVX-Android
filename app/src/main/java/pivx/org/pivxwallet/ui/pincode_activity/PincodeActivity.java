@@ -122,7 +122,11 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     }
 
     private void clear(){
-
+        unactiveCheck(0);
+        unactiveCheck(1);
+        unactiveCheck(2);
+        unactiveCheck(3);
+        lastPos = 0;
     }
 
     private void activeCheck(int pos){
@@ -145,16 +149,16 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     private void unactiveCheck(int pos){
         switch (pos){
             case 0:
-                i1.setImageResource(R.drawable.pin_circle_white);
+                i1.setImageResource(R.drawable.pin_circle);
                 break;
             case 1:
-                i2.setImageResource(R.drawable.pin_circle_white);
+                i2.setImageResource(R.drawable.pin_circle);
                 break;
             case 2:
-                i3.setImageResource(R.drawable.pin_circle_white);
+                i3.setImageResource(R.drawable.pin_circle);
                 break;
             case 3:
-                i4.setImageResource(R.drawable.pin_circle_white);
+                i4.setImageResource(R.drawable.pin_circle);
                 break;
         }
     }

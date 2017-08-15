@@ -1,8 +1,8 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:gravity="center"
     android:paddingTop="12dp"
@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:text="1443 PIV"
+            tools:text="1443 PIV"
+            android:hint="@string/no_data_available"
             android:textStyle="bold"
             android:textColor="@color/bgPurple"
             android:textSize="16sp" />
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lines="1"
-            android:text="DAE9XiuuCYgbGC2aTEZT8jnGStv3eWrWDw"
+            tools:text="DAE9XiuuCYgbGC2aTEZT8jnGStv3eWrWDw"
             android:textColor="@color/bgPurple"
             android:textSize="13sp" />
 
@@ -57,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="45 Confirmations"
+                tools:text="45 Confirmations"
                 android:textSize="13sp" />
 
             <TextView
@@ -65,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="24/09/2017"
+                tools:text="24/09/2017"
                 android:layout_alignParentEnd="true"
                 android:textSize="13sp" />
 

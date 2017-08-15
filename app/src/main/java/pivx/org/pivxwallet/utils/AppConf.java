@@ -21,6 +21,7 @@ public class AppConf extends Configurations {
 
     private static final String SELECTED_RATE_COIN = "selected_rate_coin";
     private static final String USER_HAS_BACKUP = "user_has_backup";
+    private static final String LAST_BEST_CHAIN_BLOCK_TIME = "last_best_chain_block_time";
 
     public AppConf(SharedPreferences prefs) {
         super(prefs);
@@ -75,4 +76,11 @@ public class AppConf extends Configurations {
     }
 
 
+    public void setLastBestChainBlockTime(long lastBestChainBlockTime) {
+        save(LAST_BEST_CHAIN_BLOCK_TIME,lastBestChainBlockTime);
+    }
+
+    public long getLastBestChainBlockTime(){
+        return getLong(LAST_BEST_CHAIN_BLOCK_TIME,0);
+    }
 }

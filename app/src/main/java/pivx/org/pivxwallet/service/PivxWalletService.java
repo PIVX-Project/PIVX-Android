@@ -102,7 +102,6 @@ public class PivxWalletService extends Service{
     /**  */
     private final Set<Impediment> impediments = EnumSet.noneOf(Impediment.class);
 
-    private Handler delayHandler;
     private BlockchainState blockchainState = BlockchainState.NOT_CONNECTION;
 
     private volatile long lastUpdateTime = System.currentTimeMillis();
@@ -165,6 +164,7 @@ public class PivxWalletService extends Service{
                 }else {
                     blockchainState = BlockchainState.SYNCING;
                 }
+                pivxApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
                 broadcastBlockchainState(true);
             }
         }
@@ -294,7 +294,6 @@ public class PivxWalletService extends Service{
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             broadcastManager = LocalBroadcastManager.getInstance(this);
-            delayHandler = new Handler();
             // Pivx
             pivxApplication = PivxApplication.getInstance();
             module = (PivxModuleImp) pivxApplication.getModule();

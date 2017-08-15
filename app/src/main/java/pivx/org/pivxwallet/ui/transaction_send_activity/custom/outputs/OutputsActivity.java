@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import org.bitcoinj.core.Coin;
@@ -57,6 +58,10 @@ public class OutputsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 multiple_addresses_fragment.addOutput();
+                if(getCurrentFocus()!=null) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
             }
         });
 

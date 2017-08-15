@@ -103,7 +103,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private boolean inPivs = true;
     private Transaction transaction;
-    private String contactName;
+    //private String contactName;
     /** Several outputs */
     private List<OutputWrapper> outputWrappers;
     /** Custom inputs */
@@ -359,13 +359,21 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SCANNER_RESULT){
             if (resultCode==RESULT_OK) {
+                String address = "";
                 try {
-                    String address = data.getStringExtra(INTENT_EXTRA_RESULT);
-                    PivxURI pivxUri = new PivxURI(address);
-                    final String tempPubKey = pivxUri.getAddress().toBase58();
+                    address = data.getStringExtra(INTENT_EXTRA_RESULT);
+                    String usedAddress;
+                    if (pivxModule.chechAddress(address)){
+                        usedAddress = address;
+                    }else {
+                        PivxURI pivxUri = new PivxURI(address);
+                        usedAddress = pivxUri.getAddress().toBase58();
+                    }
+                    final String tempPubKey = usedAddress;
                     edit_address.setText(tempPubKey);
                 }catch (Exception e){
-                    Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                    Toast.makeText(this,"Bad address "+address,Toast.LENGTH_LONG).show();
                 }
             }
         }else if(requestCode == SEND_DETAIL){
@@ -446,7 +454,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
 
             NetworkParameters params = pivxModule.getConf().getNetworkParams();
-            Transaction transaction = new Transaction(params);
+            transaction = new Transaction(params);
 
             // then outputs
             if (outputWrappers!=null && !outputWrappers.isEmpty()){
@@ -482,7 +490,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 inputsSum = transaction.getInputSum();
             }
 
-            Coin fee;
+            Coin feePerKb;
             // then fee and change address
 
             // tx size calculation -> (148*inputs)+(34*outputs)+10
@@ -490,32 +498,30 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             if (customFee!=null){
                 if (customFee.isPayMinimum()){
-                    fee = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
+                    feePerKb = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
                 }else {
                     if (customFee.isFeePerKbSelected()){
                         // fee per kB
-                        Coin feePerByte = customFee.getAmount().shiftRight(3);
-                        fee = feePerByte.multiply(txSize);
+                        feePerKb = customFee.getAmount();
                     }else {
                         // total fee
-                        fee = customFee.getAmount();
+                        feePerKb = customFee.getAmount();
                     }
                 }
             }else {
-                Coin feePerByte = Transaction.DEFAULT_TX_FEE.shiftRight(3);
-                fee = feePerByte.multiply(txSize);
+                feePerKb = Transaction.DEFAULT_TX_FEE;
             }
 
             // check if something left and add it on a change address output
-            Coin coinsLeft = inputsSum.minus(ouputsSum).minus(fee);
+            /*Coin coinsLeft = inputsSum.minus(ouputsSum).minus(fee);
             if (coinsLeft.isGreaterThan(Coin.ZERO)){
                 transaction.addOutput(coinsLeft,pivxModule.getAddress());
-            }
+            }*/
             String memo = edit_memo.getText().toString();
             if (memo.length()>0)
                 transaction.setMemo(memo);
 
-            transaction = pivxModule.completeTx(transaction);
+            transaction = pivxModule.completeTx(transaction,feePerKb);
             // build a tx with the default fee
             //transaction = pivxModule.buildSendTx(addressStr, amount, memo);
 
@@ -542,7 +548,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void sendConfirmed(){
-        if (contactName.length()>0){
+        /*if (contactName.length()>0){
             Contact contact = new Contact(contactName);
             contact.addAddress(addressStr);
             contact.addTx(transaction.getHash());
@@ -553,14 +559,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(SendActivity.this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
                 return;
             }
-        }
+        }*/
         pivxModule.commitTx(transaction);
         Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);
         intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
         startService(intent);
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
-        onBackPressed();
+        finish();
     }
 
 }

@@ -145,8 +145,14 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             if (resultCode==RESULT_OK) {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
-                    PivxURI pivxUri = new PivxURI(address);
-                    final String tempPubKey = pivxUri.getAddress().toBase58();
+                    String usedAddress;
+                    if (pivxModule.chechAddress(address)){
+                        usedAddress = address;
+                    }else {
+                        PivxURI pivxUri = new PivxURI(address);
+                        usedAddress = pivxUri.getAddress().toBase58();
+                    }
+                    final String tempPubKey = usedAddress;
                     edit_address.setText(tempPubKey);
                 }catch (Exception e){
                     Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();

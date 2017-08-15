@@ -121,6 +121,12 @@ public final class ScanActivity extends Activity implements SurfaceTextureListen
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+
+	}
+
+	@Override
 	protected void onPause()
 	{
 		cameraHandler.post(closeRunnable);

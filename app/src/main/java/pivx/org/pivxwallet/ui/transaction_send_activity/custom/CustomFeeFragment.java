@@ -58,7 +58,7 @@ public class CustomFeeFragment extends BaseFragment {
                 isFeePerKbSelected = intent.getBooleanExtra(INTENT_EXTRA_IS_TOTAL_FEE,false);
             }
             if (intent.hasExtra(INTENT_EXTRA_IS_MINIMUM_FEE)){
-                payMinimum = true;
+                payMinimum = intent.getBooleanExtra(INTENT_EXTRA_IS_MINIMUM_FEE,false);
             }
             if (intent.hasExtra(INTENT_EXTRA_FEE)) {
                 fee = (Coin) intent.getSerializableExtra(INTENT_EXTRA_FEE);

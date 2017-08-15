@@ -11,13 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutPoint;
 import org.bitcoinj.core.TransactionOutput;
+import org.bitcoinj.script.Script;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import wallet.TxNotFoundException;
@@ -57,6 +55,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     private TextView txt_date_title;
     private TextView txt_confirmations;
     private TextView container_confirmations;
+    private TextView txt_tx_weight;
 
     private TransactionWrapper transactionWrapper;
     private boolean isTxDetail = true;
@@ -88,6 +87,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         recycler_outputs = (RecyclerView) root.findViewById(R.id.recycler_outputs);
         txt_confirmations = (TextView) root.findViewById(R.id.txt_confirmations);
         container_confirmations = (TextView) root.findViewById(R.id.container_confirmations);
+        txt_tx_weight = (TextView) root.findViewById(R.id.txt_tx_weight);
 
         txt_inputs.setOnClickListener(this);
 
@@ -113,19 +113,29 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         }
         txt_transaction_id.setText(transactionWrapper.getTransaction().getHashAsString());
         txt_amount.setText(transactionWrapper.getAmount().toFriendlyString());
-        Coin fee;
-        if(transactionWrapper.getTransaction().getFee()!=null) {
+        Coin fee = null;
+        if (transactionWrapper.isStake()){
+            fee = Coin.ZERO;
+        }else if(transactionWrapper.getTransaction().getFee()!=null) {
             fee = transactionWrapper.getTransaction().getFee();
         }else {
-            // Fee calculation with low performance, have to check why the fee is null here..
-            Coin inputsSum = Coin.ZERO;
-            for (TransactionInput input : transactionWrapper.getTransaction().getInputs()) {
-                TransactionOutPoint unspent = input.getOutpoint();
-                inputsSum = inputsSum.plus(pivxModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex()));
+            try {
+                // Fee calculation with low performance, have to check why the fee is null here..
+                Coin inputsSum = Coin.ZERO;
+                for (TransactionInput input : transactionWrapper.getTransaction().getInputs()) {
+                    TransactionOutPoint unspent = input.getOutpoint();
+                    inputsSum = inputsSum.plus(pivxModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex()));
+                }
+                fee = inputsSum.subtract(transactionWrapper.getTransaction().getOutputSum());
+            }catch (Exception e){
+                e.printStackTrace();
             }
-            fee = inputsSum.minus(transactionWrapper.getTransaction().getOutputSum());
         }
-        txt_fee.setText(fee.toFriendlyString());
+        if (fee!=null)
+            txt_fee.setText(fee.toFriendlyString());
+        else
+            txt_fee.setText(R.string.no_data_available);
+
         if (transactionWrapper.getTransaction().getMemo()!=null && transactionWrapper.getTransaction().getMemo().length()>0){
             txt_memo.setText(transactionWrapper.getTransaction().getMemo());
         }else {
@@ -133,6 +143,8 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         }
 
         txt_confirmations.setText(String.valueOf(transactionWrapper.getTransaction().getConfidence().getDepthInBlocks()));
+
+        txt_tx_weight.setText(transactionWrapper.getTransaction().unsafeBitcoinSerialize().length+" bytes");
 
         txt_inputs.setText(getString(R.string.tx_detail_inputs,transactionWrapper.getTransaction().getInputs().size()));
 
@@ -147,18 +159,24 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                     if (contact.getName() != null) {
                         label = contact.getName();
                     } else
-                        label = contact.getAddresses().get(0);
+                        //label = contact.getAddresses().get(0);
+                        label = transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(),true).toBase58();
                 }else {
-                    label = transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58();
+                    label = transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(),true).toBase58();
                 }
             }else {
-                label = transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58();
+                Script script = transactionOutput.getScriptPubKey();
+                if (script.isPayToScriptHash() || script.isSentToRawPubKey() || script.isSentToAddress()) {
+                    label = script.getToAddress(pivxModule.getConf().getNetworkParams(), true).toBase58();
+                }else {
+                    label = script.toString();
+                }
             }
 
             list.add(
                     new OutputUtil(
                             transactionOutput.getIndex(),
-                            transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58(), // for now.. //label,
+                            label, // for now.. //label,
                             transactionOutput.getValue()
                     )
             );
@@ -171,7 +189,6 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     private void setupOutputs(List<OutputUtil> list) {
         recycler_outputs.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler_outputs.setHasFixedSize(true);
-        //recycler_outputs.setNestedScrollingEnabled(false);
         recycler_outputs.setAdapter(new BaseRecyclerAdapter<OutputUtil,DetailOutputHolder>(getActivity(),list) {
             @Override
             protected DetailOutputHolder createHolder(View itemView, int type) {
@@ -188,7 +205,6 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 holder.txt_num.setText("Position "+position);
                 holder.txt_address.setText(data.getLabel());
                 holder.txt_value.setText(data.getAmount().toFriendlyString());
-
             }
 
         });
@@ -199,7 +215,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         int id = v.getId();
         if (id == R.id.txt_inputs){
             try {
-                Intent intent = new Intent(getActivity(), InputsActivity.class);
+                Intent intent = new Intent(getActivity(), InputsDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(INTENT_NO_TOTAL_AMOUNT, true);
                 bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) pivxModule.convertFrom(transactionWrapper.getTransaction().getInputs()));
@@ -236,7 +252,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         }
     }
 
-    private class DetailOutputHolder extends BaseRecyclerViewHolder{
+    public static class DetailOutputHolder extends BaseRecyclerViewHolder{
 
         TextView txt_num;
         TextView txt_address;
@@ -249,7 +265,5 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
             txt_value = (TextView) itemView.findViewById(R.id.txt_value);
 
         }
-
-
     }
 }

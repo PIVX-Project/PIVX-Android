@@ -21,7 +21,8 @@
         <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait">
+        <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +36,7 @@
         <activity android:name=".ui.security_words_activity.MnemonicActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
         <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
@@ -52,6 +53,7 @@
         </activity>
 
         <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.transaction_detail_activity.InputsDetailActivity" android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"  android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="portrait"/>
@@ -62,7 +64,7 @@
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
-        <activity android:name=".ui.donate.DonateActivity"/>
+        <activity android:name=".ui.donate.DonateActivity" />
 
         <service android:name=".service.PivxWalletService" />
 

@@ -21,10 +21,10 @@ import pivx.org.pivxwallet.contacts.Contact;
  */
 public class TransactionWrapper implements Serializable{
 
-
     public static enum TransactionUse{
         SENT_SINGLE,
-        RECEIVE
+        RECEIVE,
+        STAKE
         ;
 
     }
@@ -76,7 +76,23 @@ public class TransactionWrapper implements Serializable{
         return outputLabels;
     }
 
-    public boolean isTxMine() {
+    public boolean isSent() {
         return transactionUse == TransactionUse.SENT_SINGLE;
+    }
+
+    public boolean isStake() {
+        return transactionUse == TransactionUse.STAKE;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionWrapper{" +
+                "transaction=" + transaction +
+                ", txId=" + txId +
+                ", outputLabels=" + outputLabels +
+                ", inputsLabels=" + inputsLabels +
+                ", amount=" + amount +
+                ", transactionUse=" + transactionUse +
+                '}';
     }
 }

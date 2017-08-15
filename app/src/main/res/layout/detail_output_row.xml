@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
@@ -22,7 +24,8 @@
         android:paddingTop="3dp"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:text = "1FfmbHfnpaZjKFvyi1okTjJJusN455paPH"
+        tools:text = "1FfmbHfnpaZjKFvyi1okTjJJusN455paPH"
+        android:hint="Error"
         android:textColor = "@color/mainText"
         android:textSize = "15sp" />
 

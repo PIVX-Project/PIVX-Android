@@ -123,8 +123,6 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
         // Open Send
-
-
         fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +133,24 @@ public class WalletActivity extends BaseDrawerActivity {
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // to check current activity in the navigation drawer
+        setNavigationMenuItemChecked(0);
+
+        init();
+
+        // register
+        localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
+        localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
+
+        updateBalance();
+    }
+
+    private void init() {
         // Start service if it's not started.
         pivxApplication.startPivxService();
 
@@ -165,18 +181,6 @@ public class WalletActivity extends BaseDrawerActivity {
                 reminderDialog.show();
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // to check current activity in the navigation drawer
-        setNavigationMenuItemChecked(0);
-        // register
-        localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
-        localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
-
-        updateBalance();
     }
 
     @Override
@@ -242,10 +246,16 @@ public class WalletActivity extends BaseDrawerActivity {
             if (resultCode==RESULT_OK) {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
-                    PivxURI pivxUri = new PivxURI(address);
+                    String usedAddress;
+                    if (pivxModule.chechAddress(address)){
+                        usedAddress = address;
+                    }else {
+                        PivxURI pivxUri = new PivxURI(address);
+                        usedAddress = pivxUri.getAddress().toBase58();
+                    }
                     final DialogBuilder dialog = DialogBuilder.warn(this, R.string.scan_result_address_title);
-                    dialog.setMessage(pivxUri.getAddress()+"\n\nCreate contact?");
-                    final String tempPubKey = pivxUri.getAddress().toBase58();
+                    dialog.setMessage(usedAddress+"\n\nCreate contact?");
+                    final String tempPubKey = usedAddress;
                     DialogInterface.OnClickListener rightListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {

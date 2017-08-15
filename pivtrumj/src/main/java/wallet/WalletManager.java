@@ -584,7 +584,9 @@ public class WalletManager {
     }
 
     public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
-        return wallet.getTransaction(parentTransactionHash).getOutput(index).getValue();
+        Transaction tx = wallet.getTransaction(parentTransactionHash);
+        if (tx==null)return null;
+        return tx.getOutput(index).getValue();
     }
 
 

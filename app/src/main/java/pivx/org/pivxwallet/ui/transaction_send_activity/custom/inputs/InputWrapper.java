@@ -50,6 +50,6 @@ public class InputWrapper implements Serializable{
 
 
     public String getLabel() {
-        return contact!=null?contact.toLabel():unspent.getScriptPubKey().getToAddress(PivxContext.NETWORK_PARAMETERS).toBase58();
+        return contact!=null?contact.toLabel():unspent.getScriptPubKey().getToAddress(PivxContext.NETWORK_PARAMETERS,true).toBase58();
     }
 }

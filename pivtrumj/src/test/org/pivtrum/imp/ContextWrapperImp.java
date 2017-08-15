@@ -53,6 +53,26 @@ public class ContextWrapperImp implements ContextWrapper {
         return null;
     }
 
+    @Override
+    public String getPackageName() {
+        return null;
+    }
+
+    @Override
+    public boolean isMemoryLow() {
+        return false;
+    }
+
+    @Override
+    public String getVersionName() {
+        return null;
+    }
+
+    @Override
+    public void stopBlockchain() {
+
+    }
+
     private File initFile(File file) throws IOException {
         if (!file.exists()){
             file.getParentFile().mkdirs();

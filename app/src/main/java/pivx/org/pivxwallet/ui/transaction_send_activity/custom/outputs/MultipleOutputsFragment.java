@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.uri.PivxURI;
@@ -26,6 +27,7 @@ import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission_group.CAMERA;
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**

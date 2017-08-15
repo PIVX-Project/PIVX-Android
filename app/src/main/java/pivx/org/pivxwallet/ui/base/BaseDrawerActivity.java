@@ -27,6 +27,7 @@ import pivx.org.pivxwallet.ui.donate.DonateActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
+import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
@@ -88,13 +89,25 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         onCreateView(savedInstanceState,frameLayout);
 
         localBroadcastManager.registerReceiver(walletServiceReceiver,new IntentFilter(ACTION_NOTIFICATION));
-
-        updateBlockchainState();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        long now = System.currentTimeMillis();
+        long lastBlockTime = pivxApplication.getAppConf().getLastBestChainBlockTime();
+        if (lastBlockTime+OUT_OF_SYNC_TIME>now){
+            blockchainState = BlockchainState.SYNCING;
+        }else {
+            if (pivxModule.isAnyPeerConnected()) {
+                blockchainState = BlockchainState.SYNC;
+            }else {
+                blockchainState = BlockchainState.NOT_CONNECTION;
+            }
+        }
+
+        updateBlockchainState();
 
     }
 
@@ -157,7 +170,10 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         }
 
         if (id == R.id.nav_wallet) {
-            startActivity(new Intent(this,WalletActivity.class));
+            Intent intent = new Intent(this,WalletActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_address) {
             startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_settings) {
