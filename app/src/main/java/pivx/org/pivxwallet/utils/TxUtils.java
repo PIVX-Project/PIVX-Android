@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 
@@ -21,13 +21,13 @@ public class TxUtils {
     public static String getAddressOrContact(PivxModule pivxModule, TransactionWrapper data) {
         String text;
         if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
-            Collection<Contact> contacts = data.getOutputLabels().values();
-            Contact contact = contacts.iterator().next();
-            if (contact!=null) {
-                if (contact.getName() != null)
-                    text = contact.getName();
+            Collection<AddressLabel> addressLabels = data.getOutputLabels().values();
+            AddressLabel addressLabel = addressLabels.iterator().next();
+            if (addressLabel !=null) {
+                if (addressLabel.getName() != null)
+                    text = addressLabel.getName();
                 else
-                    text = contact.getAddresses().get(0);
+                    text = addressLabel.getAddresses().get(0);
             }else {
                 try {
                     text = data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(), true).toBase58();

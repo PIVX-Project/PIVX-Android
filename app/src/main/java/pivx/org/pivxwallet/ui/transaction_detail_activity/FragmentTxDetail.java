@@ -23,11 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import wallet.TxNotFoundException;
 
@@ -154,12 +153,12 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
 
             String label;
             if (transactionWrapper.getOutputLabels()!=null && transactionWrapper.getOutputLabels().containsKey(transactionOutput.getIndex())){
-                Contact contact = transactionWrapper.getOutputLabels().get(transactionOutput.getIndex());
-                if (contact!=null) {
-                    if (contact.getName() != null) {
-                        label = contact.getName();
+                AddressLabel addressLabel = transactionWrapper.getOutputLabels().get(transactionOutput.getIndex());
+                if (addressLabel !=null) {
+                    if (addressLabel.getName() != null) {
+                        label = addressLabel.getName();
                     } else
-                        //label = contact.getAddresses().get(0);
+                        //label = addressLabel.getAddresses().get(0);
                         label = transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(),true).toBase58();
                 }else {
                     label = transactionOutput.getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(),true).toBase58();

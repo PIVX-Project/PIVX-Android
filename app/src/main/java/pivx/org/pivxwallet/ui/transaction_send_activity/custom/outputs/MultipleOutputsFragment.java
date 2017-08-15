@@ -19,6 +19,7 @@ import org.bitcoinj.uri.PivxURI;
 import java.util.ArrayList;
 import java.util.List;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
@@ -129,10 +130,16 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                     public void afterTextChanged(Editable s) {
                         if (s.length()>0){
                             if (holder.edit_address!=null) {
-                                if (!pivxModule.chechAddress(s.toString())) {
+                                String address = s.toString();
+                                if (!pivxModule.chechAddress(address)) {
                                     holder.edit_address.setTextColor(Color.RED);
                                 } else {
                                     holder.edit_address.setTextColor(Color.GREEN);
+                                    // check if there is a label for this address
+                                    AddressLabel addressLabel = pivxModule.getAddressLabel(address);
+                                    if (addressLabel!=null){
+                                        holder.edit_address_label.setText(addressLabel.getName());
+                                    }
                                 }
                             }
                         }

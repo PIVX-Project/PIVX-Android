@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,8 +39,7 @@ import java.util.List;
 import java.util.Set;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.Contact;
-import pivx.org.pivxwallet.module.ContactAlreadyExistException;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -253,9 +253,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         super.onResume();
         // todo: This is not updating the filter..
         if (filterableAdapter==null) {
-            List<Contact> list = new ArrayList<>(pivxModule.getContacts());
+            List<AddressLabel> list = new ArrayList<>(pivxModule.getContacts());
             filterableAdapter = new MyFilterableAdapter(this,list );
             edit_address.setAdapter(filterableAdapter);
+        }
+
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
@@ -550,7 +555,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private void sendConfirmed(){
         /*if (contactName.length()>0){
-            Contact contact = new Contact(contactName);
+            AddressLabel contact = new AddressLabel(contactName);
             contact.addAddress(addressStr);
             contact.addTx(transaction.getHash());
             try {

@@ -8,20 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.ScriptException;
-import org.bitcoinj.utils.BtcFormat;
 import org.bitcoinj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.Contact;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
@@ -119,7 +115,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 holder.title.setText(getAddressOrContact(pivxModule,data));
 
                 /*if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
-                    Contact contact = data.getOutputLabels().get(0);
+                    AddressLabel contact = data.getOutputLabels().get(0);
                     if (contact!=null) {
                         if (contact.getName() != null)
                             holder.title.setText(contact.getName());

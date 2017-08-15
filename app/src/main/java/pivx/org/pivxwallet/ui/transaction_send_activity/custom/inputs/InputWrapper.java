@@ -5,7 +5,7 @@ import org.bitcoinj.core.TransactionOutput;
 
 import java.io.Serializable;
 
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.module.PivxContext;
 
 /**
@@ -17,11 +17,11 @@ public class InputWrapper implements Serializable{
     private transient TransactionOutput unspent;
     private Sha256Hash parentTxHash;
     private int index;
-    private Contact contact;
+    private AddressLabel addressLabel;
 
-    public InputWrapper(TransactionOutput unspent, Contact contact) {
+    public InputWrapper(TransactionOutput unspent, AddressLabel addressLabel) {
         this.unspent = unspent;
-        this.contact = contact;
+        this.addressLabel = addressLabel;
         if (unspent!=null) {
             parentTxHash = unspent.getParentTransactionHash();
             index = unspent.getIndex();
@@ -36,8 +36,8 @@ public class InputWrapper implements Serializable{
         this.unspent = unspent;
     }
 
-    public Contact getContact() {
-        return contact;
+    public AddressLabel getAddressLabel() {
+        return addressLabel;
     }
 
     public Sha256Hash getParentTxHash() {
@@ -50,7 +50,7 @@ public class InputWrapper implements Serializable{
 
 
     public String getLabel() {
-        return contact!=null?contact.toLabel():unspent.getScriptPubKey().getToAddress(PivxContext.NETWORK_PARAMETERS,true).toBase58();
+        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(PivxContext.NETWORK_PARAMETERS,true).toBase58();
     }
 
     @Override

@@ -29,9 +29,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:paddingTop="14dp"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
+        android:paddingBottom="14dp"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -39,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txt_add_address"
-            android:background="@color/transparent"
+            android:background="@drawable/bg_button_border"
             android:gravity="center"
             android:paddingBottom="12dp"
             android:paddingTop="12dp"

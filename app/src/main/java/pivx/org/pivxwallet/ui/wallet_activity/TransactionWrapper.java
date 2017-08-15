@@ -1,20 +1,13 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.BitcoinSerializer;
 import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
-import org.bitcoinj.wallet.Protos;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 
 /**
  * Created by furszy on 6/29/17.
@@ -32,13 +25,13 @@ public class TransactionWrapper implements Serializable{
     private transient Transaction transaction;
     private Sha256Hash txId;
     /** Map of Address labels ordered by output position */
-    private Map<Integer,Contact> outputLabels;
-    private Map<Integer,Contact> inputsLabels;
+    private Map<Integer,AddressLabel> outputLabels;
+    private Map<Integer,AddressLabel> inputsLabels;
     private Coin amount;
     private TransactionUse transactionUse;
 
 
-    public TransactionWrapper(Transaction transaction,Map<Integer,Contact> inputsLabels, Map<Integer,Contact> outputLabels, Coin amount, TransactionUse transactionUse) {
+    public TransactionWrapper(Transaction transaction, Map<Integer,AddressLabel> inputsLabels, Map<Integer,AddressLabel> outputLabels, Coin amount, TransactionUse transactionUse) {
         this.transaction = transaction;
         this.txId = transaction.getHash();
         this.inputsLabels = inputsLabels;
@@ -68,11 +61,11 @@ public class TransactionWrapper implements Serializable{
         return transactionUse;
     }
 
-    public Map<Integer, Contact> getInputsLabels() {
+    public Map<Integer, AddressLabel> getInputsLabels() {
         return inputsLabels;
     }
 
-    public Map<Integer, Contact> getOutputLabels() {
+    public Map<Integer, AddressLabel> getOutputLabels() {
         return outputLabels;
     }
 

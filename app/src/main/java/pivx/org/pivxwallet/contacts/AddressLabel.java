@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by furszy on 6/22/17.
  */
 
-public class Contact implements Serializable{
+public class AddressLabel implements Serializable{
 
     private int id;
     private String name;
@@ -20,11 +20,11 @@ public class Contact implements Serializable{
     /** Set of tx sent to this contact */
     private Set<String> txHashes;
 
-    public Contact(int id,String name) {
+    public AddressLabel(int id, String name) {
         this.name = name;
     }
 
-    public Contact(String name) {
+    public AddressLabel(String name) {
         this.name = name;
     }
 

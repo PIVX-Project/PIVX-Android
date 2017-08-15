@@ -5,27 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.snappydb.DB;
-import com.snappydb.DBFactory;
-import com.snappydb.KeyIterator;
-import com.snappydb.SnappydbException;
-
 import org.bitcoinj.core.Sha256Hash;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
  * Created by furszy on 6/22/17.
  */
 
-public class ContactsStore extends AbstractSqliteDb<Contact>{
+public class ContactsStore extends AbstractSqliteDb<AddressLabel>{
 
     private static final String DATABASE_NAME = "db";
     private static final int DATABASE_VERSION = 2;
@@ -72,7 +63,7 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
     }
 
     @Override
-    protected ContentValues buildContent(Contact obj) {
+    protected ContentValues buildContent(AddressLabel obj) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME,obj.getName());
         contentValues.put(KEY_ADDRESS,obj.getAddresses().get(0));
@@ -82,7 +73,7 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
     }
 
     @Override
-    protected Contact buildFrom(Cursor cursor) {
+    protected AddressLabel buildFrom(Cursor cursor) {
         try {
             int id = cursor.getInt(KEY_POS_ID);
             String name = cursor.getString(KEY_POS_NAME);
@@ -91,17 +82,17 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
             Set<String> txHashes = null;
             if (txHashesJson != null)
                 txHashes = fromJson(txHashesJson);
-            Contact contact = new Contact(id, name);
-            contact.addAddress(address);
-            contact.addAllTx(txHashes);
-            return contact;
+            AddressLabel addressLabel = new AddressLabel(id, name);
+            addressLabel.addAddress(address);
+            addressLabel.addAllTx(txHashes);
+            return addressLabel;
         } catch (JSONException e) {
             e.printStackTrace();
             throw new CantBuildContactException(e);
         }
     }
 
-    public Contact getContact(String address){
+    public AddressLabel getContact(String address){
         return get(KEY_ADDRESS,address);
     }
 
@@ -113,9 +104,9 @@ public class ContactsStore extends AbstractSqliteDb<Contact>{
      * @return
      */
     public boolean addTxHash(String addressContact, Sha256Hash txHash){
-        Contact contact = getContact(addressContact);
-        contact.addTx(txHash);
-        return updateFieldByKey(KEY_ADDRESS,addressContact,KEY_TX_HASHES_SET,toJson(contact.getTxHashes()))==1;
+        AddressLabel addressLabel = getContact(addressContact);
+        addressLabel.addTx(txHash);
+        return updateFieldByKey(KEY_ADDRESS,addressContact,KEY_TX_HASHES_SET,toJson(addressLabel.getTxHashes()))==1;
     }
 
     public String toJson(Set<String> set){

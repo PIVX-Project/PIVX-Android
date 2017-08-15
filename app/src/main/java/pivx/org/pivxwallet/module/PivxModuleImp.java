@@ -33,7 +33,7 @@ import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.rate.db.RateDb;
@@ -152,14 +152,24 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Collection<Contact> getContacts(){
+    public Collection<AddressLabel> getContacts(){
         return contactsStore.list();
     }
 
     @Override
-    public void saveContact(Contact contact) throws ContactAlreadyExistException {
-        if (contactsStore.getContact(contact.getAddresses().get(0))!=null) throw new ContactAlreadyExistException();
-        contactsStore.insert(contact);
+    public AddressLabel getAddressLabel(String address) {
+        return contactsStore.getContact(address);
+    }
+
+    @Override
+    public void saveContact(AddressLabel addressLabel) throws ContactAlreadyExistException {
+        if (contactsStore.getContact(addressLabel.getAddresses().get(0))!=null) throw new ContactAlreadyExistException();
+        contactsStore.insert(addressLabel);
+    }
+    @Override
+    public void saveContactIfNotExist(AddressLabel addressLabel){
+        if (contactsStore.getContact(addressLabel.getAddresses().get(0))!=null) return;
+        contactsStore.insert(addressLabel);
     }
 
     @Override
@@ -248,8 +258,8 @@ public class PivxModuleImp implements PivxModule {
         for (Transaction transaction : walletManager.listTransactions()) {
             boolean isMine = walletManager.isMine(transaction);
             boolean isStaking = false;
-            Map<Integer,Contact> outputsLabeled = new HashMap<>();
-            Map<Integer,Contact> inputsLabeled = new HashMap<>();
+            Map<Integer,AddressLabel> outputsLabeled = new HashMap<>();
+            Map<Integer,AddressLabel> inputsLabeled = new HashMap<>();
             Address address = null;
             if (isMine){
                 try {
@@ -279,7 +289,7 @@ public class PivxModuleImp implements PivxModule {
                         try {
                             address = transactionInput.getScriptSig().getToAddress(getConf().getNetworkParams());
                             // if the tx is mine i know that the first output address is the sent and the second one is the change address
-                            inputsLabeled.put((int) transactionInput.getOutpoint().getIndex(), contactsStore.getContact(address.toBase58()));
+                            inputsLabeled.put((int) transactionInput.getOutpoint().getIndex(), contactsStore.getAddressLabel(address.toBase58()));
                         }catch (ScriptException e){
                             e.printStackTrace();
                         }
@@ -385,11 +395,11 @@ public class PivxModuleImp implements PivxModule {
         List<InputWrapper> inputWrappers = new ArrayList<>();
         for (TransactionOutput transactionOutput : walletManager.listUnspent()) {
             Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams(),true);
-            Contact contact = contactsStore.getContact(address.toBase58());
+            AddressLabel addressLabel = contactsStore.getContact(address.toBase58());
             inputWrappers.add(
                     new InputWrapper(
                             transactionOutput,
-                            contact
+                            addressLabel
                     )
 
             );
@@ -406,11 +416,11 @@ public class PivxModuleImp implements PivxModule {
                 transactionOutput = getUnspent(input.getOutpoint().getHash(), (int) input.getOutpoint().getIndex());
             }
             Address address = transactionOutput.getScriptPubKey().getToAddress(getConf().getNetworkParams(),true);
-            Contact contact = contactsStore.getContact(address.toBase58());
+            AddressLabel addressLabel = contactsStore.getContact(address.toBase58());
             ret.add(
                     new InputWrapper(
                             transactionOutput,
-                            contact
+                            addressLabel
                             )
             );
         }

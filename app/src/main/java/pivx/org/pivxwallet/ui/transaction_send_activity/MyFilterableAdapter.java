@@ -13,15 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 
 public class MyFilterableAdapter extends BaseAdapter implements Filterable {
     private Context context;
-    private List<Contact> items;
-    private List<Contact> filteredItems = new ArrayList<>();
+    private List<AddressLabel> items;
+    private List<AddressLabel> filteredItems = new ArrayList<>();
     private ItemFilter mFilter = new ItemFilter();
 
-    public MyFilterableAdapter(Context context, List<Contact> items) {
+    public MyFilterableAdapter(Context context, List<AddressLabel> items) {
         //super(context, R.layout.your_row, items);
         this.context = context;
         this.items = items;
@@ -77,7 +77,7 @@ public class MyFilterableAdapter extends BaseAdapter implements Filterable {
             FilterResults results = new FilterResults();
 
             int count = items.size();
-            final List<Contact> tempItems = new ArrayList<>(count);
+            final List<AddressLabel> tempItems = new ArrayList<>(count);
 
             for (int i = 0; i < count; i++) {
                 if (items.get(i).getName().toLowerCase().contains(filterString)) {
@@ -94,7 +94,7 @@ public class MyFilterableAdapter extends BaseAdapter implements Filterable {
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredItems = (ArrayList<Contact>) results.values;
+            filteredItems = (ArrayList<AddressLabel>) results.values;
             notifyDataSetChanged();
         }
     }

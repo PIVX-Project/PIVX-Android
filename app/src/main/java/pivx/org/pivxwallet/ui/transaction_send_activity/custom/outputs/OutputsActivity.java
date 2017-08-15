@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.contacts.AddressLabel;
+import pivx.org.pivxwallet.module.ContactAlreadyExistException;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
@@ -41,7 +43,7 @@ public class OutputsActivity extends BaseActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        setTitle("Address list");
+        setTitle(R.string.multi_send_activity_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -64,7 +66,6 @@ public class OutputsActivity extends BaseActivity {
                 }
             }
         });
-
 
         Intent intent = getIntent();
         if (intent!=null){
@@ -90,11 +91,17 @@ public class OutputsActivity extends BaseActivity {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 outputWrappers = multiple_addresses_fragment.getList();
+                // save addresses labels in db
+                saveAddressesLabels(outputWrappers);
                 bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
                 intent.putExtras(bundle);
                 setResult(RESULT_OK, intent);
                 finish();
             } catch (InvalidFieldException e) {
+                e.printStackTrace();
+                DialogsUtil.buildSimpleErrorTextDialog(this,getString(R.string.invalid_inputs),e.getMessage())
+                        .show(getFragmentManager(),"invalid_fields_outputs");
+            } catch (Exception e){
                 e.printStackTrace();
                 DialogsUtil.buildSimpleErrorTextDialog(this,getString(R.string.invalid_inputs),e.getMessage())
                         .show(getFragmentManager(),"invalid_fields_outputs");
@@ -107,5 +114,19 @@ public class OutputsActivity extends BaseActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveAddressesLabels(List<OutputWrapper> outputWrappers){
+        for (OutputWrapper outputWrapper : outputWrappers) {
+            if (outputWrapper.getAddressLabel()!=null && !outputWrapper.getAddressLabel().equals("")) {
+                AddressLabel addressLabel = new AddressLabel(
+                        outputWrapper.getAddressLabel()
+                );
+                addressLabel.addAddress(outputWrapper.getAddress());
+                pivxModule.saveContactIfNotExist(
+                        addressLabel
+                );
+            }
+        }
     }
 }

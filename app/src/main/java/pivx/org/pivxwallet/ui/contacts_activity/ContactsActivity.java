@@ -1,27 +1,22 @@
 package pivx.org.pivxwallet.ui.contacts_activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import android.view.ContextMenu;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
@@ -32,12 +27,12 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
  */
 
 
-public class ContactsActivity extends BaseDrawerActivity implements ListItemListeners<Contact> {
+public class ContactsActivity extends BaseDrawerActivity implements ListItemListeners<AddressLabel> {
 
     RecyclerView recyclerView;
     private ContactsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Collection<Contact> contacts;
+    private Collection<AddressLabel> addressLabels;
     private LinearLayout emptyView;
     private ExecutorService executor;
 
@@ -88,13 +83,13 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
         executor.submit(new Runnable() {
             @Override
             public void run() {
-                contacts = pivxModule.getContacts();
-                if (contacts!=null && !contacts.isEmpty())
-                    adapter.changeDataSet(new ArrayList(contacts));
+                addressLabels = pivxModule.getContacts();
+                if (addressLabels !=null && !addressLabels.isEmpty())
+                    adapter.changeDataSet(new ArrayList(addressLabels));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (contacts==null || contacts.isEmpty()) {
+                        if (addressLabels ==null || addressLabels.isEmpty()) {
                             emptyView.setVisibility(View.VISIBLE);
                         }else {
                             emptyView.setVisibility(View.GONE);
@@ -126,12 +121,12 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
 
 
     @Override
-    public void onItemClickListener(Contact data, int position) {
+    public void onItemClickListener(AddressLabel data, int position) {
 
     }
 
     @Override
-    public void onLongItemClickListener(Contact data, int position) {
+    public void onLongItemClickListener(AddressLabel data, int position) {
 
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import global.WalletConfiguration;
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
@@ -75,9 +75,19 @@ public interface PivxModule {
 
     BigDecimal getAvailableBalanceLocale();
 
-    Collection<Contact> getContacts();
+    /******    Address Label          ******/
 
-    void saveContact(Contact contact) throws ContactAlreadyExistException;
+    Collection<AddressLabel> getContacts();
+
+    AddressLabel getAddressLabel(String address);
+
+    void saveContact(AddressLabel addressLabel) throws ContactAlreadyExistException;
+
+    void saveContactIfNotExist(AddressLabel addressLabel);
+
+
+    /******   End Address Label          ******/
+
 
     boolean chechAddress(String addressBase58);
 
@@ -125,5 +135,6 @@ public interface PivxModule {
     Coin getUnspentValue(Sha256Hash parentTransactionHash, int index);
 
     boolean isAnyPeerConnected();
+
 
 }

@@ -4,14 +4,14 @@ import android.content.Context;
 import android.view.View;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.Contact;
+import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 
 /**
  * Created by Neoperol on 5/18/17.
  */
 
-public class ContactsAdapter extends BaseRecyclerAdapter<Contact,ContactViewHolderBase> {
+public class ContactsAdapter extends BaseRecyclerAdapter<AddressLabel,ContactViewHolderBase> {
 
     public ContactsAdapter(Context context) {
         super(context);
@@ -28,7 +28,7 @@ public class ContactsAdapter extends BaseRecyclerAdapter<Contact,ContactViewHold
     }
 
     @Override
-    protected void bindHolder(ContactViewHolderBase holder, Contact data, int position) {
+    protected void bindHolder(ContactViewHolderBase holder, AddressLabel data, int position) {
         holder.address.setText(data.getAddresses().get(0));
         holder.name.setText(data.getName());
     }
