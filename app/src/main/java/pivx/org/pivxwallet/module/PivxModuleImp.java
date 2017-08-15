@@ -24,8 +24,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import chain.BlockchainManager;
 import global.ContextWrapper;
@@ -396,8 +398,8 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public List<InputWrapper> convertFrom(List<TransactionInput> list) throws TxNotFoundException {
-        List<InputWrapper> ret = new ArrayList<>();
+    public Set<InputWrapper> convertFrom(List<TransactionInput> list) throws TxNotFoundException {
+        Set<InputWrapper> ret = new HashSet<>();
         for (TransactionInput input : list) {
             TransactionOutput transactionOutput = input.getConnectedOutput();
             if (transactionOutput==null){

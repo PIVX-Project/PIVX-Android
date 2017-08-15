@@ -232,6 +232,7 @@
     <string name="title_tx_weight">Weight</string>
     <string name="no_data_available">Data not available</string>
     <string name="delete">Delete</string>
+    <string name="no_coin_selected">No coins selected</string>
 
 
 </resources>

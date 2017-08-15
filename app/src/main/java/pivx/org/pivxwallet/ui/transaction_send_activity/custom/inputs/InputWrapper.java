@@ -52,4 +52,23 @@ public class InputWrapper implements Serializable{
     public String getLabel() {
         return contact!=null?contact.toLabel():unspent.getScriptPubKey().getToAddress(PivxContext.NETWORK_PARAMETERS,true).toBase58();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        InputWrapper that = (InputWrapper) o;
+
+        if (index != that.index) return false;
+        return parentTxHash.equals(that.parentTxHash);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = parentTxHash.hashCode();
+        result = 31 * result + index;
+        return result;
+    }
 }

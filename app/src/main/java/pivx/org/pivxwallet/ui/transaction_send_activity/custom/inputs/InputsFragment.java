@@ -20,7 +20,9 @@ import org.bitcoinj.core.Coin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
@@ -32,7 +34,7 @@ import wallet.TxNotFoundException;
  * Created by furszy on 8/4/17.
  */
 
-public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
+public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSelectionWrapper> {
 
     private static final int TYPE_INIT = 0;
     private static final int TYPE_NORMAL = 1;
@@ -40,10 +42,10 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     public static final String INTENT_EXTRA_UNSPENT_WRAPPERS = "unspent_wrappers";
 
 
-    private List<InputWrapper> list;
+    private List<InputSelectionWrapper> list;
     private BaseRecyclerAdapter adapter;
 
-    private List<InputWrapper> selectedList = new ArrayList<>();
+    private Set<InputWrapper> selectedList = new HashSet<>();
 
     private boolean selectAll = false;
 
@@ -56,18 +58,20 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
             Intent intent = getActivity().getIntent();
             if (intent != null) {
                 if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)) {
-                    selectedList = (List<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                    selectedList = (Set<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : selectedList) {
                         inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
                 }
             }
             setSwipeRefresh(false);
+
         } catch (TxNotFoundException e) {
             e.printStackTrace();
             Toast.makeText(getActivity(),R.string.invalid_inputs,Toast.LENGTH_SHORT).show();
             getActivity().onBackPressed();
         }
+
     }
 
     @Override
@@ -80,7 +84,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.option_ok){
-            List<InputWrapper> unspent = listSelected();
+            Set<InputWrapper> unspent = listSelected();
             if (unspent!=null && !unspent.isEmpty()) {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
@@ -89,12 +93,14 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
                 getActivity().setResult(Activity.RESULT_OK,intent);
                 getActivity().finish();
                 return true;
+            }else {
+                Toast.makeText(getActivity(),R.string.no_coin_selected,Toast.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private List<InputWrapper> listSelected() {
+    private Set<InputWrapper> listSelected() {
         /*List<InputWrapper> unspent = new ArrayList<>();
         for (int i=1;i<adapter.getItemCount();i++){
             InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
@@ -108,23 +114,29 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
     }
 
     @Override
-    protected List<InputWrapper> onLoading() {
+    protected List<InputSelectionWrapper> onLoading() {
 
         list.clear();
 
-        list.add(new InputWrapper(
-                null,
-                null
+        list.add(
+                new InputSelectionWrapper(
+                    new InputWrapper(
+                    null,
+                    null
+                    )
         ));
 
-        list.addAll(pivxModule.listUnspentWrappers());
+        for (InputWrapper inputWrapper : pivxModule.listUnspentWrappers()) {
+            InputSelectionWrapper inputSelectionWrapper = new InputSelectionWrapper(inputWrapper);
+            list.add(inputSelectionWrapper);
+        }
 
         return list;
     }
 
     @Override
-    protected BaseRecyclerAdapter<InputWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
-        adapter = new BaseRecyclerAdapter<InputWrapper, BaseRecyclerViewHolder>(getActivity()) {
+    protected BaseRecyclerAdapter<InputSelectionWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
+        adapter = new BaseRecyclerAdapter<InputSelectionWrapper, BaseRecyclerViewHolder>(getActivity()) {
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 
@@ -139,7 +151,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
             }
 
             @Override
-            protected void bindHolder(final BaseRecyclerViewHolder holder, final InputWrapper data, int position) {
+            protected void bindHolder(final BaseRecyclerViewHolder holder, final InputSelectionWrapper data, int position) {
                 if (position==0){
                     SelectorHolder selectorHolder = (SelectorHolder) holder;
                     selectorHolder.radio_select.setOnClickListener(new View.OnClickListener() {
@@ -155,26 +167,31 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
                         public void onClick(View v) {
                             boolean selected = !inputHolder.radio_select.isChecked();
                             inputHolder.radio_select.setChecked(selected);
+                            data.setSelected(selected);
                             if (selected){
-                                selectedList.add(data);
+                                selectedList.add(data.getInputWrapper());
                             }else {
-                                selectedList.remove(data);
+                                selectedList.remove(data.getInputWrapper());
                             }
                         }
                     });
 
+                    boolean found = false;
                     for (InputWrapper inputWrapper : selectedList) {
-                        if (inputWrapper.getParentTxHash().equals(data.getParentTxHash())
+                        if (inputWrapper.getParentTxHash().equals(data.getInputWrapper().getParentTxHash())
                                 &&
-                                inputWrapper.getIndex() == data.getIndex()){
-                            inputHolder.radio_select.setChecked(true);
+                                inputWrapper.getIndex() == data.getInputWrapper().getIndex()){
+                            found = true;
                             break;
                         }
                     }
-                    inputHolder.txt_address.setText(data.getLabel());
-                    inputHolder.txt_amount.setText(data.getUnspent().getValue().toFriendlyString());
-                    inputHolder.txt_confirmations_amount.setText(data.getUnspent().getParentTransactionDepthInBlocks()+" "+getString(R.string.confimations));
-                    inputHolder.txt_date.setText(simpleDateFormat.format(data.getUnspent().getParentTransaction().getUpdateTime()));
+                    inputHolder.radio_select.setChecked(found);
+                    data.setSelected(found);
+
+                    inputHolder.txt_address.setText(data.getInputWrapper().getLabel());
+                    inputHolder.txt_amount.setText(data.getInputWrapper().getUnspent().getValue().toFriendlyString());
+                    inputHolder.txt_confirmations_amount.setText(data.getInputWrapper().getUnspent().getParentTransactionDepthInBlocks()+" "+getString(R.string.confimations));
+                    inputHolder.txt_date.setText(simpleDateFormat.format(data.getInputWrapper().getUnspent().getParentTransaction().getUpdateTime()));
                 }
             }
             @Override
@@ -191,6 +208,13 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
             InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
             if (inputHolder!=null)
                 inputHolder.radio_select.setChecked(selectAll);
+            InputSelectionWrapper inputSelectionWrapper = list.get(i);
+            inputSelectionWrapper.setSelected(selectAll);
+            if (selectAll) {
+                selectedList.add(inputSelectionWrapper.getInputWrapper());
+            }else {
+                selectedList.remove(inputSelectionWrapper.getInputWrapper());
+            }
         }
     }
 
@@ -202,8 +226,28 @@ public class InputsFragment extends BaseRecyclerFragment<InputWrapper> {
             super(itemView, holderType);
             this.radio_select = (CheckBox) itemView.findViewById(R.id.radio_select);
         }
+    }
 
+    public static class InputSelectionWrapper{
 
+        private InputWrapper inputWrapper;
+        private boolean isSelected;
+
+        public InputSelectionWrapper(InputWrapper inputWrapper) {
+            this.inputWrapper = inputWrapper;
+        }
+
+        public InputWrapper getInputWrapper() {
+            return inputWrapper;
+        }
+
+        public void setSelected(boolean selected) {
+            isSelected = selected;
+        }
+
+        public boolean isSelected() {
+            return isSelected;
+        }
     }
 
 }

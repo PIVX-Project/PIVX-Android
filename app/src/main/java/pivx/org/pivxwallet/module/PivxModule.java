@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.contacts.Contact;
@@ -105,7 +106,7 @@ public interface PivxModule {
 
     List<InputWrapper> listUnspentWrappers();
 
-    List<InputWrapper> convertFrom(List<TransactionInput> list) throws TxNotFoundException;
+    Set<InputWrapper> convertFrom(List<TransactionInput> list) throws TxNotFoundException;
 
     Transaction getTx(Sha256Hash txId);
 

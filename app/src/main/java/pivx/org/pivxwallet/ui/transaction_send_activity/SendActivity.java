@@ -35,6 +35,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.Contact;
@@ -107,7 +108,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     /** Several outputs */
     private List<OutputWrapper> outputWrappers;
     /** Custom inputs */
-    private List<InputWrapper> unspent;
+    private Set<InputWrapper> unspent;
     /** Custom fee selector */
     private CustomFeeFragment.FeeSelector customFee;
 
@@ -232,7 +233,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void startCoinControlActivity(List<InputWrapper> unspent) {
+    private void startCoinControlActivity(Set<InputWrapper> unspent) {
         String amountStr = edit_amount.getText().toString();
         if (amountStr.length()>0){
             Intent intent = new Intent(this, InputsActivity.class);
@@ -397,7 +398,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }else if (requestCode == CUSTOM_INPUTS){
             if (resultCode == RESULT_OK) {
                 try {
-                    List<InputWrapper> unspents = (List<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                    Set<InputWrapper> unspents = (Set<InputWrapper>) data.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : unspents) {
                         inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
