@@ -300,7 +300,7 @@ public class WalletActivity extends BaseDrawerActivity {
             pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         if (pivxRate!=null) {
             txt_local_currency.setText(
-                    pivxApplication.getCentralFormats().getNumberFormat().format(
+                    pivxApplication.getCentralFormats().format(
                             new BigDecimal(availableBalance.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                     )
                     + " "+pivxRate.getCoin()

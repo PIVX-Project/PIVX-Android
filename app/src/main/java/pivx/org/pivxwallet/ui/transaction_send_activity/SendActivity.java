@@ -173,7 +173,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }
                     Coin coin = Coin.parseCoin(valueStr);
                     txt_local_currency.setText(
-                            pivxApplication.getCentralFormats().getNumberFormat().format(
+                            pivxApplication.getCentralFormats().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                             )
                                     + " "+pivxRate.getCoin()
@@ -290,14 +290,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (inPivs){
                 edit_amount.setText(coin.toPlainString());
                 txt_local_currency.setText(
-                        pivxApplication.getCentralFormats().getNumberFormat().format(
+                        pivxApplication.getCentralFormats().format(
                                 new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                         )
                                 + " "+pivxRate.getCoin()
                 );
             }else {
                 editCurrency.setText(
-                        pivxApplication.getCentralFormats().getNumberFormat().format(
+                        pivxApplication.getCentralFormats().format(
                                 new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                         )
                                 + " "+pivxRate.getCoin()
