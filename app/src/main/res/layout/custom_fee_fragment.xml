@@ -34,12 +34,22 @@
     </RadioGroup>
 
     <TextView
+        android:id="@+id/txt_fee_explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="12dp"
+        android:text="@string/fee_explanation"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/fee"
         android:textSize="14sp"
         android:textColor="#757575"
-        android:paddingTop="12dp"
+        android:paddingTop="6dp"
         android:gravity="center"/>
 
     <RelativeLayout
@@ -54,6 +64,7 @@
             android:minWidth="150dp"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:inputType="numberDecimal"
             android:textColor="@color/mainText"
             android:paddingTop="7dp"
@@ -79,18 +90,6 @@
         android:textColor="@color/mainText"
         android:text="@string/minimum_fee"/>
 
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_fee_explanation"
-        android:textSize="14sp"
-        android:text="@string/fee_explanation"
-        android:textColor="#757575"
-        android:paddingTop="50dp"
-        android:paddingBottom="20dp"
-        android:gravity="center"/>
 
 
 </LinearLayout>
