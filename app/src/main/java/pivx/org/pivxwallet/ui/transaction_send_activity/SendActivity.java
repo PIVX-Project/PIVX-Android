@@ -153,6 +153,32 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         addAllPiv.setOnClickListener(this);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
+        editCurrency.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length()>0) {
+                    String valueStr = s.toString();
+                    if (valueStr.charAt(0)=='.'){
+                        valueStr = "0"+valueStr;
+                    }
+                    BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
+                    txtShowPiv.setText(result.toPlainString()+" PIV");
+                }else {
+                    txtShowPiv.setText("0 "+pivxRate.getCoin());
+                }
+            }
+        });
+
         edit_amount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -446,7 +472,18 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         try {
 
             // first check amount
-            String amountStr = edit_amount.getText().toString();
+            String amountStr;
+            if (inPivs) {
+                amountStr = edit_amount.getText().toString();
+            }else {
+                String valueStr = editCurrency.getText().toString();
+                if (valueStr.charAt(0)=='.'){
+                    valueStr = "0"+valueStr;
+                }
+                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
+                amountStr = result.toPlainString();
+
+            }
             if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
             if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException("Amount not valid");
             if (amountStr.charAt(0)=='.'){
