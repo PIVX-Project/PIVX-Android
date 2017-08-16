@@ -74,7 +74,7 @@ public class DialogsUtil {
         void onNodeSelected(PivtrumPeerData pivtrumPeerData);
     }
 
-    public static DialogBuilder buildtrustedNodeDialog(Context context, final TrustedNodeDialogListener trustedNodeDialogListener){
+    public static DialogBuilder buildtrustedNodeDialog(final Context context, final TrustedNodeDialogListener trustedNodeDialogListener){
         LayoutInflater content = LayoutInflater.from(context);
         View dialogView = content.inflate(R.layout.dialog_node, null);
         DialogBuilder nodeDialog = new DialogBuilder(context);
@@ -97,12 +97,16 @@ public class DialogsUtil {
                 if (sslPortStr.length()>0){
                     sslPort = Integer.valueOf(sslPortStr);
                 }
-                trustedNodeDialogListener.onNodeSelected(
-                        new PivtrumPeerData(
-                                host,
-                                tcpPort,
-                                sslPort)
-                );
+                if (host.equals("")){
+                    Toast.makeText(context,R.string.invalid_host,Toast.LENGTH_SHORT).show();
+                }else {
+                    trustedNodeDialogListener.onNodeSelected(
+                            new PivtrumPeerData(
+                                    host,
+                                    tcpPort,
+                                    sslPort)
+                    );
+                }
                 dialog.dismiss();
             }
         });

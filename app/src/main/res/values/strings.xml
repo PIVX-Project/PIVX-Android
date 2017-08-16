@@ -246,6 +246,7 @@
     <string name="restore_mnemonic">Restoring wallet from mnemonic..</string>
     <string name="restore_mnemonic_title">Restore Mnemonic</string>
     <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synched.</string>
+    <string name="invalid_host">Invalid host name</string>
 
 
 </resources>
