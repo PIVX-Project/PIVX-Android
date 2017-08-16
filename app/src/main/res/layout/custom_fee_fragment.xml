@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/radio_group"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:gravity="center">
 
         <RadioButton
@@ -61,7 +62,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PIV"
+            android:text="PIV/kB"
             android:textSize="20sp"
             android:paddingTop="7dp"
             android:layout_toRightOf="@+id/edit_fee"

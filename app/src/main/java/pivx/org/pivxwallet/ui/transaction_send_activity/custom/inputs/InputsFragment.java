@@ -65,7 +65,9 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
                 }
             }
             setSwipeRefresh(false);
-
+            setEmptyText(getString(R.string.no_available_inputs));
+            setEmptyTextColor(Color.parseColor("#444444"));
+            setEmptyView(R.drawable.img_coins_empty);
         } catch (TxNotFoundException e) {
             e.printStackTrace();
             Toast.makeText(getActivity(),R.string.invalid_inputs,Toast.LENGTH_SHORT).show();

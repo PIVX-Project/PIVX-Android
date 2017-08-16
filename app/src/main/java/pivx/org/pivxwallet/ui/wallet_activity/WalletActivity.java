@@ -106,6 +106,7 @@ public class WalletActivity extends BaseDrawerActivity {
         if (!pivxApplication.getAppConf().isAppInit()){
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
+            finish();
         }
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }

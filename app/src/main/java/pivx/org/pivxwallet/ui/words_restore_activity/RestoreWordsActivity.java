@@ -10,13 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 
+import static pivx.org.pivxwallet.module.PivxContext.PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
+
 /**
  * Created by Neoperol on 7/19/17.
+ * // todo: this activity is awfull, should do this right..
  */
 
 public class RestoreWordsActivity extends BaseActivity {
@@ -32,7 +40,7 @@ public class RestoreWordsActivity extends BaseActivity {
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.security_words_restore, container);
 
-        setTitle("Security words");
+        setTitle(R.string.restore_mnemonic_screen_title);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -74,11 +82,9 @@ public class RestoreWordsActivity extends BaseActivity {
         txtWord22 = (EditText) findViewById(R.id.text_word22);
         txtWord23 = (EditText) findViewById(R.id.text_word23);
         txtWord24 = (EditText) findViewById(R.id.text_word24);
-
-
     }
 
-    public  void btnBackClick(View v) {
+    public void btnBackClick(View v) {
         int current = getItem(-1);
         if (current < layouts.length) {
             // move to previus screen
@@ -86,16 +92,74 @@ public class RestoreWordsActivity extends BaseActivity {
         }
     }
 
-    public  void btnNextClick(View v)
-    {
+    public void btnNextClick(View v) {
         // checking for last page
         int current = getItem(1);
         if (current < layouts.length) {
             // move to next screen
             viewPager.setCurrentItem(current);
         } else {
-            //Restore Wallet
-            launchHomeScreen();
+            try {
+                //Restore Wallet
+                String word1 = txtWord1.getText().toString();
+                String word2 = txtWord2.getText().toString();
+                String word3 = txtWord3.getText().toString();
+                String word4 = txtWord4.getText().toString();
+                String word5 = txtWord5.getText().toString();
+                String word6 = txtWord6.getText().toString();
+                String word7 = txtWord7.getText().toString();
+                String word8 = txtWord8.getText().toString();
+                String word9 = txtWord9.getText().toString();
+                String word10 = txtWord10.getText().toString();
+                String word11 = txtWord11.getText().toString();
+                String word12 = txtWord12.getText().toString();
+                String word13 = txtWord13.getText().toString();
+                String word14 = txtWord14.getText().toString();
+                String word15 = txtWord15.getText().toString();
+                String word16 = txtWord16.getText().toString();
+                String word17 = txtWord17.getText().toString();
+                String word18 = txtWord18.getText().toString();
+                String word19 = txtWord19.getText().toString();
+                String word20 = txtWord20.getText().toString();
+                String word21 = txtWord21.getText().toString();
+                String word22 = txtWord22.getText().toString();
+                String word23 = txtWord23.getText().toString();
+                String word24 = txtWord24.getText().toString();
+
+                List<String> mnemonic = new ArrayList<>();
+                mnemonic.add(word1);
+                mnemonic.add(word2);
+                mnemonic.add(word3);
+                mnemonic.add(word4);
+                mnemonic.add(word5);
+                mnemonic.add(word6);
+                mnemonic.add(word7);
+                mnemonic.add(word8);
+                mnemonic.add(word9);
+                mnemonic.add(word10);
+                mnemonic.add(word11);
+                mnemonic.add(word12);
+                mnemonic.add(word13);
+                mnemonic.add(word14);
+                mnemonic.add(word15);
+                mnemonic.add(word16);
+                mnemonic.add(word17);
+                mnemonic.add(word18);
+                mnemonic.add(word19);
+                mnemonic.add(word20);
+                mnemonic.add(word21);
+                mnemonic.add(word22);
+                mnemonic.add(word23);
+                mnemonic.add(word24);
+
+                pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
+
+                launchHomeScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // todo: show an error message here..
+                Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+            }
         }
     }
 

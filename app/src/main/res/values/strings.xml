@@ -240,6 +240,8 @@
     <string name="options_menu">Options Menu</string>
     <string name="delete_address_label_text">Label for address\n%s\nis going to be deleted.\n\nAre you sure?</string>
     <string name="address_label_deleted">Address label deleted.</string>
+    <string name="no_available_inputs">You don\'t have any coin to spend</string>
+    <string name="restore_mnemonic_screen_title">Restore Mnemonic</string>
 
 
 </resources>
