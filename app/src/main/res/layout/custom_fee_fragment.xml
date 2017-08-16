@@ -41,9 +41,11 @@
         android:paddingTop="12dp"
         android:gravity="center"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <EditText
             android:background="@drawable/transaction_inputs"
@@ -52,7 +54,6 @@
             android:id="@+id/edit_fee"
             android:hint="0.0000001"
             android:minWidth="150dp"
-            android:layout_centerHorizontal="true"
             android:textSize="20sp"
             android:inputType="numberDecimal"
             android:textColor="@color/mainText"
@@ -63,13 +64,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PIV"
+            android:layout_marginTop="6dp"
             android:textSize="20sp"
             android:paddingTop="7dp"
             android:textColor="@color/mainText"
             android:layout_toRightOf="@+id/edit_fee"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <CheckBox
