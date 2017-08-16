@@ -234,6 +234,12 @@
     <string name="delete">Delete</string>
     <string name="no_coin_selected">No coins selected</string>
     <string name="multi_send_activity_title">Multi Send</string>
+    <string name="address_book_screen_title">Address Book</string>
+    <string name="my_wallet">My Wallet</string>
+    <string name="settings_screen_title">Settings</string>
+    <string name="options_menu">Options Menu</string>
+    <string name="delete_address_label_text">Label for address\n%s\nis going to be deleted.\n\nAre you sure?</string>
+    <string name="address_label_deleted">Address label deleted.</string>
 
 
 </resources>

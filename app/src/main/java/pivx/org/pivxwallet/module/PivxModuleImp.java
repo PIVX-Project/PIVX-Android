@@ -173,6 +173,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public void deleteAddressLabel(AddressLabel data) {
+        contactsStore.delete(data);
+    }
+
+    @Override
     public boolean chechAddress(String addressBase58) {
         boolean result = false;
         try {
@@ -245,6 +250,14 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public boolean isAnyPeerConnected() {
         return (blockchainManager != null && blockchainManager.getConnectedPeers() != null) && !blockchainManager.getConnectedPeers().isEmpty();
+    }
+
+    @Override
+    public long getConnectedPeerHeight() {
+        if (blockchainManager!=null && blockchainManager.getConnectedPeers() !=null){
+            return blockchainManager.getConnectedPeers().get(0).getBestHeight();
+        }else
+            return -1;
     }
 
     @Override

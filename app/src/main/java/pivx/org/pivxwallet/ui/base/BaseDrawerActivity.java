@@ -30,6 +30,7 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
@@ -50,14 +51,18 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.hasExtra(INTENT_BROADCAST_DATA_TYPE)){
-                BlockchainState blockchainStateNew = (BlockchainState) intent.getSerializableExtra(INTENT_EXTRA_BLOCKCHAIN_STATE);
-                if (blockchainStateNew==null){
-                    Log.e("APP","blockchain state null..");
-                    return;
-                }
-                if (blockchainState == null || blockchainState!=blockchainStateNew){
-                    blockchainState = blockchainStateNew;
-                    updateBlockchainState();
+                if (intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE)) {
+                    BlockchainState blockchainStateNew = (BlockchainState) intent.getSerializableExtra(INTENT_EXTRA_BLOCKCHAIN_STATE);
+                    if (blockchainStateNew == null) {
+                        Log.e("APP", "blockchain state null..");
+                        return;
+                    }
+                    if (blockchainState == null || blockchainState != blockchainStateNew) {
+                        blockchainState = blockchainStateNew;
+                        updateBlockchainState();
+                    }
+                }else if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_PEER_CONNECTED)){
+                    checkState();
                 }
             }
         }
@@ -91,21 +96,44 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         localBroadcastManager.registerReceiver(walletServiceReceiver,new IntentFilter(ACTION_NOTIFICATION));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    private void checkState(){
         long now = System.currentTimeMillis();
         long lastBlockTime = pivxApplication.getAppConf().getLastBestChainBlockTime();
         if (lastBlockTime+OUT_OF_SYNC_TIME>now){
-            blockchainState = BlockchainState.SYNCING;
+            // check if i'm syncing or i'm synched
+            long peerHeight = pivxModule.getConnectedPeerHeight();
+            if (peerHeight!=-1){
+                if (pivxModule.getChainHeight()+10>peerHeight) {
+                    blockchainState = BlockchainState.SYNC;
+                }else {
+                    blockchainState = BlockchainState.SYNCING;
+                }
+            }else {
+                blockchainState = BlockchainState.NOT_CONNECTION;
+            }
         }else {
             if (pivxModule.isAnyPeerConnected()) {
-                blockchainState = BlockchainState.SYNC;
+                long peerHeight = pivxModule.getConnectedPeerHeight();
+                if (peerHeight!=-1){
+                    if (pivxModule.getChainHeight()+10>peerHeight) {
+                        blockchainState = BlockchainState.SYNC;
+                    }else {
+                        blockchainState = BlockchainState.SYNCING;
+                    }
+                }else {
+                    blockchainState = BlockchainState.NOT_CONNECTION;
+                }
             }else {
                 blockchainState = BlockchainState.NOT_CONNECTION;
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkState();
 
         updateBlockchainState();
 

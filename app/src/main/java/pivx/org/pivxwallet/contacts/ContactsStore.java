@@ -125,4 +125,8 @@ public class ContactsStore extends AbstractSqliteDb<AddressLabel>{
         }
         return set;
     }
+
+    public void delete(AddressLabel data) {
+        delete(KEY_ADDRESS,data.getAddresses().get(0));
+    }
 }

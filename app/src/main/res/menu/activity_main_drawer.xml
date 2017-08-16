@@ -5,15 +5,15 @@
         <item
             android:id="@+id/nav_wallet"
             android:icon="@mipmap/ic_wallet"
-            android:title="My Wallet" />
+            android:title="@string/my_wallet" />
         <item
             android:id="@+id/nav_address"
             android:icon="@mipmap/ic_address"
-            android:title="Contacts book" />
+            android:title="@string/address_book_screen_title" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@mipmap/ic_settings"
-            android:title="Settings" />
+            android:title="@string/settings_screen_title" />
         <item
             android:id="@+id/nav_donations"
             android:icon="@drawable/ic_donations"

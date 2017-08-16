@@ -66,4 +66,8 @@ public class AddressLabel implements Serializable{
     public String toLabel() {
         return (name!=null)?name:addresses.get(0);
     }
+
+    public int getId() {
+        return id;
+    }
 }

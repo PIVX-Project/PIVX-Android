@@ -85,6 +85,8 @@ public interface PivxModule {
 
     void saveContactIfNotExist(AddressLabel addressLabel);
 
+    void deleteAddressLabel(AddressLabel data);
+
 
     /******   End Address Label          ******/
 
@@ -136,5 +138,5 @@ public interface PivxModule {
 
     boolean isAnyPeerConnected();
 
-
+    long getConnectedPeerHeight();
 }

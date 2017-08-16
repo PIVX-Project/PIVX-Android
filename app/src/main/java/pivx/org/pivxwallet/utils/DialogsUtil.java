@@ -46,6 +46,10 @@ public class DialogsUtil {
         return dialog;
     }
 
+    public static SimpleTwoButtonsDialog buildSimpleTwoBtnsDialog(Context context, int titleRes, int bodyRes, SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener simpleTwoBtnsDialogListener){
+        return buildSimpleTwoBtnsDialog(context,context.getString(titleRes),context.getString(bodyRes),simpleTwoBtnsDialogListener);
+    }
+
     public static SimpleTwoButtonsDialog buildSimpleTwoBtnsDialog(Context context, String title, String body, SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener simpleTwoBtnsDialogListener){
         final SimpleTwoButtonsDialog dialog = SimpleTwoButtonsDialog.newInstance(context);
         dialog.setTitle(title);

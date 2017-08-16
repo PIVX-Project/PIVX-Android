@@ -24,6 +24,7 @@ public class IntentsConstants {
     public static final String ACTION_NOTIFICATION = "service_not";
     public static final String INTENT_BROADCAST_DATA_TYPE = "service_not_type";
     public static final String INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE = "blockchain_state";
+    public static final String INTENT_BROADCAST_DATA_PEER_CONNECTED = "peer_connected";
 
     // Data
     public static final String DATA_TRANSACTION_HASH = "tx_hash";

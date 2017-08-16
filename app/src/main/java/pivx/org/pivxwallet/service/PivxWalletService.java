@@ -70,6 +70,7 @@ import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_SCHEDULE_SERVI
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_BLOCKCHAIN_ALERT;
@@ -133,6 +134,7 @@ public class PivxWalletService extends Service{
         public void onPeerConnected(Peer peer, int i) {
             //todo: notify peer connected
             log.info("Peer connected: "+peer.getAddress());
+            broadcastPeerConnected();
         }
 
         @Override
@@ -521,6 +523,12 @@ public class PivxWalletService extends Service{
             intent.putExtra(INTENT_EXTRA_BLOCKCHAIN_STATE,blockchainState);
             broadcastManager.sendBroadcast(intent);
         }
+    }
+
+    private void broadcastPeerConnected() {
+        Intent intent = new Intent(ACTION_NOTIFICATION);
+        intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_PEER_CONNECTED);
+        broadcastManager.sendBroadcast(intent);
     }
 
 }
