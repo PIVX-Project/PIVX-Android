@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
  */
 
 public class SettingsActivity extends BaseDrawerActivity implements View.OnClickListener {
-
+    private Switch videoSwitch;
     private Button buttonBackup;
     private Button buttonRestore;
     private Button buttonChange;
@@ -95,6 +97,21 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         buttonTutorial = (Button) findViewById(R.id.btn_tutorial);
         buttonTutorial.setOnClickListener(this);
 
+        // Video Switch
+        videoSwitch = (Switch) findViewById(R.id.videoSwitch);
+        videoSwitch.setChecked(true);
+        videoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
+                if (Checked) {
+                    //Video with sound
+                    //Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_video);
+                } else {
+                    //Video muted
+                    //Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_video_muted);
+                }
+            }
+        });
     }
 
     @Override
