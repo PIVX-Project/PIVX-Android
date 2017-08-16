@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/radio_group"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:gravity="center">
 
         <RadioButton
@@ -33,12 +34,22 @@
     </RadioGroup>
 
     <TextView
+        android:id="@+id/txt_fee_explanation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="12dp"
+        android:text="@string/fee_explanation"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/fee"
         android:textSize="14sp"
         android:textColor="#757575"
-        android:paddingTop="12dp"
+        android:paddingTop="6dp"
         android:gravity="center"/>
 
     <LinearLayout
@@ -54,20 +65,21 @@
             android:id="@+id/edit_fee"
             android:hint="0.0000001"
             android:minWidth="150dp"
+            android:layout_centerHorizontal="true"
             android:textSize="20sp"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:inputType="numberDecimal"
             android:textColor="@color/mainText"
             android:paddingTop="7dp"
             android:gravity="center"/>
 
         <TextView
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PIV"
-            android:layout_marginTop="6dp"
+            android:text="PIV/kB"
             android:textSize="20sp"
             android:paddingTop="7dp"
-            android:textColor="@color/mainText"
             android:layout_toRightOf="@+id/edit_fee"
             />
 
@@ -82,18 +94,6 @@
         android:textColor="@color/mainText"
         android:text="@string/minimum_fee"/>
 
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_fee_explanation"
-        android:textSize="14sp"
-        android:text="@string/fee_explanation"
-        android:textColor="#757575"
-        android:paddingTop="50dp"
-        android:paddingBottom="20dp"
-        android:gravity="center"/>
 
 
 </LinearLayout>

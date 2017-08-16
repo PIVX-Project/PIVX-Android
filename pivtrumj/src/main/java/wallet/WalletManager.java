@@ -139,6 +139,7 @@ public class WalletManager {
         loadWalletFromProtobuf(walletFile);
     }
 
+
     private void loadWalletFromProtobuf(File walletFile) throws IOException {
         if (walletFile.exists()) {
             FileInputStream walletStream = null;
@@ -203,7 +204,6 @@ public class WalletManager {
                 saveWallet();
             }
         });
-
     }
 
     public static List<String> generateMnemonic(int entropyBitsSize){
@@ -276,6 +276,12 @@ public class WalletManager {
                 // nothing
             }
         }
+    }
+
+    // DeterministicSeed(List<String> mnemonicCode, @Nullable byte[] seed, String passphrase, long creationTimeSeconds)
+    public void restoreWalletFrom(List<String> mnemonic, long timestamp) throws IOException {
+        wallet = Wallet.fromSeed(conf.getNetworkParams(),new DeterministicSeed(mnemonic,null,"",0));
+        restoreWallet(wallet);
     }
 
     /**
@@ -588,6 +594,8 @@ public class WalletManager {
         if (tx==null)return null;
         return tx.getOutput(index).getValue();
     }
+
+
 
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

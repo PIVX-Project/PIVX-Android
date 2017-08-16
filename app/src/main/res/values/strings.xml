@@ -226,7 +226,7 @@
     <string name="confimations">Confirmations</string>
     <string name="multiple_address_send">Sending to %d addresses</string>
     <string name="fee_per_kb">%s Piv/kB</string>
-    <string name="fee_explanation">If the custom fee is set to 1000 uPivs and the transaction is only 250 bytes, then \"per kilobyte\" only pays 250 uPivs in fee, while \"at least\" pays 1000 uPivs. For transactions bigger than a kilobyte both pay by kilobyte.</string>
+    <string name="fee_explanation">If the custom fee is lower than the minimum fee (0.0001 PIV/kB) the cost will be the minimum and not the custom fee selected.</string>
     <string name="invalid_fee_amount">Invalid fee amount</string>
     <string name="load_inputs_fail">Coin control fail</string>
     <string name="title_tx_weight">Weight</string>
@@ -240,6 +240,8 @@
     <string name="options_menu">Options Menu</string>
     <string name="delete_address_label_text">Label for address\n%s\nis going to be deleted.\n\nAre you sure?</string>
     <string name="address_label_deleted">Address label deleted.</string>
+    <string name="no_available_inputs">You don\'t have any coin to spend</string>
+    <string name="restore_mnemonic_screen_title">Restore Mnemonic</string>
 
 
 </resources>

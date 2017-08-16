@@ -1,6 +1,8 @@
 package pivx.org.pivxwallet;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 import pivx.org.pivxwallet.utils.AppConf;
 
@@ -10,7 +12,7 @@ import pivx.org.pivxwallet.utils.AppConf;
 
 public class CentralFormats {
 
-    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
     public CentralFormats(AppConf appConf) {
         // number format
@@ -20,5 +22,9 @@ public class CentralFormats {
 
     public NumberFormat getNumberFormat() {
         return numberFormat;
+    }
+
+    public String format(BigDecimal bigDecimal){
+        return numberFormat.format(bigDecimal).substring(1);
     }
 }

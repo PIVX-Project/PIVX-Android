@@ -106,6 +106,7 @@ public class WalletActivity extends BaseDrawerActivity {
         if (!pivxApplication.getAppConf().isAppInit()){
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
+            finish();
         }
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
@@ -299,7 +300,7 @@ public class WalletActivity extends BaseDrawerActivity {
             pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         if (pivxRate!=null) {
             txt_local_currency.setText(
-                    pivxApplication.getCentralFormats().getNumberFormat().format(
+                    pivxApplication.getCentralFormats().format(
                             new BigDecimal(availableBalance.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                     )
                     + " "+pivxRate.getCoin()

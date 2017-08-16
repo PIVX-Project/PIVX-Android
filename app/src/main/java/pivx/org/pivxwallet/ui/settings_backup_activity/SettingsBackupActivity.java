@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.File;
@@ -37,6 +38,7 @@ public class SettingsBackupActivity extends BaseActivity {
     private EditText edit_password;
     private EditText edit_repeat_password;
     private Button btn_backup;
+    private ProgressBar progress;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -46,13 +48,16 @@ public class SettingsBackupActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         edit_password = (EditText) root.findViewById(R.id.edit_password);
         edit_repeat_password = (EditText) root.findViewById(R.id.edit_repeat_password);
+        progress = (ProgressBar) root.findViewById(R.id.progress);
 
         btn_backup = (Button) findViewById(R.id.btn_backup);
         btn_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progress.setVisibility(View.VISIBLE);
                 checkPermissions();
                 backup();
+                progress.setVisibility(View.GONE);
             }
         });
     }
@@ -94,6 +99,8 @@ public class SettingsBackupActivity extends BaseActivity {
                 Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e){
             e.printStackTrace();
         }
     }

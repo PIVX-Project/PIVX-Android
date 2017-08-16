@@ -25,6 +25,7 @@ import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment;
+import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
@@ -118,6 +119,16 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
             } else if (key == KeyboardFragment.KEYS.CLEAR) {
                 clear();
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // todo: controlar esto
+        if (pivxApplication.getAppConf().getPincode()==null){
+            startActivity(new Intent(this, StartActivity.class));
+            finish();
         }
     }
 

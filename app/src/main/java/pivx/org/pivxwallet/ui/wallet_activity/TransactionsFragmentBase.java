@@ -91,7 +91,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
                 String localCurrency = null;
                 if (pivxRate!=null) {
-                    localCurrency = pivxApplication.getCentralFormats().getNumberFormat().format(
+                    localCurrency = pivxApplication.getCentralFormats().format(
                                     new BigDecimal(data.getAmount().getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                                     )
                                     + " " + pivxRate.getCoin();

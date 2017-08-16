@@ -24,6 +24,9 @@ public class PivxContext {
     public static final String DEFAULT_RATE_COIN = "USD";
     public static final long RATE_UPDATE_TIME = 72000000;
 
+    /** Pivx wallet released time */
+    public static final long PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME = 1500940800;
+
     // report mail
     public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.com";
     /** Subject line for manually reported issues. */

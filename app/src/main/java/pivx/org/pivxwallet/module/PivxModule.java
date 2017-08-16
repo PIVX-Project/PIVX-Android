@@ -54,6 +54,8 @@ public interface PivxModule {
 
     void restoreWalletFromEncrypted(File file, String password) throws CantRestoreEncryptedWallet, IOException;
 
+    void restoreWallet(List<String> mnemonic, long timestamp) throws IOException;
+
     /**
      * If the wallet already exist
      * @return
@@ -139,4 +141,6 @@ public interface PivxModule {
     boolean isAnyPeerConnected();
 
     long getConnectedPeerHeight();
+
+
 }
