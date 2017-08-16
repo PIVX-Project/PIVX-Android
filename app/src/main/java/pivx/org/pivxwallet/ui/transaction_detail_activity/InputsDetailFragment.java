@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
@@ -28,19 +30,19 @@ public class InputsDetailFragment extends BaseRecyclerFragment<InputWrapper> {
 
     public static final String INTENT_EXTRA_UNSPENT_WRAPPERS = "unspent_wrappers";
 
-    private List<InputWrapper> list;
+    private Set<InputWrapper> list;
     private BaseRecyclerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            list = new ArrayList<>();
+            list = new HashSet<>();
             setHasOptionsMenu(true);
             Intent intent = getActivity().getIntent();
             if (intent != null) {
                 if (intent.hasExtra(INTENT_EXTRA_UNSPENT_WRAPPERS)) {
-                    list = (List<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
+                    list = (Set<InputWrapper>) intent.getSerializableExtra(INTENT_EXTRA_UNSPENT_WRAPPERS);
                     for (InputWrapper inputWrapper : list) {
                         inputWrapper.setUnspent(pivxModule.getUnspent(inputWrapper.getParentTxHash(), inputWrapper.getIndex()));
                     }
@@ -56,7 +58,7 @@ public class InputsDetailFragment extends BaseRecyclerFragment<InputWrapper> {
 
     @Override
     protected List<InputWrapper> onLoading() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override

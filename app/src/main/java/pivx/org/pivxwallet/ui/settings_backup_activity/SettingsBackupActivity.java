@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.ui.settings_backup_activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
@@ -54,12 +56,27 @@ public class SettingsBackupActivity extends BaseActivity {
         btn_backup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress.setVisibility(View.VISIBLE);
                 checkPermissions();
-                backup();
-                progress.setVisibility(View.GONE);
+                viewBackup();
             }
         });
+    }
+
+    private void viewBackup() {
+        progress.setVisibility(View.VISIBLE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
+                backup();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -100,8 +117,10 @@ public class SettingsBackupActivity extends BaseActivity {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();
         } catch (Exception e){
             e.printStackTrace();
+            Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -167,7 +186,7 @@ public class SettingsBackupActivity extends BaseActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //backup
-                    backup();
+                    viewBackup();
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.

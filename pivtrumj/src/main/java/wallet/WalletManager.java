@@ -278,9 +278,8 @@ public class WalletManager {
         }
     }
 
-    // DeterministicSeed(List<String> mnemonicCode, @Nullable byte[] seed, String passphrase, long creationTimeSeconds)
     public void restoreWalletFrom(List<String> mnemonic, long timestamp) throws IOException {
-        wallet = Wallet.fromSeed(conf.getNetworkParams(),new DeterministicSeed(mnemonic,null,"",0));
+        wallet = Wallet.fromSeed(conf.getNetworkParams(),new DeterministicSeed(mnemonic,null,"",timestamp));
         restoreWallet(wallet);
     }
 

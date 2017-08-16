@@ -44,7 +44,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_new_address, container);
-        setTitle("New AddressLabel");
+        setTitle("New Address Label");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         edit_name = (EditText) root.findViewById(R.id.edit_name);
