@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Address 1"
+        android:textSize = "14sp"
+        android:textColor = "#757575"
         android:id="@+id/txt_address_number"/>
 
         <ImageView
