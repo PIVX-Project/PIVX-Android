@@ -42,9 +42,9 @@
     <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
-    <string name="restore_wallet">Restore Wallet</string>
-    <string name="backup_wallet">Backup Wallet</string>
-    <string name="change_pincode">Change PIN Code</string>
+    <string name="restore_wallet">Restore wallet</string>
+    <string name="backup_wallet">Backup wallet</string>
+    <string name="change_pincode">Change PIN code</string>
     <string name="local_currency">Local Currency</string>
     <string name="local_currency_usd">USD</string>
     <string name="repeat_password">Repeat Password</string>
@@ -61,7 +61,7 @@
 
     <string name="select">Select a Node</string>
     <string name="text_version">Version</string>
-    <string name="network_monitor">Network Monitor</string>
+    <string name="network_monitor">Network monitor</string>
     <string name="settings_report">Report issue</string>
     <string name="send_message">Transaction details:</string>
     <string name="save_message">Do you want to save the address?</string>
@@ -225,7 +225,7 @@
     <string name="confimations">Confirmations</string>
     <string name="multiple_address_send">Sending to %d addresses</string>
     <string name="fee_per_kb">%s Piv/kB</string>
-    <string name="fee_explanation">If the custom fee is lower than the minimum fee (0.0001 PIV/kB) the cost will be the minimum and not the custom fee selected.</string>
+    <string name="fee_explanation">If the custom fee is lower than the minimum fee (0.0001 PIV/kB) the cost will be the minimum and not the custom fee selected.\n Fee calculated per kilobyte.</string>
     <string name="invalid_fee_amount">Invalid fee amount</string>
     <string name="load_inputs_fail">Coin control fail</string>
     <string name="title_tx_weight">Weight</string>

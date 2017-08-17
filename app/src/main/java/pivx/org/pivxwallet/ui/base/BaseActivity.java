@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import pivx.org.pivxwallet.R;
@@ -37,6 +38,7 @@ public abstract class BaseActivity extends PivxActivity {
         init();
         // onCreateChildMethod
         onCreateView(savedInstanceState,childContainer);
+
     }
 
     private void init(){

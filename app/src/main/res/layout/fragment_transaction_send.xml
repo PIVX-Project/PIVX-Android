@@ -224,7 +224,7 @@
                 android:hint="@string/set_description"
                 android:text = ""
                 android:textColor = "#434343"
-                android:textSize = "18sp" />
+                android:textSize = "15sp" />
 
         </LinearLayout>
 
