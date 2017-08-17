@@ -36,8 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
-                android:text="@string/backup_wallet"/>
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:text="@string/backup_wallet" />
             <Button
                 android:id="@+id/btn_restore_wallet"
                 android:background="@drawable/settings_items"
@@ -49,7 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/restore_wallet"/>
             <Button
                 android:id="@+id/btn_change_pincode"
@@ -62,7 +66,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/change_pincode"/>
 
             <Button
@@ -76,7 +82,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/settings_change_trusted_node"/>
 
             <Button
@@ -90,7 +98,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/settings_reset_blockchain"/>
 
 
@@ -119,8 +129,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
                 android:text="Splash video sound"
-                android:textColor="#0d0d0d"
-                android:textAllCaps="true"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:padding="8dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
@@ -159,7 +170,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/tutorial"/>
 
             <Button
@@ -173,7 +186,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/network_monitor"/>
 
             <Button
@@ -187,7 +202,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/settings_report"/>
 
 
@@ -202,7 +219,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textColor="#444444"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
                 android:text="@string/settings_support"/>
 
         </LinearLayout>
