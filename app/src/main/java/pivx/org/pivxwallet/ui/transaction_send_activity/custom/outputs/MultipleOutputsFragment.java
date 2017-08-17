@@ -44,6 +44,8 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
     private List<OutputWrapper> list;
     private BaseRecyclerAdapter adapter;
 
+    private int holderWaitingForAddress = -1;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +89,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
             }
 
             @Override
-            protected void bindHolder(final OutputHolder holder, final OutputWrapper data, int position) {
+            protected void bindHolder(final OutputHolder holder, final OutputWrapper data, final int position) {
                 data.setId(position);
                 holder.txt_address_number.setText(getString(R.string.address_num,position+1));
                 if(position==0) {
@@ -112,6 +114,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                                 requestPermissions(perms, permsRequestCode);
                             }
                         }
+                        holderWaitingForAddress = position;
                         startActivityForResult(new Intent(getActivity(), ScanActivity.class),SCANNER_RESULT);
                     }
                 });
@@ -275,7 +278,18 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
         if (requestCode == SCANNER_RESULT){
             if (resultCode==RESULT_OK) {
                 try {
-
+                    String address = "";
+                    address = data.getStringExtra(INTENT_EXTRA_RESULT);
+                    String usedAddress;
+                    if (pivxModule.chechAddress(address)){
+                        usedAddress = address;
+                    }else {
+                        PivxURI pivxUri = new PivxURI(address);
+                        usedAddress = pivxUri.getAddress().toBase58();
+                    }
+                    final String tempPubKey = usedAddress;
+                    OutputHolder outputHolder = (OutputHolder) getRecycler().findViewHolderForAdapterPosition(holderWaitingForAddress);
+                    outputHolder.edit_address.setText(tempPubKey);
                 }catch (Exception e){
                     Toast.makeText(getActivity(),R.string.bad_address,Toast.LENGTH_LONG).show();
                 }
