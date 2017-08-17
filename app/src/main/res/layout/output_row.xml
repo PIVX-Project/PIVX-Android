@@ -52,7 +52,7 @@
             android:maxLines="1"
             android:lines="1"
             android:maxLength="58"
-            android:hint="DB6xr1b9zgMnpBEG3hhUP22WDKydyevaM2"
+            android:hint="@string/add_address"
             android:textCursorDrawable="@drawable/color_cursor"
             android:inputType="text"
             android:textSize="14sp"
@@ -71,7 +71,7 @@
                 android:layout_height="24dp"
                 android:layout_marginBottom="3dp"
                 android:id="@+id/img_qr"
-                android:src="@mipmap/ic_qr_code"/>
+                android:src="@drawable/ic_qr_code"/>
 
 
         </LinearLayout>
