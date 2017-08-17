@@ -18,7 +18,10 @@ import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.module.PivxContext.PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
 
@@ -56,32 +59,9 @@ public class RestoreWordsActivity extends BaseActivity {
         viewPagerAdapter = new RestoreWordsActivity.ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        viewPager.setOffscreenPageLimit(3);
 
         //Words
-        txtWord1 = (EditText) findViewById(R.id.text_word1);
-        txtWord2 = (EditText) findViewById(R.id.text_word2);
-        txtWord3 = (EditText) findViewById(R.id.text_word3);
-        txtWord4 = (EditText) findViewById(R.id.text_word4);
-        txtWord5 = (EditText) findViewById(R.id.text_word5);
-        txtWord6 = (EditText) findViewById(R.id.text_word6);
-        txtWord7 = (EditText) findViewById(R.id.text_word7);
-        txtWord8 = (EditText) findViewById(R.id.text_word8);
-        txtWord9 = (EditText) findViewById(R.id.text_word9);
-        txtWord10 = (EditText) findViewById(R.id.text_word10);
-        txtWord11 = (EditText) findViewById(R.id.text_word11);
-        txtWord12 = (EditText) findViewById(R.id.text_word12);
-        txtWord13 = (EditText) findViewById(R.id.text_word13);
-        txtWord14 = (EditText) findViewById(R.id.text_word14);
-        txtWord15 = (EditText) findViewById(R.id.text_word15);
-        txtWord16 = (EditText) findViewById(R.id.text_word16);
-        txtWord17 = (EditText) findViewById(R.id.text_word17);
-        txtWord18 = (EditText) findViewById(R.id.text_word18);
-        txtWord19 = (EditText) findViewById(R.id.text_word19);
-        txtWord20 = (EditText) findViewById(R.id.text_word20);
-        txtWord21 = (EditText) findViewById(R.id.text_word21);
-        txtWord22 = (EditText) findViewById(R.id.text_word22);
-        txtWord23 = (EditText) findViewById(R.id.text_word23);
-        txtWord24 = (EditText) findViewById(R.id.text_word24);
     }
 
     public void btnBackClick(View v) {
@@ -126,7 +106,7 @@ public class RestoreWordsActivity extends BaseActivity {
                 String word23 = txtWord23.getText().toString();
                 String word24 = txtWord24.getText().toString();
 
-                List<String> mnemonic = new ArrayList<>();
+                final List<String> mnemonic = new ArrayList<>();
                 mnemonic.add(word1);
                 mnemonic.add(word2);
                 mnemonic.add(word3);
@@ -152,10 +132,47 @@ public class RestoreWordsActivity extends BaseActivity {
                 mnemonic.add(word23);
                 mnemonic.add(word24);
 
-                pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
+                for (String s : mnemonic) {
+                    if (s.equals("")){
+                        DialogsUtil.buildSimpleErrorTextDialog(this,getString(R.string.invalid_inputs),getString(R.string.invalid_mnemonic_code))
+                        .show(getFragmentManager(),"invalid_mnemonic_code");
+                        return;
+                    }
+                }
 
-                launchHomeScreen();
-            } catch (IOException e) {
+                SimpleTwoButtonsDialog dialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                        this,
+                        R.string.restore_mnemonic_title,
+                        R.string.restore_mnemonic_dialog_body,
+                        new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                            @Override
+                            public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                dialog.dismiss();
+                                try {
+                                    pivxApplication.stopBlockchain();
+
+                                    pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
+
+                                    Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
+
+                                    startActivity(new Intent(RestoreWordsActivity.this, WalletActivity.class));
+                                    finish();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    // todo: show an error message here..
+                                    Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                dialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+                dialog.show();
+            } catch (Exception e) {
                 e.printStackTrace();
                 // todo: show an error message here..
                 Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
@@ -210,10 +227,6 @@ public class RestoreWordsActivity extends BaseActivity {
         return viewPager.getCurrentItem() + i;
     }
 
-    private void launchHomeScreen() {
-        startActivity(new Intent(this, PincodeActivity.class));
-        finish();
-    }
 
 
     public class ViewPagerAdapter extends PagerAdapter {
@@ -230,6 +243,35 @@ public class RestoreWordsActivity extends BaseActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+            if (position==0) {
+                txtWord1 = (EditText) view.findViewById(R.id.text_word1);
+                txtWord2 = (EditText) view.findViewById(R.id.text_word2);
+                txtWord3 = (EditText) view.findViewById(R.id.text_word3);
+                txtWord4 = (EditText) view.findViewById(R.id.text_word4);
+                txtWord5 = (EditText) view.findViewById(R.id.text_word5);
+                txtWord6 = (EditText) view.findViewById(R.id.text_word6);
+                txtWord7 = (EditText) view.findViewById(R.id.text_word7);
+                txtWord8 = (EditText) view.findViewById(R.id.text_word8);
+            }else if (position==1){
+                txtWord9 = (EditText) view.findViewById(R.id.text_word9);
+                txtWord10 = (EditText) view.findViewById(R.id.text_word10);
+                txtWord11 = (EditText) view.findViewById(R.id.text_word11);
+                txtWord12 = (EditText) view.findViewById(R.id.text_word12);
+                txtWord13 = (EditText) view.findViewById(R.id.text_word13);
+                txtWord14 = (EditText) view.findViewById(R.id.text_word14);
+                txtWord15 = (EditText) view.findViewById(R.id.text_word15);
+                txtWord16 = (EditText) view.findViewById(R.id.text_word16);
+            }else if(position==2){
+                txtWord17 = (EditText) view.findViewById(R.id.text_word17);
+                txtWord18 = (EditText) view.findViewById(R.id.text_word18);
+                txtWord19 = (EditText) view.findViewById(R.id.text_word19);
+                txtWord20 = (EditText) view.findViewById(R.id.text_word20);
+                txtWord21 = (EditText) view.findViewById(R.id.text_word21);
+                txtWord22 = (EditText) view.findViewById(R.id.text_word22);
+                txtWord23 = (EditText) view.findViewById(R.id.text_word23);
+                txtWord24 = (EditText) view.findViewById(R.id.text_word24);
+            }
 
             return view;
 

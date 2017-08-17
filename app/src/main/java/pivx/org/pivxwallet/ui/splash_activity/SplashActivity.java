@@ -27,8 +27,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         videoView = (VideoView) findViewById(R.id.video_view);
-        Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
+        Uri video;
+        if(PivxApplication.getInstance().getAppConf().isSplashSoundEnabled())
+            video = Uri.parse("android.resource://" + getPackageName() + "/"
                 + R.raw.splash_video);
+        else
+            video = Uri.parse("android.resource://" + getPackageName() + "/"
+                    + R.raw.splash_video_muted);
 
         if (videoView != null) {
             videoView.setVideoURI(video);
@@ -38,7 +43,6 @@ public class SplashActivity extends AppCompatActivity {
                     jump();
                 }
             });
-
 
             videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override

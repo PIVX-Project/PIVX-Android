@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +32,12 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.ui.words_restore_activity.RestoreWordsActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
@@ -55,6 +58,8 @@ public class RestoreActivity extends BaseActivity {
     private Spinner spinnerFiles;
     private TextView restoreMessage;
     private Button btn_restore;
+    private ProgressBar progress;
+    private AtomicBoolean flag = new AtomicBoolean(false);
     private FileAdapter fileAdapter;
     private List<File> files = new LinkedList<File>();
 
@@ -98,6 +103,7 @@ public class RestoreActivity extends BaseActivity {
                 restore();
             }
         });
+        progress = (ProgressBar) root.findViewById(R.id.progress);
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
         edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
         spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
@@ -152,63 +158,107 @@ public class RestoreActivity extends BaseActivity {
     }
 
     private void restore() {
-        try {
-            String password = edit_password.getText().toString().trim();
+        if (!flag.getAndSet(true)) {
+            progress.setVisibility(View.VISIBLE);
+            final String password = edit_password.getText().toString().trim();
             edit_password.setText(null); // get rid of it asap
-            File file = (File) spinnerFiles.getSelectedItem();
-            if (WalletUtils.BACKUP_FILE_FILTER.accept(file)){
-                pivxModule.restoreWallet(file);
-                showRestoreSucced();
-            }else if (KEYS_FILE_FILTER.accept(file)) {
-                //module.restorePrivateKeysFromBase58(file);
-            }else if (Crypto.OPENSSL_FILE_FILTER.accept(file)) {
-                try {
-                    pivxModule.restoreWalletFromEncrypted(file, password);
-                    showRestoreSucced();
-                } catch (CantRestoreEncryptedWallet x) {
-                    DialogsUtil.buildSimpleErrorTextDialog(
-                            this,
-                            getString( R.string.import_export_keys_dialog_failure_title),
-                            getString(R.string.import_keys_dialog_failure, x.getMessage())
-                    ).setOkBtnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            restore();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        File file = (File) spinnerFiles.getSelectedItem();
+                        if (WalletUtils.BACKUP_FILE_FILTER.accept(file)) {
+                            pivxModule.restoreWallet(file);
+                            showRestoreSucced();
+                        } else if (KEYS_FILE_FILTER.accept(file)) {
+                            //module.restorePrivateKeysFromBase58(file);
+                        } else if (Crypto.OPENSSL_FILE_FILTER.accept(file)) {
+                            try {
+                                pivxModule.restoreWalletFromEncrypted(file, password);
+                                showRestoreSucced();
+                            } catch (final CantRestoreEncryptedWallet x) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        DialogsUtil.buildSimpleErrorTextDialog(
+                                                RestoreActivity.this,
+                                                getString(R.string.import_export_keys_dialog_failure_title),
+                                                getString(R.string.import_keys_dialog_failure, x.getMessage())
+                                        ).setOkBtnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                restore();
+                                            }
+                                        }).show(getFragmentManager(), getString(R.string.restore_dialog_error));
+                                    }
+                                });
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(RestoreActivity.this, R.string.cannot_restore_wallet, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
                         }
-                    }).show(getFragmentManager(),getString(R.string.restore_dialog_error));
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, R.string.cannot_restore_wallet, Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(RestoreActivity.this, R.string.cannot_restore_wallet, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(RestoreActivity.this, R.string.cannot_restore_wallet, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.setVisibility(View.GONE);
+                            flag.set(false);
+                        }
+                    });
                 }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
+            }).start();
         }
     }
 
     private void showRestoreSucced() {
-        String message = this.getString(R.string.restore_wallet_dialog_success) +
-                "\n\n" +
-                this.getString(R.string.restore_wallet_dialog_success_replay);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String message = getString(R.string.restore_wallet_dialog_success_replay);
 
-        DialogsUtil.buildSimpleTextDialog(this,null,message)
-                .show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
+                SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleTextDialog(RestoreActivity.this,getString(R.string.restore_wallet_dialog_success),message);
+                simpleTextDialog.setOkBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+                simpleTextDialog.show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
 
-        if (jumpToWizard){
-            startActivity(new Intent(this, TutorialActivity.class));
-            finish();
-        }else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    pivxApplication.startPivxService();
+                if (jumpToWizard){
+                    startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
+                    finish();
+                }else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pivxApplication.startPivxService();
+                        }
+                    }, TimeUnit.SECONDS.toMillis(5));
                 }
-            }, TimeUnit.SECONDS.toMillis(5));
-        }
-
+            }
+        });
     }
 
     private void init(){

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -66,18 +67,15 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         adapter = initAdapter();
         if (adapter==null) throw new IllegalStateException("Base adapter cannot be null");
         recycler.setAdapter(adapter);
-        if (refreshSwipeEnabled){
-            swipeRefreshLayout.setEnabled(false);
-        }else {
-            swipeRefreshLayout.setOnRefreshListener(
-                    new SwipeRefreshLayout.OnRefreshListener() {
-                        @Override
-                        public void onRefresh() {
-                            load();
-                        }
+        swipeRefreshLayout.setEnabled(refreshSwipeEnabled);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        load();
                     }
-            );
-        }
+                }
+        );
         return root;
     }
 

@@ -81,6 +81,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
 
             @Override
             protected void bindHolder(final OutputHolder holder, final OutputWrapper data, int position) {
+                data.setId(position);
                 holder.txt_address_number.setText(getString(R.string.address_num,position+1));
                 if(position==0) {
                     holder.img_cancel.setVisibility(View.GONE);
@@ -108,12 +109,23 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                 });
                 if (data.getAddress()!=null){
                     holder.edit_address.setText(data.getAddress());
+                    if (!pivxModule.chechAddress(data.getAddress())) {
+                        holder.edit_address.setTextColor(Color.RED);
+                    } else {
+                        holder.edit_address.setTextColor(Color.GREEN);
+                    }
+                }else {
+                    holder.edit_address.setText("");
                 }
                 if (data.getAddressLabel()!=null){
                     holder.edit_address_label.setText(data.getAddressLabel());
+                }else {
+                    holder.edit_address_label.setText("");
                 }
                 if (data.getAmount()!=null){
                     holder.edit_amount.setText(data.getAmount().toPlainString());
+                }else {
+                    holder.edit_amount.setText("");
                 }
                 holder.edit_address.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -141,6 +153,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                                         holder.edit_address_label.setText(addressLabel.getName());
                                     }
                                 }
+                                data.setAddress(address);
                             }
                         }
                     }
@@ -158,7 +171,34 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
 
                     @Override
                     public void afterTextChanged(Editable s) {
+                        String amountStr = s.toString();
+                        if (amountStr.length()>0){
+                            data.setAmount(Coin.parseCoin(amountStr));
+                        }else {
+                            data.setAmount(null);
+                        }
 
+                    }
+                });
+                holder.edit_address_label.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        String label = s.toString();
+                        if (label.length()>0){
+                            data.setAddressLabel(label);
+                        }else {
+                            data.setAmount(null);
+                        }
                     }
                 });
 
@@ -175,6 +215,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                 }
                 if (pos==-1) throw new IllegalArgumentException("id not exist in the dataset, id:" +id);
                 OutputWrapper outputWrapper = super.removeItem(pos);
+                notifyDataSetChanged();
                 return outputWrapper;
             }
         };
@@ -185,15 +226,15 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
     public void addOutput(){
 
         int pos = list.size()-1;
-        OutputHolder outputHolder = (OutputHolder) getRecycler().findViewHolderForAdapterPosition(pos);
-        String address = outputHolder.edit_address.getText().toString();
-        String amountStr = outputHolder.edit_amount.getText().toString();
+        OutputWrapper outputWrapper = list.get(pos);
+        String address = outputWrapper.getAddress();
+        String amountStr = outputWrapper.getAmount().toPlainString();
         if (amountStr.equals("")){
             Toast.makeText(getActivity(),R.string.invalid_last_amount,Toast.LENGTH_LONG).show();
             return;
         }
         Coin amount = Coin.parseCoin(amountStr);
-        String addressLabel = outputHolder.edit_address_label.getText().toString();
+        String addressLabel = outputWrapper.getAddressLabel();
 
         OutputWrapper lastOutput = (OutputWrapper) adapter.getItem(pos);
         lastOutput.setAddress(address);
@@ -241,29 +282,30 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
     public List<OutputWrapper> getList() throws InvalidFieldException {
         List<OutputWrapper> ret = new ArrayList<>();
         for (int i=0;i<list.size();i++){
-            OutputHolder outputHolder = (OutputHolder) getRecycler().findViewHolderForAdapterPosition(i);
-            if (outputHolder!=null){
-                String address;
-                String amountStr;
-                address = outputHolder.edit_address.getText().toString();
-                amountStr = outputHolder.edit_amount.getText().toString();
-                boolean checkAddress = !pivxModule.chechAddress(address);
-                boolean checkAmount = amountStr.length() == 0;
-                if (i!=list.size()-1) {
-                    if (checkAddress)
-                        throw new InvalidFieldException("Address not valid");
-                    if (checkAmount)
-                        throw new InvalidFieldException("Amount not valid");
-                }else {
-                    if (checkAddress || checkAmount){
-                        break;
-                    }
+            //OutputHolder outputHolder = (OutputHolder) getRecycler().findViewHolderForAdapterPosition(i);
+            //if (outputHolder!=null){
+            OutputWrapper outputWrapperList = list.get(i);
+            String address;
+            String amountStr;
+            address = outputWrapperList.getAddress(); //outputHolder.edit_address.getText().toString();
+            amountStr = outputWrapperList.getAmount().toPlainString(); //outputHolder.edit_amount.getText().toString();
+            boolean checkAddress = !pivxModule.chechAddress(address);
+            boolean checkAmount = amountStr.length() == 0;
+            if (i!=list.size()-1) {
+                if (checkAddress)
+                    throw new InvalidFieldException("Address not valid");
+                if (checkAmount)
+                    throw new InvalidFieldException("Amount not valid");
+            }else {
+                if (checkAddress || checkAmount){
+                    break;
                 }
-                Coin amount = Coin.parseCoin(amountStr);
-                String addressLabel = outputHolder.edit_address_label.getText().toString();
-                OutputWrapper outputWrapper = new OutputWrapper(i,address,amount,addressLabel);
-                ret.add(outputWrapper);
             }
+            Coin amount = Coin.parseCoin(amountStr);
+            String addressLabel = outputWrapperList.getAddressLabel();// outputHolder.edit_address_label.getText().toString();
+            OutputWrapper outputWrapper = new OutputWrapper(i,address,amount,addressLabel);
+            ret.add(outputWrapper);
+            //}
         }
         return ret;
     }

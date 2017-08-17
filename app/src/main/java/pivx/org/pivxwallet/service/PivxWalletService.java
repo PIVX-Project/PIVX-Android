@@ -58,6 +58,7 @@ import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
 import pivx.org.pivxwallet.rate.CoinTypes;
 import pivx.org.pivxwallet.rate.RequestPivxRateException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AppConf;
 
 import static pivx.org.pivxwallet.module.PivxContext.CONTEXT;
@@ -220,6 +221,7 @@ public class PivxWalletService extends Service{
 
         android.support.v4.app.NotificationCompat.Builder mBuilder;
         PendingIntent deleteIntent;
+        PendingIntent openPendingIntent;
 
         @Override
         public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
@@ -243,20 +245,23 @@ public class PivxWalletService extends Service{
             if (amount.isGreaterThan(Coin.ZERO)) {
                 //notificationCount++;
                 notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
+                Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
+                openPendingIntent = PendingIntent.getActivity(getApplicationContext(),0,openIntent,0);
                 Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
                 resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
                 deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                                 .setContentTitle("Pivs received!")
                                 .setContentText("Coins received for a value of " + notificationAccumulatedAmount.getValue())
-                                .setAutoCancel(false)
+                                .setAutoCancel(true)
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setColor(
                                         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
                                                 getResources().getColor(R.color.bgPurple,null)
                                                 :
                                                 ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
-                                .setDeleteIntent(deleteIntent);
+                                .setDeleteIntent(deleteIntent)
+                                .setContentIntent(openPendingIntent);
                 nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
             }else {
                 log.error("transaction with a value lesser than zero arrives..");

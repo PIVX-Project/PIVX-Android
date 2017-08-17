@@ -35,10 +35,12 @@
         style="@style/Inputs"/>
     <TextView
         android:text = "@string/ssl_port"
+        android:visibility="gone"
         style="@style/Subtitles"/>
 
     <EditText
         android:id="@+id/sslText"
+        android:visibility="gone"
         android:hint="@string/hint_ssl_port"
         android:text = ""
         android:inputType="number"

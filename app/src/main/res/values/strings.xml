@@ -32,14 +32,14 @@
     <string name="title_description">Description</string>
     <string name="title_receiver_name">Receiver\'s name</string>
     <string name="title_date">Date</string>
-    <string name="set_address">Write address or addressLabel name</string>
-    <string name="add_address">Write address or addressLabel name</string>
+    <string name="set_address">Write address or label name</string>
+    <string name="add_address">Write address or label name</string>
     <string name="set_name">Add name</string>
     <string name="set_description">Add a description</string>
     <string name="btn_send">Send</string>
     <string name="btn_request">Request</string>
     <string name="settings_subtitle_security">Security</string>
-    <string name="backup_wallet_message">Your backup will be encrypted with \n the password you choose and saved \n to an external storage drive.</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore Wallet</string>
@@ -145,7 +145,7 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
-    <string name="security_message">Please write this in a safe place\nyou\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!.</string>
+    <string name="security_message">Please write this in a safe place\nyou\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
@@ -242,6 +242,11 @@
     <string name="address_label_deleted">Address label deleted.</string>
     <string name="no_available_inputs">You don\'t have any coin to spend</string>
     <string name="restore_mnemonic_screen_title">Restore Mnemonic</string>
+    <string name="invalid_mnemonic_code">Invalid mnemonic code, please check every word again.</string>
+    <string name="restore_mnemonic">Restoring wallet from mnemonic..</string>
+    <string name="restore_mnemonic_title">Restore Mnemonic</string>
+    <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synched.</string>
+    <string name="invalid_host">Invalid host name</string>
 
 
 </resources>

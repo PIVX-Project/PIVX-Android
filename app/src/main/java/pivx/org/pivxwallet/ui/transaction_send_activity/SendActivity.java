@@ -61,6 +61,7 @@ import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_MEMO;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
@@ -111,6 +112,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private Set<InputWrapper> unspent;
     /** Custom fee selector */
     private CustomFeeFragment.FeeSelector customFee;
+    /** Clean wallet flag */
+    private boolean cleanWallet;
 
 
     @Override
@@ -176,6 +179,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }else {
                     txtShowPiv.setText("0 "+pivxRate.getCoin());
                 }
+                cleanWallet = false;
             }
         });
 
@@ -207,6 +211,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }else {
                     txt_local_currency.setText("0 "+pivxRate.getCoin());
                 }
+                cleanWallet = false;
 
             }
         });
@@ -245,11 +250,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void startMultiAddressSendActivity(List<OutputWrapper> outputWrappers) {
-        String amountStr = edit_amount.getText().toString();
+        String amountStr = getAmountStr();
         if (amountStr.length()>0){
             Intent intent = new Intent(this, OutputsActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
+            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,amountStr);
             if (outputWrappers!=null)
                 bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
             intent.putExtras(bundle);
@@ -260,11 +265,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void startCoinControlActivity(Set<InputWrapper> unspent) {
-        String amountStr = edit_amount.getText().toString();
+        String amountStr = getAmountStr();
         if (amountStr.length()>0){
             Intent intent = new Intent(this, InputsActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,edit_amount.getText().toString());
+            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,amountStr);
             if (unspent!=null)
                 bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) unspent);
             intent.putExtras(bundle);
@@ -312,6 +317,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             }
             startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
         }else if(id == R.id.btn_add_all){
+            cleanWallet = true;
             Coin coin = pivxModule.getAvailableBalanceCoin();
             if (inPivs){
                 edit_amount.setText(coin.toPlainString());
@@ -468,22 +474,26 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
     }
 
+    private String getAmountStr(){
+        String amountStr;
+        if (inPivs) {
+            amountStr = edit_amount.getText().toString();
+        }else {
+            String valueStr = editCurrency.getText().toString();
+            if (valueStr.charAt(0)=='.'){
+                valueStr = "0"+valueStr;
+            }
+            BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
+            amountStr = result.toPlainString();
+        }
+        return amountStr;
+    }
+
     private void send() {
         try {
 
             // first check amount
-            String amountStr;
-            if (inPivs) {
-                amountStr = edit_amount.getText().toString();
-            }else {
-                String valueStr = editCurrency.getText().toString();
-                if (valueStr.charAt(0)=='.'){
-                    valueStr = "0"+valueStr;
-                }
-                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
-                amountStr = result.toPlainString();
-
-            }
+            String amountStr = getAmountStr();
             if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
             if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException("Amount not valid");
             if (amountStr.charAt(0)=='.'){
@@ -577,9 +587,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Bundle bundle = new Bundle();
             bundle.putSerializable(TX_WRAPPER,transactionWrapper);
             bundle.putSerializable(TX,transaction.bitcoinSerialize());
+            if (memo.length()>0)
+                bundle.putString(TX_MEMO,memo);
             intent.putExtras(bundle);
             startActivityForResult(intent,SEND_DETAIL);
-            //launchDialog(transaction);
 
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
@@ -591,18 +602,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void sendConfirmed(){
-        /*if (contactName.length()>0){
-            AddressLabel contact = new AddressLabel(contactName);
-            contact.addAddress(addressStr);
-            contact.addTx(transaction.getHash());
-            try {
-                pivxModule.saveContact(contact);
-            } catch (ContactAlreadyExistException e) {
-                e.printStackTrace();
-                Toast.makeText(SendActivity.this,R.string.contact_already_exist,Toast.LENGTH_LONG).show();
-                return;
-            }
-        }*/
         pivxModule.commitTx(transaction);
         Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);
