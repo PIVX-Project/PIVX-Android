@@ -208,7 +208,6 @@
     <string name="invalid_amount_value">Invalid amount value</string>
     <string name="select_all">Select all</string>
     <string name="total_amount">Total:</string>
-    <string name="send_amount_address_error">You most set an amount to send first to send to more than one address.</string>
     <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
     <string name="tx_detail_amount">Total amount</string>
     <string name="tx_detail_inputs_title">Source coins</string>
