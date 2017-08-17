@@ -87,7 +87,7 @@
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
     <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at\n %s </string>
-    <string name="import_keys_dialog_message">Select one of your backups files loaded from %s</string>
+    <string name="import_keys_dialog_message">Select one of your backups \n files loaded from \n folder %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
     <string name="import_keys_dialog_failure">Error importing backup file\n%s</string>

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/restore_wallet_message"
         android:textColor="@color/mainText"
