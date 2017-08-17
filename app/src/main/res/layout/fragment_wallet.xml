@@ -9,9 +9,6 @@
     android:background="@color/bgWhite"
     tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
 
-    <!--<include layout="@layout/fragment_pivx_amount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -33,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:name="pivx.org.pivxwallet.ui.wallet_activity.TransactionsFragmentBase"
                 android:id="@+id/transactions_fragment"
+                android:paddingBottom="66dp"
                 />
 
             <android.support.design.widget.FloatingActionButton
