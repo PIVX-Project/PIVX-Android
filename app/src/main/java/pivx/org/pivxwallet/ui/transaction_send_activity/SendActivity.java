@@ -34,6 +34,7 @@ import org.bitcoinj.uri.PivxURI;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -114,6 +115,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private CustomFeeFragment.FeeSelector customFee;
     /** Clean wallet flag */
     private boolean cleanWallet;
+    /** Is multi send */
+    private boolean isMultiSend;
 
 
     @Override
@@ -311,24 +314,28 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             }
             startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
         }else if(id == R.id.btn_add_all){
-            cleanWallet = true;
-            Coin coin = pivxModule.getAvailableBalanceCoin();
-            if (inPivs){
-                edit_amount.setText(coin.toPlainString());
-                txt_local_currency.setText(
-                        pivxApplication.getCentralFormats().format(
-                                new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
-                        )
-                                + " "+pivxRate.getCoin()
-                );
+            if (!isMultiSend) {
+                cleanWallet = true;
+                Coin coin = pivxModule.getAvailableBalanceCoin();
+                if (inPivs) {
+                    edit_amount.setText(coin.toPlainString());
+                    txt_local_currency.setText(
+                            pivxApplication.getCentralFormats().format(
+                                    new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                            )
+                                    + " " + pivxRate.getCoin()
+                    );
+                } else {
+                    editCurrency.setText(
+                            pivxApplication.getCentralFormats().format(
+                                    new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                            )
+                                    + " " + pivxRate.getCoin()
+                    );
+                    txtShowPiv.setText(coin.toFriendlyString());
+                }
             }else {
-                editCurrency.setText(
-                        pivxApplication.getCentralFormats().format(
-                                new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
-                        )
-                                + " "+pivxRate.getCoin()
-                );
-                txtShowPiv.setText(coin.toFriendlyString());
+                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_SHORT).show();
             }
         }else if(id == R.id.btn_swap){
             inPivs = !inPivs;
@@ -420,6 +427,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     txt_multiple_outputs.setVisibility(View.GONE);
                     container_address.setVisibility(View.VISIBLE);
                     unBlockAmount();
+                    isMultiSend = false;
                 }else {
                     outputWrappers = (List<OutputWrapper>) data.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
                     Coin totalAmount = Coin.ZERO;
@@ -430,6 +438,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     txt_multiple_outputs.setText(getString(R.string.multiple_address_send, outputWrappers.size()));
                     txt_multiple_outputs.setVisibility(View.VISIBLE);
                     container_address.setVisibility(View.GONE);
+                    isMultiSend = true;
                 }
             }
         }else if (requestCode == CUSTOM_INPUTS){
@@ -484,7 +493,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 valueStr = "0"+valueStr;
             }
             BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
-            amountStr = result.toPlainString();
+            amountStr = result.setScale(6,RoundingMode.FLOOR).toPlainString();
         }
         return amountStr;
     }
@@ -494,7 +503,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             edit_amount.setText(amount.toPlainString());
             edit_amount.setEnabled(false);
         }else {
-            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getValue());
+            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getValue()).setScale(6,RoundingMode.FLOOR);
             editCurrency.setText(result.toPlainString());
             edit_amount.setEnabled(false);
         }
@@ -518,6 +527,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (amountStr.charAt(0)=='.'){
                 amountStr = "0"+amountStr;
             }
+
             Coin amount = Coin.parseCoin(amountStr);
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
