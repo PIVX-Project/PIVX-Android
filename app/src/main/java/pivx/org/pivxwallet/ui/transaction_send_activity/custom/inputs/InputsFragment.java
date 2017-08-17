@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -155,29 +156,18 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
             @Override
             protected void bindHolder(final BaseRecyclerViewHolder holder, final InputSelectionWrapper data, int position) {
                 if (position==0){
-                    SelectorHolder selectorHolder = (SelectorHolder) holder;
-                    selectorHolder.radio_select.setOnClickListener(new View.OnClickListener() {
+                    final SelectorHolder selectorHolder = (SelectorHolder) holder;
+                    View.OnClickListener onClickListener = new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            setSelectorImg(selectorHolder.radio_select,!data.isSelected);
+                            data.isSelected = !data.isSelected;
                             selectAll();
                         }
-                    });
+                    };
+                    selectorHolder.itemView.setOnClickListener(onClickListener);
                 }else {
                     final InputHolder inputHolder = (InputHolder) holder;
-                    inputHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            boolean selected = !inputHolder.radio_select.isChecked();
-                            inputHolder.radio_select.setChecked(selected);
-                            data.setSelected(selected);
-                            if (selected){
-                                selectedList.add(data.getInputWrapper());
-                            }else {
-                                selectedList.remove(data.getInputWrapper());
-                            }
-                        }
-                    });
-
                     boolean found = false;
                     for (InputWrapper inputWrapper : selectedList) {
                         if (inputWrapper.getParentTxHash().equals(data.getInputWrapper().getParentTxHash())
@@ -187,13 +177,32 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
                             break;
                         }
                     }
-                    inputHolder.radio_select.setChecked(found);
+
+                    // img
+                    setSelectorImg(inputHolder.radio_select,found);
+
                     data.setSelected(found);
 
                     inputHolder.txt_address.setText(data.getInputWrapper().getLabel());
                     inputHolder.txt_amount.setText(data.getInputWrapper().getUnspent().getValue().toFriendlyString());
                     inputHolder.txt_confirmations_amount.setText(data.getInputWrapper().getUnspent().getParentTransactionDepthInBlocks()+" "+getString(R.string.confimations));
                     inputHolder.txt_date.setText(simpleDateFormat.format(data.getInputWrapper().getUnspent().getParentTransaction().getUpdateTime()));
+
+                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            boolean selected = !data.isSelected;
+                            setSelectorImg(inputHolder.radio_select,selected);
+                            data.setSelected(selected);
+                            if (selected){
+                                selectedList.add(data.getInputWrapper());
+                            }else {
+                                selectedList.remove(data.getInputWrapper());
+                            }
+                        }
+                    };
+                    inputHolder.itemView.setOnClickListener(onClickListener);
+
                 }
             }
             @Override
@@ -204,12 +213,21 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
         return adapter;
     }
 
+    private void setSelectorImg(ImageView img,boolean selected){
+        if (selected){
+            img.setImageResource(R.drawable.ic_selector_on);
+        }else {
+            img.setImageResource(R.drawable.ic_selector_off);
+        }
+    }
+
     private void selectAll(){
         selectAll = !selectAll;
         for (int i=1;i<list.size();i++){
             InputHolder inputHolder = (InputHolder) getRecycler().findViewHolderForAdapterPosition(i);
-            if (inputHolder!=null)
-                inputHolder.radio_select.setChecked(selectAll);
+            if (inputHolder!=null) {
+                setSelectorImg(inputHolder.radio_select,selectAll);
+            }
             InputSelectionWrapper inputSelectionWrapper = list.get(i);
             inputSelectionWrapper.setSelected(selectAll);
             if (selectAll) {
@@ -222,11 +240,11 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
 
     private class SelectorHolder extends BaseRecyclerViewHolder{
 
-        CheckBox radio_select;
+        ImageView radio_select;
 
         protected SelectorHolder(View itemView, int holderType) {
             super(itemView, holderType);
-            this.radio_select = (CheckBox) itemView.findViewById(R.id.radio_select);
+            this.radio_select = (ImageView) itemView.findViewById(R.id.radio_select);
         }
     }
 

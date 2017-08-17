@@ -16,7 +16,7 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 public class InputHolder extends BaseRecyclerViewHolder{
 
-    CheckBox radio_select;
+    ImageView radio_select;
     TextView txt_amount;
     TextView txt_address;
     TextView txt_confirmations_amount;
@@ -25,7 +25,7 @@ public class InputHolder extends BaseRecyclerViewHolder{
     public InputHolder(View itemView, int holderType) {
         super(itemView, holderType);
         txt_amount = (TextView) itemView.findViewById(R.id.txt_amount);
-        radio_select = (CheckBox) itemView.findViewById(R.id.radio_select);
+        radio_select = (ImageView) itemView.findViewById(R.id.radio_select);
         txt_address = (TextView) itemView.findViewById(R.id.txt_address);
         txt_confirmations_amount = (TextView) itemView.findViewById(R.id.txt_confirmations_amount);
         txt_date = (TextView) itemView.findViewById(R.id.txt_date);
