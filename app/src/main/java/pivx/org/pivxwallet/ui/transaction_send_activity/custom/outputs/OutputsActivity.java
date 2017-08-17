@@ -37,9 +37,7 @@ public class OutputsActivity extends BaseActivity {
     private TextView txt_total_amount;
 
     private List<OutputWrapper> outputWrappers;
-
     private Coin totalAmount;
-    private Coin selectedAmount;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -47,14 +45,14 @@ public class OutputsActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        totalAmount = Coin.parseCoin(getIntent().getStringExtra(INTENT_EXTRA_TOTAL_AMOUNT));
+        totalAmount = Coin.ZERO;
 
         root = getLayoutInflater().inflate(R.layout.outputs_main,container);
         multiple_addresses_fragment = (MultipleOutputsFragment) getSupportFragmentManager().findFragmentById(R.id.multiple_addresses_fragment);
         txt_add_address = (TextView) root.findViewById(R.id.txt_add_address);
         txt_total_amount = (TextView) root.findViewById(R.id.txt_total_amount);
 
-        txt_total_amount.setText(totalAmount.toFriendlyString());
+        updateTotalAmount();
 
         txt_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +73,10 @@ public class OutputsActivity extends BaseActivity {
             }
         }
 
+    }
+
+    private void updateTotalAmount() {
+        txt_total_amount.setText(totalAmount.toFriendlyString());
     }
 
     @Override
@@ -127,6 +129,18 @@ public class OutputsActivity extends BaseActivity {
                         addressLabel
                 );
             }
+        }
+    }
+
+    public void setAmount(Coin amount) {
+        totalAmount = amount;
+        updateTotalAmount();
+    }
+
+    public void substractAmount(OutputWrapper outputWrapper) {
+        if (outputWrapper.getAmount()!=null) {
+            totalAmount = totalAmount.subtract(outputWrapper.getAmount());
+            updateTotalAmount();
         }
     }
 }

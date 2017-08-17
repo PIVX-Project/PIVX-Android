@@ -17,8 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Address 1"
-        android:textSize = "14sp"
-        android:textColor = "#757575"
         android:id="@+id/txt_address_number"/>
 
         <ImageView
@@ -54,7 +52,7 @@
             android:maxLines="1"
             android:lines="1"
             android:maxLength="58"
-            android:hint="@string/set_address"
+            android:hint="DB6xr1b9zgMnpBEG3hhUP22WDKydyevaM2"
             android:textCursorDrawable="@drawable/color_cursor"
             android:inputType="text"
             android:textSize="14sp"

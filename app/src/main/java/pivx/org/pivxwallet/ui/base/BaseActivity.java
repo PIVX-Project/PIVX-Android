@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 
 /**
  * Created by mati on 18/04/17.
@@ -83,6 +84,7 @@ public abstract class BaseActivity extends PivxActivity {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);
         return result == PackageManager.PERMISSION_GRANTED;
     }
+
 
 
 }

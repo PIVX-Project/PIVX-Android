@@ -250,18 +250,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void startMultiAddressSendActivity(List<OutputWrapper> outputWrappers) {
-        String amountStr = getAmountStr();
-        if (amountStr.length()>0){
-            Intent intent = new Intent(this, OutputsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,amountStr);
-            if (outputWrappers!=null)
-                bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
-            intent.putExtras(bundle);
-            startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
-        }else {
-            Toast.makeText(this,R.string.send_amount_address_error,Toast.LENGTH_LONG).show();
-        }
+        Intent intent = new Intent(this, OutputsActivity.class);
+        Bundle bundle = new Bundle();
+        if (outputWrappers!=null)
+            bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
+        intent.putExtras(bundle);
+        startActivityForResult(intent,MULTIPLE_ADDRESSES_SEND_RESULT);
     }
 
     private void startCoinControlActivity(Set<InputWrapper> unspent) {
@@ -425,8 +419,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     outputWrappers = null;
                     txt_multiple_outputs.setVisibility(View.GONE);
                     container_address.setVisibility(View.VISIBLE);
+                    unBlockAmount();
                 }else {
                     outputWrappers = (List<OutputWrapper>) data.getSerializableExtra(INTENT_EXTRA_OUTPUTS_WRAPPERS);
+                    Coin totalAmount = Coin.ZERO;
+                    for (OutputWrapper outputWrapper : outputWrappers) {
+                        totalAmount = outputWrapper.getAmount().plus(totalAmount);
+                    }
+                    setAmountAndBlock(totalAmount);
                     txt_multiple_outputs.setText(getString(R.string.multiple_address_send, outputWrappers.size()));
                     txt_multiple_outputs.setVisibility(View.VISIBLE);
                     container_address.setVisibility(View.GONE);
@@ -487,6 +487,25 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             amountStr = result.toPlainString();
         }
         return amountStr;
+    }
+
+    public void setAmountAndBlock(Coin amount) {
+        if (inPivs) {
+            edit_amount.setText(amount.toPlainString());
+            edit_amount.setEnabled(false);
+        }else {
+            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getValue());
+            editCurrency.setText(result.toPlainString());
+            edit_amount.setEnabled(false);
+        }
+    }
+
+    public void unBlockAmount(){
+        if (inPivs) {
+            edit_amount.setEnabled(true);
+        }else {
+            edit_amount.setEnabled(true);
+        }
     }
 
     private void send() {
@@ -610,5 +629,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
         finish();
     }
+
+
 
 }
