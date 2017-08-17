@@ -19,12 +19,12 @@
         android:id="@+id/txt_address_number"/>
 
         <ImageView
-            android:layout_width="16dp"
+            android:layout_width="12dp"
             android:layout_height="16dp"
             android:id="@+id/img_cancel"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:src="@mipmap/ic_settings"/>
+            android:src="@drawable/ic_delete"/>
 
     </RelativeLayout>
 
@@ -51,6 +51,7 @@
             android:lines="1"
             android:maxLength="58"
             android:hint="eg: DB6xr1b9zgMnpBEG3hhUP22WDKydyevaM2"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:inputType="text"
             android:textSize="14sp"
             android:textColor="@color/mainText"
@@ -85,6 +86,7 @@
         android:paddingBottom="12dp"
         android:inputType="numberDecimal"
         android:textSize="15sp"
+        android:textCursorDrawable="@drawable/color_cursor"
         android:textColor="@color/mainText"
         android:id="@+id/edit_amount"/>
 
@@ -94,6 +96,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
+        android:textCursorDrawable="@drawable/color_cursor"
         android:hint="Address label"
         android:textSize="15sp"
         android:textColor="@color/mainText"

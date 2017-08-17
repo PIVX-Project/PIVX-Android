@@ -104,6 +104,41 @@
             android:textAllCaps="true"
             android:gravity="center_vertical"
             android:background="#F0F0F0"
+            android:text="@string/settings_subtitle_preference"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_height="wrap_content">
+
+
+            <Switch
+                android:id="@+id/videoSwitch"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:text="Splash video sound"
+                android:textColor="#444444"
+                android:textAllCaps="true"
+                android:padding="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:checked="true"
+                android:gravity="left"/>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:paddingLeft="16dp"
+            android:textAllCaps="true"
+            android:gravity="center_vertical"
+            android:background="#F0F0F0"
             android:text="@string/settings_subtitle_about"/>
 
         <LinearLayout
