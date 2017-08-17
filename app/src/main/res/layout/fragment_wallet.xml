@@ -23,7 +23,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="66dp"
             android:id="@+id/container_txs">
 
             <fragment
@@ -31,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:name="pivx.org.pivxwallet.ui.wallet_activity.TransactionsFragmentBase"
                 android:id="@+id/transactions_fragment"
+                android:paddingBottom="66dp"
                 />
 
             <android.support.design.widget.FloatingActionButton
