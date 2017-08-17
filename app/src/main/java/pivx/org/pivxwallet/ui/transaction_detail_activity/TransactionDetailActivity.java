@@ -37,8 +37,8 @@ public class TransactionDetailActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case 0:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com"));
-                startActivity(browserIntent);
+                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com"));
+                //startActivity(browserIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.ui.restore_activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -166,6 +167,7 @@ public class RestoreActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
+                        org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
                         File file = (File) spinnerFiles.getSelectedItem();
                         if (WalletUtils.BACKUP_FILE_FILTER.accept(file)) {
                             pivxModule.restoreWallet(file);
