@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
 
@@ -93,6 +94,10 @@ public class OutputsActivity extends BaseActivity {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 outputWrappers = multiple_addresses_fragment.getList();
+                if (outputWrappers.isEmpty()){
+                    Toast.makeText(this,R.string.invalid_inputs,Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 // save addresses labels in db
                 saveAddressesLabels(outputWrappers);
                 bundle.putSerializable(INTENT_EXTRA_OUTPUTS_WRAPPERS, (Serializable) outputWrappers);
