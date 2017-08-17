@@ -65,6 +65,7 @@
             android:id="@+id/edit_fee"
             android:hint="0.0000001"
             android:minWidth="150dp"
+            android:maxLength="10"
             android:layout_centerHorizontal="true"
             android:textSize="20sp"
             android:textCursorDrawable="@drawable/color_cursor"
