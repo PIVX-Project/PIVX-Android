@@ -67,18 +67,15 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         adapter = initAdapter();
         if (adapter==null) throw new IllegalStateException("Base adapter cannot be null");
         recycler.setAdapter(adapter);
-        if (refreshSwipeEnabled){
-            swipeRefreshLayout.setEnabled(false);
-        }else {
-            swipeRefreshLayout.setOnRefreshListener(
-                    new SwipeRefreshLayout.OnRefreshListener() {
-                        @Override
-                        public void onRefresh() {
-                            load();
-                        }
+        swipeRefreshLayout.setEnabled(refreshSwipeEnabled);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        load();
                     }
-            );
-        }
+                }
+        );
         return root;
     }
 

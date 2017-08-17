@@ -42,6 +42,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     public static final String TX = "tx";
     public static final String TX_WRAPPER = "tx_wrapper";
     public static final String IS_DETAIL = "is_detail";
+    public static final String TX_MEMO = "tx_memo";
 
     private View root;
     private TextView txt_transaction_id;
@@ -72,6 +73,9 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 isTxDetail = true;
             }else {
                 transactionWrapper.setTransaction(new Transaction(pivxModule.getConf().getNetworkParams(),intent.getByteArrayExtra(TX)));
+                if (intent.hasExtra(TX_MEMO)){
+                    transactionWrapper.getTransaction().setMemo(intent.getStringExtra(TX_MEMO));
+                }
                 isTxDetail = false;
             }
 

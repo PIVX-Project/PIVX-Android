@@ -253,7 +253,7 @@ public class PivxWalletService extends Service{
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                                 .setContentTitle("Pivs received!")
                                 .setContentText("Coins received for a value of " + notificationAccumulatedAmount.getValue())
-                                .setAutoCancel(false)
+                                .setAutoCancel(true)
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setColor(
                                         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
