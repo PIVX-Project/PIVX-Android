@@ -99,17 +99,11 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         // Video Switch
         videoSwitch = (Switch) findViewById(R.id.videoSwitch);
-        videoSwitch.setChecked(true);
+        videoSwitch.setChecked(pivxApplication.getAppConf().isSplashSoundEnabled());
         videoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
-                if (Checked) {
-                    //Video with sound
-                    //Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_video);
-                } else {
-                    //Video muted
-                    //Uri video = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.splash_video_muted);
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                pivxApplication.getAppConf().setSplashSound(checked);
             }
         });
     }
