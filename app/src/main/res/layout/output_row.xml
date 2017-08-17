@@ -54,7 +54,7 @@
             android:maxLines="1"
             android:lines="1"
             android:maxLength="58"
-            android:hint="DB6xr1b9zgMnpBEG3hhUP22WDKydyevaM2"
+            android:hint="@string/set_address"
             android:textCursorDrawable="@drawable/color_cursor"
             android:inputType="text"
             android:textSize="14sp"
