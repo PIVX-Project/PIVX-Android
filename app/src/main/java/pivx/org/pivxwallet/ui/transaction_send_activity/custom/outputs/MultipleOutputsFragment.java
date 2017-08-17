@@ -112,7 +112,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                     if (!pivxModule.chechAddress(data.getAddress())) {
                         holder.edit_address.setTextColor(Color.RED);
                     } else {
-                        holder.edit_address.setTextColor(Color.GREEN);
+                        holder.edit_address.setTextColor(Color.parseColor("#4F4F4F"));
                     }
                 }else {
                     holder.edit_address.setText("");
@@ -146,7 +146,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                                 if (!pivxModule.chechAddress(address)) {
                                     holder.edit_address.setTextColor(Color.RED);
                                 } else {
-                                    holder.edit_address.setTextColor(Color.GREEN);
+                                    holder.edit_address.setTextColor(Color.parseColor("#4F4F4F"));
                                     // check if there is a label for this address
                                     AddressLabel addressLabel = pivxModule.getAddressLabel(address);
                                     if (addressLabel!=null){
