@@ -225,7 +225,7 @@
     <string name="confimations">Confirmations</string>
     <string name="multiple_address_send">Sending to %d addresses</string>
     <string name="fee_per_kb">%s Piv/kB</string>
-    <string name="fee_explanation">If the custom fee is lower than the minimum fee (0.0001 PIV/kB) the cost will be the minimum and not the custom fee selected.</string>
+    <string name="fee_explanation">If the custom fee is lower than the minimum fee (0.0001 PIV/kB) the cost will be the minimum and not the custom fee selected.\n Fee calculated per kilobyte.</string>
     <string name="invalid_fee_amount">Invalid fee amount</string>
     <string name="load_inputs_fail">Coin control fail</string>
     <string name="title_tx_weight">Weight</string>
