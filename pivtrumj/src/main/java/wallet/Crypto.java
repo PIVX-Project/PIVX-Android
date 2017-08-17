@@ -288,11 +288,10 @@ public class Crypto {
 		private final char[] buf = new char[OPENSSL_MAGIC_TEXT.length()];
 
 		@Override
-		public boolean accept(final File file)
-		{
+		public boolean accept(final File file) {
 			Reader in = null;
-			try
-			{
+			try {
+				if (file==null)return false;
 				in = new InputStreamReader(new FileInputStream(file), Charsets.UTF_8);
 				if (in.read(buf) == -1)
 					return false;
