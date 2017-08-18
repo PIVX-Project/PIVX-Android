@@ -38,6 +38,7 @@
                 android:padding="8dp"
                 android:background="@drawable/transaction_inputs"
                 android:text = "@string/transaction_hash"
+                android:textIsSelectable="true"
                 android:textColor = "@color/mainText"
                 android:textSize = "13sp" />
 
@@ -55,6 +56,7 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
                 android:padding="8dp"
+                android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
                 android:text = "36 PIV"
                 android:textStyle="bold"
@@ -78,6 +80,7 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
                 android:padding="8dp"
+                android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
                 android:text = "13 Mar 2017"
                 android:textColor = "@color/mainText"
@@ -98,6 +101,7 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
                 android:padding="8dp"
+                android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
                 android:text = "45"
                 android:textColor = "@color/mainText"
@@ -134,6 +138,7 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
                 android:padding="8dp"
+                android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
                 android:text = "@string/add_memo"
                 android:textColor = "@color/mainText"
@@ -157,6 +162,7 @@
                 android:padding="8dp"
                 android:background="@drawable/transaction_inputs"
                 android:text = "@string/title_fee"
+                android:textIsSelectable="true"
                 android:textColor = "@color/mainText"
                 android:textSize = "16sp" />
 
@@ -175,6 +181,7 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
                 android:padding="8dp"
+                android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
                 android:text = "Bytes"
                 android:textColor = "@color/mainText"
