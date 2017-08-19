@@ -28,7 +28,9 @@ import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 import wallet.TxNotFoundException;
 
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity.INTENT_NO_TOTAL_AMOUNT;
@@ -193,7 +195,20 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     private void setupOutputs(List<OutputUtil> list) {
         recycler_outputs.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler_outputs.setHasFixedSize(true);
-        recycler_outputs.setAdapter(new BaseRecyclerAdapter<OutputUtil,DetailOutputHolder>(getActivity(),list) {
+        ListItemListeners<OutputUtil> listItemListener = new ListItemListeners<OutputUtil>() {
+            @Override
+            public void onItemClickListener(OutputUtil data, int position) {
+
+            }
+
+            @Override
+            public void onLongItemClickListener(OutputUtil data, int position) {
+                if (pivxModule.chechAddress(data.getLabel())) {
+                    DialogsUtil.showCreateAddressLabelDialog(getActivity(),data.getLabel());
+                }
+            }
+        };
+        recycler_outputs.setAdapter(new BaseRecyclerAdapter<OutputUtil,DetailOutputHolder>(getActivity(),list,listItemListener) {
             @Override
             protected DetailOutputHolder createHolder(View itemView, int type) {
                 return new DetailOutputHolder(itemView,type);
@@ -210,7 +225,6 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 holder.txt_address.setText(data.getLabel());
                 holder.txt_value.setText(data.getAmount().toFriendlyString());
             }
-
         });
     }
 

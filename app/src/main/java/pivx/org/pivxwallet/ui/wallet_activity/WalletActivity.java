@@ -254,35 +254,17 @@ public class WalletActivity extends BaseDrawerActivity {
                         PivxURI pivxUri = new PivxURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
                     }
-                    final DialogBuilder dialog = DialogBuilder.warn(this, R.string.scan_result_address_title);
-                    dialog.setMessage(usedAddress+"\n\nCreate contact?");
-                    final String tempPubKey = usedAddress;
-                    DialogInterface.OnClickListener rightListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int which) {
-                            Intent intent = new Intent(WalletActivity.this, AddContactActivity.class);
-                            intent.putExtra(AddContactActivity.ADDRESS_TO_ADD,tempPubKey);
-                            startActivity(intent);
-                            dialog.dismiss();
-                        }
-                    };
-                    DialogInterface.OnClickListener lefttListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int which) {
-                            // nothing yet
-                            dialog.dismiss();
-                        }
-                    };
-                    dialog.twoButtons(lefttListener,rightListener);
-                    dialog.create().show();
+                    DialogsUtil.showCreateAddressLabelDialog(this,usedAddress);
                 }catch (Exception e){
+                    e.printStackTrace();
                     Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
                 }
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
     private boolean checkPermission(String permission) {
         int result = ContextCompat.checkSelfPermission(getApplicationContext(),permission);

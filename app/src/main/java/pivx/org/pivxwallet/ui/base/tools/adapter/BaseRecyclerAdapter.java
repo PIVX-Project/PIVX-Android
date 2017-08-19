@@ -28,6 +28,11 @@ public abstract class BaseRecyclerAdapter<M, H extends BaseRecyclerViewHolder> e
         this.dataSet = dataSet;
     }
 
+    protected BaseRecyclerAdapter(Context context, List<M> dataSet,ListItemListeners<M> itemListeners) {
+        this(context,dataSet);
+        this.eventListeners = itemListeners;
+    }
+
     @Override
     public H onCreateViewHolder(ViewGroup viewGroup, int type) {
         return createHolder(LayoutInflater.from(context).inflate(getCardViewResource(type), viewGroup, false), type);
