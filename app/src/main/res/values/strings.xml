@@ -247,6 +247,7 @@
     <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synched.</string>
     <string name="invalid_host">Invalid host name</string>
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
+    <string name="detail_no_available_inputs">No available inputs information</string>
 
 
 </resources>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.Transaction;
@@ -226,6 +227,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 startActivity(intent);
             } catch (TxNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(getActivity(),R.string.detail_no_available_inputs,Toast.LENGTH_SHORT).show();
             }
         }
     }

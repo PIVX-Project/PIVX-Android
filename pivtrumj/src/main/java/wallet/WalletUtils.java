@@ -229,8 +229,8 @@ public class WalletUtils
 		{
 			InputStream is = null;
 
-			try
-			{
+			try {
+				if (file==null)return false;
 				is = new FileInputStream(file);
 				return WalletProtobufSerializer.isWallet(is);
 			}

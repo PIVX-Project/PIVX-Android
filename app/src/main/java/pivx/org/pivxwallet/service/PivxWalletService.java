@@ -149,7 +149,7 @@ public class PivxWalletService extends Service{
 
         @Override
         public void onBlocksDownloaded(final Peer peer, final Block block, final FilteredBlock filteredBlock, final int blocksLeft) {
-            log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
+            //log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
             /*log.info("############# on Blockcs downloaded ###########");
             log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);*/
 
@@ -252,7 +252,7 @@ public class PivxWalletService extends Service{
                 deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                 mBuilder = new NotificationCompat.Builder(getApplicationContext())
                                 .setContentTitle("Pivs received!")
-                                .setContentText("Coins received for a value of " + notificationAccumulatedAmount.getValue())
+                                .setContentText("Coins received for a value of " + notificationAccumulatedAmount.toFriendlyString())
                                 .setAutoCancel(true)
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setColor(

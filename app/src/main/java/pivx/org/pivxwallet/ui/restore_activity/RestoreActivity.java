@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.ui.restore_activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,6 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.ui.words_restore_activity.RestoreWordsActivity;
@@ -166,6 +168,7 @@ public class RestoreActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
+                        org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
                         File file = (File) spinnerFiles.getSelectedItem();
                         if (WalletUtils.BACKUP_FILE_FILTER.accept(file)) {
                             pivxModule.restoreWallet(file);
@@ -241,15 +244,24 @@ public class RestoreActivity extends BaseActivity {
                 simpleTextDialog.setOkBtnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (jumpToWizard){
+                            startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
+                        }
+                        finish();
+                    }
+                });
+                simpleTextDialog.setListener(new DialogListener() {
+                    @Override
+                    public void cancel(boolean isActionCompleted) {
+                        if (jumpToWizard){
+                            startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
+                        }
                         finish();
                     }
                 });
                 simpleTextDialog.show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
 
-                if (jumpToWizard){
-                    startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
-                    finish();
-                }else {
+                if (!jumpToWizard) {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -356,6 +368,7 @@ public class RestoreActivity extends BaseActivity {
         public boolean accept(final File file) {
             BufferedReader reader = null;
             try {
+                if (file==null)return false;
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
                 WalletUtils.readKeys(reader, PivxContext.NETWORK_PARAMETERS,PivxContext.BACKUP_MAX_CHARS);
                 return true;
