@@ -50,4 +50,6 @@ public interface WalletConfiguration {
     long getBackupMaxChars();
 
     boolean isTest();
+
+    int getProtocolVersion();
 }

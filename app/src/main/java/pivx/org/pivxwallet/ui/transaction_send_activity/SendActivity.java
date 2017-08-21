@@ -31,6 +31,7 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.uri.PivxURI;
+import org.bitcoinj.wallet.Wallet;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -177,7 +178,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     if (valueStr.charAt(0)=='.'){
                         valueStr = "0"+valueStr;
                     }
-                    BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
+                    BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getValue(),6,BigDecimal.ROUND_DOWN);
                     txtShowPiv.setText(result.toPlainString()+" PIV");
                 }else {
                     txtShowPiv.setText("0 "+pivxRate.getCoin());
@@ -301,6 +302,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     send();
                 }
             }catch (IllegalArgumentException e){
+                e.printStackTrace();
+                showErrorDialog(e.getMessage());
+            }catch (Exception e){
                 e.printStackTrace();
                 showErrorDialog(e.getMessage());
             }
@@ -483,16 +487,18 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private String getAmountStr(){
-        String amountStr;
+        String amountStr = "0";
         if (inPivs) {
             amountStr = edit_amount.getText().toString();
         }else {
             String valueStr = editCurrency.getText().toString();
-            if (valueStr.charAt(0)=='.'){
-                valueStr = "0"+valueStr;
+            if(valueStr.length()>0) {
+                if (valueStr.charAt(0) == '.') {
+                    valueStr = "0" + valueStr;
+                }
+                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
+                amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
-            BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
-            amountStr = result.setScale(6,RoundingMode.FLOOR).toPlainString();
         }
         return amountStr;
     }
@@ -626,6 +632,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         } catch (InsufficientInputsException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Insuficient balance");
+        } catch (Wallet.DustySendRequested e){
+            e.printStackTrace();
+            throw new IllegalArgumentException("Dusty send output, please increase the value of your outputs");
         }
     }
 

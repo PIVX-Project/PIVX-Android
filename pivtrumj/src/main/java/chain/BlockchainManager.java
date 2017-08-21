@@ -407,4 +407,8 @@ public class BlockchainManager {
             return peerGroup.getConnectedPeers();
         return new ArrayList<>();
     }
+
+    public int getProtocolVersion() {
+        return conf.getProtocolVersion();
+    }
 }

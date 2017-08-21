@@ -266,6 +266,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public int getProtocolVersion() {
+        return blockchainManager.getProtocolVersion();
+    }
+
+    @Override
     public WalletConfiguration getConf() {
         return walletConfiguration;
     }

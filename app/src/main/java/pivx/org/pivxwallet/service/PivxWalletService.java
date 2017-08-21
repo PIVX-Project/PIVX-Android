@@ -60,6 +60,7 @@ import pivx.org.pivxwallet.rate.RequestPivxRateException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AppConf;
+import pivx.org.pivxwallet.utils.CrashReporter;
 
 import static pivx.org.pivxwallet.module.PivxContext.CONTEXT;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE;
@@ -149,7 +150,8 @@ public class PivxWalletService extends Service{
 
         @Override
         public void onBlocksDownloaded(final Peer peer, final Block block, final FilteredBlock filteredBlock, final int blocksLeft) {
-            //log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
+            try {
+                //log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);
             /*log.info("############# on Blockcs downloaded ###########");
             log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);*/
 
@@ -157,18 +159,22 @@ public class PivxWalletService extends Service{
             /*if (PivxContext.IS_TEST)
                 showBlockchainSyncNotification(blocksLeft);*/
 
-            //delayHandler.removeCallbacksAndMessages(null);
+                //delayHandler.removeCallbacksAndMessages(null);
 
 
-            final long now = System.currentTimeMillis();
-            if (now-lastMessageTime > TimeUnit.SECONDS.toMillis(15)) {
-                if (blocksLeft<6){
-                    blockchainState = BlockchainState.SYNC;
-                }else {
-                    blockchainState = BlockchainState.SYNCING;
+                final long now = System.currentTimeMillis();
+                if (now - lastMessageTime > TimeUnit.SECONDS.toMillis(15)) {
+                    if (blocksLeft < 6) {
+                        blockchainState = BlockchainState.SYNC;
+                    } else {
+                        blockchainState = BlockchainState.SYNCING;
+                    }
+                    pivxApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
+                    broadcastBlockchainState(true);
                 }
-                pivxApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
-                broadcastBlockchainState(true);
+            }catch (Exception e){
+                e.printStackTrace();
+                CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
             }
         }
     };

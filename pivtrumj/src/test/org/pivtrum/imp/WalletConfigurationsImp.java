@@ -104,4 +104,9 @@ public class WalletConfigurationsImp implements WalletConfiguration {
     public boolean isTest() {
         return false;
     }
+
+    @Override
+    public String getProtocolVersion() {
+        return null;
+    }
 }

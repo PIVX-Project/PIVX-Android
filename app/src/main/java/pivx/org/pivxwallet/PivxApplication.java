@@ -11,6 +11,9 @@ import android.support.v4.content.FileProvider;
 
 import com.snappydb.SnappydbException;
 
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +38,7 @@ import global.utils.Io;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
@@ -54,7 +58,10 @@ import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 /**
  * Created by mati on 18/04/17.
  */
-
+@ReportsCrashes(
+        mailTo = PivxContext.REPORT_EMAIL, // my email here
+        mode = ReportingInteractionMode.TOAST,
+        resToastText = R.string.crash_toast_text)
 public class PivxApplication extends Application implements ContextWrapper {
 
     private static Logger log;
@@ -126,6 +133,9 @@ public class PivxApplication extends Application implements ContextWrapper {
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+
+            // The following line triggers the initialization of ACRA
+            ACRA.init(this);
             //if (BuildConfig.DEBUG)
             //    new ANRWatchDog().start();
             CrashReporter.init(getCacheDir());

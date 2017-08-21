@@ -249,6 +249,7 @@
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
     <string name="detail_no_available_inputs">No available inputs information</string>
     <string name="report_crash_title">Report crash</string>
+    <string name="crash_toast_text">Pivx wallet crash</string>
 
 
 </resources>
