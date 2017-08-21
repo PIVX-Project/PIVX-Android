@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/report_issue_dialog_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textColor="#000"
+                tools:text=""
+                android:layout_marginTop="6dp" />
+
+            <EditText
+                android:id="@+id/report_issue_dialog_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:textSize="13sp"
+                android:textColor="#898989"
+                android:hint="@string/report_issue_dialog_description"
+                android:inputType="text|textCapSentences|textMultiLine" />
+
+            <CheckBox
+                android:id="@+id/report_issue_dialog_collect_device_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="24dp"
+                android:textSize="14sp"
+                android:checked="true"
+                android:text="@string/report_issue_dialog_collect_device_info" />
+
+            <CheckBox
+                android:id="@+id/report_issue_dialog_collect_application_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:textSize="14sp"
+                android:checked="true"
+                android:text="@string/report_issue_dialog_collect_application_log" />
+
+            <CheckBox
+                android:id="@+id/report_issue_dialog_collect_wallet_dump"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:textSize="14sp"
+                android:checked="true"
+                android:text="@string/report_issue_dialog_collect_wallet_dump" />
+
+            <CheckBox
+                android:id="@+id/report_issue_dialog_collect_installed_packages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:checked="false"
+                android:text="@string/report_issue_dialog_collect_installed_packages" />
+
+
+            <CheckBox
+                android:id="@+id/report_issue_dialog_collect_db_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:checked="true"
+                android:text="@string/report_issue_dialog_collect_db_data" />
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="12dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_cancel"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/button_cancel"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_send"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/bgPurple"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="@string/btn_send"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>
