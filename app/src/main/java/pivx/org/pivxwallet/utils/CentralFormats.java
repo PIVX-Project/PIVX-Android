@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet;
+package pivx.org.pivxwallet.utils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;

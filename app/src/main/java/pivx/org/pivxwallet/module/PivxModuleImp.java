@@ -259,7 +259,7 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public long getConnectedPeerHeight() {
-        if (blockchainManager!=null && blockchainManager.getConnectedPeers() !=null){
+        if (blockchainManager!=null && blockchainManager.getConnectedPeers() !=null && !blockchainManager.getConnectedPeers().isEmpty()){
             return blockchainManager.getConnectedPeers().get(0).getBestHeight();
         }else
             return -1;

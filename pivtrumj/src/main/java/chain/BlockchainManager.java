@@ -398,7 +398,8 @@ public class BlockchainManager {
 
 
     public void removeBlockchainDownloadListener(PeerDataEventListener blockchainDownloadListener) {
-        peerGroup.removeBlocksDownloadedEventListener(blockchainDownloadListener);
+        if (peerGroup!=null)
+            peerGroup.removeBlocksDownloadedEventListener(blockchainDownloadListener);
     }
 
     public List<Peer> listConnectedPeers() {

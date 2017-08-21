@@ -330,7 +330,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                             pivxApplication.getCentralFormats().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
                             )
-                                    + " " + pivxRate.getCoin()
                     );
                     txtShowPiv.setText(coin.toFriendlyString());
                 }

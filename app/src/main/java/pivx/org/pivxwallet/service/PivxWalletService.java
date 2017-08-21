@@ -192,27 +192,31 @@ public class PivxWalletService extends Service{
     private final BroadcastReceiver connectivityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-            if (ConnectivityManager.CONNECTIVITY_ACTION.equals(action)) {
-                final NetworkInfo networkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-                final boolean hasConnectivity = networkInfo.isConnected();
-                log.info("network is {}, state {}/{}", hasConnectivity ? "up" : "down", networkInfo.getState(), networkInfo.getDetailedState());
-                if (hasConnectivity)
-                    impediments.remove(Impediment.NETWORK);
-                else
-                    impediments.add(Impediment.NETWORK);
-                check();
-                // try to request coin rate
-                requestRateCoin();
-            } else if (Intent.ACTION_DEVICE_STORAGE_LOW.equals(action)) {
-                log.info("device storage low");
+            try {
+                final String action = intent.getAction();
+                if (ConnectivityManager.CONNECTIVITY_ACTION.equals(action)) {
+                    final NetworkInfo networkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+                    final boolean hasConnectivity = networkInfo.isConnected();
+                    log.info("network is {}, state {}/{}", hasConnectivity ? "up" : "down", networkInfo.getState(), networkInfo.getDetailedState());
+                    if (hasConnectivity)
+                        impediments.remove(Impediment.NETWORK);
+                    else
+                        impediments.add(Impediment.NETWORK);
+                    check();
+                    // try to request coin rate
+                    requestRateCoin();
+                } else if (Intent.ACTION_DEVICE_STORAGE_LOW.equals(action)) {
+                    log.info("device storage low");
 
-                impediments.add(Impediment.STORAGE);
-                check();
-            } else if (Intent.ACTION_DEVICE_STORAGE_OK.equals(action)) {
-                log.info("device storage ok");
-                impediments.remove(Impediment.STORAGE);
-                check();
+                    impediments.add(Impediment.STORAGE);
+                    check();
+                } else if (Intent.ACTION_DEVICE_STORAGE_OK.equals(action)) {
+                    log.info("device storage ok");
+                    impediments.remove(Impediment.STORAGE);
+                    check();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     };
@@ -228,43 +232,49 @@ public class PivxWalletService extends Service{
             //todo: acá falta una validación para saber si la transaccion es mia.
             org.bitcoinj.core.Context.propagate(CONTEXT);
 
-            int depthInBlocks = transaction.getConfidence().getDepthInBlocks();
+            try {
 
-            long now = System.currentTimeMillis();
-            if (lastUpdateTime+3000<now) {
-                lastUpdateTime=now;
-                Intent intent = new Intent(ACTION_NOTIFICATION);
-                intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
-                broadcastManager.sendBroadcast(intent);
-            }
+                int depthInBlocks = transaction.getConfidence().getDepthInBlocks();
 
-            //final Address address = WalletUtils.getWalletAddressOfReceived(WalletConstants.NETWORK_PARAMETERS,transaction, wallet);
-            final Coin amount = transaction.getValue(wallet);
-            final TransactionConfidence.ConfidenceType confidenceType = transaction.getConfidence().getConfidenceType();
+                long now = System.currentTimeMillis();
+                if (lastUpdateTime + 3000 < now) {
+                    lastUpdateTime = now;
+                    Intent intent = new Intent(ACTION_NOTIFICATION);
+                    intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
+                    broadcastManager.sendBroadcast(intent);
+                }
 
-            if (amount.isGreaterThan(Coin.ZERO)) {
-                //notificationCount++;
-                notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
-                Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
-                openPendingIntent = PendingIntent.getActivity(getApplicationContext(),0,openIntent,0);
-                Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
-                resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
-                deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                                .setContentTitle("Pivs received!")
-                                .setContentText("Coins received for a value of " + notificationAccumulatedAmount.toFriendlyString())
-                                .setAutoCancel(true)
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setColor(
-                                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
-                                                getResources().getColor(R.color.bgPurple,null)
-                                                :
-                                                ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
-                                .setDeleteIntent(deleteIntent)
-                                .setContentIntent(openPendingIntent);
-                nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
-            }else {
-                log.error("transaction with a value lesser than zero arrives..");
+                //final Address address = WalletUtils.getWalletAddressOfReceived(WalletConstants.NETWORK_PARAMETERS,transaction, wallet);
+                final Coin amount = transaction.getValue(wallet);
+                final TransactionConfidence.ConfidenceType confidenceType = transaction.getConfidence().getConfidenceType();
+
+                if (amount.isGreaterThan(Coin.ZERO)) {
+                    //notificationCount++;
+                    notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
+                    Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
+                    openPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, openIntent, 0);
+                    Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
+                    resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
+                    deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentTitle("Pivs received!")
+                            .setContentText("Coins received for a value of " + notificationAccumulatedAmount.toFriendlyString())
+                            .setAutoCancel(true)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setColor(
+                                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
+                                            getResources().getColor(R.color.bgPurple, null)
+                                            :
+                                            ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
+                            .setDeleteIntent(deleteIntent)
+                            .setContentIntent(openPendingIntent);
+                    nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
+                } else {
+                    log.error("transaction with a value lesser than zero arrives..");
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
         }
@@ -274,17 +284,21 @@ public class PivxWalletService extends Service{
         @Override
         public void onTransactionConfidenceChanged(Wallet wallet, Transaction transaction) {
             org.bitcoinj.core.Context.propagate(CONTEXT);
-            if (transaction != null) {
-                if (transaction.getConfidence().getDepthInBlocks() > 1) {
-                    long now = System.currentTimeMillis();
-                    if (lastUpdateTime+3000<now) {
-                        lastUpdateTime=now;
-                        // update balance state
-                        Intent intent = new Intent(ACTION_NOTIFICATION);
-                        intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
-                        broadcastManager.sendBroadcast(intent);
+            try {
+                if (transaction != null) {
+                    if (transaction.getConfidence().getDepthInBlocks() > 1) {
+                        long now = System.currentTimeMillis();
+                        if (lastUpdateTime + 3000 < now) {
+                            lastUpdateTime = now;
+                            // update balance state
+                            Intent intent = new Intent(ACTION_NOTIFICATION);
+                            intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
+                            broadcastManager.sendBroadcast(intent);
+                        }
                     }
                 }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
     };
@@ -342,30 +356,34 @@ public class PivxWalletService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         log.info("Pivx service onStartCommand");
-        if (intent != null) {
-            try {
-                log.info("service init command: " + intent
-                        + (intent.hasExtra(Intent.EXTRA_ALARM_COUNT) ? " (alarm count: " + intent.getIntExtra(Intent.EXTRA_ALARM_COUNT, 0) + ")" : ""));
-            }catch (Exception e){
-                e.printStackTrace();
-                log.info("service init command: " + intent
-                        + (intent.hasExtra(Intent.EXTRA_ALARM_COUNT) ? " (alarm count: " + intent.getLongArrayExtra(Intent.EXTRA_ALARM_COUNT) + ")" : ""));
+        try {
+            if (intent != null) {
+                try {
+                    log.info("service init command: " + intent
+                            + (intent.hasExtra(Intent.EXTRA_ALARM_COUNT) ? " (alarm count: " + intent.getIntExtra(Intent.EXTRA_ALARM_COUNT, 0) + ")" : ""));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    log.info("service init command: " + intent
+                            + (intent.hasExtra(Intent.EXTRA_ALARM_COUNT) ? " (alarm count: " + intent.getLongArrayExtra(Intent.EXTRA_ALARM_COUNT) + ")" : ""));
+                }
+                final String action = intent.getAction();
+                if (ACTION_SCHEDULE_SERVICE.equals(action)) {
+                    check();
+                } else if (ACTION_CANCEL_COINS_RECEIVED.equals(action)) {
+                    notificationAccumulatedAmount = Coin.ZERO;
+                    nm.cancel(NOT_COINS_RECEIVED);
+                } else if (ACTION_RESET_BLOCKCHAIN.equals(action)) {
+                    log.info("will remove blockchain on service shutdown");
+                    resetBlockchainOnShutdown = true;
+                    stopSelf();
+                } else if (ACTION_BROADCAST_TRANSACTION.equals(action)) {
+                    blockchainManager.broadcastTransaction(intent.getByteArrayExtra(DATA_TRANSACTION_HASH));
+                }
+            } else {
+                log.warn("service restart, although it was started as non-sticky");
             }
-            final String action = intent.getAction();
-            if (ACTION_SCHEDULE_SERVICE.equals(action)){
-                check();
-            }else if (ACTION_CANCEL_COINS_RECEIVED.equals(action)) {
-                notificationAccumulatedAmount = Coin.ZERO;
-                nm.cancel(NOT_COINS_RECEIVED);
-            }else if (ACTION_RESET_BLOCKCHAIN.equals(action)) {
-                log.info("will remove blockchain on service shutdown");
-                resetBlockchainOnShutdown = true;
-                stopSelf();
-            }else if (ACTION_BROADCAST_TRANSACTION.equals(action)) {
-                blockchainManager.broadcastTransaction(intent.getByteArrayExtra(DATA_TRANSACTION_HASH));
-            }
-        }else {
-            log.warn("service restart, although it was started as non-sticky");
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return START_NOT_STICKY;
     }

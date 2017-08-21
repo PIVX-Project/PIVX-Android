@@ -2,29 +2,26 @@ package pivx.org.pivxwallet;
 
 import android.app.ActivityManager;
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.IBinder;
-import android.util.Log;
+import android.net.Uri;
+import android.support.v4.content.FileProvider;
 
-import com.github.anrwatchdog.ANRWatchDog;
 import com.snappydb.SnappydbException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.util.concurrent.ExecutorService;
+import java.io.OutputStream;
+import java.util.ArrayList;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -34,10 +31,10 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
+import global.utils.Io;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
-import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
@@ -45,11 +42,14 @@ import global.WalletConfiguration;
 import pivx.org.pivxwallet.module.store.SnappyStore;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
+import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.utils.AppConf;
+import pivx.org.pivxwallet.utils.CentralFormats;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import store.AddressStore;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
+import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
 /**
  * Created by mati on 18/04/17.
@@ -77,6 +77,45 @@ public class PivxApplication extends Application implements ContextWrapper {
         return instance;
     }
 
+    private CrashReporter.CrashListener crashListener = new CrashReporter.CrashListener() {
+        @Override
+        public void onCrashOcurred(Thread thread, Throwable throwable) {
+            log.error("crash occured..");
+            throwable.printStackTrace();
+            String authorities = "pivx.org.pivxwallet.myfileprovider";
+            final File cacheDir = getCacheDir();
+            // show error report dialog to send the crash
+            final ArrayList<Uri> attachments = new ArrayList<Uri>();
+            try {
+                final File logDir = getDir("log", Context.MODE_PRIVATE);
+
+                for (final File logFile : logDir.listFiles()) {
+                    final String logFileName = logFile.getName();
+                    final File file;
+                    if (logFileName.endsWith(".log.gz"))
+                        file = File.createTempFile(logFileName.substring(0, logFileName.length() - 6), ".log.gz", cacheDir);
+                    else if (logFileName.endsWith(".log"))
+                        file = File.createTempFile(logFileName.substring(0, logFileName.length() - 3), ".log", cacheDir);
+                    else
+                        continue;
+
+                    final InputStream is = new FileInputStream(logFile);
+                    final OutputStream os = new FileOutputStream(file);
+
+                    Io.copy(is, os);
+
+                    os.close();
+                    is.close();
+
+                    attachments.add(FileProvider.getUriForFile(getApplicationContext(), authorities, file));
+                }
+            } catch (final IOException x) {
+                log.info("problem writing attachment", x);
+            }
+            shareText(PivxApplication.this,"Pivx wallet crash", "Unexpected crash", attachments);
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -90,6 +129,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             //if (BuildConfig.DEBUG)
             //    new ANRWatchDog().start();
             CrashReporter.init(getCacheDir());
+            CrashReporter.setCrashListener(crashListener);
             // Default network conf for localhost test
             networkConf = new NetworkConf();
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
@@ -101,6 +141,12 @@ public class PivxApplication extends Application implements ContextWrapper {
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
             pivxModule.start();
+
+            if(appConf.getShowReportOnStart()){
+                Intent intent = new Intent(this, CrashPopupActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         } catch (SnappydbException e) {
             e.printStackTrace();
         } catch (Exception e){
