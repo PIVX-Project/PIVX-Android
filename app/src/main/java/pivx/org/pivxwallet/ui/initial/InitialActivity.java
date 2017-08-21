@@ -24,7 +24,7 @@ public class InitialActivity extends AppCompatActivity {
         AppConf appConf = pivxApplication.getAppConf();
         // show report dialog if something happen with the previous process
         Intent intent;
-        if (!appConf.isAppInit()){
+        if (!appConf.isAppInit() || appConf.isSplashSoundEnabled()){
             intent = new Intent(this, SplashActivity.class);
         }else {
             intent = new Intent(this, WalletActivity.class);
