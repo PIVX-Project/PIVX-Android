@@ -114,8 +114,10 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
                     }
                 }
             } else if (key == KeyboardFragment.KEYS.DELETE) {
-                lastPos--;
-                unactiveCheck(lastPos);
+                if (lastPos!=0) {
+                    lastPos--;
+                    unactiveCheck(lastPos);
+                }
             } else if (key == KeyboardFragment.KEYS.CLEAR) {
                 clear();
             }
