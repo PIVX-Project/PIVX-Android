@@ -49,16 +49,27 @@ public class CrashReporter {
 	private static File backgroundTracesFile;
 	private static File crashTraceFile;
 
+	private static CrashListener crashListener;
+
 	private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
 
 	private static final Logger log = LoggerFactory.getLogger(CrashReporter.class);
 
-	public static void init(final File cacheDir)
-	{
+	public interface CrashListener{
+
+		void onCrashOcurred(Thread thread,Throwable throwable);
+
+	}
+
+	public static void init(final File cacheDir) {
 		backgroundTracesFile = new File(cacheDir, BACKGROUND_TRACES_FILENAME);
 		crashTraceFile = new File(cacheDir, CRASH_TRACE_FILENAME);
 
 		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(Thread.getDefaultUncaughtExceptionHandler()));
+	}
+
+	public static void setCrashListener(CrashListener crashListener) {
+		CrashReporter.crashListener = crashListener;
 	}
 
 	public static boolean hasSavedBackgroundTraces()
@@ -315,34 +326,32 @@ public class CrashReporter {
 		}
 	}
 
-	private static class ExceptionHandler implements Thread.UncaughtExceptionHandler
-	{
+	private static class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 		private final Thread.UncaughtExceptionHandler previousHandler;
 
-		public ExceptionHandler(final Thread.UncaughtExceptionHandler previousHandler)
-		{
+		public ExceptionHandler(final Thread.UncaughtExceptionHandler previousHandler) {
 			this.previousHandler = previousHandler;
 		}
 
 		@Override
-		public synchronized void uncaughtException(final Thread t, final Throwable exception)
-		{
+		public synchronized void uncaughtException(final Thread t, final Throwable exception) {
 			log.warn("crashing because of uncaught exception", exception);
 
-			try
-			{
+			try {
 				saveCrashTrace(exception);
 			}
-			catch (final IOException x)
-			{
+			catch (final IOException x) {
 				log.info("problem writing crash trace", x);
+			}
+
+			if (crashListener!=null){
+				crashListener.onCrashOcurred(t,exception);
 			}
 
 			previousHandler.uncaughtException(t, exception);
 		}
 
-		private void saveCrashTrace(final Throwable throwable) throws IOException
-		{
+		private void saveCrashTrace(final Throwable throwable) throws IOException {
 			final PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(crashTraceFile), Charsets.UTF_8));
 			appendTrace(writer, throwable);
 			writer.close();

@@ -187,7 +187,7 @@
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
-    <string name="restore_words_1">To restore your wallet you most write your 12, write your security words in the right order from number 1 to 8.</string>
+    <string name="restore_words_1">To restore your wallet you must write your 12, write your mnemonic words in the right order from number 1 to 8.</string>
     <string name="restore_from_words">Restore from words</string>
     <string name="restore_words_2">Now write your security words in the right order \n from number 9 to 16</string>
     <string name="restore_words_3">Now write your security words in the right order \n from number 17 to 24</string>
@@ -219,7 +219,7 @@
     <string name="coin_selection">Coin selection</string>
     <string name="set_default">Set default</string>
     <string name="delete_addresses">DELETE ADDRESSES</string>
-    <string name="sync">Synched</string>
+    <string name="sync">Synced</string>
     <string name="syncing">Syncing</string>
     <string name="not_connection">Not connection</string>
     <string name="confimations">Confirmations</string>
@@ -248,6 +248,8 @@
     <string name="invalid_host">Invalid host name</string>
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
     <string name="detail_no_available_inputs">No available inputs information</string>
+    <string name="report_crash_title">Report crash</string>
+    <string name="crash_toast_text">Pivx wallet crash</string>
 
 
 </resources>

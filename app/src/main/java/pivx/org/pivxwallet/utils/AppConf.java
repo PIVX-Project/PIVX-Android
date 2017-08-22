@@ -23,6 +23,8 @@ public class AppConf extends Configurations {
     private static final String USER_HAS_BACKUP = "user_has_backup";
     private static final String LAST_BEST_CHAIN_BLOCK_TIME = "last_best_chain_block_time";
     private static final String SPLASH_SOUND = "splash_sound";
+    private static final String SHOW_REPORT_ON_START = "show_report";
+
 
     public AppConf(SharedPreferences prefs) {
         super(prefs);
@@ -91,5 +93,13 @@ public class AppConf extends Configurations {
 
     public boolean isSplashSoundEnabled(){
         return getBoolean(SPLASH_SOUND,true);
+    }
+
+    public void saveShowReportScreenOnStart(boolean flag) {
+        save(SHOW_REPORT_ON_START,flag);
+    }
+
+    public boolean getShowReportOnStart(){
+        return getBoolean(SHOW_REPORT_ON_START,false);
     }
 }

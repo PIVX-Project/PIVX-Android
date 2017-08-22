@@ -40,11 +40,13 @@ import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
+import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
@@ -103,11 +105,14 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void beforeCreate(){
-        if (!pivxApplication.getAppConf().isAppInit()){
+        /*
+        if (!appConf.isAppInit()){
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
             finish();
         }
+        // show report dialog if something happen with the previous process
+        */
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 

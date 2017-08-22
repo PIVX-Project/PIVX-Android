@@ -142,5 +142,5 @@ public interface PivxModule {
 
     long getConnectedPeerHeight();
 
-
+    int getProtocolVersion();
 }

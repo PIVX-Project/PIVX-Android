@@ -8,7 +8,7 @@ android {
         applicationId "pivx.tech.furszy"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 6
+        versionCode 7
         versionName "1.02"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -63,6 +63,8 @@ dependencies {
     compile group: 'com.google.zxing', name: 'core', version: '3.3.0'
     // db
     compile group: 'com.snappydb', name: 'snappydb-lib', version: '0.5.2'
+
+    compile 'ch.acra:acra:4.9.2'
 
     testCompile project(':pivtrumj')
     testCompile 'org.slf4j:slf4j-api:1.7.20'

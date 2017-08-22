@@ -18,6 +18,7 @@ import static pivx.org.pivxwallet.module.PivxContext.Files.BLOCKCHAIN_FILENAME;
 import static pivx.org.pivxwallet.module.PivxContext.Files.CHECKPOINTS_FILENAME;
 import static pivx.org.pivxwallet.module.PivxContext.Files.WALLET_FILENAME_PROTOBUF;
 import static pivx.org.pivxwallet.module.PivxContext.Files.WALLET_KEY_BACKUP_PROTOBUF;
+import static pivx.org.pivxwallet.module.PivxContext.NETWORK_PARAMETERS;
 import static pivx.org.pivxwallet.module.PivxContext.PEER_DISCOVERY_TIMEOUT_MS;
 import static pivx.org.pivxwallet.module.PivxContext.PEER_TIMEOUT_MS;
 
@@ -122,6 +123,11 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
     @Override
     public boolean isTest() {
         return PivxContext.IS_TEST;
+    }
+
+    @Override
+    public int getProtocolVersion() {
+        return NETWORK_PARAMETERS.getProtocolVersionNum(NetworkParameters.ProtocolVersion.CURRENT);
     }
 
 }

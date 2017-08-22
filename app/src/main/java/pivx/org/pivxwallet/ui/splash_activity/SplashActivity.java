@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
         }else {
             // Jump to your Next Activity or MainActivity
-            Intent intent = new Intent(SplashActivity.this, StartActivity.class);
+            Intent intent = new Intent(this, StartActivity.class);
             startActivity(intent);
             SplashActivity.this.finish();
         }

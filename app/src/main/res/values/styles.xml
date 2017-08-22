@@ -99,5 +99,12 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
+    <!-- custom dialog activity theme -->
+    <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize">
+        <!-- removing the dialog's action bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 
 </resources>

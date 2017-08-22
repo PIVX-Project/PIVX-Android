@@ -121,7 +121,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                 Html.fromHtml(
                         "Network<br><font color=#55476c>"+pivxModule.getConf().getNetworkParams().getId()+
                                 "</font><br>" +
-                                "Height<br><font color=#55476c>"+pivxModule.getChainHeight()+"</font>"
+                                "Height<br><font color=#55476c>"+pivxModule.getChainHeight()+"</font><br>" +
+                                "Protocol Version<br><font color=#55476c>"+
+                                pivxModule.getProtocolVersion()+"</font>"
+
                 )
         );
     }
