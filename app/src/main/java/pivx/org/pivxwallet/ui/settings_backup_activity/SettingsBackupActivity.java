@@ -99,11 +99,14 @@ public class SettingsBackupActivity extends BaseActivity {
     }
 
     private void backup() {
+        int backupRes = 0;
         try {
+
             String firstPassword = edit_password.getText().toString();
             String repeatPassword = edit_repeat_password.getText().toString();
             if (!firstPassword.equals(repeatPassword)) {
-                Toast.makeText(this, R.string.backup_passwords_doesnt_match, Toast.LENGTH_LONG).show();
+                backupRes = R.string.backup_passwords_doesnt_match;
+                toastfromBackgroundMessage(backupRes);
                 return;
             }
             File backupFile = new WalletBackupHelper().determineBackupFile();
@@ -113,31 +116,49 @@ public class SettingsBackupActivity extends BaseActivity {
                 pivxApplication.getAppConf().setHasBackup(true);
                 showSuccedBackupDialog(backupFile.getAbsolutePath());
             }else {
-                Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();
+                backupRes = R.string.backup_fail;
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();
+            backupRes = R.string.backup_fail;
         } catch (Exception e){
             e.printStackTrace();
-            Toast.makeText(this,"Backup fail",Toast.LENGTH_LONG).show();
+            backupRes = R.string.backup_fail;
+        }
+        if (backupRes!=0){
+            toastfromBackgroundMessage(backupRes);
         }
     }
 
-    private void showSuccedBackupDialog(final String backupAbsolutePath){
-        SimpleTextDialog succedDialog = DialogsUtil.buildSimpleTextDialog(
-                this,
-                getString(R.string.backup_completed),
-                getString(R.string.backup_completed_text,backupAbsolutePath)
-                );
-        succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
-        succedDialog.setOkBtnClickListener(new View.OnClickListener() {
+    private void toastfromBackgroundMessage(final int msgRes){
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                onBackPressed();
+            public void run() {
+                Toast.makeText(SettingsBackupActivity.this,msgRes,Toast.LENGTH_LONG).show();
             }
         });
-        succedDialog.show(getFragmentManager(),getString(R.string.backup_succed_dialog));
+    }
+
+    private void showSuccedBackupDialog(final String backupAbsolutePath){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                SimpleTextDialog succedDialog = DialogsUtil.buildSimpleTextDialog(
+                        SettingsBackupActivity.this,
+                        getString(R.string.backup_completed),
+                        getString(R.string.backup_completed_text,backupAbsolutePath)
+                );
+                succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
+                succedDialog.setOkBtnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onBackPressed();
+                    }
+                });
+                succedDialog.show(getFragmentManager(),getString(R.string.backup_succed_dialog));
+            }
+        });
+
     }
 
     private void checkPermissions() {

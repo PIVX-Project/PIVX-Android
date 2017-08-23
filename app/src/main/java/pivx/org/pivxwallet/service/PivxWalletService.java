@@ -472,6 +472,8 @@ public class PivxWalletService extends Service{
                         module.saveRate(pivxRate);
                     } catch (RequestPivxRateException e) {
                         e.printStackTrace();
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
             }).start();

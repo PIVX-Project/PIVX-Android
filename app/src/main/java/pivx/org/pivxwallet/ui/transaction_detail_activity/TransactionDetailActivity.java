@@ -28,19 +28,19 @@ public class TransactionDetailActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem menuItem = menu.add(0,0,0,R.string.explorer);
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        /*MenuItem menuItem = menu.add(0,0,0,R.string.explorer);
+        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);*/
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case 0:
                 //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com"));
                 //startActivity(browserIntent);
                 return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 }

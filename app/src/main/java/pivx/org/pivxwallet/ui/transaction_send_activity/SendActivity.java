@@ -54,6 +54,7 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActi
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.InsufficientInputsException;
@@ -420,8 +421,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             }
         }else if(requestCode == SEND_DETAIL){
             if (resultCode==RESULT_OK) {
-                // pin ok, send the tx now
-                sendConfirmed();
+                try {
+                    // pin ok, send the tx now
+                    sendConfirmed();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+                    showErrorDialog("Commit transaction fail, please send the error report");
+                }
             }
         }else if(requestCode == MULTIPLE_ADDRESSES_SEND_RESULT){
             if (resultCode == RESULT_OK){
