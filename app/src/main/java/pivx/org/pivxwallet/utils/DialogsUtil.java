@@ -43,7 +43,11 @@ public class DialogsUtil {
         final SimpleTextDialog dialog = SimpleTextDialog.newInstance();
         dialog.setTitle(title);
         dialog.setBody(body);
-        dialog.setOkBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen,null));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            dialog.setOkBtnBackgroundColor(context.getResources().getColor(R.color.lightGreen, null));
+        }else {
+            dialog.setOkBtnBackgroundColor(ContextCompat.getColor(context, R.color.lightGreen));
+        }
         dialog.setOkBtnTextColor(Color.WHITE);
         dialog.setRootBackgroundRes(R.drawable.dialog_bg);
         return dialog;
