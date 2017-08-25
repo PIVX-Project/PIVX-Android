@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.common.collect.Lists;
+
+import org.bitcoinj.crypto.MnemonicException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,31 +113,32 @@ public class RestoreWordsActivity extends BaseActivity {
                 String word23 = txtWord23.getText().toString();
                 String word24 = txtWord24.getText().toString();
 
-                final List<String> mnemonic = new ArrayList<>();
-                mnemonic.add(word1);
-                mnemonic.add(word2);
-                mnemonic.add(word3);
-                mnemonic.add(word4);
-                mnemonic.add(word5);
-                mnemonic.add(word6);
-                mnemonic.add(word7);
-                mnemonic.add(word8);
-                mnemonic.add(word9);
-                mnemonic.add(word10);
-                mnemonic.add(word11);
-                mnemonic.add(word12);
-                mnemonic.add(word13);
-                mnemonic.add(word14);
-                mnemonic.add(word15);
-                mnemonic.add(word16);
-                mnemonic.add(word17);
-                mnemonic.add(word18);
-                mnemonic.add(word19);
-                mnemonic.add(word20);
-                mnemonic.add(word21);
-                mnemonic.add(word22);
-                mnemonic.add(word23);
-                mnemonic.add(word24);
+                final List<String> mnemonic = Lists.newArrayList(
+                        word1,
+                        word2,
+                        word3,
+                        word4,
+                        word5,
+                        word6,
+                        word7,
+                        word8,
+                        word9,
+                        word10,
+                        word11,
+                        word12,
+                        word13,
+                        word14,
+                        word15,
+                        word16,
+                        word17,
+                        word18,
+                        word19,
+                        word20,
+                        word21,
+                        word22,
+                        word23,
+                        word24
+                );
 
                 for (String s : mnemonic) {
                     if (s.equals("")){
@@ -152,6 +157,9 @@ public class RestoreWordsActivity extends BaseActivity {
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
                                 dialog.dismiss();
                                 try {
+
+                                    pivxModule.checkMnemonic(mnemonic);
+
                                     pivxApplication.stopBlockchain();
 
                                     pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
@@ -162,9 +170,12 @@ public class RestoreWordsActivity extends BaseActivity {
                                     finish();
                                 } catch (IOException e) {
                                     e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+                                    CrashReporter.saveBackgroundTrace(e, pivxApplication.getPackageInfo());
                                     // todo: show an error message here..
-                                    Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RestoreWordsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                }catch (MnemonicException e){
+                                    e.printStackTrace();
+                                    Toast.makeText(RestoreWordsActivity.this, R.string.invalid_mnemonic_code, Toast.LENGTH_LONG).show();
                                 }catch (Exception e){
                                     e.printStackTrace();
                                     CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());

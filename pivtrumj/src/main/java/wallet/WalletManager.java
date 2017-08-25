@@ -278,7 +278,8 @@ public class WalletManager {
         }
     }
 
-    public void restoreWalletFrom(List<String> mnemonic, long timestamp) throws IOException {
+    public void restoreWalletFrom(List<String> mnemonic, long timestamp) throws IOException, MnemonicException {
+        MnemonicCode.INSTANCE.check(mnemonic);
         wallet = Wallet.fromSeed(conf.getNetworkParams(),new DeterministicSeed(mnemonic,null,"",timestamp));
         restoreWallet(wallet);
     }
@@ -594,7 +595,9 @@ public class WalletManager {
         return tx.getOutput(index).getValue();
     }
 
-
+    public void checkMnemonic(List<String> mnemonic) throws MnemonicException {
+        MnemonicCode.INSTANCE.check(mnemonic);
+    }
 
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

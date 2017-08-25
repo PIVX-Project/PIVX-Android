@@ -11,6 +11,7 @@ import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
@@ -113,7 +114,7 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public void restoreWallet(List<String> mnemonic, long timestamp) throws IOException {
+    public void restoreWallet(List<String> mnemonic, long timestamp) throws IOException, MnemonicException {
         walletManager.restoreWalletFrom(mnemonic,timestamp);
     }
 
@@ -268,6 +269,11 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public int getProtocolVersion() {
         return blockchainManager.getProtocolVersion();
+    }
+
+    @Override
+    public void checkMnemonic(List<String> mnemonic) throws MnemonicException {
+        walletManager.checkMnemonic(mnemonic);
     }
 
     @Override

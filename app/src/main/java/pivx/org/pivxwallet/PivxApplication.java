@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
+import com.bugsee.library.Bugsee;
 import com.github.anrwatchdog.ANRWatchDog;
 import com.snappydb.SnappydbException;
 
@@ -134,6 +135,8 @@ public class PivxApplication extends Application implements ContextWrapper {
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+
+            //Bugsee.launch(this, "9b3473f1-984c-4f70-9aef-b0cf485839fd");
 
             // The following line triggers the initialization of ACRA
             ACRA.init(this);

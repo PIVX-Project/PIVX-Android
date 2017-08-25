@@ -9,6 +9,7 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.wallet.Wallet;
 
 import java.io.File;
@@ -54,7 +55,7 @@ public interface PivxModule {
 
     void restoreWalletFromEncrypted(File file, String password) throws CantRestoreEncryptedWallet, IOException;
 
-    void restoreWallet(List<String> mnemonic, long timestamp) throws IOException;
+    void restoreWallet(List<String> mnemonic, long timestamp) throws IOException, MnemonicException;
 
     /**
      * If the wallet already exist
@@ -143,4 +144,6 @@ public interface PivxModule {
     long getConnectedPeerHeight();
 
     int getProtocolVersion();
+
+    void checkMnemonic(List<String> mnemonic) throws MnemonicException;
 }

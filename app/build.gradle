@@ -66,6 +66,8 @@ dependencies {
 
     compile 'ch.acra:acra:4.9.2'
 
+    compile 'com.bugsee:bugsee-android:+'
+
     testCompile project(':pivtrumj')
     testCompile 'org.slf4j:slf4j-api:1.7.20'
     testCompile 'org.slf4j:slf4j-simple:1.7.5'
