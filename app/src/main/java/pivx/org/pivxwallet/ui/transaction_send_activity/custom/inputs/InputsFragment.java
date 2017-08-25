@@ -3,7 +3,6 @@ package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 import org.bitcoinj.core.Coin;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -141,7 +141,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
     protected BaseRecyclerAdapter<InputSelectionWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
         adapter = new BaseRecyclerAdapter<InputSelectionWrapper, BaseRecyclerViewHolder>(getActivity()) {
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
 
             @Override
             protected BaseRecyclerViewHolder createHolder(View itemView, int type) {

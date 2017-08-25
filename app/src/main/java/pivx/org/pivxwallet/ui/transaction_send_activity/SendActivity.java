@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -377,8 +378,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         }
                     }
             );
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                noConnectivityDialog.setRightBtnTextColor(getColor(R.color.lightGreen));
+            }else {
+                noConnectivityDialog.setRightBtnTextColor(ContextCompat.getColor(this, R.color.lightGreen));
+            }
             noConnectivityDialog.setLeftBtnTextColor(Color.WHITE)
-                    .setLeftBtnBackgroundColor(getColor(R.color.lightGreen))
                     .setRightBtnTextColor(Color.BLACK)
                     .setRightBtnBackgroundColor(Color.WHITE)
                     .setLeftBtnText(getString(R.string.button_cancel))

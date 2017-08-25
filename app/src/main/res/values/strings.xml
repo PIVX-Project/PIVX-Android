@@ -86,7 +86,7 @@
     <string name="explorer">Explorer</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
-    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at\n %s </string>
+    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete.\nIt has been saved in the folder at\n%s </string>
     <string name="import_keys_dialog_message">Select one of your backups \n files loaded from \n folder %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
@@ -221,7 +221,7 @@
     <string name="delete_addresses">DELETE ADDRESSES</string>
     <string name="sync">Synced</string>
     <string name="syncing">Syncing</string>
-    <string name="not_connection">Not connection</string>
+    <string name="not_connection">No connection</string>
     <string name="confimations">Confirmations</string>
     <string name="multiple_address_send">Sending to %d addresses</string>
     <string name="fee_per_kb">%s Piv/kB</string>
@@ -244,7 +244,7 @@
     <string name="invalid_mnemonic_code">Invalid mnemonic code, please check every word again.</string>
     <string name="restore_mnemonic">Restoring wallet from mnemonic..</string>
     <string name="restore_mnemonic_title">Restore Mnemonic</string>
-    <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synched.</string>
+    <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synced.</string>
     <string name="invalid_host">Invalid host name</string>
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
     <string name="detail_no_available_inputs">No available inputs information</string>

@@ -148,7 +148,11 @@ public class SettingsBackupActivity extends BaseActivity {
                         getString(R.string.backup_completed),
                         getString(R.string.backup_completed_text,backupAbsolutePath)
                 );
-                succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
+                }else {
+                    succedDialog.setOkBtnBackgroundColor(ContextCompat.getColor(SettingsBackupActivity.this, R.color.lightGreen));
+                }
                 succedDialog.setOkBtnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

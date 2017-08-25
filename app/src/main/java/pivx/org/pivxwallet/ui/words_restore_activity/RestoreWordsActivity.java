@@ -2,7 +2,9 @@ package pivx.org.pivxwallet.ui.words_restore_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.module.PivxContext.PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
@@ -159,6 +162,12 @@ public class RestoreWordsActivity extends BaseActivity {
                                     finish();
                                 } catch (IOException e) {
                                     e.printStackTrace();
+                                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+                                    // todo: show an error message here..
+                                    Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
                                     // todo: show an error message here..
                                     Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                 }
@@ -170,7 +179,11 @@ public class RestoreWordsActivity extends BaseActivity {
                             }
                         }
                 );
-                dialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    dialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+                }else {
+                    dialog.setRightBtnTextColor(ContextCompat.getColor(this, R.color.bgPurple));
+                }
                 dialog.show();
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,7 +1,9 @@
 package pivx.org.pivxwallet.ui.contacts_activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -160,7 +162,12 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
             deleteAddressLabelDialog.setListener(listener);
             deleteAddressLabelDialog.setBody(getString(R.string.delete_address_label_text,data.getAddresses().get(0)));
         }
-        deleteAddressLabelDialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            deleteAddressLabelDialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+        }else {
+            deleteAddressLabelDialog.setRightBtnTextColor(ContextCompat.getColor(this, R.color.bgPurple));
+        }
+
         deleteAddressLabelDialog.show();
     }
 }

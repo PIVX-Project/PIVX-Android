@@ -26,6 +26,8 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -63,11 +65,20 @@ public class ScannerView extends View
 		super(context, attrs);
 
 		final Resources res = getResources();
-		maskColor = res.getColor(R.color.scan_mask);
-		maskResultColor = res.getColor(R.color.scan_result_view);
-		laserColor = res.getColor(R.color.scan_laser);
-		dotColor = res.getColor(R.color.scan_dot);
-		dotResultColor = res.getColor(R.color.scan_result_dots);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			maskColor = res.getColor(R.color.scan_mask,null);
+			maskResultColor = res.getColor(R.color.scan_result_view,null);
+			laserColor = res.getColor(R.color.scan_laser,null);
+			dotColor = res.getColor(R.color.scan_dot,null);
+			dotResultColor = res.getColor(R.color.scan_result_dots,null);
+		}else {
+			maskColor = ContextCompat.getColor(context,R.color.scan_mask);
+			maskResultColor = ContextCompat.getColor(context,R.color.scan_result_view);
+			laserColor = ContextCompat.getColor(context,R.color.scan_laser);
+			dotColor = ContextCompat.getColor(context,R.color.scan_dot);
+			dotResultColor = ContextCompat.getColor(context,R.color.scan_result_dots);
+		}
+
 
 		maskPaint = new Paint();
 		maskPaint.setStyle(Style.FILL);
