@@ -13,6 +13,9 @@ import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
+import org.bitcoinj.wallet.CoinSelection;
+import org.bitcoinj.wallet.CoinSelector;
+import org.bitcoinj.wallet.DefaultCoinSelector;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -31,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 
 import chain.BlockchainManager;
+import chain.BlockchainState;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;
@@ -197,12 +201,18 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException {
+        return buildSendTx(addressBase58,amount,null,memo);
+    }
+    @Override
+    public Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo) throws InsufficientMoneyException{
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
 
         SendRequest sendRequest = SendRequest.to(address,amount);
         sendRequest.memo = memo;
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
+        if (feePerKb!=null)
+            sendRequest.feePerKb = feePerKb;
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -210,11 +220,19 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Transaction completeTx(Transaction transaction,Coin fee) throws InsufficientMoneyException {
+    public Transaction completeTx(Transaction transaction,Coin feePerKb) throws InsufficientMoneyException {
         SendRequest sendRequest = SendRequest.forTx(transaction);
+        if (transaction.getInputs()!=null && !transaction.getInputs().isEmpty()){
+            List<TransactionOutput> unspent = new ArrayList<>();
+            for (TransactionInput input : transaction.getInputs()) {
+                unspent.add(input.getConnectedOutput());
+            }
+            sendRequest.coinSelector = new pivx.org.pivxwallet.module.wallet.DefaultCoinSelector(unspent);
+        }
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
-        sendRequest.feePerKb = fee;
+        if (feePerKb!=null)
+            sendRequest.feePerKb = feePerKb;
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -480,6 +498,22 @@ public class PivxModuleImp implements PivxModule {
     public List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException {
         return walletManager.getRandomListUnspentNotInListToFullCoins(inputs,amount);
     }
+
+   @Override
+   public boolean isSyncWithNode() throws NoPeerConnectedException {
+       boolean isSync = false;
+       if (isAnyPeerConnected()) {
+           long peerHeight = getConnectedPeerHeight();
+           if (peerHeight!=-1){
+               if (getChainHeight()+10>peerHeight) {
+                   isSync = true;
+               }
+           }
+       }else {
+          throw new NoPeerConnectedException();
+       }
+       return isSync;
+   }
 
 
     public void saveRate(PivxRate pivxRate){

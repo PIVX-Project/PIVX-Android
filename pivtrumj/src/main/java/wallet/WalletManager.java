@@ -571,7 +571,9 @@ public class WalletManager {
             boolean found = false;
             if (inputs!=null) {
                 for (TransactionInput input : inputs) {
-                    if (input.getConnectedOutput().equals(transactionOutput)) {
+                    if (input.getConnectedOutput().getParentTransactionHash().equals(transactionOutput.getParentTransactionHash())
+                            &&
+                        input.getConnectedOutput().getIndex() == transactionOutput.getIndex()) {
                         found = true;
                     }
                 }

@@ -97,6 +97,7 @@ public interface PivxModule {
     boolean chechAddress(String addressBase58);
 
     Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException;
+    Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo) throws InsufficientMoneyException;
 
     WalletConfiguration getConf();
 
@@ -146,4 +147,6 @@ public interface PivxModule {
     int getProtocolVersion();
 
     void checkMnemonic(List<String> mnemonic) throws MnemonicException;
+
+    boolean isSyncWithNode() throws NoPeerConnectedException;
 }

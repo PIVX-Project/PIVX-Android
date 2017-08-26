@@ -251,6 +251,8 @@
     <string name="report_crash_title">Report crash</string>
     <string name="crash_toast_text">Pivx wallet crash</string>
     <string name="backup_fail">Backup fail</string>
+    <string name="no_peer_connection">No connection to the node</string>
+    <string name="wallet_is_not_sync">Wallet is not sync, to be sure about your real balance please wait until the synchronization finish</string>
 
 
 </resources>
