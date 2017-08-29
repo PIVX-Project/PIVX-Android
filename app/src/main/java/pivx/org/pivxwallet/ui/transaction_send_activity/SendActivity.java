@@ -345,8 +345,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_SHORT).show();
             }
         }else if(id == R.id.btn_swap){
-            inPivs = !inPivs;
-            amountSwap.showNext();
+            if (!isMultiSend){
+                inPivs = !inPivs;
+                amountSwap.showNext();
+            }else {
+                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_LONG).show();
+            }
         }else if (id == R.id.txt_coin_selection){
             startCoinControlActivity(unspent);
         }else if(id == R.id.txt_multiple_outputs){
