@@ -525,6 +525,11 @@ public class PivxModuleImp implements PivxModule {
        return isSync;
    }
 
+    @Override
+    public void watchOnlyMode(String xpub) throws IOException {
+        walletManager.watchOnlyMode(xpub);
+    }
+
 
     public void saveRate(PivxRate pivxRate){
         rateDb.insertOrUpdateIfExist(pivxRate);

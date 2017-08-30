@@ -495,6 +495,15 @@ public class WalletManager {
         logger.info("successfully restored encrypted wallet: {}", file);
     }
 
+    /**
+     * Restart the wallet and re create it in a watch only mode.
+     * @param xpub
+     */
+    public void watchOnlyMode(String xpub) throws IOException {
+        Wallet wallet = Wallet.fromWatchingKeyB58(conf.getNetworkParams(),xpub,0);
+        restoreWallet(wallet);
+    }
+
     public Set<Transaction> listTransactions() {
         return wallet.getTransactions(true);
     }
@@ -603,7 +612,6 @@ public class WalletManager {
     public String getExtPubKey() {
         return wallet.getWatchingKey().serializePubB58(conf.getNetworkParams());
     }
-
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

@@ -259,6 +259,14 @@
     <string name="unknown_error_message">Error loading the xpub, please send a report</string>
     <string name="settings_export_pub_key">Export account</string>
     <string name="copy_key_message">Key copied</string>
-
+    <string name="hint_paste_xpub">Paste your xpub here</string>
+    <string name="explanation_import_xpub">Make your wallet a Watch Only Wallet importing your xpub from another wallet.</string>
+    <string name="import_xpub">Import</string>
+    <string name="settings_import_xpub">Watch only mode</string>
+    <string name="screen_title_watch_only">Watch Only</string>
+    <string name="watch_only_mode_activated">Watch only mode activated</string>
+    <string name="watch_only_mode_activated_text">Please wait until the synchronization is completed, could take a while be patient.</string>
+    <string name="error_importing_xpub">Please check the key or send an error report.</string>
+    <string name="error_importing_xpub_title">Error importing xpub</string>
 
 </resources>

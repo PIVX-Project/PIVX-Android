@@ -153,4 +153,5 @@ public interface PivxModule {
 
     boolean isSyncWithNode() throws NoPeerConnectedException;
 
+    void watchOnlyMode(String xpub) throws IOException;
 }

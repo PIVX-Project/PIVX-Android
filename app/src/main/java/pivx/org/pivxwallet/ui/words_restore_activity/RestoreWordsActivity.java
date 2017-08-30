@@ -160,8 +160,6 @@ public class RestoreWordsActivity extends BaseActivity {
 
                                     pivxModule.checkMnemonic(mnemonic);
 
-                                    pivxApplication.stopBlockchain();
-
                                     pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
 
                                     Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
