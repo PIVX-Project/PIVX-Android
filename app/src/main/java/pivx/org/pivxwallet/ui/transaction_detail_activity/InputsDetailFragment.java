@@ -1,12 +1,12 @@
 package pivx.org.pivxwallet.ui.transaction_detail_activity;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -65,7 +65,7 @@ public class InputsDetailFragment extends BaseRecyclerFragment<InputWrapper> {
     protected BaseRecyclerAdapter<InputWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
         adapter = new BaseRecyclerAdapter<InputWrapper, FragmentTxDetail.DetailOutputHolder>(getActivity()) {
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
 
             @Override
             protected FragmentTxDetail.DetailOutputHolder createHolder(View itemView, int type) {
