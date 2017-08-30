@@ -13,7 +13,7 @@
     <string name="app_name">PIVX wallet</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
-    <string name="restore_wallet_message">Select a backup of the wallet \n from a storage unit</string>
+    <string name="restore_wallet_message">Select a backup of the wallet\nfrom a storage unit</string>
     <string name="pincode_message">For your security \na pincode is needed</string>
     <string name="select_file">Select File</string>
     <string name="action_qr">QR Cocde</string>
@@ -87,7 +87,7 @@
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
     <string name="backup_completed_text">Congratulations! Your wallet is backup is complete.\nIt has been saved in the folder at\n%s </string>
-    <string name="import_keys_dialog_message">Select one of your backups \n files loaded from \n folder %s</string>
+    <string name="import_keys_dialog_message">Select one of your backups\nfiles loaded from\nfolder %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
     <string name="import_keys_dialog_failure">Error importing backup file\n%s</string>
