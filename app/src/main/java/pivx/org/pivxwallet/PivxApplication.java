@@ -156,11 +156,6 @@ public class PivxApplication extends Application implements ContextWrapper {
             pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
             pivxModule.start();
 
-            /*if(appConf.getShowReportOnStart()){
-                Intent intent = new Intent(this, CrashPopupActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }*/
         } catch (SnappydbException e) {
             e.printStackTrace();
         } catch (Exception e){

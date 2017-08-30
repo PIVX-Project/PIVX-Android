@@ -39,7 +39,7 @@
         <activity android:name=".ui.start_activity.StartActivity"  android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".ui.security_words_activity.MnemonicActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.backup_mnemonic_activity.MnemonicActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait"/>
@@ -74,6 +74,7 @@
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
         <activity android:name=".ui.donate.DonateActivity" />
+        <activity android:name=".ui.export_account.ExportKeyActivity"/>
 
         <activity android:name=".ui.crash_activity.CrashPopupActivity"
             android:launchMode="singleInstance"

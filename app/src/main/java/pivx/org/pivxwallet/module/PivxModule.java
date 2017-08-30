@@ -128,6 +128,9 @@ public interface PivxModule {
 
     List<String> getMnemonic();
 
+    String getWatchingPubKey();
+    DeterministicKey getWatchingKey();
+
     DeterministicKey getKeyPairForAddress(Address address);
 
     TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException;
@@ -149,4 +152,5 @@ public interface PivxModule {
     void checkMnemonic(List<String> mnemonic) throws MnemonicException;
 
     boolean isSyncWithNode() throws NoPeerConnectedException;
+
 }

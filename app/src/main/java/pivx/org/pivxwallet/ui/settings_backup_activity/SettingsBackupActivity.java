@@ -1,7 +1,6 @@
 package pivx.org.pivxwallet.ui.settings_backup_activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -25,7 +24,7 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.ui.security_words_activity.MnemonicActivity;
+import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**

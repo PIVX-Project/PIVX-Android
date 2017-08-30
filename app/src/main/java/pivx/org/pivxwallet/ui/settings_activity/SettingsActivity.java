@@ -23,6 +23,7 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.export_account.ExportKeyActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
@@ -43,6 +44,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Switch videoSwitch;
     private Button buttonBackup;
     private Button buttonRestore;
+    private Button btn_export_pub_key;
     private Button buttonChange;
     private Button btn_change_node;
     private Button btn_reset_blockchain;
@@ -72,6 +74,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         // Open Restore Wallet
         buttonRestore = (Button) findViewById(R.id.btn_restore_wallet);
         buttonRestore.setOnClickListener(this);
+
+        btn_export_pub_key = (Button) findViewById(R.id.btn_export_pub_key);
+        btn_export_pub_key.setOnClickListener(this);
 
         // Open Change Pincode
         buttonChange = (Button) findViewById(R.id.btn_change_pincode);
@@ -160,6 +165,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                     getString(R.string.report_issue_dialog_message_issue),
                     new ArrayList<Uri>()
             );
+        }else if (id == R.id.btn_export_pub_key){
+            startActivity(new Intent(v.getContext(), ExportKeyActivity.class));
         }
     }
 

@@ -41,7 +41,7 @@ public abstract class BaseActivity extends PivxActivity {
 
     }
 
-    private void init(){
+    private final void init(){
         childContainer = (FrameLayout) findViewById(R.id.content);
         if (hasToolbar() && !isFullScreen()) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -485,6 +485,16 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public String getWatchingPubKey() {
+        return walletManager.getExtPubKey();
+    }
+
+    @Override
+    public DeterministicKey getWatchingKey() {
+        return walletManager.getWatchingPubKey();
+    }
+
+    @Override
     public DeterministicKey getKeyPairForAddress(Address address) {
         return walletManager.getKeyPairForAddress(address);
     }

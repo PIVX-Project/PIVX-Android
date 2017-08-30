@@ -20,6 +20,7 @@ import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.LinuxSecureRandom;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
+import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.bitcoinj.wallet.KeyChainGroup;
 import org.bitcoinj.wallet.Protos;
@@ -179,16 +180,10 @@ public class WalletManager {
             if (Utils.isAndroidRuntime()) {
                 new LinuxSecureRandom();
             }
-            /*SecureRandom secureRandom = new SecureRandom();
-            byte[] seed = secureRandom.generateSeed(32);
-            DeterministicSeed deterministicSeed = new DeterministicSeed(seed, ByteString.copyFrom(seed).toStringUtf8(),System.currentTimeMillis());
-            KeyChainGroup keyChainGroup = new KeyChainGroup(conf.getNetworkParams(),deterministicSeed);
-            wallet = new Wallet(conf.getNetworkParams(),keyChainGroup);*/
-            // coinomi compatibility..
             List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
 
             DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
-            wallet = Wallet.fromSeed(conf.getNetworkParams(), seed);
+            wallet = Wallet.fromSeed(conf.getNetworkParams(), seed, DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY);
 
             saveWallet();
             backupWallet();
@@ -599,6 +594,14 @@ public class WalletManager {
 
     public void checkMnemonic(List<String> mnemonic) throws MnemonicException {
         MnemonicCode.INSTANCE.check(mnemonic);
+    }
+
+    public DeterministicKey getWatchingPubKey() {
+        return wallet.getWatchingKey();
+    }
+
+    public String getExtPubKey() {
+        return wallet.getWatchingKey().serializePubB58(conf.getNetworkParams());
     }
 
 
