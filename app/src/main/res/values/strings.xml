@@ -260,7 +260,7 @@
     <string name="settings_export_pub_key">Export account</string>
     <string name="copy_key_message">Key copied</string>
     <string name="hint_paste_xpub">Paste your xpub here</string>
-    <string name="explanation_import_xpub">Make your wallet a Watch Only Wallet importing your xpub from another wallet.</string>
+    <string name="explanation_import_xpub">Make your wallet a Watch\nOnly Wallet importing your xpub\nfrom another wallet.</string>
     <string name="import_xpub">Import</string>
     <string name="settings_import_xpub">Watch only mode</string>
     <string name="screen_title_watch_only">Watch Only</string>
