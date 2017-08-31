@@ -253,7 +253,7 @@
     <string name="backup_fail">Backup fail</string>
     <string name="no_peer_connection">No connection to the node</string>
     <string name="wallet_is_not_sync">Wallet is not sync, to be sure about your real balance please wait until the synchronization finish</string>
-    <string name="warn_sharing_pub_key">Sharing your public key will allow anybody to view your balance and transactio history.</string>
+    <string name="warn_sharing_pub_key">Sharing your public key will allow anybody to view your balance and transaction history.</string>
     <string name="public_key">Public key</string>
     <string name="derivation_path">Derivation path (BIP32)</string>
     <string name="unknown_error_message">Error loading the xpub, please send a report</string>
@@ -268,5 +268,6 @@
     <string name="watch_only_mode_activated_text">Please wait until the synchronization is completed, could take a while be patient.</string>
     <string name="error_importing_xpub">Please check the key or send an error report.</string>
     <string name="error_importing_xpub_title">Error importing xpub</string>
+    <string name="export_wallet">Export Wallet</string>
 
 </resources>
