@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/restoreMessage"
@@ -17,14 +18,17 @@
         android:textSize="18sp" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/bg_settings_input_bottom"
         android:id="@+id/edit_xpub"
-        android:lines="4"
-        android:padding="16dp"
+        android:maxLines="4"
+        android:padding="10dp"
+        android:textSize="14sp"
         android:gravity="center"
         android:hint="@string/hint_paste_xpub"
-        android:background="@color/transparent"
+        android:textColorHint="@color/hintInput"
+        android:textColor="@color/mainText"
         />
 
     <LinearLayout

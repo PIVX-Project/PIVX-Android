@@ -39,6 +39,9 @@ public class ExportKeyActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         try {
+            setTitle(R.string.export_wallet);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             root = getLayoutInflater().inflate(R.layout.export_key_main, container);
             txt_title = (TextView) root.findViewById(R.id.txt_title);
             txt_key = (TextView) root.findViewById(R.id.txt_key);
