@@ -90,6 +90,10 @@ public class SettingsBackupActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case 0:
+                if (pivxModule.isWalletWatchOnly()){
+                    Toast.makeText(this,R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 Intent myIntent = new Intent(getApplicationContext(), MnemonicActivity.class);
                 startActivity(myIntent);
                 return true;

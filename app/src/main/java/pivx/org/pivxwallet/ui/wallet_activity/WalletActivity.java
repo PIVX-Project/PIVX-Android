@@ -57,10 +57,9 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_value;
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
+    private TextView txt_watch_only;
     private PivxRate pivxRate;
-
     private TransactionsFragmentBase txsFragment;
-
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
@@ -111,13 +110,17 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
         container_txs = root.findViewById(R.id.container_txs);
         txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
-
+        txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
 
         // Open Send
         fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (pivxModule.isWalletWatchOnly()){
+                    Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(new Intent(v.getContext(), SendActivity.class));
             }
         });
@@ -138,7 +141,12 @@ public class WalletActivity extends BaseDrawerActivity {
         localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
         localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
 
+        updateState();
         updateBalance();
+    }
+
+    private void updateState() {
+        txt_watch_only.setVisibility(pivxModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
     }
 
     private void init() {

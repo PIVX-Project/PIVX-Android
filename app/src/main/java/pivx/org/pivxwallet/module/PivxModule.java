@@ -76,6 +76,8 @@ public interface PivxModule {
 
     Coin getUnnavailableBalanceCoin();
 
+    boolean isWalletWatchOnly();
+
     BigDecimal getAvailableBalanceLocale();
 
     /******    Address Label          ******/

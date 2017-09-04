@@ -267,5 +267,6 @@
     <string name="watch_only_mode_activated_text">Please wait until the synchronization is completed, could take a while be patient.</string>
     <string name="error_importing_xpub">Please check the key or send an error report.</string>
     <string name="error_importing_xpub_title">Error importing xpub</string>
+    <string name="error_watch_only_mode">Action is not possible on watch only mode</string>
 
 </resources>

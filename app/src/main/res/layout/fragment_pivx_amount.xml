@@ -1,59 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="20dp"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/bgPurple">
 
     <TextView
-        android:id = "@+id/pivValue"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="10dp"
-        android:text = "13.135 PIV"
-        android:textColor = "@color/textColorWhite"
-        android:textSize = "24sp" />
-    <TextView
-        android:layout_below="@+id/pivValue"
-        android:layout_centerHorizontal="true"
-        android:id = "@+id/txt_local_currency"
-        android:layout_width = "wrap_content"
-        android:layout_height = "wrap_content"
-        android:text = "14710 USD"
-        android:textColor = "@color/textColorLightPurple"
-        android:textSize = "16sp"
-        android:paddingBottom="20dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_watch_only"
+        android:visibility="gone"
+        android:text="@string/screen_title_watch_only"
+        android:textColor="@color/bgInput"
+        android:layout_alignParentEnd="true"
+        android:textSize="14sp"
+        android:paddingEnd="16dp"
+        android:paddingTop="7dp"
+        />
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bgBlack30"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:layout_alignParentBottom="true">
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:gravity="center"
+        >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unavailable"
-            android:textSize="14sp"
-            android:textColor="@color/bgWhite"
-            android:layout_marginRight="8dp"/>
-
-        <TextView
-            android:id = "@+id/txt_unnavailable"
+            android:id = "@+id/pivValue"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:text = "Unspendable: 0"
-            android:textColor = "@color/mainGreen"
-            android:textSize = "14sp" />
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="10dp"
+            android:text = "13.135 PIV"
+            android:textColor = "@color/textColorWhite"
+            android:textSize = "24sp" />
+        <TextView
+            android:layout_below="@+id/pivValue"
+            android:layout_centerHorizontal="true"
+            android:id = "@+id/txt_local_currency"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "14710 USD"
+            android:textColor = "@color/textColorLightPurple"
+            android:textSize = "16sp"
+            android:paddingBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bgBlack30"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unavailable"
+                android:textSize="14sp"
+                android:textColor="@color/bgWhite"
+                android:layout_marginRight="8dp"/>
+
+            <TextView
+                android:id = "@+id/txt_unnavailable"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "Unspendable: 0"
+                android:textColor = "@color/mainGreen"
+                android:textSize = "14sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

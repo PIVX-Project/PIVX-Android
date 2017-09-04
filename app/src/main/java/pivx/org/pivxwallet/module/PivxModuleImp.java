@@ -153,6 +153,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public boolean isWalletWatchOnly(){
+        return walletManager.isWatchOnly();
+    }
+
+    @Override
     public BigDecimal getAvailableBalanceLocale() {
         return pivInUsdHardcoded.multiply(new BigDecimal(availableBalance));
     }

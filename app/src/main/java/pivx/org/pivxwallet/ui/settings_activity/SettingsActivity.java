@@ -34,6 +34,8 @@ import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.IntentsUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
 
+import static pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity.INTENT_EXTRA_INFO_TUTORIAL;
+
 /**
  * Created by Neoperol on 5/11/17.
  */
@@ -142,9 +144,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         if (id == R.id.btn_backup_wallet){
             Intent myIntent = new Intent(v.getContext(), SettingsBackupActivity.class);
             startActivity(myIntent);
-
         }else if (id == R.id.btn_tutorial){
             Intent myIntent = new Intent(v.getContext(), TutorialActivity.class);
+            myIntent.putExtra(INTENT_EXTRA_INFO_TUTORIAL,true);
             startActivity(myIntent);
         }else if (id == R.id.btn_restore_wallet){
             Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);

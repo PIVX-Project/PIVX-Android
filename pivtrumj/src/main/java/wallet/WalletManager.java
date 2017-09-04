@@ -410,7 +410,7 @@ public class WalletManager {
     }
 
     public Coin getAvailableBalance() {
-        return wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE);
+        return wallet.getBalance(Wallet.BalanceType.AVAILABLE);
     }
 
     public Coin getValueSentFromMe(Transaction transaction) {
@@ -513,7 +513,7 @@ public class WalletManager {
     }
 
     public Coin getUnspensableBalance() {
-        return wallet.getBalance(Wallet.BalanceType.ESTIMATED_SPENDABLE).minus(wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE));
+        return wallet.getBalance(Wallet.BalanceType.ESTIMATED).minus(wallet.getBalance(Wallet.BalanceType.AVAILABLE));
     }
 
     public boolean isAddressMine(Address address) {
@@ -551,6 +551,14 @@ public class WalletManager {
         logger.info("Key pub: "+deterministicKey.getPublicKeyAsHex());
         logger.info("Key priv: "+deterministicKey.getPrivateKeyEncoded(conf.getNetworkParams()));
         return deterministicKey;
+    }
+
+    /**
+     * If the wallet doesn't contain any private key.
+     * @return
+     */
+    public boolean isWatchOnly(){
+        return wallet.isWatching();
     }
 
     public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException {
