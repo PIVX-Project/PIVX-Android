@@ -1,7 +1,5 @@
 package pivx.org.pivxwallet.rate;
 
-import org.apache.http.client.ClientProtocolException;
-
 /**
  * Created by furszy on 7/5/17.
  */

@@ -1,8 +1,5 @@
 package pivx.org.pivxwallet.ui.qr_activity;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -29,7 +26,6 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
 
-import static android.R.attr.label;
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;
 import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;

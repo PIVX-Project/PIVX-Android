@@ -4,11 +4,6 @@ import android.content.SharedPreferences;
 
 import org.bitcoinj.core.Context;
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.TestNet3Params;
-
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.utils.Configurations;

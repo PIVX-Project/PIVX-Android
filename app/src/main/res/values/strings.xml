@@ -149,7 +149,6 @@
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
-    <string name="reveal_words">Reveal words</string>
     <string name="backup_words">Mnemonic Code</string>
     <string name="btn_secure">Already noted</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>

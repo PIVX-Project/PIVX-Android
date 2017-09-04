@@ -1,7 +1,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,7 +11,7 @@
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="@color/white">
+        >
 
         <TextView
             android:id="@+id/secureMessage"
@@ -47,32 +48,27 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:visibility="gone"
-            android:paddingRight="30dp"
+            android:id="@+id/container_continue_btn"
+            android:visibility="visible"
             android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:gravity="center|top"
             android:layout_below="@+id/securityWords"
+            android:paddingTop="20dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
             android:layout_alignParentStart="true">
 
-            <TextView
+            <Button
+                android:id="@+id/btn_continue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_button_border"
+                android:elevation="2dp"
                 android:gravity="center"
-                android:textColor="@color/mainText"
-                android:textSize="16sp"
-                android:text="@string/reveal_words"/>
+                android:layout_gravity="bottom"
+                android:text="@string/button_ok"
+                android:textColor="@color/textColorPurple"
+                android:textSize="14sp" />
 
-
-            <ImageButton
-                android:id="@+id/btn_show"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:gravity="center"
-                android:src="@drawable/ic_show_words" />
 
 
         </LinearLayout>

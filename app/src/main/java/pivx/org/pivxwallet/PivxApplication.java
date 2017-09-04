@@ -9,8 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
-import com.bugsee.library.Bugsee;
-import com.github.anrwatchdog.ANRWatchDog;
 import com.snappydb.SnappydbException;
 
 import org.acra.ACRA;
@@ -36,6 +34,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
+import global.WalletConfiguration;
 import global.utils.Io;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
@@ -44,11 +43,9 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
-import global.WalletConfiguration;
 import pivx.org.pivxwallet.module.store.SnappyStore;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
-import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.CentralFormats;
 import pivx.org.pivxwallet.utils.CrashReporter;

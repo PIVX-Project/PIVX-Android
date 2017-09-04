@@ -7,11 +7,8 @@ import com.snappydb.DBFactory;
 import com.snappydb.KeyIterator;
 import com.snappydb.SnappydbException;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import store.AddressBalance;

@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 
 /**
  * Created by mati on 18/04/17.

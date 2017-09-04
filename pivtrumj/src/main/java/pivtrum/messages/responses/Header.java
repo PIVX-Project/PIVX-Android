@@ -1,11 +1,5 @@
 package pivtrum.messages.responses;
 
-import com.google.protobuf.ByteString;
-
-import org.spongycastle.util.encoders.Hex;
-
-import java.nio.ByteBuffer;
-
 /**
  * Created by furszy on 6/18/17.
  *

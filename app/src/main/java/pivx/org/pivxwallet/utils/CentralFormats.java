@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import pivx.org.pivxwallet.utils.AppConf;
-
 /**
  * Created by furszy on 7/8/17.
  */

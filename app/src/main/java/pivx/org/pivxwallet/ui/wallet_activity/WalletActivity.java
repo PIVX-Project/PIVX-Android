@@ -2,52 +2,37 @@ package pivx.org.pivxwallet.ui.wallet_activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.uri.PivxURI;
-import org.bitcoinj.utils.MonetaryFormat;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
+import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.IntentsConstants;
-import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
-import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
-import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
-import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
-import pivx.org.pivxwallet.utils.AppConf;
-import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 

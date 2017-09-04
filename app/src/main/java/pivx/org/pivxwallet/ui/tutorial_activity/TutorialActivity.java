@@ -11,8 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,10 +19,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
-import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 
 /**

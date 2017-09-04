@@ -1,12 +1,9 @@
 package pivx.org.pivxwallet.utils;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -20,7 +17,6 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
-import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by furszy on 7/5/17.

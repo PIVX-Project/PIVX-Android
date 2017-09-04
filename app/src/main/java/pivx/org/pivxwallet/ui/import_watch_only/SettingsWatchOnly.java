@@ -1,6 +1,5 @@
 package pivx.org.pivxwallet.ui.import_watch_only;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +8,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.bugsee.library.util.ExceptionUtils;
-import com.google.common.base.Throwables;
-
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
-import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
-import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.utils.CrashReporter.appendSavedBackgroundTraces;

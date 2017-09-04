@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import global.utils.Io;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
 
 import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;

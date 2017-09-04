@@ -15,8 +15,6 @@ import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.utils.DialogBuilder;
 
-import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
-
 /**
  * Created by furszy on 6/8/17.
  */

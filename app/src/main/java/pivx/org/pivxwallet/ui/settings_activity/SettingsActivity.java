@@ -1,12 +1,10 @@
 package pivx.org.pivxwallet.ui.settings_activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,9 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import pivx.org.pivxwallet.BuildConfig;
+import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.export_account.ExportKeyActivity;
 import pivx.org.pivxwallet.ui.import_watch_only.SettingsWatchOnly;
@@ -32,7 +30,6 @@ import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
-import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.IntentsUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;

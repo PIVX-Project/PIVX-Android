@@ -1,6 +1,5 @@
 package org.pivtrum.imp;
 
-import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.params.TestNet3Params;
 import org.junit.Test;

@@ -1,16 +1,13 @@
 package pivx.org.pivxwallet.ui.start_activity;
 
 import android.content.Intent;
-import android.graphics.RadialGradient;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
-import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 

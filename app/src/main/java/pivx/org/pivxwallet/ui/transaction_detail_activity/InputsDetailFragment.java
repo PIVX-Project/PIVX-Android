@@ -16,10 +16,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputHolder;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputHolder;
 import wallet.TxNotFoundException;
 
 /**

@@ -1,10 +1,7 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
 
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import pivx.org.pivxwallet.R;

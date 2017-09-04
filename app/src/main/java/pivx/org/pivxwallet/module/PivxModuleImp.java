@@ -13,9 +13,6 @@ import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
-import org.bitcoinj.wallet.CoinSelection;
-import org.bitcoinj.wallet.CoinSelector;
-import org.bitcoinj.wallet.DefaultCoinSelector;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -34,7 +31,6 @@ import java.util.Map;
 import java.util.Set;
 
 import chain.BlockchainManager;
-import chain.BlockchainState;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;

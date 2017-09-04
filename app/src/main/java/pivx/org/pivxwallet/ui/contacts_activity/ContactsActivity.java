@@ -6,12 +6,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +13,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.utils.DialogsUtil;
