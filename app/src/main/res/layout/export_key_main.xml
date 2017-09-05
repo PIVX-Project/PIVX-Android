@@ -4,16 +4,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgWhite"
     android:padding="16dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Public key"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:paddingBottom="9dp"
         android:id="@+id/txt_title"
-        android:textColor="#666666"
+        android:textColor="@color/subtitle"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
     <TextView
@@ -23,6 +24,7 @@
         android:paddingBottom="9dp"
         android:layout_below="@+id/txt_title"
         android:textSize="18sp"
+        android:textColor="@color/mainText"
         tools:text="xpub"/>
 
     <TextView
@@ -40,8 +42,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_title_derivation_path"
         android:layout_below="@+id/txt_warn"
-        android:textColor="#666666"
-        android:textSize="15sp"
+        android:textColor="@color/subtitle"
+        android:textSize="14sp"
         android:paddingBottom="9dp"
         tools:text="Derivation path (BIP32)"/>
 
@@ -50,7 +52,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_derivation_path"
         android:paddingBottom="9dp"
-        android:textSize="16sp"
+        android:textSize="14sp"
+        android:textColor="@color/subtitle"
         android:layout_below="@+id/txt_title_derivation_path"
         tools:text="M / 44' / 119' / 0' "/>
 
