@@ -549,7 +549,6 @@ public class WalletManager {
     public DeterministicKey getKeyPairForAddress(Address address) {
         DeterministicKey deterministicKey = wallet.getActiveKeyChain().findKeyFromPubHash(address.getHash160());
         logger.info("Key pub: "+deterministicKey.getPublicKeyAsHex());
-        logger.info("Key priv: "+deterministicKey.getPrivateKeyEncoded(conf.getNetworkParams()));
         return deterministicKey;
     }
 
