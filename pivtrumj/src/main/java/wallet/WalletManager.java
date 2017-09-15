@@ -51,6 +51,8 @@ import java.util.concurrent.TimeUnit;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import global.utils.Io;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 
 /**
  * Created by furszy on 6/4/17.

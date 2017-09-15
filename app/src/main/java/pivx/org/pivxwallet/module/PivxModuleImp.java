@@ -42,8 +42,8 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapp
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressStore;
-import wallet.InsufficientInputsException;
-import wallet.TxNotFoundException;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 import wallet.WalletManager;
 
 /**
@@ -274,13 +274,19 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public boolean isAnyPeerConnected() {
-        return (blockchainManager != null && blockchainManager.getConnectedPeers() != null) && !blockchainManager.getConnectedPeers().isEmpty();
+        List<Peer> peers = blockchainManager.getConnectedPeers();
+        return (blockchainManager != null && peers != null) && !peers.isEmpty();
     }
 
     @Override
     public long getConnectedPeerHeight() {
-        if (blockchainManager!=null && blockchainManager.getConnectedPeers() !=null && !blockchainManager.getConnectedPeers().isEmpty()){
-            return blockchainManager.getConnectedPeers().get(0).getBestHeight();
+        List<Peer> peers = blockchainManager.getConnectedPeers();
+        if (blockchainManager!=null &&  peers!=null && !peers.isEmpty()){
+            Peer peer = peers.get(0);
+            if (peer!=null)
+                return peer.getBestHeight();
+            else
+                return -1;
         }else
             return -1;
     }

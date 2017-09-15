@@ -33,7 +33,10 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.uri.PivxURI;
 import org.bitcoinj.wallet.Wallet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -59,8 +62,8 @@ import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
-import wallet.InsufficientInputsException;
-import wallet.TxNotFoundException;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 
 import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
@@ -85,6 +88,7 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String INTENT_EXTRA_TOTAL_AMOUNT = "total_amount";
+    private Logger logger = LoggerFactory.getLogger(SendActivity.class);
 
     private static final int PIN_RESULT = 121;
     private static final int SCANNER_RESULT = 122;
@@ -110,7 +114,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private boolean inPivs = true;
     private Transaction transaction;
-    //private String contactName;
     /** Several outputs */
     private List<OutputWrapper> outputWrappers;
     /** Custom inputs */
@@ -281,6 +284,21 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(TX,transaction.unsafeBitcoinSerialize());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // todo: test this roting the screen..
+        if (savedInstanceState.containsKey(TX)){
+            transaction = new Transaction(pivxModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // todo: This is not updating the filter..
@@ -439,7 +457,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }catch (Exception e){
                     e.printStackTrace();
                     CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
-                    showErrorDialog("Commit transaction fail, please send the error report");
+                    showErrorDialog(R.string.commit_tx_fail);
                 }
             }
         }else if(requestCode == MULTIPLE_ADDRESSES_SEND_RESULT){
@@ -498,6 +516,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void showErrorDialog(int resStr){
+        showErrorDialog(getString(resStr));
     }
 
     private void showErrorDialog(String message) {
@@ -680,6 +702,16 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void sendConfirmed(){
+        if(transaction==null){
+            logger.error("## trying to send a NULL transaction");
+            try {
+                CrashReporter.appendSavedBackgroundTraces(new StringBuilder().append("ERROR ### sendActivity - sendConfirmed - transaction NULL"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            showErrorDialog(R.string.commit_tx_fail);
+            return;
+        }
         pivxModule.commitTx(transaction);
         Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);

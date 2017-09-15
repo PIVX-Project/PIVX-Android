@@ -7,7 +7,7 @@ import java.util.TimeZone;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.module.PivxContext;
-import wallet.Iso8601Format;
+import global.utils.Iso8601Format;
 
 import static com.google.common.base.Preconditions.checkState;
 

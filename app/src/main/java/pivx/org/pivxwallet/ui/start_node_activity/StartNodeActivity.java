@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import global.PivtrumGlobalData;
+import pivtrum.PivtrumPeer;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -104,6 +105,12 @@ public class StartNodeActivity extends BaseActivity {
         });
 
         dropdown = (Spinner)findViewById(R.id.spinner);
+
+        // add connected node if it's not on the list
+        PivtrumPeerData pivtrumPeer = pivxApplication.getAppConf().getTrustedNode();
+        if (!pivtrumPeer.getHost().equals(FURSZY_TESTNET_SERVER)){
+            trustedNodes.add(pivtrumPeer);
+        }
 
         for (PivtrumPeerData trustedNode : trustedNodes) {
             if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)){

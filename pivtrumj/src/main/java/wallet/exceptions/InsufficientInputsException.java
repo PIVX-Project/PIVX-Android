@@ -1,4 +1,4 @@
-package wallet;
+package wallet.exceptions;
 
 /**
  * Created by furszy on 8/9/17.

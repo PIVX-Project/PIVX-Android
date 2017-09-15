@@ -24,6 +24,8 @@
     <color name="hintInput">#979899</color>
     <color name="red">#d0011b</color>
 
+    <color name="gray_87_text">#dd000000</color>
+
     <!-- scanner -->
     <color name="scan_mask">#60000000</color>
     <color name="scan_laser">#cc0000</color>

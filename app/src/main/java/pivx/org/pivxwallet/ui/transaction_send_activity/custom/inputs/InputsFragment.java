@@ -23,7 +23,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import wallet.TxNotFoundException;
+import wallet.exceptions.TxNotFoundException;
 
 /**
  * Created by furszy on 8/4/17.

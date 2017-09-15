@@ -53,6 +53,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             if (intent.hasExtra(INTENT_BROADCAST_DATA_TYPE)){
                 if (intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE)) {
                     BlockchainState blockchainStateNew = (BlockchainState) intent.getSerializableExtra(INTENT_EXTRA_BLOCKCHAIN_STATE);
+                    onBlockchainStateChange();
                     if (blockchainStateNew == null) {
                         Log.e("APP", "blockchain state null..");
                         return;
@@ -250,6 +251,12 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         }
     }
 
+    /**
+     * Method to override
+     */
+    protected void onBlockchainStateChange() {
+
+    }
 
 
 }
