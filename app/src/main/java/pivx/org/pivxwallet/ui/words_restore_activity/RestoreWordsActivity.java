@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.collect.Lists;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
@@ -43,6 +46,9 @@ public class RestoreWordsActivity extends BaseActivity {
     private Button btnBack, btnNext;
     private EditText txtWord1, txtWord2, txtWord3, txtWord4, txtWord5, txtWord6, txtWord7, txtWord8 , txtWord9, txtWord10, txtWord11, txtWord12 ;
     private EditText txtWord13, txtWord14, txtWord15, txtWord16, txtWord17, txtWord18 , txtWord19, txtWord20, txtWord21, txtWord22, txtWord23, txtWord24;
+
+    private TextView txt_bip32_message;
+    private CheckBox check_bip32;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -158,7 +164,9 @@ public class RestoreWordsActivity extends BaseActivity {
 
                                     pivxModule.checkMnemonic(mnemonic);
 
-                                    pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
+                                    boolean isBip32 = check_bip32.isChecked();
+
+                                    pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
 
                                     Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
 
@@ -291,6 +299,10 @@ public class RestoreWordsActivity extends BaseActivity {
                 txtWord22 = (EditText) view.findViewById(R.id.text_word22);
                 txtWord23 = (EditText) view.findViewById(R.id.text_word23);
                 txtWord24 = (EditText) view.findViewById(R.id.text_word24);
+                txt_bip32_message = (TextView) root.findViewById(R.id.txt_bip32_message);
+                check_bip32 = (CheckBox) root.findViewById(R.id.check_bip32);
+                txt_bip32_message.setText(getString(R.string.restore_bip32_warning, PivxContext.ENABLE_BIP44_APP_VERSION));
+
             }
 
             return view;

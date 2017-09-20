@@ -186,10 +186,10 @@
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
-    <string name="restore_words_1">To restore your wallet you must write your 12, write your mnemonic words in the right order from number 1 to 8.</string>
+    <string name="restore_words_1">To restore your wallet you must write the 24, write your mnemonic code in the right order from number 1 to 8.</string>
     <string name="restore_from_words">Restore from words</string>
-    <string name="restore_words_2">Now write your security words in the right order \n from number 9 to 16</string>
-    <string name="restore_words_3">Now write your security words in the right order \n from number 17 to 24</string>
+    <string name="restore_words_2">Now from number 9 to 16</string>
+    <string name="restore_words_3">Now from number 17 to 24</string>
     <string name="fee_recommended">Recommended</string>
     <string name="fee_custom">Custom</string>
     <string name="confirmation_time">Confirmation time</string>
@@ -358,5 +358,8 @@
     <string name="settings_sweep_wallet">Sweep wallet</string>
     <string name="disconnected_label">No connection</string>
     <string name="error_generic">Error occurred while performing action</string>
+    <string name="old_wallet_version">Old wallet version</string>
+    <string name="advance_restore">Advance restore</string>
+    <string name="restore_bip32_warning">If your mnemonic code was created by this wallet on a version lower than %s please check the next box to restore your coins correctly.</string>
 
 </resources>

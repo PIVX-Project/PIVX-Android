@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ import wallet.exceptions.CantRestoreEncryptedWallet;
 public class RestoreActivity extends BaseActivity {
     public static final String ACTION_RESTORE_AND_JUMP_TO_WIZARD = "jump_to_wizard";
     private static final int OPTIONS_RESTORE = 1;
+    private static final int OPTIONS_ADVANCE = 2;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL = 502;
     private View root;
     private TextInputEditText edit_password;

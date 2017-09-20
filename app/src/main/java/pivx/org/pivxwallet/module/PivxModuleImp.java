@@ -114,8 +114,8 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public void restoreWallet(List<String> mnemonic, long timestamp) throws IOException, MnemonicException {
-        walletManager.restoreWalletFrom(mnemonic,timestamp);
+    public void restoreWallet(List<String> mnemonic, long timestamp,boolean bip44) throws IOException, MnemonicException {
+        walletManager.restoreWalletFrom(mnemonic,timestamp,bip44);
     }
 
     @Override

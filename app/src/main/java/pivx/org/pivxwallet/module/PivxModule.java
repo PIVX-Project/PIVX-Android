@@ -55,7 +55,7 @@ public interface PivxModule {
 
     void restoreWalletFromEncrypted(File file, String password) throws CantRestoreEncryptedWallet, IOException;
 
-    void restoreWallet(List<String> mnemonic, long timestamp) throws IOException, MnemonicException;
+    void restoreWallet(List<String> mnemonic, long timestamp,boolean bip44) throws IOException, MnemonicException;
 
     /**
      * If the wallet already exist

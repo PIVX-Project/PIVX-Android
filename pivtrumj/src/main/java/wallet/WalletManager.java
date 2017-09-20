@@ -266,9 +266,13 @@ public class WalletManager {
         }
     }
 
-    public void restoreWalletFrom(List<String> mnemonic, long timestamp) throws IOException, MnemonicException {
+    public void restoreWalletFrom(List<String> mnemonic, long timestamp, boolean bip44) throws IOException, MnemonicException {
         MnemonicCode.INSTANCE.check(mnemonic);
-        wallet = Wallet.fromSeed(conf.getNetworkParams(),new DeterministicSeed(mnemonic,null,"",timestamp));
+        wallet = Wallet.fromSeed(
+                conf.getNetworkParams(),
+                new DeterministicSeed(mnemonic,null,"",timestamp),
+                bip44? DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY: DeterministicKeyChain.KeyChainType.BIP32
+        );
         restoreWallet(wallet);
     }
 
@@ -592,7 +596,7 @@ public class WalletManager {
                 }
             }
         }
-        throw new InsufficientInputsException("No unspent available");
+        throw new InsufficientInputsException("No unspent available",amount.minus(total));
     }
 
     public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
