@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Mercurius</item>
+        <item>Venus</item>
+        <item>Aarde</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturnus</item>
+        <item>Uranus</item>
+        <item>Neptunus</item>
+    </string-array>
+    <string name="app_name">PIVX portefeuille</string>
+    <string name="btn_create_wallet">Creëer Portefeuille</string>
+    <string name="btn_restore_wallet">Herstel Portefeuille</string>
+    <string name="restore_wallet_message">Selecteer een backup van de portefeuille \n van een opslageenheid</string>
+    <string name="pincode_message">Voor jouw veiligheid \n is een pincode nodig</string>
+    <string name="select_file">Selecteer Bestand</string>
+    <string name="action_qr">QR Code</string>
+    <string name="action_add">Contact Toevoegen</string>
+    <string name="string_password">Wachtwoord</string>
+    <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_gedrag</string>
+    <string name="navigation_drawer_open">Open navigatiepaneel</string>
+    <string name="navigation_drawer_close">Sluit navigatiepaneel</string>
+    <string name="set_amount">Bedrag invullen om te verzenden</string>
+    <string name="title_amount">Hoeveelheid</string>
+    <string name="title_address">Adres</string>
+    <string name="title_name">Naam</string>
+    <string name="title_description">Beschrijving</string>
+    <string name="title_receiver_name">Naam van de ontvanger</string>
+    <string name="title_date">Datum</string>
+    <string name="set_address">Schrijf adres of contactnaam</string>
+    <string name="add_address">Adres of contactnaam invullen</string>
+    <string name="set_name">Naam toevoegen</string>
+    <string name="set_description">Voeg een beschrijving toe</string>
+    <string name="btn_send">Verzenden</string>
+    <string name="btn_request">Verzoek</string>
+    <string name="settings_subtitle_security">Veiligheid</string>
+    <string name="backup_wallet_message">Je backup zal geëncrypteerd zijn  met \n het gekozen wachtwoord en opslagen \n naar een externe opslaglocatie.</string>
+    <string name="settings_subtitle_preference">Voorkeur</string>
+    <string name="settings_subtitle_about">Over</string>
+    <string name="restore_wallet">Portefeuille herstellen</string>
+    <string name="backup_wallet">Portfeuille backup maken</string>
+    <string name="change_pincode">Wijzig PIN Code</string>
+    <string name="local_currency">Lokale Munteenheid</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Herhaal Wachtwoord</string>
+    <string name="add_name">Een naam toevoegen</string>
+
+    <string name="scan_camera_problem_dialog_title">Sorry</string>
+    <string name="scan_camera_problem_dialog_message">De camera heeft een probleem. Je moet waarschijnlijk je toestel herstarten.</string>
+    <string name="scan_camera_permission_dialog_title">Camera permissies</string>
+    <string name="scan_camera_permission_dialog_message">Om de QR codes te scannen, moet u toestemming geven om de camera te gebruiken.</string>
+    <string name="scan_result_title">Scanresultaat</string>
+    <string name="scan_result_address_title">Adres gedetecteerd</string>
+    <string name="node_selection_message">Je kan een van de beschikbare nodes selecteren of er één toevoegen.</string>
+    <string name="select_node">Selecteer Node</string>
+
+    <string name="select">Een Node Selecteren</string>
+    <string name="text_version">Versie</string>
+    <string name="network_monitor">Netwerk monitor</string>
+    <string name="settings_report">Probleem rapporteren</string>
+    <string name="send_message">Transactie details:</string>
+    <string name="save_message">Wil je dit adres opslaan?</string>
+    <string name="confirm">Bevestig</string>
+    <string name="action_scan">scanner</string>
+    <string name="btn_select_node">Node toevoegen</string>
+
+    <string name="title_no_trusted_peer_connection">Peer probleem</string>
+    <string name="message_no_trusted_peer_connection">Trusted peer connectie mislukt</string>
+    <string name="share_address_text">Adres delen</string>
+    <string name="error_sending_coins">Munten verzenden mislukt</string>
+
+    <string name="ssl_port">SSL poort</string>
+    <string name="hint_ssl_port">Standaard SSL poort</string>
+    <string name="host">Host</string>
+    <string name="hint_host">Een host toevoegen</string>
+    <string name="tcp_port">TCP poort</string>
+    <string name="hint_tcp_port">Standaard TCP poort</string>
+    <string name="add_memo">Maandelijkse betaling</string>
+    <string name="backup_create">Creëer</string>
+    <string name="backup_passwords_doesnt_match">Wachtwoorden komen niet overeen, vul alstublieft je wachtwoord opnieuw in.</string>
+    <string name="backup_completed">Backup voltooid</string>
+    <string name="backup_completed_text">Gefeliciteerd! Je portemonnee backup is voltooid. \n Dit is in volgende map opgeslagen \n%s</string>
+    <string name="import_keys_dialog_message">Selecteer een van je backup bestanden vanaf%s</string>
+    <string name="backup_restore">Herstel</string>
+    <string name="import_export_keys_dialog_failure_title">Herstellen van portefeuille mislukt</string>
+    <string name="import_keys_dialog_failure">Error importeren backup bestand \n %s</string>
+    <string name="button_dismiss">Afwijzen</string>
+    <string name="button_retry">Opnieuw proberen</string>
+    <string name="restore_wallet_dialog_success">Portefeuille is hersteld</string>
+    <string name="restore_wallet_dialog_success_replay">Je portemonnee is sucesvol hersteld. De balans zal als volgende gedetermineerd worden. Dit kan even duren.</string>
+    <string name="unavailable">Onuitgeefbare hoeveelheid:</string>
+    <string name="sending_tx">Verzenden van transactie..</string>
+    <string name="currency_message">Selecteer een lokale munteenheid \n naar jou keuze</string>
+    <string name="title_fee">Kost</string>
+    <string name="title_currency">Lokale Munteenheid</string>
+    <string name="title_pivx_send">Hoeveelheid verzonden</string>
+    <string name="empty_message_address">Je hebt nog geen adressen opgeslaan</string>
+    <string name="error_message">Er is mogelijk een fout \n met je transactie</string>
+    <string name="settings_change_trusted_node">Wijzig trusted node</string>
+    <string name="settings_reset_blockchain">Blockchain resetten</string>
+    <string name="save">Opslaan</string>
+    <string name="tutorial_message">PIVX, Private, Instant, Verified, Transaction\n is een op privacy-gefocust, gedecentraliseerd, open source cryptovaluta gerund door een wereldwijde gemeenschap die bestaat uit ontwikkelaars, vernieuwers, en technologie enthousiastelingen.</string>
+    <!-- Tutorial -->
+    <string name="next">Volgende</string>
+    <string name="skip">Overslaan</string>
+    <string name="start">Beginnen</string>
+    <string name="title_slide1">Pivx is veilig</string>
+    <string name="desc_slide1">Eerste munt met BIP38 encryptie en decryptie van private keys</string>
+    <string name="title_slide2">60 seconden block time</string>
+    <string name="desc_slide2">Pivx transacties zijn nu al supersnel door het gebruik van SwiftTX zijn de transacties direct zonder dat er bevestiging nodig is.</string>
+    <string name="title_slide3">Enorm veilig en privé</string>
+    <string name="desc_slide3">PIVX richt zich er op om de eerste echte anonieme crypto-currency te zijn.</string>
+    <string name="title_slide4">Trusted nodes federatie</string>
+    <string name="desc_slide4">Vertrouwde nodes federatie maakt lichte PoS portemonnees mogelijk, je kunt er op rekenen of een eigen vertrouwde node maken!</string>
+    <string name="option_add_node">Node toevoegen</string>
+    <string name="report_issue_dialog_description">Beschrijving van het probleem</string>
+    <string name="report_issue_dialog_collect_device_info">Toestelinformatie bijvoegen</string>
+    <string name="report_issue_dialog_collect_application_log">Applicatie log bijvoegen</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Portefeuille dump bijvoegen</string>
+    <string name="report_issue_dialog_collect_installed_packages">Lijst van geïnstalleerde pakketten bijvoegen</string>
+    <string name="report_issue_dialog_collect_db_data">Databasegegevens bijvoegen</string>
+    <string name="report_issue_dialog_report">Rapporteer</string>
+    <string name="button_cancel">Annuleer</string>
+    <string name="report_issue_dialog_mail_intent_chooser">Rapport verzenden met....</string>
+    <string name="report_issue_dialog_mail_intent_failed">Verzenden rapport mislukt.</string>
+    <string name="report_issue_dialog_message_issue">Beschrijf uw probleem precies genoeg om gereproduceerd te worden.</string>
+    <string name="report_issuea_dialog_title">Probleem rapporteren</string>
+    <string name="invalid_inputs">Ongeldige invoer</string>
+    <string name="send_error_dialog_tag">verzend error dialoog tag</string>
+    <string name="restore_dialog_tag">herstel dialoog tag</string>
+    <string name="restore_dialog_error">herstel dialoog error</string>
+    <string name="settings_support">Ondersteuning</string>
+    <string name="support_subject">PIVX portefeuille ondersteuning</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="copy">Kopieer</string>
+    <string name="share">Delen</string>
+    <string name="copy_message">Adres gekopieerd naar het klembord</string>
+    <string name="security_message">Schrijf deze woorden zorgvuldig op</string>
+    <string name="security_message_confirmation">Je moet in het volgende scherm bevestigen</string>
+    <string name="confirmation_message">Verifieer je security words</string>
+    <string name="order_message_confirmation">Kies de woorden in de juiste volgorde</string>
+    <string name="btn_secure">Alreeds genoteerd</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Leegmaken</string>
+    <string name="btn_backspace">Terug</string>
+    <string name="pincode_saved">Nieuwe pin opgeslagen</string>
+    <string name="insert_old_pin">Vul je huidige PIN in</string>
+    <string name="insert_new_pin">Nieuwe PIN invullen</string>
+    <string name="invalid_pincode">Ongeldige PIN</string>
+    <string name="contact_already_exist">Contact adres bestaat alreeds</string>
+    <string name="invalid_input_address">Ongeldig adres</string>
+    <string name="reminder_backup">Backup herinnering</string>
+    <string name="reminder_backup_body">Een van de meest belangrijkste onderdelen van een mobiele portefeuille is de backup, wil je deze nu uitvoeren?</string>
+    <string name="button_ok">Ok</string>
+    <string name="backup_succed_dialog">backup_voltooid_dialoog</string>
+    <string name="error_no_connectivity_title">Geen internet connectie</string>
+    <string name="error_no_connectivity_body">De applicatie gaat jouw transactie opslaan totdat de connectie terug is.\n Wil je verdergaan?</string>
+    <string name="cannot_restore_wallet">Error, kan portemonnee niet herstellen\nverifieer alstublieft je wachtwoord</string>
+    <string name="dialog_reset_blockchain_title">Blockchain Resetten</string>
+    <string name="dialog_reset_blockchain_body">Je blockchain bestand gaat opnieuw ingesteld worden.\nDe synchronisatie kan even duren.\n\nBen je zeker?</string>
+    <string name="reseting_blockchain">Herinitialiseren blockchain..</string>
+    <string name="donations">Donaties</string>
+    <string name="donation_message">Donaties helpen met het onderhouden en het ontwikkel van de applicatie. Bedankt bij voorbaat.</string>
+    <string name="donation_title">Ik ga doneren</string>
+    <string name="btn_donate">Doneer</string>
+    <string name="donation_thanks">Donatie verzenden.. Bedankt voor je ondersteuning!</string>
+</resources>

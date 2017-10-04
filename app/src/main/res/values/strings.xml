@@ -259,7 +259,7 @@
     <string name="settings_export_pub_key">Export account</string>
     <string name="copy_key_message">Key copied</string>
     <string name="hint_paste_xpub">Paste your xpub here</string>
-    <string name="explanation_import_xpub">Make your wallet a Watch\nOnly Wallet importing your xpub\nfrom another wallet.</string>
+    <string name="explanation_import_xpub">Make your wallet a Watch Only Wallet importing your xpub from another wallet.\n\nPeople using this device are going to see the full balance but not be able to spend coins.</string>
     <string name="import_xpub">Import</string>
     <string name="settings_import_xpub">Watch only mode</string>
     <string name="screen_title_watch_only">Watch Only</string>
@@ -268,7 +268,7 @@
     <string name="error_importing_xpub">Please check the key or send an error report.</string>
     <string name="error_importing_xpub_title">Error importing xpub</string>
     <string name="error_watch_only_mode">Action is not possible on watch only mode</string>
-    <string name="export_wallet">Export Wallet</string>
+    <string name="export_wallet">Export Account</string>
     <string name="commit_tx_fail">Commit transaction fail, please send the error report</string>
 
 
@@ -361,5 +361,8 @@
     <string name="old_wallet_version">Old wallet version</string>
     <string name="advance_restore">Advance restore</string>
     <string name="restore_bip32_warning">If your mnemonic code was created by this wallet on a version lower than %s please check the next box to restore your coins correctly.</string>
+    <string name="fee_included">Fee is not included on the total amount</string>
+    <string name="title_blockstore_error">Error</string>
+    <string name="message_blockstore_error">Blockchain store corrupted\\n\\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
 
 </resources>

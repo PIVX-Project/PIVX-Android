@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Mercurio</item>
+        <item>Venus</item>
+        <item>La Tierra</item>
+        <item>Marte</item>
+        <item>Júpiter</item>
+        <item>Saturno</item>
+        <item>Urano</item>
+        <item>Neptuno</item>
+    </string-array>
+    <string name="app_name">Monedero PIVX</string>
+    <string name="btn_create_wallet">Crear Monedero</string>
+    <string name="btn_restore_wallet">Restaurar Monedero</string>
+    <string name="restore_wallet_message">Seleccionar una copia de seguridad del monedero \n desde unidad de almacenamiento</string>
+    <string name="pincode_message">Para su seguridad \na se necesita código PIN</string>
+    <string name="select_file">Seleccione Archivo</string>
+    <string name="action_qr">Código QR</string>
+    <string name="action_add">Añadir Contacto</string>
+    <string name="string_password">Contraseña</string>
+    <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
+    <string name="navigation_drawer_open">Abrir ventana de navegador</string>
+    <string name="navigation_drawer_close">Cerrar ventana de navegador</string>
+    <string name="set_amount">Introduzca cantidad a enviar</string>
+    <string name="title_amount">Cantidad</string>
+    <string name="title_address">Dirección</string>
+    <string name="title_name">Nombre</string>
+    <string name="title_description">Descripción</string>
+    <string name="title_receiver_name">Nombre del destinatario</string>
+    <string name="title_date">Fecha</string>
+    <string name="set_address">Introduzca dirección o nombre del contacto</string>
+    <string name="add_address">Introduzca dirección o nombre del contacto</string>
+    <string name="set_name">Añadir nombre</string>
+    <string name="set_description">Añadir una descipción</string>
+    <string name="btn_send">Enviar</string>
+    <string name="btn_request">Solicitar</string>
+    <string name="settings_subtitle_security">Seguridad</string>
+    <string name="backup_wallet_message">La copia será encriptada con \n la contraseña que usted elija y guardada \n en una unidad de almacenamiento.</string>
+    <string name="settings_subtitle_preference">Preferencia</string>
+    <string name="settings_subtitle_about">Acerca de</string>
+    <string name="restore_wallet">Restaurar Monedero</string>
+    <string name="backup_wallet">Hacer Copia Seguridad del Monedero</string>
+    <string name="change_pincode">Cambiar código PIN</string>
+    <string name="local_currency">Moneda Local</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Repetir Contraseña</string>
+    <string name="add_name">Añadir un nombre</string>
+
+    <string name="scan_camera_problem_dialog_title">Perdón</string>
+    <string name="scan_camera_problem_dialog_message">La cámara tiene un problema. Quizá necesites reiniciar el dispositivo.</string>
+    <string name="scan_camera_permission_dialog_title">Permisos de la cámara</string>
+    <string name="scan_camera_permission_dialog_message">Para escanear códigos QR, debes darme permisos para usar la cámara.</string>
+    <string name="scan_result_title">Resultado del escaneo</string>
+    <string name="scan_result_address_title">Dirección detectada</string>
+    <string name="node_selection_message">Puedes seleccionar uno de los nodos disponibles o añadir uno</string>
+    <string name="select_node">Seleccionar Nodo</string>
+
+    <string name="select">Seleccionar un Nodo</string>
+    <string name="text_version">Versión</string>
+    <string name="network_monitor">Monitor de Red</string>
+    <string name="settings_report">Reportar incidencia</string>
+    <string name="send_message">Detalles de la transacción:</string>
+    <string name="save_message">¿Quieres guardar la dirección?</string>
+    <string name="confirm">Confirmar</string>
+    <string name="action_scan">escanear</string>
+    <string name="btn_select_node">Añadir nodo</string>
+
+    <string name="title_no_trusted_peer_connection">Incidencia de conexión</string>
+    <string name="message_no_trusted_peer_connection">Fallo de conexión al nodo maestro</string>
+    <string name="share_address_text">Compartir dirección</string>
+    <string name="error_sending_coins">Fallo de envío de monedas</string>
+
+    <string name="ssl_port">Puerto SSL</string>
+    <string name="hint_ssl_port">Puerto SSL por defecto</string>
+    <string name="host">Servidor</string>
+    <string name="hint_host">Añadir un Servidor</string>
+    <string name="tcp_port">Puerto TCP</string>
+    <string name="hint_tcp_port">Puerto TCP por defecto</string>
+    <string name="add_memo">Pago mensual</string>
+    <string name="backup_create">crear</string>
+    <string name="backup_passwords_doesnt_match">Las contraseñas no coinciden, por favor introdúzcala de nuevo.</string>
+    <string name="backup_completed">Copia de seguridad completada</string>
+    <string name="backup_completed_text">¡Felicidades! La copia de seguridad de tu monedero se completó con éxito. \n Se ha guardado en la carpeta\n %s</string>
+    <string name="import_keys_dialog_message">Seleccione un fichero de copia de seguridad obtenido desde %s</string>
+    <string name="backup_restore">Restaurar</string>
+    <string name="import_export_keys_dialog_failure_title">Fallo de restauración del monedero</string>
+    <string name="import_keys_dialog_failure">Error importando fichero de copia de seguridad\n %s</string>
+    <string name="button_dismiss">Abandonar</string>
+    <string name="button_retry">Reintentar</string>
+    <string name="restore_wallet_dialog_success">Monedero restaurado</string>
+    <string name="restore_wallet_dialog_success_replay">Tu monedero ha sido correctamente restaurado. Vamos a recuperar su balance. Esto tomará algo de tiempo.</string>
+    <string name="unavailable">Cantidad bloqueada:</string>
+    <string name="sending_tx">Enviando transacción..</string>
+    <string name="currency_message">Seleccione su moneda local</string>
+    <string name="title_fee">Comisión</string>
+    <string name="title_currency">Divisa Local</string>
+    <string name="title_pivx_send">Cantidad enviada</string>
+    <string name="empty_message_address">Todavía no tiene direcciones guardadas.</string>
+    <string name="error_message">Para que ha habido un error\ncon su transacción</string>
+    <string name="settings_change_trusted_node">Cambiar nodo de confianza</string>
+    <string name="settings_reset_blockchain">Resetear cadena de bloques</string>
+    <string name="save">Guardar</string>
+    <string name="tutorial_message">Privada, Instantánea, Verificada, Transacción\nes dinero digital descentralizado y de código abierto, focalizado en su privacidad. Está desarrollado por una comunidad global de creadores, emprendedores y entusiastas de la tecnología.</string>
+    <!-- Tutorial -->
+    <string name="next">Siguiente</string>
+    <string name="skip">Saltar</string>
+    <string name="start">Empezar</string>
+    <string name="title_slide1">Pivx es seguro</string>
+    <string name="desc_slide1">La primera moneda digital con Encriptado y Desencriptado de Llaves Privadas BIP38</string>
+    <string name="title_slide2">BLOQUES CADA 60 SEGUNDOS</string>
+    <string name="desc_slide2">De por sí ya muy rápida, pero las transacciones PIVX que usan SwiftX son instantáneas sin tiempo de espera de confirmaciones.</string>
+    <string name="title_slide3">Dinero digital extremadamente seguro y privado</string>
+    <string name="desc_slide3">PIVX quiere establecerse como la primera moneda digital realmente anónima.</string>
+    <string name="title_slide4">Federación de nodos de confianza</string>
+    <string name="desc_slide4">La federación de nodos de confianza hacen posible los monederos PoS, puedes conectarte a ellos o crear tu propio nodo de confianza!</string>
+    <string name="option_add_node">Añadir nodo</string>
+    <string name="report_issue_dialog_description">Descripción de la incidencia</string>
+    <string name="report_issue_dialog_collect_device_info">Anexar información del dispositivo</string>
+    <string name="report_issue_dialog_collect_application_log">Anexar registro de la aplicación</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Anexar volcado del monedero</string>
+    <string name="report_issue_dialog_collect_installed_packages">Anexar lista de paquetes instalados</string>
+    <string name="report_issue_dialog_collect_db_data">Anexar información de las bases de datos</string>
+    <string name="report_issue_dialog_report">Reportar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="report_issue_dialog_mail_intent_chooser">Enviar informe utilizando...</string>
+    <string name="report_issue_dialog_mail_intent_failed">Envío del informe fallido.</string>
+    <string name="report_issue_dialog_message_issue">Por favor describa su incidencia de forma suficientemente precisa para ser reproducida, si es posible en idioma inglés</string>
+    <string name="report_issuea_dialog_title">Reportar incidencia</string>
+    <string name="invalid_inputs">Entradas inválidas</string>
+    <string name="send_error_dialog_tag">enviar etiqueta del diálogo de error</string>
+    <string name="restore_dialog_tag">resturante etiqueta del diálogo</string>
+    <string name="restore_dialog_error">restaurar diálogo de error</string>
+    <string name="settings_support">Soporte</string>
+    <string name="support_subject">Soporte del monedero PIVX</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="copy">Copiar</string>
+    <string name="share">Compartir</string>
+    <string name="copy_message">Dirección copiada al portapapeles</string>
+    <string name="security_message">Por favor escriba en papel y guarde estas palabras cuidadosamente</string>
+    <string name="security_message_confirmation">Debe confirmar en la siguiente pantalla</string>
+    <string name="confirmation_message">Verifique sus palabras de seguridad</string>
+    <string name="order_message_confirmation">Elija las palabras en el orden preciso</string>
+    <string name="btn_secure">Anotado</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Limpiar</string>
+    <string name="btn_backspace">Atrás</string>
+    <string name="pincode_saved">Nuevo pin guardado</string>
+    <string name="insert_old_pin">Introduzca su PIN actual</string>
+    <string name="insert_new_pin">Introduzca nuevo PIN</string>
+    <string name="invalid_pincode">PIN inválido</string>
+    <string name="contact_already_exist">La dirección del contacto ya existe</string>
+    <string name="invalid_input_address">Dirección inválida</string>
+    <string name="reminder_backup">Recordatorio de copia de seguridad</string>
+    <string name="reminder_backup_body">Una de las cosas más críticas en un monedero móvil es tener una copia de seguridad, lo hacemos ahora?</string>
+    <string name="button_ok">Ok</string>
+    <string name="backup_succed_dialog">backup_succed_dialog</string>
+    <string name="error_no_connectivity_title">No hay conexión internet</string>
+    <string name="error_no_connectivity_body">La App guardará su transacción hasta que tengamos conexión de nuevo.\n¿Quiere continuar?</string>
+    <string name="cannot_restore_wallet">Error! No podemos restaurar su monedero\npor favor compruebe la contraseña introducida</string>
+    <string name="dialog_reset_blockchain_title">Resetear Cadena de Bloques</string>
+    <string name="dialog_reset_blockchain_body">El índice de la cadena de bloques va a ser reconstruido.\nLa sincronización puede tomar un tiempo.\n\n¿Está seguro?</string>
+    <string name="reseting_blockchain">Reconstruyendo cadena de bloques..</string>
+    <string name="donations">Donaciones</string>
+    <string name="donation_message">Las donaciones nos ayudan al mantenimiento y desarrollo de la App, Gracias por adelantado.</string>
+    <string name="donation_title">Voy a hacer una donación</string>
+    <string name="btn_donate">Donar</string>
+    <string name="donation_thanks">Enviando donación.. ¡Gracias por su ayuda!</string>
+</resources>

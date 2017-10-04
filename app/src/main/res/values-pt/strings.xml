@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Mercúrio</item>
+        <item>Venus</item>
+        <item>Terra</item>
+        <item>Marte</item>
+        <item>Jupiter</item>
+        <item>Saturno</item>
+        <item>Urano</item>
+        <item>Netuno</item>
+    </string-array>
+    <string name="app_name">Carteira PIVX</string>
+    <string name="btn_create_wallet">Criar Carteira</string>
+    <string name="btn_restore_wallet">Recuperar Carteira</string>
+    <string name="restore_wallet_message">Selecione uma cópia de segurança da carteira
+de uma unidade de armazenamento</string>
+    <string name="pincode_message">Para a sua segurança
+é necessário um código PIN</string>
+    <string name="select_file">Selecione um arquivo</string>
+    <string name="action_qr">QR Code</string>
+    <string name="action_add">Adicionar Contato</string>
+    <string name="string_password">Senha</string>
+    <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
+    <string name="navigation_drawer_open">Abrir menu de navegação</string>
+    <string name="navigation_drawer_close">Fechar menu de navegação</string>
+    <string name="set_amount">Insira uma quantia para envio</string>
+    <string name="title_amount">Quantia</string>
+    <string name="title_address">Endereço</string>
+    <string name="title_name">Nome</string>
+    <string name="title_description">Descrição</string>
+    <string name="title_receiver_name">Nome do destinatário</string>
+    <string name="title_date">Data</string>
+    <string name="set_address">Insira um endereço ou um contato</string>
+    <string name="add_address">Insira um endereço ou um contato</string>
+    <string name="set_name">Adicionar nome</string>
+    <string name="set_description">Adicionar descrição</string>
+    <string name="btn_send">Enviar</string>
+    <string name="btn_request">Solicitar</string>
+    <string name="settings_subtitle_security">Segurança</string>
+    <string name="backup_wallet_message">Sua cópia de segurança será encriptada com
+a senha que você escolher e será salva
+em uma unidade externa de armazenamento.</string>
+    <string name="settings_subtitle_preference">Preferência</string>
+    <string name="settings_subtitle_about">Sobre</string>
+    <string name="restore_wallet">Restaurar Carteira</string>
+    <string name="backup_wallet">Cópia de segurança da Carteira</string>
+    <string name="change_pincode">Trocar código PIN</string>
+    <string name="local_currency">Moeda Local</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Repita a senha</string>
+    <string name="add_name">Adicione um nome</string>
+
+    <string name="scan_camera_problem_dialog_title">Desculpe</string>
+    <string name="scan_camera_problem_dialog_message">Ocorreu um problema com a câmera. Será necessário reiniciar o aplicativo.</string>
+    <string name="scan_camera_permission_dialog_title">Permissão da câmera</string>
+    <string name="scan_camera_permission_dialog_message">Para escanear QR codes, você precisa dar a permissão para usar a câmera</string>
+    <string name="scan_result_title">Resultado do escaneamento</string>
+    <string name="scan_result_address_title">Endereço encontrado</string>
+    <string name="node_selection_message">Você pode selecionar um dos nós disponíveis ou adicionar um</string>
+    <string name="select_node">Selecionar nó</string>
+
+    <string name="select">Selecione um nó</string>
+    <string name="text_version">Versão</string>
+    <string name="network_monitor">Monitoramento de rede</string>
+    <string name="settings_report">Reportar problema</string>
+    <string name="send_message">Detalhes da transação:</string>
+    <string name="save_message">Você gostaria de salvar o endereço?</string>
+    <string name="confirm">Confirmar</string>
+    <string name="action_scan">escanear</string>
+    <string name="btn_select_node">Adicionar nó</string>
+
+    <string name="title_no_trusted_peer_connection">Conexão entre pares não confiável</string>
+    <string name="message_no_trusted_peer_connection">Falha na conexão entre pares</string>
+    <string name="share_address_text">Compartilhar endereço</string>
+    <string name="error_sending_coins">Erro ao enviar moedas</string>
+
+    <string name="ssl_port">Porta SSL</string>
+    <string name="hint_ssl_port">Porta SSL padrão</string>
+    <string name="host">Host</string>
+    <string name="hint_host">Adicionar um host</string>
+    <string name="tcp_port">Porta TCP</string>
+    <string name="hint_tcp_port">Porta TCP padrão</string>
+    <string name="add_memo">Pagamento mensal</string>
+    <string name="backup_create">criar</string>
+    <string name="backup_passwords_doesnt_match">Senhas incompatíveis, por favor tente novamente.</string>
+    <string name="backup_completed">Cópia de segurança completa</string>
+    <string name="backup_completed_text">Parabéns! a cópia de segurança da sua carteira está completa.
+Está salva na pasta em
+%s</string>
+    <string name="import_keys_dialog_message">Selecione uma de suas cópias de segurança carregadas de %s</string>
+    <string name="backup_restore">Restaurar cópia de segurança</string>
+    <string name="import_export_keys_dialog_failure_title">Falha ao restaurar carteira</string>
+    <string name="import_keys_dialog_failure">Erro ao importar arquivo de cópia de segurança
+%s</string>
+    <string name="button_dismiss">Dispensar</string>
+    <string name="button_retry">Tentar novamente</string>
+    <string name="restore_wallet_dialog_success">Carteira restaurada</string>
+    <string name="restore_wallet_dialog_success_replay">Sua carteira foi restaurada com sucesso. Seu saldo será determinado a seguir. Isso pode levar algum tempo.</string>
+    <string name="unavailable">Quantia resiliente:</string>
+    <string name="sending_tx">Enviando transação..</string>
+    <string name="currency_message">Selecione a moeda local
+de sua preferência</string>
+    <string name="title_fee">Taxa</string>
+    <string name="title_currency">Moeda Local</string>
+    <string name="title_pivx_send">Quanti enviada</string>
+    <string name="empty_message_address">Você ainda não possui nenhum endereço salvo.</string>
+    <string name="error_message">Parece que há algo errado com a sua transação</string>
+    <string name="settings_change_trusted_node">Alterar nó confiável</string>
+    <string name="settings_reset_blockchain">Resetar blockchain</string>
+    <string name="save">Salvar</string>
+    <string name="tutorial_message">Privada, instantânea e verificada, a trasação é uma moeada criptografada
+de código aberto, descentralizada e de alta privacidade, dirigida por uma comunidade global munida de criadores, inovadores e entusiastas da tecnologia.</string>
+    <!-- Tutorial -->
+    <string name="next">Próximo</string>
+    <string name="skip">Pular</string>
+    <string name="start">Iniciar</string>
+    <string name="title_slide1">Pivx é seguro</string>
+    <string name="desc_slide1">Primeira moeda com a encriptação BIP38 e decodificação de chaves privadas</string>
+    <string name="title_slide2">60 segundos tempo de bloqueio</string>
+    <string name="desc_slide2">Além de muito rápidas, as trasações PIVX usando SwiftX possuem um tempo de espera de confirmação iguais a ZERO.</string>
+    <string name="title_slide3">Extramamente seguro e privado</string>
+    <string name="desc_slide3">PIVX está apontando para o estabelecimento da primeira cripto moeda verdadeiramente anônima.</string>
+    <string name="title_slide4">Associação de nós confiáveis</string>
+    <string name="desc_slide4">A associação de nós confiáveis tornam possíveis as carteiras PoS, você pode contar com essa associação ou criar seu própio nó confiável!</string>
+    <string name="option_add_node">Adicionar nó</string>
+    <string name="report_issue_dialog_description">Descrição do problema</string>
+    <string name="report_issue_dialog_collect_device_info">Anexar informações do dispositivo</string>
+    <string name="report_issue_dialog_collect_application_log">Anexar registro da aplicação</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Anexar despejo da carteira</string>
+    <string name="report_issue_dialog_collect_installed_packages">Anexar lista de pacotes instalados</string>
+    <string name="report_issue_dialog_collect_db_data">Anexar dados do banco de dados</string>
+    <string name="report_issue_dialog_report">Reportar</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="report_issue_dialog_mail_intent_chooser">Enviar relatório usando...</string>
+    <string name="report_issue_dialog_mail_intent_failed">O envio do relatório falhou.</string>
+    <string name="report_issue_dialog_message_issue">Por favor, descreva seu problema com a precisão suficiente para ser reproduzido.</string>
+    <string name="report_issuea_dialog_title">Reportar problema</string>
+    <string name="invalid_inputs">entradas inválidas</string>
+    <string name="send_error_dialog_tag">enviar etiqueta de diálogo de erro</string>
+    <string name="restore_dialog_tag">restaurar etiqueta de diálogo</string>
+    <string name="restore_dialog_error">restaurar diálogo de erro</string>
+    <string name="settings_support">Suporte</string>
+    <string name="support_subject">Suporte da carteira PIVX</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="copy">Copiar</string>
+    <string name="share">Compartilhar</string>
+    <string name="copy_message">Endereço copiado ao clipboard</string>
+    <string name="security_message">Por favor escreva essas palavras com cuidado</string>
+    <string name="security_message_confirmation">Você terá que confirmar na próxima tela</string>
+    <string name="confirmation_message">Verifique suas palavras de segurança</string>
+    <string name="order_message_confirmation">Escolha as palavras na ordem correta</string>
+    <string name="btn_secure">Já observou</string>
+    <string name="lorem_ipsum">Mussum Ipsum, cacilds vidis litro abertis. In elementis mé pra quem é amistosis quis leo. Si u mundo tá muito paradis? Toma um mé que o mundo vai girarzis! Paisis, filhis, espiritis santis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.</string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Limpar</string>
+    <string name="btn_backspace">Voltar</string>
+    <string name="pincode_saved">Novo PIN salvo</string>
+    <string name="insert_old_pin">Insira seu código PIN atual</string>
+    <string name="insert_new_pin">Insira novo código PIN</string>
+    <string name="invalid_pincode">PIN inválido</string>
+    <string name="contact_already_exist">Endereço de contato já existente</string>
+    <string name="invalid_input_address">endereço inválido</string>
+    <string name="reminder_backup">Lembrete de cópia de segurança</string>
+    <string name="reminder_backup_body">Uma das partes mais importantes de uma carteira mobile é a cópia de segurança, você deseja fazer isso agora?</string>
+    <string name="button_ok">Ok</string>
+    <string name="backup_succed_dialog">backup_succed_dialog</string>
+    <string name="error_no_connectivity_title">Sem conexão com a internet</string>
+    <string name="error_no_connectivity_body">O aplicativo irá salvar a sua transação antes da conexão voltar
+Você deseja continuar?</string>
+    <string name="cannot_restore_wallet">Erro, não foi possível restaurar carteira
+por favor verifique sua senha</string>
+    <string name="dialog_reset_blockchain_title">Resetar Blockchain</string>
+    <string name="dialog_reset_blockchain_body">Seu arquivo blockchain será resetado
+A sincronização pode demorar um pouco.
+
+Você tem certeza?</string>
+    <string name="reseting_blockchain">Resetando blockchain..</string>
+    <string name="donations">Doações</string>
+    <string name="donation_message">Doações ajudam com a manutenção e desenvolvimento do aplicativo, desde já, obrigado.</string>
+    <string name="donation_title">Eu irei doar</string>
+    <string name="btn_donate">Doação</string>
+    <string name="donation_thanks">Enviando doação.. Obrigado pela sua ajuda!</string>
+</resources>
