@@ -87,6 +87,15 @@ public class CrashReporter {
 		}
 	}
 
+	public static void appendSavedBackgroundTraces(Error e){
+		try {
+			appendSavedBackgroundTraces(new StringBuilder(Throwables.getStackTraceAsString(e)));
+		} catch (IOException e1) {
+			// something happen with the file
+			e1.printStackTrace();
+		}
+	}
+
 	public static void appendSavedBackgroundTraces(final Appendable report) throws IOException
 	{
 		BufferedReader reader = null;

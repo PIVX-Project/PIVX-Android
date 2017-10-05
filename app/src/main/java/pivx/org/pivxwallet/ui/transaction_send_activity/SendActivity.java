@@ -129,7 +129,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
-        setTitle("Send");
+        setTitle(R.string.btn_send);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
@@ -286,7 +286,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(TX,transaction.unsafeBitcoinSerialize());
+        if (transaction!=null)
+            outState.putSerializable(TX,transaction.unsafeBitcoinSerialize());
     }
 
     @Override
@@ -668,10 +669,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance");
+            throw new IllegalArgumentException("Insuficient balance\nMissing coins "+e.missing.toFriendlyString());
         } catch (InsufficientInputsException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance");
+            throw new IllegalArgumentException("Insuficient balance\nMissing coins "+e.getMissing().toFriendlyString());
         } catch (Wallet.DustySendRequested e){
             e.printStackTrace();
             throw new IllegalArgumentException("Dusty send output, please increase the value of your outputs");

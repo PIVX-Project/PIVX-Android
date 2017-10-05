@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class GetHistoryMsg extends BaseMsg<GetHistoryMsg> {
 
-    String address;
+    private String address;
 
     public GetHistoryMsg(String addressBase58) {
         super(Method.GET_ADDRESS_HISTORY.getMethod());

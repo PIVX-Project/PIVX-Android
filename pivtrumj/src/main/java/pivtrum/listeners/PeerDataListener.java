@@ -3,6 +3,7 @@ package pivtrum.listeners;
 import java.util.List;
 
 import pivtrum.PivtrumPeer;
+import pivtrum.messages.responses.StatusHistory;
 import pivtrum.messages.responses.Unspent;
 import pivtrum.utility.TxHashHeightWrapper;
 
@@ -18,5 +19,5 @@ public interface PeerDataListener {
 
     void onBalanceReceive(PivtrumPeer pivtrumPeer, String address, long confirmed, long unconfirmed);
 
-    void onGetHistory(PivtrumPeer pivtrumPeer, String address, List<TxHashHeightWrapper> list, String status);
+    void onGetHistory(PivtrumPeer pivtrumPeer, StatusHistory statusHistory);
 }

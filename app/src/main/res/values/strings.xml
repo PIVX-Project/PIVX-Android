@@ -117,7 +117,7 @@
     <string name="title_slide1">Pivx is secure</string>
     <string name="desc_slide1">First coin with BIP38 Encryption and Decryption of Private Keys</string>
     <string name="title_slide2">60 SECOND BLOCK TIME</string>
-    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required. </string>
+    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required.</string>
     <string name="title_slide3">Extremely secure and private</string>
     <string name="desc_slide3">PIVX is aiming it’s sights on establishing the first truly anonymous crypto-currency.</string>
     <string name="title_slide4">Trusted nodes federation</string>

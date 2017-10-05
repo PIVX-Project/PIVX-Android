@@ -13,7 +13,12 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.service.IntentsConstants;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.utils.DialogsUtil;
+
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR;
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL;
 
 /**
  * Created by furszy on 6/8/17.
@@ -25,13 +30,20 @@ public class PivxActivity extends AppCompatActivity {
     protected PivxModule pivxModule;
 
     protected LocalBroadcastManager localBroadcastManager;
-    private IntentFilter intentFilter = new IntentFilter(IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL);
+    private static final IntentFilter intentFilter = new IntentFilter(ACTION_TRUSTED_PEER_CONNECTION_FAIL);
+    private static final IntentFilter errorIntentFilter = new IntentFilter(ACTION_STORED_BLOCKCHAIN_ERROR);
+
     private BroadcastReceiver trustedPeerConnectionDownReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            DialogBuilder dialogBuilder = DialogBuilder.warn(PivxActivity.this, R.string.title_no_trusted_peer_connection);
-            dialogBuilder.setMessage(R.string.message_no_trusted_peer_connection);
-            dialogBuilder.show();
+            String action = intent.getAction();
+            if (action.equals(ACTION_TRUSTED_PEER_CONNECTION_FAIL)) {
+                SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleErrorTextDialog(context,R.string.title_no_trusted_peer_connection,R.string.message_no_trusted_peer_connection);
+                simpleTextDialog.show(getFragmentManager(),"fail_node_connection_dialog");
+            }else if (action.equals(ACTION_STORED_BLOCKCHAIN_ERROR)){
+                SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleErrorTextDialog(context,R.string.title_blockstore_error,R.string.message_blockstore_error);
+                simpleTextDialog.show(getFragmentManager(),"blockstore_error_dialog");
+            }
         }
     };
 
@@ -47,6 +59,7 @@ public class PivxActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver,intentFilter);
+        localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver,errorIntentFilter);
     }
 
     @Override

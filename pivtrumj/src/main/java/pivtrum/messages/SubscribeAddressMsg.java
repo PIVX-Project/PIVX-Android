@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class SubscribeAddressMsg extends BaseMsg<SubscribeAddressMsg> {
 
-    String address;
+    private String address;
 
     public SubscribeAddressMsg(String addressBase58) {
         super(Method.ADDRESS_SUBSCRIBE.getMethod());

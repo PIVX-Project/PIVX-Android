@@ -30,6 +30,19 @@ public class PivtrumPeerData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof PivtrumPeerData)) return false;
+        PivtrumPeerData other = (PivtrumPeerData) o;
+        if (!this.host.equals(other.getHost())){
+            return false;
+        }
+        if (this.tcpPort != other.tcpPort){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         return "PivtrumPeerData{" +
                 "host='" + host + '\'' +

@@ -106,6 +106,8 @@ public class BlockchainManager {
                         LOG.info("checkpoints loaded from '{}', took {}", conf.getCheckpointFilename(), watch);
                     }catch (final IOException x) {
                         LOG.error("problem reading checkpoints, continuing without", x);
+                    }catch (Exception e){
+                        LOG.error("problem reading checkpoints, continuing without", e);
                     }
                 }
 
@@ -173,7 +175,8 @@ public class BlockchainManager {
                     conf.getTrustedNodeHost()!=null;
             TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(
                     tx,
-                    onlyTrustedNode?1:2);
+                    onlyTrustedNode?1:2,
+                    false);
             return transactionBroadcast.broadcast();
         } else {
             LOG.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 public class GetTxMsg extends BaseMsg<GetTxMsg> {
 
-    String txHash;
+    private String txHash;
 
     public GetTxMsg(String txHash) {
         super(Method.GET_TX.getMethod());

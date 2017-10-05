@@ -102,7 +102,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        setTitle("My Wallet");
+        setTitle(R.string.my_wallet);
         root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
         header_container.setVisibility(View.VISIBLE);

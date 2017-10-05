@@ -10,6 +10,8 @@ public class IntentsConstants {
     public static final String ACTION_ADDRESS_BALANCE_CHANGE = "act_add_bal_chan";
     /** Action to notify the trusted peer connection have been disconnected  */
     public static final String ACTION_TRUSTED_PEER_CONNECTION_FAIL = "act_trs_peer_conn_fail";
+    /** block store error */
+    public static final String ACTION_STORED_BLOCKCHAIN_ERROR = "act_str_blc_err";
 
     // Notifications numbers
     public static final int NOT_COINS_RECEIVED = 1;

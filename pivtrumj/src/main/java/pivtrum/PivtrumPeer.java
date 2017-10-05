@@ -49,6 +49,7 @@ import pivtrum.messages.ListUnspentMsg;
 import pivtrum.messages.Method;
 import pivtrum.messages.SubscribeAddressMsg;
 import pivtrum.messages.VersionMsg;
+import pivtrum.messages.responses.StatusHistory;
 import pivtrum.messages.responses.Unspent;
 import pivtrum.utility.TxHashHeightWrapper;
 
@@ -368,7 +369,7 @@ public class PivtrumPeer implements IoHandler{
         byte[] hash = Sha256Hash.hash(ByteString.copyFromUtf8(stringBuilder.toString()).toByteArray());
         String hashHex = Hex.toHexString(hash);
         for (PeerDataListener peerDataListener : peerDataListeners) {
-            peerDataListener.onGetHistory(this,address,list,hashHex);
+            peerDataListener.onGetHistory(this,new StatusHistory(address,list,hashHex));
         }
     }
 

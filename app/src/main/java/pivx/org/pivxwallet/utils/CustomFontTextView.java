@@ -3,13 +3,13 @@ package pivx.org.pivxwallet.utils;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.support.v7.widget.AppCompatTextView;
 
 /**
  * Created by Neoperol on 7/10/17.
  */
 
-public class CustomFontTextView extends TextView {
+public class CustomFontTextView extends AppCompatTextView {
 
     public static final String ANDROID_SCHEMA = "http://schemas.android.com/apk/res/android";
 

@@ -345,9 +345,15 @@ public class PivxWalletService extends Service{
             //pivtrumPeergroup.start();
 
 
+        } catch (Error e){
+            e.printStackTrace();
+            CrashReporter.appendSavedBackgroundTraces(e);
+            Intent intent = new Intent(IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR);
+            broadcastManager.sendBroadcast(intent);
         } catch (Exception e){
             // todo: I have to handle the connection refused..
             e.printStackTrace();
+            CrashReporter.appendSavedBackgroundTraces(e);
             // for now i just launch a notification
             Intent intent = new Intent(IntentsConstants.ACTION_TRUSTED_PEER_CONNECTION_FAIL);
             broadcastManager.sendBroadcast(intent);
