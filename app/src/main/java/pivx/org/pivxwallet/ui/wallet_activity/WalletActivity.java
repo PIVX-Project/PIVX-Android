@@ -63,14 +63,6 @@ public class WalletActivity extends BaseDrawerActivity {
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
-    private IntentFilter addressBalanceIntent = new IntentFilter(IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE);
-
-    private BroadcastReceiver localReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-        }
-    };
 
     private IntentFilter pivxServiceFilter = new IntentFilter(ACTION_NOTIFICATION);
     private BroadcastReceiver pivxServiceReceiver = new BroadcastReceiver() {
@@ -138,7 +130,7 @@ public class WalletActivity extends BaseDrawerActivity {
         init();
 
         // register
-        localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
+        //localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
         localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
 
         updateState();
@@ -186,7 +178,7 @@ public class WalletActivity extends BaseDrawerActivity {
     protected void onStop() {
         super.onStop();
         // unregister
-        localBroadcastManager.unregisterReceiver(localReceiver);
+        //localBroadcastManager.unregisterReceiver(localReceiver);
         localBroadcastManager.unregisterReceiver(pivxServiceReceiver);
     }
 

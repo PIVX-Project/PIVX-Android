@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import org.bitcoinj.wallet.DeterministicKeyChain;
 
 import java.io.IOException;
 
@@ -27,6 +30,7 @@ public class SettingsWatchOnly extends BaseActivity {
     private View root;
     private Button btn_import;
     private EditText edit_xpub;
+    private CheckBox check_bip32;
     private ProgressBar progress;
 
     @Override
@@ -37,6 +41,7 @@ public class SettingsWatchOnly extends BaseActivity {
         root = getLayoutInflater().inflate(R.layout.import_watch_only_main,container);
         btn_import = (Button) root.findViewById(R.id.btn_import);
         edit_xpub = (EditText) root.findViewById(R.id.edit_xpub);
+        check_bip32 = (CheckBox) root.findViewById(R.id.check_bip32);
         progress = (ProgressBar) root.findViewById(R.id.progress);
         btn_import.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,9 +59,13 @@ public class SettingsWatchOnly extends BaseActivity {
 
     private void importXpub() {
         String xpub = edit_xpub.getText().toString();
+        boolean isBip32 = check_bip32.isChecked();
         if (xpub.length()>0){
             try {
-                pivxModule.watchOnlyMode(xpub);
+                pivxModule.watchOnlyMode(
+                        xpub,
+                        isBip32 ? DeterministicKeyChain.KeyChainType.BIP32: DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY
+                );
                 SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleTextDialog(
                         this,
                         getString(R.string.watch_only_mode_activated),

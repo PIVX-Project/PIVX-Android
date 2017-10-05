@@ -48,7 +48,6 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
         setEmptyView(R.drawable.img_transaction_empty);
         setEmptyText("You don't have any transfers yet.");
         setEmptyTextColor(Color.parseColor("#cccccc"));
-        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         return view;
     }
 
@@ -152,6 +151,12 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             }
         });
         return adapter;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
     }
 
     /**

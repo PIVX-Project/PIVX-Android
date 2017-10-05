@@ -13,6 +13,7 @@ import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
+import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -533,8 +534,8 @@ public class PivxModuleImp implements PivxModule {
    }
 
     @Override
-    public void watchOnlyMode(String xpub) throws IOException {
-        walletManager.watchOnlyMode(xpub);
+    public void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException {
+        walletManager.watchOnlyMode(xpub,keyChainType);
     }
 
 

@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -147,6 +148,7 @@ public class PivxWalletService extends Service{
         public void onBlocksDownloaded(final Peer peer, final Block block, final FilteredBlock filteredBlock, final int blocksLeft) {
             try {
                 log.info("Block received , left: " + blocksLeft);
+
             /*log.info("############# on Blockcs downloaded ###########");
             log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);*/
 
@@ -158,7 +160,7 @@ public class PivxWalletService extends Service{
 
 
                 final long now = System.currentTimeMillis();
-                if (now - lastMessageTime > TimeUnit.SECONDS.toMillis(15)) {
+                if (now - lastMessageTime > TimeUnit.SECONDS.toMillis(10)) {
                     if (blocksLeft < 6) {
                         blockchainState = BlockchainState.SYNC;
                     } else {
@@ -238,7 +240,7 @@ public class PivxWalletService extends Service{
                 int depthInBlocks = transaction.getConfidence().getDepthInBlocks();
 
                 long now = System.currentTimeMillis();
-                if (lastUpdateTime + 3000 < now) {
+                if (lastUpdateTime + 5000 < now) {
                     lastUpdateTime = now;
                     Intent intent = new Intent(ACTION_NOTIFICATION);
                     intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_ON_COIN_RECEIVED);
@@ -289,7 +291,7 @@ public class PivxWalletService extends Service{
                 if (transaction != null) {
                     if (transaction.getConfidence().getDepthInBlocks() > 1) {
                         long now = System.currentTimeMillis();
-                        if (lastUpdateTime + 3000 < now) {
+                        if (lastUpdateTime + 5000 < now) {
                             lastUpdateTime = now;
                             // update balance state
                             Intent intent = new Intent(ACTION_NOTIFICATION);
@@ -547,9 +549,14 @@ public class PivxWalletService extends Service{
         }
     }
 
+    private static int num = 0;
+
     private void broadcastBlockchainStateIntent(){
         final long now = System.currentTimeMillis();
         if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(10)) {
+            lastMessageTime = System.currentTimeMillis();
+            num++;
+            log.warn("broadcasting blockchain state change.. "+num);
             Intent intent = new Intent(ACTION_NOTIFICATION);
             intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE);
             intent.putExtra(INTENT_EXTRA_BLOCKCHAIN_STATE,blockchainState);

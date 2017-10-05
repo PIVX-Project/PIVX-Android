@@ -496,8 +496,8 @@ public class WalletManager {
      * Restart the wallet and re create it in a watch only mode.
      * @param xpub
      */
-    public void watchOnlyMode(String xpub) throws IOException {
-        Wallet wallet = Wallet.fromWatchingKeyB58(conf.getNetworkParams(),xpub,0);
+    public void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException {
+        Wallet wallet = Wallet.fromWatchingKeyB58(conf.getNetworkParams(),xpub,0,keyChainType);
         restoreWallet(wallet);
     }
 

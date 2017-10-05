@@ -10,6 +10,7 @@ import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.MnemonicException;
+import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.Wallet;
 
 import java.io.File;
@@ -155,5 +156,5 @@ public interface PivxModule {
 
     boolean isSyncWithNode() throws NoPeerConnectedException;
 
-    void watchOnlyMode(String xpub) throws IOException;
+    void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException;
 }
