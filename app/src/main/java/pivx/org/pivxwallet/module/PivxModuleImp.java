@@ -164,7 +164,7 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Collection<AddressLabel> getContacts(){
+    public List<AddressLabel> getContacts(){
         return contactsStore.list();
     }
 

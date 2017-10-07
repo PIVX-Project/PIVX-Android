@@ -96,7 +96,7 @@ public class BlockchainManager {
                 final long earliestKeyCreationTime = walletManager.getEarliestKeyCreationTime();
 
                 if (!blockChainFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
-                    try {
+                    /*try {
                         String filename = conf.getCheckpointFilename();
                         String suffix = conf.getNetworkParams() instanceof MainNetParams ? "":"-testnet";
                         final Stopwatch watch = Stopwatch.createStarted();
@@ -108,7 +108,7 @@ public class BlockchainManager {
                         LOG.error("problem reading checkpoints, continuing without", x);
                     }catch (Exception e){
                         LOG.error("problem reading checkpoints, continuing without", e);
-                    }
+                    }*/
                 }
 
             } catch (final BlockStoreException x) {

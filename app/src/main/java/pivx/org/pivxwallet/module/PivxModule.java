@@ -83,7 +83,7 @@ public interface PivxModule {
 
     /******    Address Label          ******/
 
-    Collection<AddressLabel> getContacts();
+    List<AddressLabel> getContacts();
 
     AddressLabel getAddressLabel(String address);
 
