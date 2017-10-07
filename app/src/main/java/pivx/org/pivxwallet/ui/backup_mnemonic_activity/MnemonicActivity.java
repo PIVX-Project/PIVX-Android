@@ -60,7 +60,7 @@ public class MnemonicActivity extends BaseActivity {
         }
 
         List<String> textArray = pivxModule.getMnemonic();
-        txt_words = ( FlexboxLayout ) findViewById(R.id.securityWords);
+        txt_words = (FlexboxLayout) findViewById(R.id.securityWords);
 
         for (String word : textArray) {
             TextView textView = new TextView(this);
@@ -70,7 +70,6 @@ public class MnemonicActivity extends BaseActivity {
             textView.setTextColor(Color.BLACK);
             textView.setBackgroundResource(R.drawable.bg_button_grey);
             textView.setPadding(10,8,10,8);
-
             textView.setText(word);
             txt_words.addView(textView);
         }

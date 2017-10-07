@@ -15,7 +15,7 @@
     <string name="btn_create_wallet">Crear Monedero</string>
     <string name="btn_restore_wallet">Restaurar Monedero</string>
     <string name="restore_wallet_message">Seleccionar una copia de seguridad del monedero \n desde unidad de almacenamiento</string>
-    <string name="pincode_message">Para su seguridad \na se necesita código PIN</string>
+    <string name="pincode_message">Para su seguridad \na se necesita su código PIN</string>
     <string name="select_file">Seleccione Archivo</string>
     <string name="action_qr">Código QR</string>
     <string name="action_add">Añadir Contacto</string>
@@ -98,11 +98,11 @@
     <string name="title_currency">Divisa Local</string>
     <string name="title_pivx_send">Cantidad enviada</string>
     <string name="empty_message_address">Todavía no tiene direcciones guardadas.</string>
-    <string name="error_message">Para que ha habido un error\ncon su transacción</string>
+    <string name="error_message">Parece que ha habido un error\n con su transacción</string>
     <string name="settings_change_trusted_node">Cambiar nodo de confianza</string>
     <string name="settings_reset_blockchain">Resetear cadena de bloques</string>
     <string name="save">Guardar</string>
-    <string name="tutorial_message">Privada, Instantánea, Verificada, Transacción\nes dinero digital descentralizado y de código abierto, focalizado en su privacidad. Está desarrollado por una comunidad global de creadores, emprendedores y entusiastas de la tecnología.</string>
+    <string name="tutorial_message">Privada, Instantánea y Verificada\n es dinero digital descentralizado y de código abierto, focalizado en su privacidad. Está desarrollado por una comunidad global de creadores, emprendedores y entusiastas de la tecnología.</string>
     <!-- Tutorial -->
     <string name="next">Siguiente</string>
     <string name="skip">Saltar</string>
@@ -163,7 +163,7 @@
     <string name="contact_already_exist">La dirección del contacto ya existe</string>
     <string name="invalid_input_address">Dirección inválida</string>
     <string name="reminder_backup">Recordatorio de copia de seguridad</string>
-    <string name="reminder_backup_body">Una de las cosas más críticas en un monedero móvil es tener una copia de seguridad, lo hacemos ahora?</string>
+    <string name="reminder_backup_body">Una de las cosas más importantes en un monedero móvil es tener una copia de seguridad, lo hacemos ahora?</string>
     <string name="button_ok">Ok</string>
     <string name="backup_succed_dialog">backup_succed_dialog</string>
     <string name="error_no_connectivity_title">No hay conexión internet</string>

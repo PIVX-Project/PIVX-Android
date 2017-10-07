@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -36,7 +37,7 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
     RecyclerView recyclerView;
     private ContactsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Collection<AddressLabel> addressLabels;
+    private List<AddressLabel> addressLabels;
     private LinearLayout emptyView;
     private ExecutorService executor;
 
@@ -90,17 +91,14 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
             @Override
             public void run() {
                 addressLabels = pivxModule.getContacts();
-                if (addressLabels !=null && !addressLabels.isEmpty())
-                    adapter.changeDataSet(new ArrayList(addressLabels));
-                else {
-                    adapter.changeDataSet(new ArrayList());
-                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (addressLabels ==null || addressLabels.isEmpty()) {
+                            adapter.changeDataSet(new ArrayList());
                             emptyView.setVisibility(View.VISIBLE);
                         }else {
+                            adapter.changeDataSet(new ArrayList(addressLabels));
                             emptyView.setVisibility(View.GONE);
                         }
                     }
@@ -135,7 +133,8 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
     }
 
     @Override
-    public void onLongItemClickListener(final AddressLabel data, int position) {
+    public void onLongItemClickListener(AddressLabel oldData, int position) {
+        final AddressLabel data = addressLabels.get(position);
         SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener listener = new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
             @Override
             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {

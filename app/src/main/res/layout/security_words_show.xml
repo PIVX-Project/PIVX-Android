@@ -22,6 +22,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/security_message"
+            android:textStyle="bold"
             android:textColor="@color/mainText"
             android:textSize="18sp" />
 
