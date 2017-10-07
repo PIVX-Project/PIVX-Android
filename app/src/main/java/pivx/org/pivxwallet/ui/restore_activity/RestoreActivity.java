@@ -276,6 +276,8 @@ public class RestoreActivity extends BaseActivity {
 
     private void init(){
 
+        files.clear();
+
         // external storage
         if (PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.exists() && PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory()) {
             File[] fileArray = PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.listFiles();
