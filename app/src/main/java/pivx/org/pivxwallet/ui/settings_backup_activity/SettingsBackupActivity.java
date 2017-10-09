@@ -218,7 +218,7 @@ public class SettingsBackupActivity extends BaseActivity {
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(this, "Permission denied to write your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.write_external_denied, Toast.LENGTH_SHORT).show();
                 }
                 return;
             }

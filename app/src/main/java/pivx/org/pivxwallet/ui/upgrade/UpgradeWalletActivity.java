@@ -98,8 +98,7 @@ public class UpgradeWalletActivity extends BaseActivity {
                                             }
                                         }, TimeUnit.SECONDS.toMillis(3));
                                         Toast.makeText(UpgradeWalletActivity.this,
-                                                "Upgrade wallet succed!," +
-                                                        " please wait some time before the wallet is sync again",
+                                                R.string.upgrade_succesfull,
                                                 Toast.LENGTH_LONG).show();
                                     } else {
                                         Toast.makeText(UpgradeWalletActivity.this, finalMessage, Toast.LENGTH_LONG).show();

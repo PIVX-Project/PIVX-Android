@@ -306,7 +306,7 @@
     <string name="terms_of_service" translatable="false">LEGAL DISCLAIMER\n
     \n
     \n
-    1. Risks related to the use of Coinomi Wallet\n
+    1. Risks related to the use of PIVX Wallet\n
     \n
     Furszy and/or PIVX will not be responsible for any losses, damages or claims arising from events falling within the scope of the following five categories:\n
     \n
@@ -354,7 +354,6 @@
     8. Last amendment\n
     \n
     This disclaimer was amended for the last time on January 1st, 2016.</string>
-
     <string name="settings_sweep_wallet">Sweep wallet</string>
     <string name="disconnected_label">No connection</string>
     <string name="error_generic">Error occurred while performing action</string>
@@ -365,5 +364,7 @@
     <string name="title_blockstore_error">Error</string>
     <string name="message_blockstore_error">Blockchain store corrupted\\n\\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
     <string name="upgrade_wallet">Upgrade Wallet</string>
+    <string name="upgrade_succesfull">Upgrade was successful!, please wait some time before the wallet is sync again</string>
+    <string name="write_external_denied">Permission denied to write in the external storage</string>
 
 </resources>

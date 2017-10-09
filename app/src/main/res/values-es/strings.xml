@@ -51,7 +51,7 @@
     <string name="scan_camera_problem_dialog_title">Perdón</string>
     <string name="scan_camera_problem_dialog_message">La cámara tiene un problema. Quizá necesites reiniciar el dispositivo.</string>
     <string name="scan_camera_permission_dialog_title">Permisos de la cámara</string>
-    <string name="scan_camera_permission_dialog_message">Para escanear códigos QR, debes darme permisos para usar la cámara.</string>
+    <string name="scan_camera_permission_dialog_message">Para escanear códigos QR, debes permitir el uso de la cámara.</string>
     <string name="scan_result_title">Resultado del escaneo</string>
     <string name="scan_result_address_title">Dirección detectada</string>
     <string name="node_selection_message">Puedes seleccionar uno de los nodos disponibles o añadir uno</string>
