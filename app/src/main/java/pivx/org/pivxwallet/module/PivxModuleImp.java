@@ -570,14 +570,15 @@ public class PivxModuleImp implements PivxModule {
             // sweep old wallet balance
             Transaction transaction = walletManager.createCleanWalletTx(sweepAddress);
             logger.info("sweep tx: "+transaction);
-            // broadcast
-            ListenableFuture<Transaction> future = blockchainManager.broadcastTransaction(transaction);
-            transaction = future.get(30, TimeUnit.SECONDS);
-            logger.info("sweep done: "+future.isDone());
 
             // backup the new wallet
             File backupFile = new WalletBackupHelper().determineBackupFile("upgrade");
             backupWallet(newWallet,backupFile,"");
+
+            // broadcast
+            ListenableFuture<Transaction> future = blockchainManager.broadcastTransaction(transaction);
+            transaction = future.get();
+            logger.info("sweep done: "+future.isDone());
 
             // wait until the tx is confirmed with 2 blocks
             ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -599,9 +600,6 @@ public class PivxModuleImp implements PivxModule {
         } catch (ExecutionException e) {
             e.printStackTrace();
             throw new CantSweepBalanceException(e.getMessage(),e);
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-            throw new CantSweepBalanceException("Timeout, there are no available nodes",e);
         } catch (IOException e) {
             e.printStackTrace();
             throw new CantSweepBalanceException(e.getMessage(),e);
