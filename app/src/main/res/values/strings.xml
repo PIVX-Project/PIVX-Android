@@ -364,5 +364,6 @@
     <string name="fee_included">Fee is not included on the total amount</string>
     <string name="title_blockstore_error">Error</string>
     <string name="message_blockstore_error">Blockchain store corrupted\\n\\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
+    <string name="upgrade_wallet">Upgrade Wallet</string>
 
 </resources>

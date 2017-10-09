@@ -170,13 +170,9 @@ public class WalletManager {
             afterLoadWallet();
 
         } else {
-            if (Utils.isAndroidRuntime()) {
-                new LinuxSecureRandom();
-            }
-            List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
 
-            DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
-            wallet = Wallet.fromSeed(conf.getNetworkParams(), seed, DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY);
+            // generate wallet from random mnemonic
+            wallet = generateRandomWallet();
 
             saveWallet();
             backupWallet();
@@ -192,6 +188,15 @@ public class WalletManager {
                 saveWallet();
             }
         });
+    }
+
+    public Wallet generateRandomWallet(){
+        if (Utils.isAndroidRuntime()) {
+            new LinuxSecureRandom();
+        }
+        List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
+        DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
+        return Wallet.fromSeed(conf.getNetworkParams(), seed, DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY);
     }
 
     public static List<String> generateMnemonic(int entropyBitsSize){
@@ -615,6 +620,21 @@ public class WalletManager {
 
     public String getExtPubKey() {
         return wallet.getWatchingKey().serializePubB58(conf.getNetworkParams());
+    }
+
+    public boolean isBip32Wallet() {
+        return wallet.getActiveKeyChain().getKeyChainType() == DeterministicKeyChain.KeyChainType.BIP32;
+    }
+
+    /**
+     * Create a clean transaction from the wallet balance to the sweep address
+     * @param sweepAddress
+     * @return
+     */
+    public Transaction createCleanWalletTx(Address sweepAddress) throws InsufficientMoneyException {
+        SendRequest sendRequest = SendRequest.emptyWallet(sweepAddress);
+        wallet.completeTx(sendRequest);
+        return sendRequest.tx;
     }
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {

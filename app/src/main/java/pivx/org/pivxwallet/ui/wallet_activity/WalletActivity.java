@@ -8,9 +8,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,20 +21,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.uri.PivxURI;
+import org.bitcoinj.wallet.Wallet;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.CantSweepBalanceException;
+import pivx.org.pivxwallet.module.NoPeerConnectedException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
+import pivx.org.pivxwallet.ui.upgrade.UpgradeWalletActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
@@ -130,11 +141,30 @@ public class WalletActivity extends BaseDrawerActivity {
         init();
 
         // register
-        //localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
         localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
 
         updateState();
         updateBalance();
+
+        // check if this wallet need an update:
+        try {
+            if(pivxModule.isBip32Wallet() && pivxModule.isSyncWithNode()){
+                Intent intent = UpgradeWalletActivity.createStartIntent(
+                        this,
+                        getString(R.string.upgrade_wallet),
+                        "An old wallet version with bip32 key was detected, in order to upgrade the wallet your coins are going to be sweeped" +
+                                " to a new wallet with new bip44 schema.\n\nThis means that your current mnemonic code and" +
+                                " backup file are not going to be valid anymore, please write the mnemonic code in paper " +
+                                "or export the backup file again to be able to backup your coins." +
+                                "\n\nThe blockchain sychronization could take a while."
+                                +"\n\nThanks!",
+                        "sweepBip32"
+                );
+                startActivity(intent);
+            }
+        } catch (NoPeerConnectedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateState() {

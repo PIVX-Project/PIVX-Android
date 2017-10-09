@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.module;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
@@ -30,6 +32,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import chain.BlockchainManager;
 import global.ContextWrapper;
@@ -536,6 +541,56 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException {
         walletManager.watchOnlyMode(xpub,keyChainType);
+    }
+
+    @Override
+    public boolean isBip32Wallet() {
+        return walletManager.isBip32Wallet();
+    }
+
+    @Override
+    public boolean sweepBalanceToNewSchema() throws InsufficientMoneyException, CantSweepBalanceException {
+        try {
+            logger.info("sweepBalanceToNewSchema");
+            Wallet newWallet = walletManager.generateRandomWallet();
+            Address sweepAddress = newWallet.freshReceiveAddress();
+            logger.info("sweep address: "+sweepAddress);
+            // sweep old wallet balance
+            Transaction transaction = walletManager.createCleanWalletTx(sweepAddress);
+            //walletManager.commitTx(transaction);
+            logger.info("sweep tx: "+transaction);
+            // broadcast
+            ListenableFuture<Transaction> future = blockchainManager.broadcastTransaction(transaction);
+            future.get(30, TimeUnit.SECONDS);
+            logger.info("sweep done: "+future.isDone());
+            // change wallet
+            walletManager.replaceWallet(newWallet);
+            return true;
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException(e.getMessage(),e);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException(e.getMessage(),e);
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException("Timeout, there are no available nodes",e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException(e.getMessage(),e);
+        }
+    }
+
+    @Override
+    public boolean upgradeWallet(String upgradeCode) throws UpgradeException{
+        try {
+            return sweepBalanceToNewSchema();
+        } catch (InsufficientMoneyException e) {
+            e.printStackTrace();
+            throw new UpgradeException(e.getMessage(),e);
+        } catch (CantSweepBalanceException e) {
+            throw new UpgradeException(e.getMessage(),e);
+        }
     }
 
 

@@ -67,6 +67,7 @@
             android:windowSoftInputMode="adjustPan"
             android:parentActivityName=".ui.wallet_activity.WalletActivity"
             ></activity>
+        <activity android:name=".ui.upgrade.UpgradeWalletActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.transaction_send_activity.custom.inputs.InputsActivity" android:screenOrientation="portrait"/>

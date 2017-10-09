@@ -157,4 +157,10 @@ public interface PivxModule {
     boolean isSyncWithNode() throws NoPeerConnectedException;
 
     void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException;
+
+    boolean isBip32Wallet();
+
+    boolean sweepBalanceToNewSchema() throws InsufficientMoneyException, CantSweepBalanceException;
+
+    boolean upgradeWallet(String upgradeCode) throws UpgradeException;
 }

@@ -167,12 +167,15 @@ public class BlockchainManager {
     public ListenableFuture<Transaction> broadcastTransaction(byte[] transactionHash) {
         final Sha256Hash hash = Sha256Hash.wrap(transactionHash);
         final Transaction tx = walletManager.getTransaction(hash);
+        return broadcastTransaction(tx);
+    }
+    public ListenableFuture<Transaction> broadcastTransaction(Transaction tx){
         if (peerGroup != null) {
             LOG.info("broadcasting transaction " + tx.getHashAsString());
             boolean onlyTrustedNode =
                     (conf.getNetworkParams() instanceof RegTestParams || conf.getNetworkParams() instanceof TestNet3Params)
-                    ||
-                    conf.getTrustedNodeHost()!=null;
+                            ||
+                            conf.getTrustedNodeHost()!=null;
             TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(
                     tx,
                     onlyTrustedNode?1:2,
