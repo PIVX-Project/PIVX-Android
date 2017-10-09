@@ -155,10 +155,10 @@ public class WalletActivity extends BaseDrawerActivity {
                             this,
                             getString(R.string.upgrade_wallet),
                             "An old wallet version with bip32 key was detected, in order to upgrade the wallet your coins are going to be sweeped" +
-                                    " to a new wallet with new bip44 schema.\n\nThis means that your current mnemonic code and" +
+                                    " to a new wallet with bip44 account.\n\nThis means that your current mnemonic code and" +
                                     " backup file are not going to be valid anymore, please write the mnemonic code in paper " +
                                     "or export the backup file again to be able to backup your coins." +
-                                    "\n\nThe blockchain sychronization could take a while."
+                                    "\n\nPlease wait and not close this screen. The upgrade + blockchain sychronization could take a while."
                                     + "\n\nThanks!",
                             "sweepBip32"
                     );

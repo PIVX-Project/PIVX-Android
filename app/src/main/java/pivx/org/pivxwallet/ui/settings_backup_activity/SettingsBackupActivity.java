@@ -112,7 +112,7 @@ public class SettingsBackupActivity extends BaseActivity {
                 toastfromBackgroundMessage(backupRes);
                 return;
             }
-            File backupFile = new WalletBackupHelper().determineBackupFile();
+            File backupFile = new WalletBackupHelper().determineBackupFile(null);
             boolean result = pivxModule.backupWallet(backupFile, firstPassword);
 
             if (result){

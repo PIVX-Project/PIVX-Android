@@ -9,6 +9,7 @@ import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.ScriptException;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionConfidence;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
@@ -33,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -42,6 +45,7 @@ import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;
 import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.contacts.ContactsStore;
+import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
@@ -103,9 +107,11 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public boolean backupWallet(File backupFile, String password) throws IOException {
-        //todo: add the backup reminder here..
         return walletManager.backupWallet(backupFile,password);
+    }
 
+    private boolean backupWallet(Wallet wallet,File backupFile, String password) throws IOException {
+        return walletManager.backupWallet(wallet,backupFile,password);
     }
 
     @Override
@@ -552,17 +558,38 @@ public class PivxModuleImp implements PivxModule {
     public boolean sweepBalanceToNewSchema() throws InsufficientMoneyException, CantSweepBalanceException {
         try {
             logger.info("sweepBalanceToNewSchema");
+
+            // backup the current wallet first
+            File backupFileOld = new WalletBackupHelper().determineBackupFile("old");
+            backupWallet(backupFileOld,"");
+
+            // new wallet
             Wallet newWallet = walletManager.generateRandomWallet();
             Address sweepAddress = newWallet.freshReceiveAddress();
             logger.info("sweep address: "+sweepAddress);
             // sweep old wallet balance
             Transaction transaction = walletManager.createCleanWalletTx(sweepAddress);
-            //walletManager.commitTx(transaction);
             logger.info("sweep tx: "+transaction);
             // broadcast
             ListenableFuture<Transaction> future = blockchainManager.broadcastTransaction(transaction);
-            future.get(30, TimeUnit.SECONDS);
+            transaction = future.get(30, TimeUnit.SECONDS);
             logger.info("sweep done: "+future.isDone());
+
+            // backup the new wallet
+            File backupFile = new WalletBackupHelper().determineBackupFile("upgrade");
+            backupWallet(newWallet,backupFile,"");
+
+            // wait until the tx is confirmed with 2 blocks
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            ListenableFuture<TransactionConfidence> confidenceFuture = transaction.getConfidence().getDepthFuture(2,executorService);
+            TransactionConfidence confidence = confidenceFuture.get();
+
+            if (confidence.getDepthInBlocks()>1){
+                logger.info("Upgrade wallet tx confidence accepted by the network");
+
+            }else {
+                logger.error("ERROR, Upgrade wallet tx confidence not accepted by the network {}",confidence);
+            }
             // change wallet
             walletManager.replaceWallet(newWallet);
             return true;

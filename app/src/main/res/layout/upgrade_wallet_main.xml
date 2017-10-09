@@ -39,6 +39,7 @@
         android:textStyle="bold"
         android:gravity="center"
         android:paddingTop="24dp"
+        android:scrollbars="vertical"
         android:paddingBottom="24dp"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"/>

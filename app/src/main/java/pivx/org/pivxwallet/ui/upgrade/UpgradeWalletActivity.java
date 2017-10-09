@@ -20,6 +20,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.UpgradeException;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
  * Created by furszy on 10/8/17.
@@ -34,6 +36,8 @@ public class UpgradeWalletActivity extends BaseActivity {
     private View root;
     private TextView txt_message,txt_title;
     private ProgressBar progress;
+
+    private SimpleTextDialog noConnectionDialog;
 
     private AtomicBoolean flag = new AtomicBoolean(false);
 
@@ -69,6 +73,16 @@ public class UpgradeWalletActivity extends BaseActivity {
         root.findViewById(R.id.btn_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!pivxModule.isAnyPeerConnected()){
+                    if (noConnectionDialog==null)
+                        noConnectionDialog = DialogsUtil.buildSimpleTextDialog(
+                                UpgradeWalletActivity.this,
+                                getString(R.string.not_connection),
+                                getString(R.string.message_connection_is_needed)
+                        );
+                    noConnectionDialog.show(getFragmentManager(),"no_connection");
+                    return;
+                }
                 if(!flag.getAndSet(true)) {
                     progress.setVisibility(View.VISIBLE);
                     new Thread(new Runnable() {

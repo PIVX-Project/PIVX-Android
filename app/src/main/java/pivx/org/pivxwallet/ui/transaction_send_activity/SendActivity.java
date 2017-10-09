@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -297,6 +298,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         if (savedInstanceState.containsKey(TX)){
             transaction = new Transaction(pivxModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     @Override

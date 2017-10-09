@@ -366,5 +366,6 @@
     <string name="upgrade_wallet">Upgrade Wallet</string>
     <string name="upgrade_succesfull">Upgrade was successful!, please wait some time before the wallet is sync again</string>
     <string name="write_external_denied">Permission denied to write in the external storage</string>
+    <string name="message_connection_is_needed">Peer connection is needed to execute this task, please check if your internet is active or if you are using a trusted node check if it is online.</string>
 
 </resources>

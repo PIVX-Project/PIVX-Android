@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -288,22 +291,6 @@ public class PivxApplication extends Application implements ContextWrapper {
         this.lastTimeRequestBackup = lastTimeBackupRequested;
     }
 
-    /*public ServiceConnection pivxServiceConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            log.info("profile service connected");
-            pivxWalletService = ((PivxWalletService.PivxBinder)binder).getService();
-            //isConnected.set(true);
-            //listener.onConnected();
-        }
-        //binder comes from server to communicate with method's of
-
-        public void onServiceDisconnected(ComponentName className) {
-            Log.d("ServiceConnection","disconnected");
-            //isConnected.set(false);
-            pivxWalletService = null;
-            //listener.onDisconnected();
-        }
-    };*/
 
 
 }

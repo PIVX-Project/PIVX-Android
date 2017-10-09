@@ -350,7 +350,19 @@ public class WalletManager {
      * @param password
      * @throws IOException
      */
+
     public boolean backupWallet(File file, final String password) throws IOException {
+        return backupWallet(wallet,file,password);
+    }
+
+    /**
+     * Backup wallet file with a given password
+     *
+     * @param file
+     * @param password
+     * @throws IOException
+     */
+    public boolean backupWallet(Wallet wallet,File file, final String password) throws IOException {
 
         final Protos.Wallet walletProto = new WalletProtobufSerializer().walletToProto(wallet);
 
