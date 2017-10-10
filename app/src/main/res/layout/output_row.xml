@@ -87,6 +87,7 @@
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
         android:inputType="numberDecimal"
+        android:maxLength="8"
         android:textSize="15sp"
         android:textCursorDrawable="@drawable/color_cursor"
         android:textColor="@color/mainText"

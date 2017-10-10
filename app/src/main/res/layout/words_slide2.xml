@@ -172,7 +172,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
                 android:textColor="@color/mainText"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"
                 android:background="@drawable/bg_inputs"

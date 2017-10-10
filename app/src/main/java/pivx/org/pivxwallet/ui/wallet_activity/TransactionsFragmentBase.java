@@ -3,6 +3,7 @@ package pivx.org.pivxwallet.ui.wallet_activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,6 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
         setEmptyView(R.drawable.img_transaction_empty);
         setEmptyText("You don't have any transfers yet.");
         setEmptyTextColor(Color.parseColor("#cccccc"));
-        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         return view;
     }
 
@@ -107,10 +107,13 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 if (data.isSent()){
                     //holder.cv.setBackgroundColor(Color.RED);Color.GREEN
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
                 }else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 }else {
                     holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 }
                 holder.title.setText(getAddressOrContact(pivxModule,data));
 
@@ -148,6 +151,12 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             }
         });
         return adapter;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
     }
 
     /**

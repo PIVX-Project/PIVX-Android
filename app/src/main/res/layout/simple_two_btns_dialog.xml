@@ -29,6 +29,7 @@
             android:text="Login failed"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
+            android:paddingRight="12dp"
             android:textSize="18sp"
             android:textStyle="bold"
             />

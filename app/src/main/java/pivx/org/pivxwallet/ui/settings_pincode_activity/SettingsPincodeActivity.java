@@ -1,32 +1,13 @@
 package pivx.org.pivxwallet.ui.settings_pincode_activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
-import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
-import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
-import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
-import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
-import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
-import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
-import pivx.org.pivxwallet.utils.IntentsUtils;
 
 
 /**

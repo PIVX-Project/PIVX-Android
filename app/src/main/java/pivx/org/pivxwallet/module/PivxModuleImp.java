@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.module;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
@@ -7,11 +9,14 @@ import org.bitcoinj.core.Peer;
 import org.bitcoinj.core.ScriptException;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionConfidence;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
 import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
+import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
@@ -28,6 +33,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import chain.BlockchainManager;
 import global.ContextWrapper;
@@ -35,14 +45,15 @@ import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;
 import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.contacts.ContactsStore;
+import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
 import store.AddressStore;
-import wallet.InsufficientInputsException;
-import wallet.TxNotFoundException;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 import wallet.WalletManager;
 
 /**
@@ -96,9 +107,11 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public boolean backupWallet(File backupFile, String password) throws IOException {
-        //todo: add the backup reminder here..
         return walletManager.backupWallet(backupFile,password);
+    }
 
+    private boolean backupWallet(Wallet wallet,File backupFile, String password) throws IOException {
+        return walletManager.backupWallet(wallet,backupFile,password);
     }
 
     @Override
@@ -113,8 +126,8 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public void restoreWallet(List<String> mnemonic, long timestamp) throws IOException {
-        walletManager.restoreWalletFrom(mnemonic,timestamp);
+    public void restoreWallet(List<String> mnemonic, long timestamp,boolean bip44) throws IOException, MnemonicException {
+        walletManager.restoreWalletFrom(mnemonic,timestamp,bip44);
     }
 
     @Override
@@ -152,12 +165,17 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public boolean isWalletWatchOnly(){
+        return walletManager.isWatchOnly();
+    }
+
+    @Override
     public BigDecimal getAvailableBalanceLocale() {
         return pivInUsdHardcoded.multiply(new BigDecimal(availableBalance));
     }
 
     @Override
-    public Collection<AddressLabel> getContacts(){
+    public List<AddressLabel> getContacts(){
         return contactsStore.list();
     }
 
@@ -196,12 +214,18 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException {
+        return buildSendTx(addressBase58,amount,null,memo);
+    }
+    @Override
+    public Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo) throws InsufficientMoneyException{
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
 
         SendRequest sendRequest = SendRequest.to(address,amount);
         sendRequest.memo = memo;
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
+        if (feePerKb!=null)
+            sendRequest.feePerKb = feePerKb;
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -209,11 +233,19 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Transaction completeTx(Transaction transaction,Coin fee) throws InsufficientMoneyException {
+    public Transaction completeTx(Transaction transaction,Coin feePerKb) throws InsufficientMoneyException {
         SendRequest sendRequest = SendRequest.forTx(transaction);
+        if (transaction.getInputs()!=null && !transaction.getInputs().isEmpty()){
+            List<TransactionOutput> unspent = new ArrayList<>();
+            for (TransactionInput input : transaction.getInputs()) {
+                unspent.add(input.getConnectedOutput());
+            }
+            sendRequest.coinSelector = new pivx.org.pivxwallet.module.wallet.DefaultCoinSelector(unspent);
+        }
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
-        sendRequest.feePerKb = fee;
+        if (feePerKb!=null)
+            sendRequest.feePerKb = feePerKb;
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -254,13 +286,19 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public boolean isAnyPeerConnected() {
-        return (blockchainManager != null && blockchainManager.getConnectedPeers() != null) && !blockchainManager.getConnectedPeers().isEmpty();
+        List<Peer> peers = blockchainManager.getConnectedPeers();
+        return (blockchainManager != null && peers != null) && !peers.isEmpty();
     }
 
     @Override
     public long getConnectedPeerHeight() {
-        if (blockchainManager!=null && blockchainManager.getConnectedPeers() !=null && !blockchainManager.getConnectedPeers().isEmpty()){
-            return blockchainManager.getConnectedPeers().get(0).getBestHeight();
+        List<Peer> peers = blockchainManager.getConnectedPeers();
+        if (blockchainManager!=null &&  peers!=null && !peers.isEmpty()){
+            Peer peer = peers.get(0);
+            if (peer!=null)
+                return peer.getBestHeight();
+            else
+                return -1;
         }else
             return -1;
     }
@@ -268,6 +306,11 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public int getProtocolVersion() {
         return blockchainManager.getProtocolVersion();
+    }
+
+    @Override
+    public void checkMnemonic(List<String> mnemonic) throws MnemonicException {
+        walletManager.checkMnemonic(mnemonic);
     }
 
     @Override
@@ -461,6 +504,16 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public String getWatchingPubKey() {
+        return walletManager.getExtPubKey();
+    }
+
+    @Override
+    public DeterministicKey getWatchingKey() {
+        return walletManager.getWatchingPubKey();
+    }
+
+    @Override
     public DeterministicKey getKeyPairForAddress(Address address) {
         return walletManager.getKeyPairForAddress(address);
     }
@@ -473,6 +526,96 @@ public class PivxModuleImp implements PivxModule {
     @Override
     public List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException {
         return walletManager.getRandomListUnspentNotInListToFullCoins(inputs,amount);
+    }
+
+   @Override
+   public boolean isSyncWithNode() throws NoPeerConnectedException {
+       boolean isSync = false;
+       if (isAnyPeerConnected()) {
+           long peerHeight = getConnectedPeerHeight();
+           if (peerHeight!=-1){
+               if (getChainHeight()+10>peerHeight) {
+                   isSync = true;
+               }
+           }
+       }else {
+          throw new NoPeerConnectedException();
+       }
+       return isSync;
+   }
+
+    @Override
+    public void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException {
+        walletManager.watchOnlyMode(xpub,keyChainType);
+    }
+
+    @Override
+    public boolean isBip32Wallet() {
+        return walletManager.isBip32Wallet();
+    }
+
+    @Override
+    public boolean sweepBalanceToNewSchema() throws InsufficientMoneyException, CantSweepBalanceException {
+        try {
+            logger.info("sweepBalanceToNewSchema");
+
+            // backup the current wallet first
+            File backupFileOld = new WalletBackupHelper().determineBackupFile("old");
+            backupWallet(backupFileOld,"");
+
+            // new wallet
+            Wallet newWallet = walletManager.generateRandomWallet();
+            Address sweepAddress = newWallet.freshReceiveAddress();
+            logger.info("sweep address: "+sweepAddress);
+            // sweep old wallet balance
+            Transaction transaction = walletManager.createCleanWalletTx(sweepAddress);
+            logger.info("sweep tx: "+transaction);
+
+            // backup the new wallet
+            File backupFile = new WalletBackupHelper().determineBackupFile("upgrade");
+            backupWallet(newWallet,backupFile,"");
+
+            // broadcast
+            ListenableFuture<Transaction> future = blockchainManager.broadcastTransaction(transaction);
+            transaction = future.get();
+            logger.info("sweep done: "+future.isDone());
+
+            // wait until the tx is confirmed with 2 blocks
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            ListenableFuture<TransactionConfidence> confidenceFuture = transaction.getConfidence().getDepthFuture(2,executorService);
+            TransactionConfidence confidence = confidenceFuture.get();
+
+            if (confidence.getDepthInBlocks()>1){
+                logger.info("Upgrade wallet tx confidence accepted by the network");
+
+            }else {
+                logger.error("ERROR, Upgrade wallet tx confidence not accepted by the network {}",confidence);
+            }
+            // change wallet
+            walletManager.replaceWallet(newWallet);
+            return true;
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException(e.getMessage(),e);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException(e.getMessage(),e);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new CantSweepBalanceException(e.getMessage(),e);
+        }
+    }
+
+    @Override
+    public boolean upgradeWallet(String upgradeCode) throws UpgradeException{
+        try {
+            return sweepBalanceToNewSchema();
+        } catch (InsufficientMoneyException e) {
+            e.printStackTrace();
+            throw new UpgradeException(e.getMessage(),e);
+        } catch (CantSweepBalanceException e) {
+            throw new UpgradeException(e.getMessage(),e);
+        }
     }
 
 

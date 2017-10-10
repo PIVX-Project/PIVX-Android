@@ -1,6 +1,8 @@
 package pivx.org.pivxwallet.utils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -66,6 +68,12 @@ public class AndroidUtils {
             Toast.makeText(context, R.string.report_issue_dialog_mail_intent_failed, Toast.LENGTH_LONG).show();
             logger.error("report issue failed", x);
         }
+    }
+
+    public static void copyToClipboard(Context context,String text){
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("Address", text);
+        clipboard.setPrimaryClip(clip);
     }
 
 }

@@ -1,8 +1,5 @@
 package pivx.org.pivxwallet.ui.qr_activity;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -29,8 +26,8 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
 
-import static android.R.attr.label;
 import static android.graphics.Color.WHITE;
+import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;
 import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 
 /**
@@ -94,6 +91,9 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         }
 
     }
+    public void setModule(PivxModule module) {
+        this.module = module;
+    }
 
     private void loadAddress(String uri,String addressStr) throws WriterException {
         Bitmap qrBitmap = null;//Cache.getQrBigBitmapCache();
@@ -108,9 +108,6 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         txt_address.setText(addressStr);
     }
 
-    public void setModule(PivxModule module) {
-        this.module = module;
-    }
 
     public static int convertDpToPx(Resources resources, int dp){
         return Math.round(dp*(resources.getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
@@ -124,22 +121,16 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.share_address_text)));
     }
 
-    private void copyToClipboard(String text){
-        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("Address", text);
-        clipboard.setPrimaryClip(clip);
-    }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btn_share){
             share(address.toBase58());
         }else if(id == R.id.img_qr){
-            copyToClipboard(address.toBase58());
+            copyToClipboard(getActivity(),address.toBase58());
             Toast.makeText(v.getContext(), R.string.copy_message,Toast.LENGTH_LONG).show();
         }else if (id == R.id.btn_copy){
-            copyToClipboard(address.toBase58());
+            copyToClipboard(getActivity(),address.toBase58());
             Toast.makeText(v.getContext(), R.string.copy_message, Toast.LENGTH_LONG).show();
         }
     }

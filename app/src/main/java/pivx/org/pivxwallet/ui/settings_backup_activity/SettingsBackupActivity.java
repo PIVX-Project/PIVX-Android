@@ -1,7 +1,6 @@
 package pivx.org.pivxwallet.ui.settings_backup_activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -23,9 +22,9 @@ import java.io.IOException;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
+import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.ui.security_words_activity.MnemonicActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
@@ -91,6 +90,10 @@ public class SettingsBackupActivity extends BaseActivity {
 
         switch (item.getItemId()) {
             case 0:
+                if (pivxModule.isWalletWatchOnly()){
+                    Toast.makeText(this,R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 Intent myIntent = new Intent(getApplicationContext(), MnemonicActivity.class);
                 startActivity(myIntent);
                 return true;
@@ -109,7 +112,7 @@ public class SettingsBackupActivity extends BaseActivity {
                 toastfromBackgroundMessage(backupRes);
                 return;
             }
-            File backupFile = new WalletBackupHelper().determineBackupFile();
+            File backupFile = new WalletBackupHelper().determineBackupFile(null);
             boolean result = pivxModule.backupWallet(backupFile, firstPassword);
 
             if (result){
@@ -148,7 +151,11 @@ public class SettingsBackupActivity extends BaseActivity {
                         getString(R.string.backup_completed),
                         getString(R.string.backup_completed_text,backupAbsolutePath)
                 );
-                succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    succedDialog.setOkBtnBackgroundColor(getColor(R.color.lightGreen));
+                }else {
+                    succedDialog.setOkBtnBackgroundColor(ContextCompat.getColor(SettingsBackupActivity.this, R.color.lightGreen));
+                }
                 succedDialog.setOkBtnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -211,7 +218,7 @@ public class SettingsBackupActivity extends BaseActivity {
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(this, "Permission denied to write your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.write_external_denied, Toast.LENGTH_SHORT).show();
                 }
                 return;
             }

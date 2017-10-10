@@ -2,7 +2,6 @@ package pivx.org.pivxwallet.ui.wallet_activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -13,41 +12,39 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.InsufficientMoneyException;
+import org.bitcoinj.core.Transaction;
 import org.bitcoinj.uri.PivxURI;
-import org.bitcoinj.utils.MonetaryFormat;
+import org.bitcoinj.wallet.Wallet;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.CantSweepBalanceException;
+import pivx.org.pivxwallet.module.NoPeerConnectedException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.IntentsConstants;
-import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
-import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
-import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
-import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
-import pivx.org.pivxwallet.utils.AppConf;
-import pivx.org.pivxwallet.utils.DialogBuilder;
+import pivx.org.pivxwallet.ui.upgrade.UpgradeWalletActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
@@ -72,21 +69,12 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_value;
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
+    private TextView txt_watch_only;
     private PivxRate pivxRate;
-
     private TransactionsFragmentBase txsFragment;
-
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
-    private IntentFilter addressBalanceIntent = new IntentFilter(IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE);
-
-    private BroadcastReceiver localReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-        }
-    };
 
     private IntentFilter pivxServiceFilter = new IntentFilter(ACTION_NOTIFICATION);
     private BroadcastReceiver pivxServiceReceiver = new BroadcastReceiver() {
@@ -118,7 +106,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        setTitle("My Wallet");
+        setTitle(R.string.my_wallet);
         root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
         header_container.setVisibility(View.VISIBLE);
@@ -126,13 +114,17 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
         container_txs = root.findViewById(R.id.container_txs);
         txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
-
+        txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
 
         // Open Send
         fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (pivxModule.isWalletWatchOnly()){
+                    Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startActivity(new Intent(v.getContext(), SendActivity.class));
             }
         });
@@ -150,10 +142,38 @@ public class WalletActivity extends BaseDrawerActivity {
         init();
 
         // register
-        localBroadcastManager.registerReceiver(localReceiver,addressBalanceIntent);
         localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
 
+        updateState();
         updateBalance();
+
+        // check if this wallet need an update:
+        try {
+            if(pivxModule.isBip32Wallet() && pivxModule.isSyncWithNode()){
+                if (!pivxModule.isWalletWatchOnly() && pivxModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
+                    Intent intent = UpgradeWalletActivity.createStartIntent(
+                            this,
+                            getString(R.string.upgrade_wallet),
+                            "An old wallet version with bip32 key was detected, in order to upgrade the wallet your coins are going to be sweeped" +
+                                    " to a new wallet with bip44 account.\n\nThis means that your current mnemonic code and" +
+                                    " backup file are not going to be valid anymore, please write the mnemonic code in paper " +
+                                    "or export the backup file again to be able to backup your coins." +
+                                    "\n\nPlease wait and not close this screen. The upgrade + blockchain sychronization could take a while."
+                                    +"\n\nTip: If this screen is closed for user's mistake before the upgrade is finished you can find two backups files in the 'Download' folder" +
+                                    " with prefix 'old' and 'upgrade' to be able to continue the restore manually."
+                                    + "\n\nThanks!",
+                            "sweepBip32"
+                    );
+                    startActivity(intent);
+                }
+            }
+        } catch (NoPeerConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateState() {
+        txt_watch_only.setVisibility(pivxModule.isWalletWatchOnly()?View.VISIBLE:View.GONE);
     }
 
     private void init() {
@@ -193,7 +213,7 @@ public class WalletActivity extends BaseDrawerActivity {
     protected void onStop() {
         super.onStop();
         // unregister
-        localBroadcastManager.unregisterReceiver(localReceiver);
+        //localBroadcastManager.unregisterReceiver(localReceiver);
         localBroadcastManager.unregisterReceiver(pivxServiceReceiver);
     }
 

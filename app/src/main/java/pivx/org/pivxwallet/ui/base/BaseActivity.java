@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 
 /**
  * Created by mati on 18/04/17.
@@ -41,7 +39,7 @@ public abstract class BaseActivity extends PivxActivity {
 
     }
 
-    private void init(){
+    private final void init(){
         childContainer = (FrameLayout) findViewById(R.id.content);
         if (hasToolbar() && !isFullScreen()) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);

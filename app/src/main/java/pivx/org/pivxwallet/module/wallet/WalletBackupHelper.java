@@ -7,7 +7,7 @@ import java.util.TimeZone;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.module.PivxContext;
-import wallet.Iso8601Format;
+import global.utils.Iso8601Format;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class WalletBackupHelper {
 
-    public File determineBackupFile() {
+    public File determineBackupFile(String extraData) {
         PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();
         checkState(PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory(), "%s is not a directory", PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR);
 
@@ -30,6 +30,9 @@ public class WalletBackupHelper {
             final StringBuilder filename = new StringBuilder(PivxContext.Files.getExternalWalletBackupFileName(appName));
             filename.append('-');
             filename.append(dateFormat.format(new Date()));
+            if (extraData!=null){
+                filename.append("-"+extraData);
+            }
             if (i > 0)
                 filename.append(" (").append(i).append(')');
 

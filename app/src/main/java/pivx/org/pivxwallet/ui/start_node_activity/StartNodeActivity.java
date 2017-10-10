@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import global.PivtrumGlobalData;
+import pivtrum.PivtrumPeer;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -42,13 +42,13 @@ public class StartNodeActivity extends BaseActivity {
     private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
 
-    private List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts();
+    private static final List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts();
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
 
         getLayoutInflater().inflate(R.layout.fragment_start_node, container);
-        setTitle("Select Node");
+        setTitle(R.string.select_node);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -56,22 +56,24 @@ public class StartNodeActivity extends BaseActivity {
         openDialog = (Button) findViewById(R.id.openDialog);
         openDialog.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(view.getContext(), new DialogsUtil.TrustedNodeDialogListener() {
+                DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(StartNodeActivity.this, new DialogsUtil.TrustedNodeDialogListener() {
                     @Override
                     public void onNodeSelected(PivtrumPeerData pivtrumPeerData) {
-                        dropdown.setAdapter(null);
-                        adapter.clear();
-                        hosts = new ArrayList<String>();
-                        trustedNodes.add(pivtrumPeerData);
-                        for (PivtrumPeerData trustedNode : trustedNodes) {
-                            if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)){
-                                hosts.add("pivt.furszy.tech");
-                            }else
-                                hosts.add(trustedNode.getHost());
+                        if(!trustedNodes.contains(pivtrumPeerData)) {
+                            dropdown.setAdapter(null);
+                            adapter.clear();
+                            hosts = new ArrayList<String>();
+                            trustedNodes.add(pivtrumPeerData);
+                            for (PivtrumPeerData trustedNode : trustedNodes) {
+                                if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)) {
+                                    hosts.add("pivt.furszy.tech");
+                                } else
+                                    hosts.add(trustedNode.getHost());
+                            }
+                            adapter.addAll(hosts);
+                            dropdown.setAdapter(adapter);
+                            dropdown.setSelection(hosts.size() - 1);
                         }
-                        adapter.addAll(hosts);
-                        dropdown.setAdapter(adapter);
-                        dropdown.setSelection(hosts.size()-1);
                     }
                 });
                 dialogBuilder.show();
@@ -106,7 +108,19 @@ public class StartNodeActivity extends BaseActivity {
 
         dropdown = (Spinner)findViewById(R.id.spinner);
 
-        for (PivtrumPeerData trustedNode : trustedNodes) {
+        // add connected node if it's not on the list
+        PivtrumPeerData pivtrumPeer = pivxApplication.getAppConf().getTrustedNode();
+        if (pivtrumPeer!=null && !pivtrumPeer.getHost().equals(FURSZY_TESTNET_SERVER)){
+            trustedNodes.add(pivtrumPeer);
+        }
+
+        int selectionPos = 0;
+
+        for (int i=0;i<trustedNodes.size();i++){
+            PivtrumPeerData trustedNode = trustedNodes.get(i);
+            if (pivtrumPeer!=null && pivtrumPeer.getHost().equals(trustedNode)){
+                selectionPos = i;
+            }
             if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)){
                 hosts.add("pivt.furszy.tech");
             }else
@@ -130,6 +144,7 @@ public class StartNodeActivity extends BaseActivity {
                 return view;
             }
         };
+        dropdown.setSelection(selectionPos);
         dropdown.setAdapter(adapter);
     }
 

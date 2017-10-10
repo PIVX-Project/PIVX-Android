@@ -1,12 +1,8 @@
 package pivx.org.pivxwallet.ui.qr_activity;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.lang.ref.WeakReference;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;

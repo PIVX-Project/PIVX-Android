@@ -13,7 +13,7 @@
     <string name="app_name">PIVX wallet</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
-    <string name="restore_wallet_message">Select a backup of the wallet \n from a storage unit</string>
+    <string name="restore_wallet_message">Select a backup of the wallet\nfrom a storage unit</string>
     <string name="pincode_message">For your security \na pincode is needed</string>
     <string name="select_file">Select File</string>
     <string name="action_qr">QR Cocde</string>
@@ -86,8 +86,8 @@
     <string name="explorer">Explorer</string>
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
-    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete. \n It has been saved in the folder at\n %s </string>
-    <string name="import_keys_dialog_message">Select one of your backups \n files loaded from \n folder %s</string>
+    <string name="backup_completed_text">Congratulations! Your wallet is backup is complete.\nIt has been saved in the folder at\n%s </string>
+    <string name="import_keys_dialog_message">Select one of your backups\nfiles loaded from\nfolder %s</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
     <string name="import_keys_dialog_failure">Error importing backup file\n%s</string>
@@ -108,7 +108,7 @@
     <string name="save">Save</string>
     <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
-    <string name="next_words">Next 6 words</string>
+    <string name="next_words">Next 8 words</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="back">Back</string>
@@ -117,7 +117,7 @@
     <string name="title_slide1">Pivx is secure</string>
     <string name="desc_slide1">First coin with BIP38 Encryption and Decryption of Private Keys</string>
     <string name="title_slide2">60 SECOND BLOCK TIME</string>
-    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required. </string>
+    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required.</string>
     <string name="title_slide3">Extremely secure and private</string>
     <string name="desc_slide3">PIVX is aiming it’s sights on establishing the first truly anonymous crypto-currency.</string>
     <string name="title_slide4">Trusted nodes federation</string>
@@ -145,11 +145,10 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
-    <string name="security_message">Please write this in a safe place\nyou\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!</string>
+    <string name="security_message">Please write this in a safe place and in horizontal order, you\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
-    <string name="reveal_words">Reveal words</string>
     <string name="backup_words">Mnemonic Code</string>
     <string name="btn_secure">Already noted</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
@@ -187,10 +186,10 @@
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
-    <string name="restore_words_1">To restore your wallet you must write your 12, write your mnemonic words in the right order from number 1 to 8.</string>
+    <string name="restore_words_1">To restore your wallet you must write the 24, write your mnemonic code in the right order from number 1 to 8.</string>
     <string name="restore_from_words">Restore from words</string>
-    <string name="restore_words_2">Now write your security words in the right order \n from number 9 to 16</string>
-    <string name="restore_words_3">Now write your security words in the right order \n from number 17 to 24</string>
+    <string name="restore_words_2">Now from number 9 to 16</string>
+    <string name="restore_words_3">Now from number 17 to 24</string>
     <string name="fee_recommended">Recommended</string>
     <string name="fee_custom">Custom</string>
     <string name="confirmation_time">Confirmation time</string>
@@ -221,7 +220,7 @@
     <string name="delete_addresses">DELETE ADDRESSES</string>
     <string name="sync">Synced</string>
     <string name="syncing">Syncing</string>
-    <string name="not_connection">Not connection</string>
+    <string name="not_connection">No connection</string>
     <string name="confimations">Confirmations</string>
     <string name="multiple_address_send">Sending to %d addresses</string>
     <string name="fee_per_kb">%s Piv/kB</string>
@@ -244,13 +243,129 @@
     <string name="invalid_mnemonic_code">Invalid mnemonic code, please check every word again.</string>
     <string name="restore_mnemonic">Restoring wallet from mnemonic..</string>
     <string name="restore_mnemonic_title">Restore Mnemonic</string>
-    <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synched.</string>
+    <string name="restore_mnemonic_dialog_body">The restore is almost done!\nThe blockchain synchronization process is going to start and could take a while to be fully synced.</string>
     <string name="invalid_host">Invalid host name</string>
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
     <string name="detail_no_available_inputs">No available inputs information</string>
     <string name="report_crash_title">Report crash</string>
     <string name="crash_toast_text">Pivx wallet crash</string>
     <string name="backup_fail">Backup fail</string>
+    <string name="no_peer_connection">No connection to the node</string>
+    <string name="wallet_is_not_sync">Wallet is not sync, to be sure about your real balance please wait until the synchronization finish</string>
+    <string name="warn_sharing_pub_key">Sharing your public key will allow anybody to view your balance and transaction history.</string>
+    <string name="public_key">Public key</string>
+    <string name="derivation_path">Derivation path (BIP32)</string>
+    <string name="unknown_error_message">Error loading the xpub, please send a report</string>
+    <string name="settings_export_pub_key">Export account</string>
+    <string name="copy_key_message">Key copied</string>
+    <string name="hint_paste_xpub">Paste your xpub here</string>
+    <string name="explanation_import_xpub">Make your wallet a Watch Only Wallet importing your xpub from another wallet.\n\nPeople using this device are going to see the full balance but not be able to spend coins.</string>
+    <string name="import_xpub">Import</string>
+    <string name="settings_import_xpub">Watch only mode</string>
+    <string name="screen_title_watch_only">Watch Only</string>
+    <string name="watch_only_mode_activated">Watch only mode activated</string>
+    <string name="watch_only_mode_activated_text">Please wait until the synchronization is completed, could take a while be patient.</string>
+    <string name="error_importing_xpub">Please check the key or send an error report.</string>
+    <string name="error_importing_xpub_title">Error importing xpub</string>
+    <string name="error_watch_only_mode">Action is not possible on watch only mode</string>
+    <string name="export_wallet">Export Account</string>
+    <string name="commit_tx_fail">Commit transaction fail, please send the error report</string>
 
+
+    <!-- Sweep wallet -->
+    <!-- Sweep paper wallet means to redeem coins from a code usually printed on a paper -->
+    <string name="title_activity_sweep_wallet">Sweep paper wallet</string>
+    <string name="sweep_wallet_info">You are about to transfer coins from a paper wallet to your PIVX wallet.\nAfter the transfer is complete, please avoid reusing the paper wallet for security reasons.\n\nSupported formats: WIF, BIP38, Mini private key.</string>
+    <string name="sweep_wallet_key_title">Private key</string>
+    <string name="sweep_wallet_key_password">Private key password</string>
+    <string name="sweep_wallet_key_hint">type or scan a private key</string>
+    <string name="sweep_wallet_bad_format">Could not recognize the private key format.</string>
+    <string name="sweep_wallet_bad_coin_type">The private key type does not match the destination account type.</string>
+    <string name="sweep_wallet_bad_password">Incorrect password.</string>
+    <string name="sweep_wallet_zero_coins">The private key does not contain any funds.</string>
+    <string name="sweep_wallet_key_wait">Please wait while sweeping your paper wallet</string>
+    <!-- &#8230; is the ... character -->
+    <string name="sweep_wallet_key_decoding">Decoding private key&#8230;</string>
+    <!-- &#8230; is the ... character -->
+    <string name="sweep_wallet_key_loading">Loading balance&#8230;</string>
+    <!-- &#8230; is the ... character -->
+    <string name="sweep_wallet_key_signing">Creating transaction&#8230;</string>
+    <!-- Fees settings -->
+    <string name="title_activity_transaction_fees">Transaction fees</string>
+    <!-- Example: Bitcoin transaction fees-->
+    <string name="tx_fees_title">%1$s transaction fees</string>
+    <!-- Example: The fee value is per kilobyte.-->
+    <string name="tx_fees_description">The fee value is %1$s.</string>
+    <string name="tx_fees_per_kilobyte">per kilobyte of transaction data</string>
+    <string name="tx_fees_per_byte">per byte of transaction data</string>
+    <string name="tx_fees_per_transaction">per transaction</string>
+
+    <!-- Terms -->
+    <string name="terms_of_service_title">Terms of service</string>
+    <!-- TODO translate to other languages -->
+    <string name="terms_of_service" translatable="false">LEGAL DISCLAIMER\n
+    \n
+    \n
+    1. Risks related to the use of PIVX Wallet\n
+    \n
+    Furszy and/or PIVX will not be responsible for any losses, damages or claims arising from events falling within the scope of the following five categories:\n
+    \n
+    (1) Mistakes made by the user of any cryptocurrency-related software or service, e.g., forgotten passwords, payments sent to wrong coin addresses, and accidental deletion of wallets.\n
+    \n
+    (2) Software problems of the wallet and/or any cryptocurrency-related software or service, e.g., corrupted wallet file, incorrectly constructed transactions, unsafe cryptographic libraries, malware affecting the wallet and/or any cryptocurrency-related software or service.\n
+    \n
+    (3) Technical failures in the hardware of the user of any cryptocurrency-related software or service, e.g., data loss due to a faulty or damaged storage device.\n
+    \n
+    (4) Security problems experienced by the user of any cryptocurrency-related software or service, e.g., unauthorized access to users\' wallets and/or accounts.\n
+    \n
+    (5) Actions or inactions of third parties and/or events experienced by third parties, e.g., bankruptcy of service providers, information security attacks on service providers, and fraud conducted by third parties.\n
+    \n
+    \n
+    2. Trading and Investment risks\n
+    \n
+    There is considerable exposure to risk in any crypto-currency exchange transaction. Any transaction involving currencies involves risks including, but not limited to, the potential for changing economic conditions that may substantially affect the price or liquidity of a currency. Investments in crypto-currency exchange speculation may also be susceptible to sharp rises and falls as the relevant market values fluctuate. It is for this reason that when speculating in such markets it is advisable to use only risk capital. \n
+    \n
+    \n
+    3. Electronic Trading Risks\n
+    \n
+    Before you engage in transactions using an electronic system, you should carefully review the rules and regulations of the exchanges offering the system and/or listing the instruments you intend to trade. Online trading has inherent risk due to system response and access times that may vary due to market conditions, system performance, and other factors. You should understand these and additional risks before trading.\n
+    \n
+    \n
+    4. Compliance with tax obligations\n
+    \n
+    The users of the wallet are solely responsible to determinate what, if any, taxes apply to their crypto-currency transactions. The owners of, or contributors to, the wallet are NOT responsible for determining the taxes that apply to crypto-currency transactions.\n
+    \n
+    \n
+    5. No warranties\n
+    \n
+    The wallet is provided on an \"as is\" basis without any warranties of any kind regarding the wallet and/or any content, data, materials and/or services provided on the wallet.\n
+    \n
+    \n
+    6. Limitation of liability\n
+    \n
+    Unless otherwise required by law, in no event shall the owners of, or contributors to, the wallet be liable for any damages of any kind, including, but not limited to, loss of use, loss of profits, or loss of data arising out of or in any way connected with the use of the wallet. In no way are the owners of, or contributors to, the wallet responsible for the actions, decisions, or other behavior taken or not taken by you in reliance upon the wallet.\n
+    \n
+    \n
+    7. Arbitration\n
+    \n
+    The user of the wallet agrees to arbitrate any dispute arising from or in connection with the wallet or this disclaimer, except for disputes related to copyrights, logos, trademarks, trade names, trade secrets or patents.\n
+    \n
+    \n
+    8. Last amendment\n
+    \n
+    This disclaimer was amended for the last time on January 1st, 2016.</string>
+    <string name="settings_sweep_wallet">Sweep wallet</string>
+    <string name="disconnected_label">No connection</string>
+    <string name="error_generic">Error occurred while performing action</string>
+    <string name="old_wallet_version">Old wallet version</string>
+    <string name="advance_restore">Advance restore</string>
+    <string name="restore_bip32_warning">If your mnemonic code was created by this wallet on a version lower than %s please check the next box to restore your coins correctly.</string>
+    <string name="fee_included">Fee is not included on the total amount</string>
+    <string name="title_blockstore_error">Error</string>
+    <string name="message_blockstore_error">Blockchain store corrupted\\n\\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
+    <string name="upgrade_wallet">Upgrade Wallet</string>
+    <string name="upgrade_succesfull">Upgrade was successful!, please wait some time before the wallet is sync again</string>
+    <string name="write_external_denied">Permission denied to write in the external storage</string>
+    <string name="message_connection_is_needed">Peer connection is needed to execute this task, please check if your internet is active or if you are using a trusted node check if it is online.</string>
 
 </resources>

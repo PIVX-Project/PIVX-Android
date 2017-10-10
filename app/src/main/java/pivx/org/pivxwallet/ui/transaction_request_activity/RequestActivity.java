@@ -1,7 +1,6 @@
 package pivx.org.pivxwallet.ui.transaction_request_activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import pivx.org.pivxwallet.R;

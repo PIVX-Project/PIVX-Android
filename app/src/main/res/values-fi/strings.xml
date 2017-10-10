@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Merkurius</item>
+        <item>Venus</item>
+        <item>Maa</item>
+        <item>Mars</item>
+        <item>Jupiteri</item>
+        <item>Saturnus</item>
+        <item>Uranus</item>
+        <item>Neptunus</item>
+    </string-array>
+    <string name="app_name">PIVX lompakko</string>
+    <string name="btn_create_wallet">Luo Lompakko</string>
+    <string name="btn_restore_wallet">Palauta Lompakko</string>
+    <string name="restore_wallet_message">Valitse varmuuskopio lompakosta \n tallennusvälineeltä</string>
+    <string name="pincode_message">Turvallisuutesi vuoksi \na PIN-koodi on tarpeen</string>
+    <string name="select_file">Valitse Tiedosto</string>
+    <string name="action_qr">QR-koodi</string>
+    <string name="action_add">Lisää Yhteyshenkilö</string>
+    <string name="string_password">Salasana</string>
+    <string name="appbar_scrolling_view_behavior">sovelluspalkin_vieritysnäkymän_käyttäytyminen</string>
+    <string name="navigation_drawer_open">Avaa navigointilaatikko</string>
+    <string name="navigation_drawer_close">Sulje navigointilaatikko</string>
+    <string name="set_amount">Kirjoita määrä lähetettäväksi</string>
+    <string name="title_amount">Määrä</string>
+    <string name="title_address">Osoite</string>
+    <string name="title_name">Nimi</string>
+    <string name="title_description">Kuvaus</string>
+    <string name="title_receiver_name">Vastaanottajan nimi</string>
+    <string name="title_date">Päivämäärä</string>
+    <string name="set_address">Kirjoita osoite tai yhteyshenkilön nimi</string>
+    <string name="add_address">Kirjoita osoite tai yhteyshenkilön nimi</string>
+    <string name="set_name">Lisää nimi</string>
+    <string name="set_description">Lisää kuvaus</string>
+    <string name="btn_send">Lähetä</string>
+    <string name="btn_request">Pyydä</string>
+    <string name="settings_subtitle_security">Turvallisuus</string>
+    <string name="backup_wallet_message">Varmuuskopiointisi salataan \n valitsemallasi salasanalla ja tallennetaan \n ulkoiselle tallennusasemalle.</string>
+    <string name="settings_subtitle_preference">Valinta</string>
+    <string name="settings_subtitle_about">Tietoja</string>
+    <string name="restore_wallet">Palauta Lompakko</string>
+    <string name="backup_wallet">Varmuuskopioi Lompakko</string>
+    <string name="change_pincode">Vaihda PIN-koodi</string>
+    <string name="local_currency">Paikallinen Valuutta</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Toista Salasana</string>
+    <string name="add_name">Lisää nimi</string>
+
+    <string name="scan_camera_problem_dialog_title">Pahoittelut</string>
+    <string name="scan_camera_problem_dialog_message">Kamerassa on ongelma. Sinun täytyy luultavasti käynnistää laite uudelleen.</string>
+    <string name="scan_camera_permission_dialog_title">Kameran lupa</string>
+    <string name="scan_camera_permission_dialog_message">Skannaaksesi QR-koodit, sinun täytyy antaa sovellukselle lupa käyttää kameraa.</string>
+    <string name="scan_result_title">Skannerin tulos</string>
+    <string name="scan_result_address_title">Osoite havaittu</string>
+    <string name="node_selection_message">Voit valita jonkin käytettävissä olevista solmuista tai lisätä yhden</string>
+    <string name="select_node">Valitse Solmu</string>
+
+    <string name="select">Valitse Solmu</string>
+    <string name="text_version">Versio</string>
+    <string name="network_monitor">Verkkomonitori</string>
+    <string name="settings_report">Ilmoita ongelma</string>
+    <string name="send_message">Rahansiirron yksityiskohdat:</string>
+    <string name="save_message">Haluatko tallentaa osoitteen?</string>
+    <string name="confirm">Vahvista</string>
+    <string name="action_scan">Skanneri</string>
+    <string name="btn_select_node">Lisää solmu</string>
+
+    <string name="title_no_trusted_peer_connection">Vertaisongelma</string>
+    <string name="message_no_trusted_peer_connection">Luotettu vertaisyhteys epäonnistui</string>
+    <string name="share_address_text">Jaa osoite</string>
+    <string name="error_sending_coins">Kolikoiden lähetys epäonnistui</string>
+
+    <string name="ssl_port">SSL-portti</string>
+    <string name="hint_ssl_port">Oletus SSL-portti</string>
+    <string name="host">Isäntä</string>
+    <string name="hint_host">Lisää Isäntä</string>
+    <string name="tcp_port">TCP-portti</string>
+    <string name="hint_tcp_port">Oletus TCP-portti</string>
+    <string name="add_memo">Kuukausittainen maksu</string>
+    <string name="backup_create">luo</string>
+    <string name="backup_passwords_doesnt_match">Salasanat eivät täsmää, ole hyvä ja syötä salasana uudelleen.</string>
+    <string name="backup_completed">Varmuuskopio valmis</string>
+    <string name="backup_completed_text">Onnea! Lompakkosi varmuuskopio on valmis. \n Se on tallennettu kansioon \1%s</string>
+    <string name="import_keys_dialog_message">Valitse yksi varmuuskopiotiedostoistasi, jotka on ladattu 1%s</string>
+    <string name="backup_restore">Palauta</string>
+    <string name="import_export_keys_dialog_failure_title">Lompakon palautus epäonnistui</string>
+    <string name="import_keys_dialog_failure">Virhe tuodessa varmuuskopiotiedostoa\n1%s</string>
+    <string name="button_dismiss">Hylkää</string>
+    <string name="button_retry">Yritä uudelleen</string>
+    <string name="restore_wallet_dialog_success">Lompakko palautettiin</string>
+    <string name="restore_wallet_dialog_success_replay">Lompakkosi palautettiin onnistuneesti. Sen saldo määritetään seuraavaksi. Tämä vie jonkin aikaa.</string>
+    <string name="unavailable">Määrä ei ole käytettävissä:</string>
+    <string name="sending_tx">Lähettää rahansiirtoa..</string>
+    <string name="currency_message">Valitse mieleisesi paikallinen valuutta</string>
+    <string name="title_fee">Taksa</string>
+    <string name="title_currency">Paikallinen Valuutta</string>
+    <string name="title_pivx_send">Lähetysmäärä</string>
+    <string name="empty_message_address">Sinulla ei ole vielä yhtään tallennettua osoitetta.</string>
+    <string name="error_message">Näyttää siltä että rahansiirrossasi on virhe</string>
+    <string name="settings_change_trusted_node">Vaihda luotettu solmu</string>
+    <string name="settings_reset_blockchain">Nollaa lohkoketju</string>
+    <string name="save">Tallenna</string>
+    <string name="tutorial_message">Yksityinen Välitön Vahvistettu Rahansiirto, on yksityisyyteen keskittyvä, desentralisoitu, avoimen lähdekoodin kryptovaluutta, jota pyörittää maailmanlaajuinen yhteisö luojia, innovaattoreita ja teknologia intoilijoita.</string>
+    <!-- Tutorial -->
+    <string name="next">Seuraava</string>
+    <string name="skip">Ohita</string>
+    <string name="start">Aloita</string>
+    <string name="title_slide1">Pivx on turvallinen</string>
+    <string name="desc_slide1">Ensimmäinen kolikko, jossa on BIP38 yksityisavainten salaus/avaus</string>
+    <string name="title_slide2">60 SEKUNNIN LOHKO AIKA</string>
+    <string name="desc_slide2">Jo valmiiksi erittäin nopea, PIVX rahansiirrot käyttäen SwiftTX:ää ovat välittömiä, nolla vahvistusta odotusaikaa.</string>
+    <string name="title_slide3">Erittäin turvallinen ja yksityinen</string>
+    <string name="desc_slide3">PIVX:in tavoitteena on perustaa ensimmäinen aidosti anonyymi kryptovaluutta.</string>
+    <string name="title_slide4">Luotettujen solmujen liitto</string>
+    <string name="desc_slide4">Luotettujen solmujen liitto tekevät kevyistä PoS-lompakoista mahdollisia, voit luottaa niihin tai luoda oman luotettavan solmun!</string>
+    <string name="option_add_node">Lisää solmu</string>
+    <string name="report_issue_dialog_description">Ongelman kuvaus</string>
+    <string name="report_issue_dialog_collect_device_info">Lisää laitteen tiedot</string>
+    <string name="report_issue_dialog_collect_application_log">Lisää sovellusloki</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Lisää lompakon vedos</string>
+    <string name="report_issue_dialog_collect_installed_packages">Lisää lista asennetuista paketeista</string>
+    <string name="report_issue_dialog_collect_db_data">Lisää tietokantojen tietoja</string>
+    <string name="report_issue_dialog_report">Ilmoita</string>
+    <string name="button_cancel">Peruuta</string>
+    <string name="report_issue_dialog_mail_intent_chooser">Lähetä ilmoitus käyttäen...</string>
+    <string name="report_issue_dialog_mail_intent_failed">Ilmoituksen lähetys epäonnistui.</string>
+    <string name="report_issue_dialog_message_issue">Kuvaa ongelmasi tarpeeksi tarkasti, jotta se voidaan toistaa.</string>
+    <string name="report_issuea_dialog_title">Ilmoita ongelma</string>
+    <string name="invalid_inputs">Virheelliset syötöt</string>
+    <string name="send_error_dialog_tag">lähetä virheen dialogitunniste</string>
+    <string name="restore_dialog_tag">palauta dialogitunniste</string>
+    <string name="restore_dialog_error">palauta dialogin virhe</string>
+    <string name="settings_support">Tuki</string>
+    <string name="support_subject">PIVX lompakon tuki</string>
+    <string name="tutorial">Kurssi</string>
+    <string name="copy">Kopioi</string>
+    <string name="share">Jaa</string>
+    <string name="copy_message">Osoite kopioitu leikepöydälle</string>
+    <string name="security_message">Kirjoita nämä sanat huolellisesti</string>
+    <string name="security_message_confirmation">Sinun on vahvistettava seuraavassa ikkunassa</string>
+    <string name="confirmation_message">Tarkista turvasanasi</string>
+    <string name="order_message_confirmation">Valitse sanat oikeassa järjestyksessä</string>
+    <string name="btn_secure">Huomioitu jo</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Tyhjennä</string>
+    <string name="btn_backspace">Takaisin</string>
+    <string name="pincode_saved">Uusi PIN tallennettu</string>
+    <string name="insert_old_pin">Syötä nykyinen PIN</string>
+    <string name="insert_new_pin">Syötä uusi PIN</string>
+    <string name="invalid_pincode">Virheellinen PIN</string>
+    <string name="contact_already_exist">Yhteysosoite on jo olemassa</string>
+    <string name="invalid_input_address">Virheellinen osoite</string>
+    <string name="reminder_backup">Varmuuskopiomuistutus</string>
+    <string name="reminder_backup_body">Yksi tärkeimmistä osista mobiililompakossa on varmuuskopio, haluatko tehdä sen nyt?</string>
+    <string name="button_ok">Ok</string>
+    <string name="backup_succed_dialog">varmuuskopio_onnistui_dialogi</string>
+    <string name="error_no_connectivity_title">Ei internet-yhteyttä</string>
+    <string name="error_no_connectivity_body">Sovellus aikoo tallentaa tapahtumasi kunnes yhteys palaa.\nHaluatko jatkaa?</string>
+    <string name="cannot_restore_wallet">Virhe, lompakon palautus ei onnistu \n ole hyvä ja tarkista salasanasi</string>
+    <string name="dialog_reset_blockchain_title">Nollaa Lohkoketju</string>
+    <string name="dialog_reset_blockchain_body">Lohkoketjusi tiedosto nollataan.\n Synkronisoinnissa voi mennä hetki.\n\n Oletko varma?</string>
+    <string name="reseting_blockchain">Nollaa lohkoketjua...</string>
+    <string name="donations">Lahjoitukset</string>
+    <string name="donation_message">Lahjoitukset auttavat sovelluksen ylläpidon ja kehityksen kanssa. Kiitos etukäteen.</string>
+    <string name="donation_title">Aion lahjoittaa</string>
+    <string name="btn_donate">Lahjoita</string>
+    <string name="donation_thanks">Lähettää lahjoitusta.. Kiitos tuestasi!</string>
+</resources>

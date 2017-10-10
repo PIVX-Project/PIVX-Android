@@ -1,15 +1,11 @@
 package pivx.org.pivxwallet.ui.contacts_activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,10 +13,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.utils.DialogsUtil;
@@ -35,7 +37,7 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
     RecyclerView recyclerView;
     private ContactsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private Collection<AddressLabel> addressLabels;
+    private List<AddressLabel> addressLabels;
     private LinearLayout emptyView;
     private ExecutorService executor;
 
@@ -89,17 +91,14 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
             @Override
             public void run() {
                 addressLabels = pivxModule.getContacts();
-                if (addressLabels !=null && !addressLabels.isEmpty())
-                    adapter.changeDataSet(new ArrayList(addressLabels));
-                else {
-                    adapter.changeDataSet(new ArrayList());
-                }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         if (addressLabels ==null || addressLabels.isEmpty()) {
+                            adapter.changeDataSet(new ArrayList());
                             emptyView.setVisibility(View.VISIBLE);
                         }else {
+                            adapter.changeDataSet(new ArrayList(addressLabels));
                             emptyView.setVisibility(View.GONE);
                         }
                     }
@@ -134,7 +133,8 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
     }
 
     @Override
-    public void onLongItemClickListener(final AddressLabel data, int position) {
+    public void onLongItemClickListener(AddressLabel oldData, int position) {
+        final AddressLabel data = addressLabels.get(position);
         SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener listener = new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
             @Override
             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
@@ -160,7 +160,12 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
             deleteAddressLabelDialog.setListener(listener);
             deleteAddressLabelDialog.setBody(getString(R.string.delete_address_label_text,data.getAddresses().get(0)));
         }
-        deleteAddressLabelDialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            deleteAddressLabelDialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+        }else {
+            deleteAddressLabelDialog.setRightBtnTextColor(ContextCompat.getColor(this, R.color.bgPurple));
+        }
+
         deleteAddressLabelDialog.show();
     }
 }

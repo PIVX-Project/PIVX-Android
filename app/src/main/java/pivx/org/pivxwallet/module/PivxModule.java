@@ -9,6 +9,8 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.crypto.MnemonicException;
+import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.Wallet;
 
 import java.io.File;
@@ -23,8 +25,8 @@ import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
-import wallet.InsufficientInputsException;
-import wallet.TxNotFoundException;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 import wallet.exceptions.CantRestoreEncryptedWallet;
 
 /**
@@ -54,7 +56,7 @@ public interface PivxModule {
 
     void restoreWalletFromEncrypted(File file, String password) throws CantRestoreEncryptedWallet, IOException;
 
-    void restoreWallet(List<String> mnemonic, long timestamp) throws IOException;
+    void restoreWallet(List<String> mnemonic, long timestamp,boolean bip44) throws IOException, MnemonicException;
 
     /**
      * If the wallet already exist
@@ -75,11 +77,13 @@ public interface PivxModule {
 
     Coin getUnnavailableBalanceCoin();
 
+    boolean isWalletWatchOnly();
+
     BigDecimal getAvailableBalanceLocale();
 
     /******    Address Label          ******/
 
-    Collection<AddressLabel> getContacts();
+    List<AddressLabel> getContacts();
 
     AddressLabel getAddressLabel(String address);
 
@@ -96,6 +100,7 @@ public interface PivxModule {
     boolean chechAddress(String addressBase58);
 
     Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException;
+    Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo) throws InsufficientMoneyException;
 
     WalletConfiguration getConf();
 
@@ -126,6 +131,9 @@ public interface PivxModule {
 
     List<String> getMnemonic();
 
+    String getWatchingPubKey();
+    DeterministicKey getWatchingKey();
+
     DeterministicKey getKeyPairForAddress(Address address);
 
     TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException;
@@ -143,4 +151,16 @@ public interface PivxModule {
     long getConnectedPeerHeight();
 
     int getProtocolVersion();
+
+    void checkMnemonic(List<String> mnemonic) throws MnemonicException;
+
+    boolean isSyncWithNode() throws NoPeerConnectedException;
+
+    void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException;
+
+    boolean isBip32Wallet();
+
+    boolean sweepBalanceToNewSchema() throws InsufficientMoneyException, CantSweepBalanceException;
+
+    boolean upgradeWallet(String upgradeCode) throws UpgradeException;
 }

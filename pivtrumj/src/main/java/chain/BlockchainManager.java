@@ -23,7 +23,7 @@ import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.SPVBlockStore;
-import org.bitcoinj.wallet.Wallet;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -32,13 +32,11 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import wallet.WalletManager;
@@ -108,6 +106,8 @@ public class BlockchainManager {
                         LOG.info("checkpoints loaded from '{}', took {}", conf.getCheckpointFilename(), watch);
                     }catch (final IOException x) {
                         LOG.error("problem reading checkpoints, continuing without", x);
+                    }catch (Exception e){
+                        LOG.error("problem reading checkpoints, continuing without", e);
                     }
                 }
 
@@ -167,15 +167,19 @@ public class BlockchainManager {
     public ListenableFuture<Transaction> broadcastTransaction(byte[] transactionHash) {
         final Sha256Hash hash = Sha256Hash.wrap(transactionHash);
         final Transaction tx = walletManager.getTransaction(hash);
+        return broadcastTransaction(tx);
+    }
+    public ListenableFuture<Transaction> broadcastTransaction(Transaction tx){
         if (peerGroup != null) {
             LOG.info("broadcasting transaction " + tx.getHashAsString());
             boolean onlyTrustedNode =
                     (conf.getNetworkParams() instanceof RegTestParams || conf.getNetworkParams() instanceof TestNet3Params)
-                    ||
-                    conf.getTrustedNodeHost()!=null;
+                            ||
+                            conf.getTrustedNodeHost()!=null;
             TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(
                     tx,
-                    onlyTrustedNode?1:2);
+                    onlyTrustedNode?1:2,
+                    false);
             return transactionBroadcast.broadcast();
         } else {
             LOG.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());

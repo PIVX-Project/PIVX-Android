@@ -11,8 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -21,11 +19,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
-import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
  * Created by Neoperol on 7/6/17.
@@ -34,6 +31,7 @@ import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 public class TutorialActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int OPTION_ADD_NODE = 300;
+    public static final String INTENT_EXTRA_INFO_TUTORIAL = "info_tutorial";
 
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -41,6 +39,7 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext, btn_node;
+    private boolean isInit = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.tutorial_activity);
-
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -70,6 +68,11 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
         viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+
+        Intent intent = getIntent();
+        if (intent!=null && intent.hasExtra(INTENT_EXTRA_INFO_TUTORIAL)){
+            isInit = false;
+        }
 
 
     }
@@ -158,7 +161,13 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void launchHomeScreen() {
-        startActivity(new Intent(this, PincodeActivity.class));
+        Class activity;
+        if (isInit) {
+            activity = PincodeActivity.class;
+        }else {
+            activity = WalletActivity.class;
+        }
+        startActivity(new Intent(this, activity));
         finish();
     }
 

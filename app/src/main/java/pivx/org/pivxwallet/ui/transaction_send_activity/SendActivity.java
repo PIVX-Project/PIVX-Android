@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,7 +34,10 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.uri.PivxURI;
 import org.bitcoinj.wallet.Wallet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -42,6 +47,7 @@ import java.util.Set;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.AddressLabel;
+import pivx.org.pivxwallet.module.NoPeerConnectedException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -57,8 +63,8 @@ import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
-import wallet.InsufficientInputsException;
-import wallet.TxNotFoundException;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 
 import static android.Manifest.permission_group.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
@@ -83,6 +89,7 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String INTENT_EXTRA_TOTAL_AMOUNT = "total_amount";
+    private Logger logger = LoggerFactory.getLogger(SendActivity.class);
 
     private static final int PIN_RESULT = 121;
     private static final int SCANNER_RESULT = 122;
@@ -108,7 +115,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private boolean inPivs = true;
     private Transaction transaction;
-    //private String contactName;
     /** Several outputs */
     private List<OutputWrapper> outputWrappers;
     /** Custom inputs */
@@ -124,7 +130,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
-        setTitle("Send");
+        setTitle(R.string.btn_send);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
@@ -279,6 +285,28 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (transaction!=null)
+            outState.putSerializable(TX,transaction.unsafeBitcoinSerialize());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // todo: test this roting the screen..
+        if (savedInstanceState.containsKey(TX)){
+            transaction = new Transaction(pivxModule.getConf().getNetworkParams(),savedInstanceState.getByteArray(TX));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavUtils.navigateUpFromSameTask(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // todo: This is not updating the filter..
@@ -300,7 +328,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         if (id == R.id.btnSend){
             try {
                 if (checkConnectivity()){
-                    send();
+                    send(false);
                 }
             }catch (IllegalArgumentException e){
                 e.printStackTrace();
@@ -342,8 +370,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_SHORT).show();
             }
         }else if(id == R.id.btn_swap){
-            inPivs = !inPivs;
-            amountSwap.showNext();
+            if (!isMultiSend){
+                inPivs = !inPivs;
+                amountSwap.showNext();
+            }else {
+                Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_LONG).show();
+            }
         }else if (id == R.id.txt_coin_selection){
             startCoinControlActivity(unspent);
         }else if(id == R.id.txt_multiple_outputs){
@@ -363,8 +395,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         @Override
                         public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
                             try {
-                                send();
+                                send(true);
                             }catch (Exception e){
+                                e.printStackTrace();
                                 showErrorDialog(e.getMessage());
                             }
                             dialog.dismiss();
@@ -377,10 +410,15 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         }
                     }
             );
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                noConnectivityDialog.setRightBtnTextColor(getColor(R.color.lightGreen));
+            }else {
+                noConnectivityDialog.setRightBtnTextColor(ContextCompat.getColor(this, R.color.lightGreen));
+            }
             noConnectivityDialog.setLeftBtnTextColor(Color.WHITE)
-                    .setLeftBtnBackgroundColor(getColor(R.color.lightGreen))
                     .setRightBtnTextColor(Color.BLACK)
                     .setRightBtnBackgroundColor(Color.WHITE)
+                    .setLeftBtnTextColor(Color.BLACK)
                     .setLeftBtnText(getString(R.string.button_cancel))
                     .setRightBtnText(getString(R.string.button_ok))
                     .show();
@@ -427,7 +465,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }catch (Exception e){
                     e.printStackTrace();
                     CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
-                    showErrorDialog("Commit transaction fail, please send the error report");
+                    showErrorDialog(R.string.commit_tx_fail);
                 }
             }
         }else if(requestCode == MULTIPLE_ADDRESSES_SEND_RESULT){
@@ -462,6 +500,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     txt_coin_selection.setVisibility(View.VISIBLE);
                 } catch (TxNotFoundException e) {
                     e.printStackTrace();
+                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+                    Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
+                } catch (Exception e){
+                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
                     Toast.makeText(this,R.string.load_inputs_fail,Toast.LENGTH_LONG).show();
                 }
             }
@@ -482,6 +524,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void showErrorDialog(int resStr){
+        showErrorDialog(getString(resStr));
     }
 
     private void showErrorDialog(String message) {
@@ -529,8 +575,20 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void send() {
+    private void send(boolean sendOffline) {
         try {
+
+            // check if the wallet is still syncing
+            try {
+                if(!pivxModule.isSyncWithNode()){
+                    throw new IllegalArgumentException(getString(R.string.wallet_is_not_sync));
+                }
+            } catch (NoPeerConnectedException e) {
+                if (!sendOffline) {
+                    e.printStackTrace();
+                    throw new IllegalArgumentException(getString(R.string.no_peer_connection));
+                }
+            }
 
             // first check amount
             String amountStr = getAmountStr();
@@ -546,78 +604,61 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
                 throw new IllegalArgumentException("Insuficient balance");
 
+            // memo
+            String memo = edit_memo.getText().toString();
 
             NetworkParameters params = pivxModule.getConf().getNetworkParams();
-            transaction = new Transaction(params);
 
-            // then outputs
-            if (outputWrappers!=null && !outputWrappers.isEmpty()){
-                for (OutputWrapper outputWrapper : outputWrappers) {
-                    transaction.addOutput(
-                            outputWrapper.getAmount(),
-                            Address.fromBase58(params,outputWrapper.getAddress())
-                    );
-                }
-            }else {
+            if ( (outputWrappers==null || outputWrappers.isEmpty()) && (unspent==null || unspent.isEmpty()) ){
                 addressStr = edit_address.getText().toString();
                 if (!pivxModule.chechAddress(addressStr))
                     throw new IllegalArgumentException("Address not valid");
-                transaction.addOutput(amount,Address.fromBase58(pivxModule.getConf().getNetworkParams(),addressStr));
-            }
-
-            // then check custom inputs if there is any
-            if (unspent!=null && !unspent.isEmpty()){
-                for (InputWrapper inputWrapper : unspent) {
-                    transaction.addInput(inputWrapper.getUnspent());
+                Coin feePerKb = getFee();
+                transaction = pivxModule.buildSendTx(addressStr,amount,feePerKb,memo);
+            }else {
+                transaction = new Transaction(params);
+                // then outputs
+                if (outputWrappers != null && !outputWrappers.isEmpty()) {
+                    for (OutputWrapper outputWrapper : outputWrappers) {
+                        transaction.addOutput(
+                                outputWrapper.getAmount(),
+                                Address.fromBase58(params, outputWrapper.getAddress())
+                        );
+                    }
+                } else {
+                    addressStr = edit_address.getText().toString();
+                    if (!pivxModule.chechAddress(addressStr))
+                        throw new IllegalArgumentException("Address not valid");
+                    transaction.addOutput(amount, Address.fromBase58(pivxModule.getConf().getNetworkParams(), addressStr));
                 }
-            }
-            // satisfy output with inputs if it's neccesary
-            Coin ouputsSum = transaction.getOutputSum();
-            Coin inputsSum = transaction.getInputSum();
 
-            if (ouputsSum.isGreaterThan(inputsSum)){
-                List<TransactionOutput> unspent = pivxModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(),ouputsSum);
-                for (TransactionOutput transactionOutput : unspent) {
-                    transaction.addInput(transactionOutput);
-                }
-                // update the input amount
-                inputsSum = transaction.getInputSum();
-            }
-
-            Coin feePerKb;
-            // then fee and change address
-
-            // tx size calculation -> (148*inputs)+(34*outputs)+10
-            long txSize = 148 * transaction.getInputs().size() + 34 * transaction.getOutputs().size() + 10;
-
-            if (customFee!=null){
-                if (customFee.isPayMinimum()){
-                    feePerKb = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
-                }else {
-                    if (customFee.isFeePerKbSelected()){
-                        // fee per kB
-                        feePerKb = customFee.getAmount();
-                    }else {
-                        // total fee
-                        feePerKb = customFee.getAmount();
+                // then check custom inputs if there is any
+                if (unspent != null && !unspent.isEmpty()) {
+                    for (InputWrapper inputWrapper : unspent) {
+                        transaction.addInput(inputWrapper.getUnspent());
                     }
                 }
-            }else {
-                feePerKb = Transaction.DEFAULT_TX_FEE;
+                // satisfy output with inputs if it's neccesary
+                Coin ouputsSum = transaction.getOutputSum();
+                Coin inputsSum = transaction.getInputSum();
+
+                if (ouputsSum.isGreaterThan(inputsSum)) {
+                    List<TransactionOutput> unspent = pivxModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
+                    for (TransactionOutput transactionOutput : unspent) {
+                        transaction.addInput(transactionOutput);
+                    }
+                    // update the input amount
+                    inputsSum = transaction.getInputSum();
+                }
+
+                // then fee and change address
+                Coin feePerKb = getFee();
+
+                if (memo.length()>0)
+                    transaction.setMemo(memo);
+
+                transaction = pivxModule.completeTx(transaction,feePerKb);
             }
-
-            // check if something left and add it on a change address output
-            /*Coin coinsLeft = inputsSum.minus(ouputsSum).minus(fee);
-            if (coinsLeft.isGreaterThan(Coin.ZERO)){
-                transaction.addOutput(coinsLeft,pivxModule.getAddress());
-            }*/
-            String memo = edit_memo.getText().toString();
-            if (memo.length()>0)
-                transaction.setMemo(memo);
-
-            transaction = pivxModule.completeTx(transaction,feePerKb);
-            // build a tx with the default fee
-            //transaction = pivxModule.buildSendTx(addressStr, amount, memo);
 
             Log.i("APP","tx: "+transaction.toString());
 
@@ -635,17 +676,50 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance");
+            throw new IllegalArgumentException("Insuficient balance\nMissing coins "+e.missing.toFriendlyString());
         } catch (InsufficientInputsException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance");
+            throw new IllegalArgumentException("Insuficient balance\nMissing coins "+e.getMissing().toFriendlyString());
         } catch (Wallet.DustySendRequested e){
             e.printStackTrace();
             throw new IllegalArgumentException("Dusty send output, please increase the value of your outputs");
         }
     }
 
+    public Coin getFee() {
+        Coin feePerKb;
+        // tx size calculation -> (148*inputs)+(34*outputs)+10
+        //long txSize = 148 * transaction.getInputs().size() + 34 * transaction.getOutputs().size() + 10;
+
+        if (customFee!=null){
+            if (customFee.isPayMinimum()){
+                feePerKb = Transaction.REFERENCE_DEFAULT_MIN_TX_FEE;
+            }else {
+                if (customFee.isFeePerKbSelected()){
+                    // fee per kB
+                    feePerKb = customFee.getAmount();
+                }else {
+                    // todo: total fee..
+                    feePerKb = customFee.getAmount();
+                }
+            }
+        }else {
+            feePerKb = Transaction.DEFAULT_TX_FEE;
+        }
+        return feePerKb;
+    }
+
     private void sendConfirmed(){
+        if(transaction==null){
+            logger.error("## trying to send a NULL transaction");
+            try {
+                CrashReporter.appendSavedBackgroundTraces(new StringBuilder().append("ERROR ### sendActivity - sendConfirmed - transaction NULL"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            showErrorDialog(R.string.commit_tx_fail);
+            return;
+        }
         pivxModule.commitTx(transaction);
         Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);
@@ -654,7 +728,4 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
         finish();
     }
-
-
-
 }

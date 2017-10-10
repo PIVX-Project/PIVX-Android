@@ -12,6 +12,7 @@ import android.os.Build;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
+import com.google.common.base.Throwables;
 
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionOutput;
@@ -77,10 +78,27 @@ public class CrashReporter {
 		return backgroundTracesFile.exists();
 	}
 
+	public static void appendSavedBackgroundTraces(Exception e){
+		try {
+			appendSavedBackgroundTraces(new StringBuilder(Throwables.getStackTraceAsString(e)));
+		} catch (IOException e1) {
+			// something happen with the file
+			e1.printStackTrace();
+		}
+	}
+
+	public static void appendSavedBackgroundTraces(Error e){
+		try {
+			appendSavedBackgroundTraces(new StringBuilder(Throwables.getStackTraceAsString(e)));
+		} catch (IOException e1) {
+			// something happen with the file
+			e1.printStackTrace();
+		}
+	}
+
 	public static void appendSavedBackgroundTraces(final Appendable report) throws IOException
 	{
 		BufferedReader reader = null;
-
 		try
 		{
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(backgroundTracesFile), Charsets.UTF_8));

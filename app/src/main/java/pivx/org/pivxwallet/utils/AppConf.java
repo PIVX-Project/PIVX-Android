@@ -102,4 +102,5 @@ public class AppConf extends Configurations {
     public boolean getShowReportOnStart(){
         return getBoolean(SHOW_REPORT_ON_START,false);
     }
+
 }

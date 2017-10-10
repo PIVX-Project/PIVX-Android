@@ -11,8 +11,6 @@ public class BaseMsg<T>{
 
     private long id;
     private String method;
-    //private params..
-
 
     public BaseMsg(String method) {
         this.method = method;

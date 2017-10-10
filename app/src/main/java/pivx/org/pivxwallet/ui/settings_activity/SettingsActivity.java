@@ -1,12 +1,13 @@
 package pivx.org.pivxwallet.ui.settings_activity;
 
-import android.content.DialogInterface;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,11 +19,14 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import chain.BlockchainState;
 import pivx.org.pivxwallet.BuildConfig;
+import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.export_account.ExportKeyActivity;
+import pivx.org.pivxwallet.ui.import_watch_only.SettingsWatchOnly;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
@@ -30,10 +34,15 @@ import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
-import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.IntentsUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
+
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
+import static pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity.INTENT_EXTRA_INFO_TUTORIAL;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -43,6 +52,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Switch videoSwitch;
     private Button buttonBackup;
     private Button buttonRestore;
+    private Button btn_export_pub_key;
+    private Button btn_import_xpub;
     private Button buttonChange;
     private Button btn_change_node;
     private Button btn_reset_blockchain;
@@ -72,6 +83,12 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         // Open Restore Wallet
         buttonRestore = (Button) findViewById(R.id.btn_restore_wallet);
         buttonRestore.setOnClickListener(this);
+
+        btn_export_pub_key = (Button) findViewById(R.id.btn_export_pub_key);
+        btn_export_pub_key.setOnClickListener(this);
+
+        btn_import_xpub = (Button) findViewById(R.id.btn_import_xpub);
+        btn_import_xpub.setOnClickListener(this);
 
         // Open Change Pincode
         buttonChange = (Button) findViewById(R.id.btn_change_pincode);
@@ -135,9 +152,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         if (id == R.id.btn_backup_wallet){
             Intent myIntent = new Intent(v.getContext(), SettingsBackupActivity.class);
             startActivity(myIntent);
-
         }else if (id == R.id.btn_tutorial){
             Intent myIntent = new Intent(v.getContext(), TutorialActivity.class);
+            myIntent.putExtra(INTENT_EXTRA_INFO_TUTORIAL,true);
             startActivity(myIntent);
         }else if (id == R.id.btn_restore_wallet){
             Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
@@ -160,6 +177,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                     getString(R.string.report_issue_dialog_message_issue),
                     new ArrayList<Uri>()
             );
+        }else if (id == R.id.btn_export_pub_key){
+            startActivity(new Intent(v.getContext(), ExportKeyActivity.class));
+        }else if (id == R.id.btn_import_xpub){
+            startActivity(new Intent(v.getContext(), SettingsWatchOnly.class));
         }
     }
 
@@ -229,6 +250,11 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             }
         };
         dialog.show();
+    }
+
+    @Override
+    protected void onBlockchainStateChange() {
+        updateNetworkStatus();
     }
 
 

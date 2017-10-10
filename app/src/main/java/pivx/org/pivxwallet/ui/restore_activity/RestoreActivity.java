@@ -1,8 +1,6 @@
 package pivx.org.pivxwallet.ui.restore_activity;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -11,7 +9,6 @@ import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.apache.commons.codec.Charsets;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -54,6 +54,7 @@ import wallet.exceptions.CantRestoreEncryptedWallet;
 public class RestoreActivity extends BaseActivity {
     public static final String ACTION_RESTORE_AND_JUMP_TO_WIZARD = "jump_to_wizard";
     private static final int OPTIONS_RESTORE = 1;
+    private static final int OPTIONS_ADVANCE = 2;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL = 502;
     private View root;
     private TextInputEditText edit_password;
@@ -274,6 +275,8 @@ public class RestoreActivity extends BaseActivity {
     }
 
     private void init(){
+
+        files.clear();
 
         // external storage
         if (PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.exists() && PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory()) {
