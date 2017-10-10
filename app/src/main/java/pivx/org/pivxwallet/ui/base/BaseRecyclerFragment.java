@@ -129,32 +129,34 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     protected Runnable loadRunnable = new Runnable() {
         @Override
         public void run() {
-            boolean res = false;
-            try {
-                list = onLoading();
-                res = true;
-            } catch (Exception e){
-                e.printStackTrace();
-                res = false;
-                log.info("cantLoadListException: "+e.getMessage());
-            }
-            final boolean finalRes = res;
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(false);
-                    if (finalRes) {
-                        adapter.changeDataSet(list);
-                        if (list!=null && !list.isEmpty()) {
-                            hideEmptyScreen();
-                        } else {
-                            showEmptyScreen();
-                            txt_empty.setText(emptyText);
-                            txt_empty.setTextColor(Color.BLACK);
+            if (getActivity()!=null) {
+                boolean res = false;
+                try {
+                    list = onLoading();
+                    res = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    res = false;
+                    log.info("cantLoadListException: " + e.getMessage());
+                }
+                final boolean finalRes = res;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        if (finalRes) {
+                            adapter.changeDataSet(list);
+                            if (list != null && !list.isEmpty()) {
+                                hideEmptyScreen();
+                            } else {
+                                showEmptyScreen();
+                                txt_empty.setText(emptyText);
+                                txt_empty.setTextColor(Color.BLACK);
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
     };
 
