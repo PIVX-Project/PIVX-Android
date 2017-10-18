@@ -31,11 +31,13 @@ import org.bitcoinj.core.listeners.PeerConnectedEventListener;
 import org.bitcoinj.core.listeners.PeerDataEventListener;
 import org.bitcoinj.core.listeners.PeerDisconnectedEventListener;
 import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
+import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.wallet.Wallet;
 import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.Set;
@@ -50,6 +52,7 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModuleImp;
+import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
 import pivx.org.pivxwallet.rate.CoinTypes;
 import pivx.org.pivxwallet.rate.RequestPivxRateException;
@@ -160,7 +163,7 @@ public class PivxWalletService extends Service{
 
 
                 final long now = System.currentTimeMillis();
-                if (now - lastMessageTime > TimeUnit.SECONDS.toMillis(10)) {
+                if (now - lastMessageTime > TimeUnit.SECONDS.toMillis(6)) {
                     if (blocksLeft < 6) {
                         blockchainState = BlockchainState.SYNC;
                     } else {
@@ -332,7 +335,14 @@ public class PivxWalletService extends Service{
 
             peerConnectivityListener = new PeerConnectivityListener();
 
-            blockchainManager.init();
+            File file = getDir("blockstore_v2",MODE_PRIVATE);
+            String filename = PivxContext.Files.BLOCKCHAIN_FILENAME;
+            BlockStore blockchainStore = new SnappyBlockchainStore(PivxContext.CONTEXT,file,filename);
+            blockchainManager.init(
+                    blockchainStore,
+                    file,
+                    filename
+            );
 
             module.addCoinsReceivedEventListener(coinReceiverListener);
             module.addOnTransactionConfidenceChange(transactionConfidenceEventListener);
@@ -352,6 +362,7 @@ public class PivxWalletService extends Service{
             CrashReporter.appendSavedBackgroundTraces(e);
             Intent intent = new Intent(IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR);
             broadcastManager.sendBroadcast(intent);
+            throw e;
         } catch (Exception e){
             // todo: I have to handle the connection refused..
             e.printStackTrace();
@@ -553,7 +564,7 @@ public class PivxWalletService extends Service{
 
     private void broadcastBlockchainStateIntent(){
         final long now = System.currentTimeMillis();
-        if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(10)) {
+        if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(6)) {
             lastMessageTime = System.currentTimeMillis();
             num++;
             log.warn("broadcasting blockchain state change.. "+num);

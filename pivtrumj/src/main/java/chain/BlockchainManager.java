@@ -22,6 +22,7 @@ import org.bitcoinj.params.RegTestParams;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
+import org.bitcoinj.store.LevelDBBlockStore;
 import org.bitcoinj.store.SPVBlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,11 +77,11 @@ public class BlockchainManager {
         this.blockchainManagerListeners = new ArrayList<>();
     }
 
-    public void init(){
+    public void init(BlockStore blockStore,File blockStoreDir,String blockStoreFilename){
         synchronized (this) {
 
             // todo: en vez de que el service este maneje el blockchain deberia crear una clase que lo haga..
-            blockChainFile = new File(context.getDirPrivateMode("blockstore"), conf.getBlockchainFilename());
+            blockChainFile = new File(blockStoreDir, blockStoreFilename);
             final boolean blockChainFileExists = blockChainFile.exists();
 
             if (!blockChainFileExists) {
@@ -90,7 +91,7 @@ public class BlockchainManager {
 
             // Create the blockstore
             try {
-                blockStore = new SPVBlockStore(conf.getNetworkParams(), blockChainFile);
+                this.blockStore = (blockStore!=null) ? blockStore : new LevelDBBlockStore(conf.getWalletContext(), blockChainFile);
                 blockStore.getChainHead(); // detect corruptions as early as possible
 
                 final long earliestKeyCreationTime = walletManager.getEarliestKeyCreationTime();

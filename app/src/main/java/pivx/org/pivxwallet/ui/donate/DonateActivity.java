@@ -71,7 +71,7 @@ public class DonateActivity extends BaseDrawerActivity {
                 throw new IllegalArgumentException("Insuficient balance");
             String memo = "Donation!";
             // build a tx with the default fee
-            Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo);
+            Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo,pivxModule.getReceiveAddress());
             // send it
             pivxModule.commitTx(transaction);
             Intent intent = new Intent(DonateActivity.this, PivxWalletService.class);

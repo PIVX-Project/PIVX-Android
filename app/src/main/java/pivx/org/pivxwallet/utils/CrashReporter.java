@@ -199,7 +199,7 @@ public class CrashReporter {
 //			final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 //			if (adapter == null)
 //				return null;
-//			return adapter.getAddress();
+//			return adapter.getReceiveAddress();
 //		}
 //		catch (final Exception x)
 //		{

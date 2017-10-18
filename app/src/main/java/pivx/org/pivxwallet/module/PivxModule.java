@@ -67,7 +67,7 @@ public interface PivxModule {
     /**
      * Return a new address.
      */
-    Address getAddress();
+    Address getReceiveAddress();
 
     boolean isAddressUsed(Address address);
 
@@ -99,8 +99,8 @@ public interface PivxModule {
 
     boolean chechAddress(String addressBase58);
 
-    Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException;
-    Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo) throws InsufficientMoneyException;
+    Transaction buildSendTx(String addressBase58, Coin amount, String memo,Address changeAddress) throws InsufficientMoneyException;
+    Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo,Address changeAddress) throws InsufficientMoneyException;
 
     WalletConfiguration getConf();
 
@@ -140,7 +140,7 @@ public interface PivxModule {
 
     List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException;
 
-    Transaction completeTx(Transaction transaction,Coin fee) throws InsufficientMoneyException;
+    Transaction completeTx(Transaction transaction,Address changeAddress,Coin fee) throws InsufficientMoneyException;
 
     Transaction completeTxWithCustomFee(Transaction transaction,Coin fee) throws InsufficientMoneyException;
 

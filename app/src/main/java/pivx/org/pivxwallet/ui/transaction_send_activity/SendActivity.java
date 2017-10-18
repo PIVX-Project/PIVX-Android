@@ -31,6 +31,7 @@ import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.InsufficientMoneyException;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.uri.PivxURI;
 import org.bitcoinj.wallet.Wallet;
@@ -663,7 +664,18 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (!pivxModule.chechAddress(addressStr))
                     throw new IllegalArgumentException("Address not valid");
                 Coin feePerKb = getFee();
-                transaction = pivxModule.buildSendTx(addressStr,amount,feePerKb,memo);
+                Address changeAddressTemp = null;
+                if (changeAddress==null){
+                    changeAddressTemp = changeAddress;
+                }else {
+                    changeAddressTemp = pivxModule.getReceiveAddress();
+                }
+                transaction = pivxModule.buildSendTx(addressStr,amount,feePerKb,memo,changeAddressTemp);
+
+                // check if there is a need to change the change address
+                if (changeToOrigin){
+                    transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
+                }
             }else {
                 transaction = new Transaction(params);
                 // then outputs
@@ -706,7 +718,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (memo.length()>0)
                     transaction.setMemo(memo);
 
-                transaction = pivxModule.completeTx(transaction,feePerKb);
+                Address changeAddressTemp = null;
+                if (changeAddress==null){
+                    changeAddressTemp = changeAddress;
+                }else {
+                    changeAddressTemp = pivxModule.getReceiveAddress();
+                }
+
+                transaction = pivxModule.completeTx(transaction,changeAddressTemp,feePerKb);
+
+                // check if there is a need to change the change address
+                if (changeToOrigin){
+                    transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
+                }
             }
 
             Log.i("APP","tx: "+transaction.toString());
@@ -733,6 +757,40 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             e.printStackTrace();
             throw new IllegalArgumentException("Dusty send output, please increase the value of your outputs");
         }
+    }
+
+    private Transaction changeChangeAddressToOriginAddress(Transaction transaction, Address currentChangeAddress) {
+        NetworkParameters params = transaction.getParams();
+        // origin address is the highest from the inputs.
+        TransactionInput origin = null;
+        for (TransactionInput input : transaction.getInputs()) {
+            if (origin==null)
+                origin = input;
+            else {
+                if (origin.getValue().isLessThan(input.getValue())){
+                    origin = input;
+                }
+            }
+        }
+        Address originAddress = origin.getScriptSig().getToAddress(params,true);
+
+        // Now i just have to re organize the outputs.
+        TransactionOutput changeOutput = null;
+        List<TransactionOutput> outputs = new ArrayList<>();
+        for (TransactionOutput transactionOutput : transaction.getOutputs()) {
+            if(transactionOutput.getScriptPubKey().getToAddress(params).equals(currentChangeAddress)){
+                changeOutput = transactionOutput;
+            }else {
+                outputs.add(transactionOutput);
+            }
+        }
+        transaction.clearOutputs();
+        for (TransactionOutput output : outputs) {
+            transaction.addOutput(output);
+        }
+        // now the new change address with the same value
+        transaction.addOutput(changeOutput.getValue(),originAddress);
+        return transaction;
     }
 
     public Coin getFee() {

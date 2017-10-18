@@ -15,6 +15,7 @@ import com.snappydb.SnappydbException;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.bitcoinj.store.BlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +48,7 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
-import pivx.org.pivxwallet.module.store.SnappyStore;
+import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.utils.AppConf;
@@ -152,13 +153,11 @@ public class PivxApplication extends Application implements ContextWrapper {
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
             //todo: add this on the initial wizard..
             //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
-            AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
+            //AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
-            pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
+            pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
             pivxModule.start();
 
-        } catch (SnappydbException e) {
-            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -290,7 +289,5 @@ public class PivxApplication extends Application implements ContextWrapper {
     public void setLastTimeBackupRequested(long lastTimeBackupRequested) {
         this.lastTimeRequestBackup = lastTimeBackupRequested;
     }
-
-
 
 }

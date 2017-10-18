@@ -51,7 +51,6 @@ import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import store.AddressBalance;
-import store.AddressStore;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 import wallet.WalletManager;
@@ -69,7 +68,6 @@ public class PivxModuleImp implements PivxModule {
     private WalletManager walletManager;
     private BlockchainManager blockchainManager;
     private PivtrumPeergroup peergroup;
-    private AddressStore addressStore;
     private ContactsStore contactsStore;
     private RateDb rateDb;
 
@@ -77,28 +75,25 @@ public class PivxModuleImp implements PivxModule {
     private long availableBalance = 0;
     private BigDecimal pivInUsdHardcoded = new BigDecimal("1.5");
 
-    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,AddressStore addressStore,ContactsStore contactsStore,RateDb rateDb) {
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStore contactsStore,RateDb rateDb) {
         this.context = contextWrapper;
         this.walletConfiguration = walletConfiguration;
-        this.addressStore = addressStore;
         this.contactsStore = contactsStore;
         this.rateDb = rateDb;
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
         blockchainManager = new BlockchainManager(context,walletManager,walletConfiguration);
-        for (AddressBalance addressBalance : addressStore.listBalance()) {
-            availableBalance+=addressBalance.getConfirmedBalance();
-        }
     }
 
     public void start() throws IOException{
         walletManager.init();
     }
 
-    public void setPivtrumPeergroup(PivtrumPeergroup peergroup){
-        peergroup.setAddressStore(addressStore);
-        peergroup.setWalletManager(walletManager);
-        this.peergroup = peergroup;
-    }
+    // todo: clean this.
+    //public void setPivtrumPeergroup(PivtrumPeergroup peergroup){
+        //peergroup.setAddressStore(addressStore);
+        //peergroup.setWalletManager(walletManager);
+        //this.peergroup = peergroup;
+    //}
 
     @Override
     public void createWallet() {
@@ -136,7 +131,7 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Address getAddress() {
+    public Address getReceiveAddress() {
         Address address = walletManager.getCurrentAddress();
         if (peergroup!=null && peergroup.isRunning()){
             peergroup.addWatchedAddress(address);
@@ -213,11 +208,11 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Transaction buildSendTx(String addressBase58, Coin amount, String memo) throws InsufficientMoneyException {
-        return buildSendTx(addressBase58,amount,null,memo);
+    public Transaction buildSendTx(String addressBase58, Coin amount, String memo,Address changeAddress) throws InsufficientMoneyException {
+        return buildSendTx(addressBase58,amount,null,memo,changeAddress);
     }
     @Override
-    public Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo) throws InsufficientMoneyException{
+    public Transaction buildSendTx(String addressBase58, Coin amount,Coin feePerKb, String memo,Address changeAddress) throws InsufficientMoneyException{
         Address address = Address.fromBase58(walletConfiguration.getNetworkParams(), addressBase58);
 
         SendRequest sendRequest = SendRequest.to(address,amount);
@@ -226,6 +221,9 @@ public class PivxModuleImp implements PivxModule {
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
         if (feePerKb!=null)
             sendRequest.feePerKb = feePerKb;
+        if (changeAddress!=null){
+            sendRequest.changeAddress = changeAddress;
+        }
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
@@ -233,7 +231,7 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public Transaction completeTx(Transaction transaction,Coin feePerKb) throws InsufficientMoneyException {
+    public Transaction completeTx(Transaction transaction,Address changeAddress,Coin feePerKb) throws InsufficientMoneyException {
         SendRequest sendRequest = SendRequest.forTx(transaction);
         if (transaction.getInputs()!=null && !transaction.getInputs().isEmpty()){
             List<TransactionOutput> unspent = new ArrayList<>();
@@ -244,6 +242,9 @@ public class PivxModuleImp implements PivxModule {
         }
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
+        if (changeAddress!=null){
+            sendRequest.changeAddress = changeAddress;
+        }
         if (feePerKb!=null)
             sendRequest.feePerKb = feePerKb;
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
