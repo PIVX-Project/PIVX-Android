@@ -118,7 +118,6 @@ public class UpgradeWalletActivity extends BaseActivity {
                                         Toast.makeText(UpgradeWalletActivity.this, finalMessage, Toast.LENGTH_LONG).show();
                                     }
                                     progress.setVisibility(View.INVISIBLE);
-                                    onBackPressed();
                                     finish();
                                 }
                             });

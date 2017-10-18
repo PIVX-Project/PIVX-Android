@@ -266,6 +266,19 @@
                 android:paddingBottom="12dp"
                 />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_change_address"
+                android:text="@string/option_change_address"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="#d0011b"
+                android:textStyle="bold"
+                android:paddingBottom="12dp"
+                />
+
+
             <Button
                 android:id="@+id/btnSend"
                 android:layout_width="match_parent"

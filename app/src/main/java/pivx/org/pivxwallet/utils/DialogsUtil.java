@@ -157,6 +157,7 @@ public class DialogsUtil {
 
             private boolean checkHost(String host, int tcpPort) {
                 if (host.equals(""))return false;
+                if (host.startsWith("192.")) return true; // localhost
                 SocketAddress sockaddr = new InetSocketAddress(host,tcpPort);
                 Socket sock = new Socket();
                 // This method will block no more than timeoutMs.

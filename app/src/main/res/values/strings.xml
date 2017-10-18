@@ -362,10 +362,19 @@
     <string name="restore_bip32_warning">If your mnemonic code was created by this wallet on a version lower than %s please check the next box to restore your coins correctly.</string>
     <string name="fee_included">Fee is not included on the total amount</string>
     <string name="title_blockstore_error">Error</string>
-    <string name="message_blockstore_error">Blockchain store corrupted\\n\\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
+    <string name="message_blockstore_error">Blockchain store corrupted\n\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
     <string name="upgrade_wallet">Upgrade Wallet</string>
     <string name="upgrade_succesfull">Upgrade was successful!, please wait some time before the wallet is sync again</string>
     <string name="write_external_denied">Permission denied to write in the external storage</string>
     <string name="message_connection_is_needed">Peer connection is needed to execute this task, please check if your internet is active or if you are using a trusted node check if it is online.</string>
+    <string name="no_rate">No rate</string>
+    <string name="change_address_explain">You can customize the change address of your transaction specifing it or checking the box below and sending the amount to the origin (if there is more than one origin the wallet will chose the address with the highest value).</string>
+    <string name="change_address_origin">Send it to origin.</string>
+    <string name="clean">Clean</string>
+    <string name="origin_address">Origin address</string>
+    <string name="option_change_address">Change address</string>
+    <string name="option_custom_fee">Custom fee</string>
+    <string name="option_multi_outputs">Multi send</string>
+    <string name="option_coin_selection">Coin selection</string>
 
 </resources>

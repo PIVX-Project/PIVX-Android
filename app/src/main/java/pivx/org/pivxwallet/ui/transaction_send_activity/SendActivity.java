@@ -53,6 +53,7 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
@@ -72,6 +73,8 @@ import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_MEMO;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity.INTENT_EXTRA_CHANGE_ADDRESS;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity.INTENT_EXTRA_CHANGE_SEND_ORIGIN;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_CLEAR;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_FEE;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment.INTENT_EXTRA_IS_FEE_PER_KB;
@@ -97,11 +100,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int MULTIPLE_ADDRESSES_SEND_RESULT = 124;
     private static final int CUSTOM_INPUTS = 125;
     private static final int SEND_DETAIL = 126;
+    private static final int CUSTOM_CHANGE_ADDRESS = 127;
 
     private View root;
     private Button buttonSend, addAllPiv;
     private AutoCompleteTextView edit_address;
-    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txtShowPiv;
+    private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
     private TextView txt_multiple_outputs, txt_currency_amount;
     private View container_address;
     private EditText edit_amount, editCurrency;
@@ -125,6 +129,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private boolean cleanWallet;
     /** Is multi send */
     private boolean isMultiSend;
+    /** Change address */
+    private boolean changeToOrigin;
+    private Address changeAddress;
 
 
     @Override
@@ -144,6 +151,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         txt_coin_selection.setOnClickListener(this);
         txt_custom_fee = (TextView) root.findViewById(R.id.txt_custom_fee);
         txt_custom_fee.setOnClickListener(this);
+        txt_change_address = (TextView) root.findViewById(R.id.txt_change_address);
+        txt_change_address.setOnClickListener(this);
         findViewById(R.id.button_qr).setOnClickListener(this);
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
@@ -208,19 +217,27 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    String valueStr = s.toString();
-                    if (valueStr.charAt(0)=='.'){
-                        valueStr = "0"+valueStr;
+                    if (pivxRate != null) {
+                        String valueStr = s.toString();
+                        if (valueStr.charAt(0) == '.') {
+                            valueStr = "0" + valueStr;
+                        }
+                        Coin coin = Coin.parseCoin(valueStr);
+                        txt_local_currency.setText(
+                                pivxApplication.getCentralFormats().format(
+                                        new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                                )
+                                        + " " + pivxRate.getCoin()
+                        );
+                    }else {
+                        // rate null -> no connection.
+                        txt_local_currency.setText(R.string.no_rate);
                     }
-                    Coin coin = Coin.parseCoin(valueStr);
-                    txt_local_currency.setText(
-                            pivxApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
-                            )
-                                    + " "+pivxRate.getCoin()
-                    );
                 }else {
-                    txt_local_currency.setText("0 "+pivxRate.getCoin());
+                    if (pivxRate!=null)
+                        txt_local_currency.setText("0 "+pivxRate.getCoin());
+                    else
+                        txt_local_currency.setText(R.string.no_rate);
                 }
                 cleanWallet = false;
 
@@ -245,8 +262,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             return true;
         }else if(id == R.id.option_select_inputs){
             startCoinControlActivity(unspent);
+        }else if (id == R.id.option_change_address){
+            startChangeAddressActivity(changeAddress,changeToOrigin);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startChangeAddressActivity(Address changeAddress,boolean changeToOrigin) {
+        Intent intent = new Intent(this, ChangeAddressActivity.class);
+        if (changeAddress!=null){
+            intent.putExtra(INTENT_EXTRA_CHANGE_ADDRESS,changeAddress.toBase58());
+        }
+        intent.putExtra(INTENT_EXTRA_CHANGE_SEND_ORIGIN,changeToOrigin);
+        startActivityForResult(intent,CUSTOM_CHANGE_ADDRESS);
     }
 
     private void startCustomFeeActivity(CustomFeeFragment.FeeSelector customFee) {
@@ -382,6 +410,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startMultiAddressSendActivity(outputWrappers);
         }else if(id == R.id.txt_custom_fee){
             startCustomFeeActivity(customFee);
+        }else if (id == R.id.txt_change_address){
+            startChangeAddressActivity(changeAddress,changeToOrigin);
         }
     }
 
@@ -519,6 +549,25 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     Coin feeAmount = (Coin) data.getSerializableExtra(INTENT_EXTRA_FEE);
                     customFee = new CustomFeeFragment.FeeSelector(isPerKb, feeAmount, isMinimum);
                     txt_custom_fee.setVisibility(View.VISIBLE);
+                }
+            }
+        }else if(requestCode == CUSTOM_CHANGE_ADDRESS){
+            if (resultCode == RESULT_OK){
+                if (data.hasExtra(ChangeAddressActivity.INTENT_EXTRA_CLEAR_CHANGE_ADDRESS)){
+                    changeAddress = null;
+                    changeToOrigin = false;
+                    txt_change_address.setVisibility(View.GONE);
+                }else {
+                    if (data.hasExtra(INTENT_EXTRA_CHANGE_SEND_ORIGIN)){
+                        changeAddress = null;
+                        changeToOrigin = true;
+                    }else {
+                        if (data.hasExtra(INTENT_EXTRA_CHANGE_ADDRESS)) {
+                            String address = data.getStringExtra(INTENT_EXTRA_CHANGE_ADDRESS);
+                            changeAddress = Address.fromBase58(pivxModule.getConf().getNetworkParams(),address);
+                        }
+                    }
+                    txt_change_address.setVisibility(View.VISIBLE);
                 }
             }
         }
