@@ -59,7 +59,10 @@
 
         </activity>
 
-        <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.wallet_activity.WalletActivity"
+            />
         <activity android:name=".ui.transaction_detail_activity.InputsDetailActivity" android:screenOrientation="portrait"/>
 
         <activity android:name=".ui.transaction_send_activity.SendActivity"

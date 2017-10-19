@@ -44,6 +44,9 @@ public class ChangeAddressActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         super.onCreateView(savedInstanceState, container);
+        setTitle(R.string.option_change_address);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         root = getLayoutInflater().inflate(R.layout.change_address_main,container);
         check_send_origin = (CheckBox) root.findViewById(R.id.check_send_origin);
         edit_address = (EditText) root.findViewById(R.id.edit_address);
@@ -83,7 +86,11 @@ public class ChangeAddressActivity extends BaseActivity {
             edit_address.setText(intent.getStringExtra(INTENT_EXTRA_CHANGE_ADDRESS));
         }
         if (intent.hasExtra(INTENT_EXTRA_CHANGE_SEND_ORIGIN)){
-            disableAddress();
+            if (intent.getBooleanExtra(INTENT_EXTRA_CHANGE_SEND_ORIGIN,false)) {
+                disableAddress();
+            }else {
+                enableAddress();
+            }
         }
     }
 

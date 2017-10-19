@@ -103,8 +103,12 @@ public class WalletManager {
      *
      * @return
      */
-    public boolean isMarkedAddress() {
+    public boolean isMarkedAddress(Address address) {
         return false;
+    }
+
+    public boolean isWatchingAddress(Address address){
+        return wallet.isAddressWatched(address);
     }
 
     public void completeSend(SendRequest sendRequest) throws InsufficientMoneyException {

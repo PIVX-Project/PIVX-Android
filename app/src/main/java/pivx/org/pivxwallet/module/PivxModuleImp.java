@@ -141,7 +141,7 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public boolean isAddressUsed(Address address) {
-        return walletManager.isMarkedAddress();
+        return walletManager.isAddressMine(address);
     }
 
     @Override

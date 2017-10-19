@@ -76,7 +76,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
             if (address == null || module.isAddressUsed(address)) {
                 address = module.getReceiveAddress();
                 // todo: cleanup this
-                module.getKeyPairForAddress(address);
+                //module.getKeyPairForAddress(address);
                 flag = true;
             }
             if (flag) {

@@ -665,7 +665,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     throw new IllegalArgumentException("Address not valid");
                 Coin feePerKb = getFee();
                 Address changeAddressTemp = null;
-                if (changeAddress==null){
+                if (changeAddress!=null){
                     changeAddressTemp = changeAddress;
                 }else {
                     changeAddressTemp = pivxModule.getReceiveAddress();
@@ -772,13 +772,15 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         }
-        Address originAddress = origin.getScriptSig().getToAddress(params,true);
+        Address originAddress = origin.getConnectedOutput().getScriptPubKey().getToAddress(params,true);
+        // check if the address is mine just in case
+        if (!pivxModule.isAddressUsed(originAddress)) throw new IllegalStateException("origin address is not on the wallet: "+originAddress);
 
         // Now i just have to re organize the outputs.
         TransactionOutput changeOutput = null;
         List<TransactionOutput> outputs = new ArrayList<>();
         for (TransactionOutput transactionOutput : transaction.getOutputs()) {
-            if(transactionOutput.getScriptPubKey().getToAddress(params).equals(currentChangeAddress)){
+            if(transactionOutput.getScriptPubKey().getToAddress(params,true).equals(currentChangeAddress)){
                 changeOutput = transactionOutput;
             }else {
                 outputs.add(transactionOutput);

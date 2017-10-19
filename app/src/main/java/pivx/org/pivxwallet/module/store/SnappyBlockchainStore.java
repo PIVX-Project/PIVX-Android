@@ -80,7 +80,7 @@ public class SnappyBlockchainStore implements BlockStore{
     @Override
     public synchronized void put(StoredBlock block) throws BlockStoreException {
         try {
-            System.out.println("### trying to save something..");
+            //System.out.println("### trying to save something..");
             ByteBuffer buffer;
             buffer = block.getHeader().isZerocoin() ? zerocoinBuffer : this.buffer;
             buffer.clear();
