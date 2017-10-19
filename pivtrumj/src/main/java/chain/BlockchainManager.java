@@ -77,7 +77,7 @@ public class BlockchainManager {
         this.blockchainManagerListeners = new ArrayList<>();
     }
 
-    public void init(BlockStore blockStore,File blockStoreDir,String blockStoreFilename){
+    public void init(BlockStore blockStore,File blockStoreDir,String blockStoreFilename,boolean blockStoreFileExists){
         synchronized (this) {
 
             // todo: en vez de que el service este maneje el blockchain deberia crear una clase que lo haga..
@@ -96,7 +96,7 @@ public class BlockchainManager {
 
                 final long earliestKeyCreationTime = walletManager.getEarliestKeyCreationTime();
 
-                if (!blockChainFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
+                if (!blockStoreFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
                     try {
                         String filename = conf.getCheckpointFilename();
                         String suffix = conf.getNetworkParams() instanceof MainNetParams ? "":"-testnet";

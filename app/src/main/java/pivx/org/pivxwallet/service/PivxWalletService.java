@@ -337,11 +337,13 @@ public class PivxWalletService extends Service{
 
             File file = getDir("blockstore_v2",MODE_PRIVATE);
             String filename = PivxContext.Files.BLOCKCHAIN_FILENAME;
+            boolean fileExists = new File(file,filename).exists();
             BlockStore blockchainStore = new SnappyBlockchainStore(PivxContext.CONTEXT,file,filename);
             blockchainManager.init(
                     blockchainStore,
                     file,
-                    filename
+                    filename,
+                    fileExists
             );
 
             module.addCoinsReceivedEventListener(coinReceiverListener);
