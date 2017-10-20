@@ -143,7 +143,7 @@ public class SnappyBlockchainStore implements BlockStore{
     @Override
     public synchronized void close() throws BlockStoreException {
         try {
-            db.close();
+            db.destroy();
         } catch (SnappydbException e) {
             throw new BlockStoreException(e);
         }
@@ -190,5 +190,9 @@ public class SnappyBlockchainStore implements BlockStore{
     @Override
     public NetworkParameters getParams() {
         return context.getParams();
+    }
+
+    public void truncate() throws SnappydbException {
+        db.destroy();
     }
 }

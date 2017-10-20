@@ -26,6 +26,7 @@ import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.utils.DialogsUtil;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -167,5 +168,11 @@ public class ContactsActivity extends BaseDrawerActivity implements ListItemList
         }
 
         deleteAddressLabelDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavigationUtils.goBackToHome(this);
     }
 }

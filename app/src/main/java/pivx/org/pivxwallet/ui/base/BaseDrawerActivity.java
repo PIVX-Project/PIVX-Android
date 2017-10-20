@@ -62,6 +62,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
                     updateBlockchainState();
                 }else if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_PEER_CONNECTED)){
                     checkState();
+                    updateBlockchainState();
                 }
             }
         }

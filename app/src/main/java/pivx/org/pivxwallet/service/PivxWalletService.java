@@ -96,6 +96,7 @@ public class PivxWalletService extends Service{
     private NotificationManager nm;
     private LocalBroadcastManager broadcastManager;
 
+    private SnappyBlockchainStore blockchainStore;
     private boolean resetBlockchainOnShutdown = false;
     /** Created service time (just for checks) */
     private long serviceCreatedAt;
@@ -338,7 +339,7 @@ public class PivxWalletService extends Service{
             File file = getDir("blockstore_v2",MODE_PRIVATE);
             String filename = PivxContext.Files.BLOCKCHAIN_FILENAME;
             boolean fileExists = new File(file,filename).exists();
-            BlockStore blockchainStore = new SnappyBlockchainStore(PivxContext.CONTEXT,file,filename);
+            blockchainStore = new SnappyBlockchainStore(PivxContext.CONTEXT,file,filename);
             blockchainManager.init(
                     blockchainStore,
                     file,
@@ -423,6 +424,13 @@ public class PivxWalletService extends Service{
             module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
             blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
             // destroy the blockchain
+            /*if (resetBlockchainOnShutdown){
+                try {
+                    blockchainStore.truncate();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }*/
             blockchainManager.destroy(resetBlockchainOnShutdown);
 
             /*if (pivtrumPeergroup.isRunning()) {

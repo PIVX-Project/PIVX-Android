@@ -18,6 +18,7 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogsUtil;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
@@ -95,5 +96,11 @@ public class DonateActivity extends BaseDrawerActivity {
             errorDialog.setBody(message);
         }
         errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavigationUtils.goBackToHome(this);
     }
 }

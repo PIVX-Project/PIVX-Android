@@ -64,6 +64,7 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsAc
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
@@ -332,7 +333,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavUtils.navigateUpFromSameTask(this);
+        NavigationUtils.goBackToHome(this);
     }
 
     @Override
@@ -675,6 +676,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 // check if there is a need to change the change address
                 if (changeToOrigin){
                     transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
+                    transaction = pivxModule.completeTx(transaction);
                 }
             }else {
                 transaction = new Transaction(params);
@@ -728,8 +730,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 transaction = pivxModule.completeTx(transaction,changeAddressTemp,feePerKb);
 
                 // check if there is a need to change the change address
+                // check if there is a need to change the change address
                 if (changeToOrigin){
                     transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
+                    transaction = pivxModule.completeTx(transaction);
                 }
             }
 

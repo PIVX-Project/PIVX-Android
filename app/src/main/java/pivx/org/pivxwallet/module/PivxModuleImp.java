@@ -224,7 +224,6 @@ public class PivxModuleImp implements PivxModule {
         if (changeAddress!=null){
             sendRequest.changeAddress = changeAddress;
         }
-        //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
         return sendRequest.tx;
@@ -250,6 +249,16 @@ public class PivxModuleImp implements PivxModule {
         //sendRequest.changeAddress -> add the change address with address that i know instead of give this job to the wallet.
         walletManager.completeSend(sendRequest);
 
+        return sendRequest.tx;
+    }
+
+    public Transaction completeTx(Transaction transaction) throws InsufficientMoneyException{
+        SendRequest sendRequest = SendRequest.forTx(transaction);
+        sendRequest.changeAddress = null;
+        sendRequest.signInputs = true;
+        sendRequest.shuffleOutputs = false;
+        walletManager.getWallet().completeTx(sendRequest);
+        //walletManager.getWallet().signTransaction(sendRequest);
         return sendRequest.tx;
     }
 

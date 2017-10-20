@@ -184,7 +184,7 @@
     <string name="donation_message">Donations help with the maintenance and development of the app.\nThanks in advance.</string>
     <string name="donation_title">I’m going to donate</string>
     <string name="btn_donate">Donate</string>
-    <string name="donation_thanks">Sending donation.. Thanks for you support!</string>
+    <string name="donation_thanks">Sending donation.. Thanks for your support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
     <string name="restore_words_1">To restore your wallet you must write the 24, write your mnemonic code in the right order from number 1 to 8.</string>
     <string name="restore_from_words">Restore from words</string>
@@ -376,5 +376,6 @@
     <string name="option_custom_fee">Custom fee</string>
     <string name="option_multi_outputs">Multi send</string>
     <string name="option_coin_selection">Coin selection</string>
+    <string name="change_address_remember">Remember selection</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.transaction_detail_activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 
 /**
  * Created by Neoperol on 6/9/17.
@@ -46,6 +49,6 @@ public class TransactionDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavUtils.navigateUpFromSameTask(this);
+        NavigationUtils.goBackToHome(this);
     }
 }

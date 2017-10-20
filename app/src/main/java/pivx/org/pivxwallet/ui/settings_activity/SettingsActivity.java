@@ -36,6 +36,7 @@ import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.IntentsUtils;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
@@ -257,5 +258,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         updateNetworkStatus();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavigationUtils.goBackToHome(this);
+    }
 }

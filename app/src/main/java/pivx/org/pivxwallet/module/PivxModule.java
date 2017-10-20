@@ -141,6 +141,7 @@ public interface PivxModule {
     List<TransactionOutput> getRandomUnspentNotInListToFullCoins(List<TransactionInput> inputs, Coin amount) throws InsufficientInputsException;
 
     Transaction completeTx(Transaction transaction,Address changeAddress,Coin fee) throws InsufficientMoneyException;
+    Transaction completeTx(Transaction transaction) throws InsufficientMoneyException;
 
     Transaction completeTxWithCustomFee(Transaction transaction,Coin fee) throws InsufficientMoneyException;
 
