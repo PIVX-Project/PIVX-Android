@@ -191,15 +191,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()>0) {
-                    String valueStr = s.toString();
-                    if (valueStr.charAt(0)=='.'){
-                        valueStr = "0"+valueStr;
+                if (pivxRate != null) {
+                    if (s.length() > 0) {
+                        String valueStr = s.toString();
+                        if (valueStr.charAt(0) == '.') {
+                            valueStr = "0" + valueStr;
+                        }
+                        BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getValue(), 6, BigDecimal.ROUND_DOWN);
+                        txtShowPiv.setText(result.toPlainString() + " PIV");
+                    } else {
+                        txtShowPiv.setText("0 " + pivxRate.getCoin());
                     }
-                    BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getValue(),6,BigDecimal.ROUND_DOWN);
-                    txtShowPiv.setText(result.toPlainString()+" PIV");
                 }else {
-                    txtShowPiv.setText("0 "+pivxRate.getCoin());
+                    txtShowPiv.setText(R.string.no_rate);
                 }
                 cleanWallet = false;
             }
