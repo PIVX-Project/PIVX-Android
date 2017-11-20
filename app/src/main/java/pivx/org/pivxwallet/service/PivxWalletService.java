@@ -20,20 +20,20 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 
-import org.bitcoinj.core.Block;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.FilteredBlock;
-import org.bitcoinj.core.Peer;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionConfidence;
-import org.bitcoinj.core.listeners.AbstractPeerDataEventListener;
-import org.bitcoinj.core.listeners.PeerConnectedEventListener;
-import org.bitcoinj.core.listeners.PeerDataEventListener;
-import org.bitcoinj.core.listeners.PeerDisconnectedEventListener;
-import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
-import org.bitcoinj.store.BlockStore;
-import org.bitcoinj.wallet.Wallet;
-import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.pivxj.core.Block;
+import org.pivxj.core.Coin;
+import org.pivxj.core.FilteredBlock;
+import org.pivxj.core.Peer;
+import org.pivxj.core.Transaction;
+import org.pivxj.core.TransactionConfidence;
+import org.pivxj.core.listeners.AbstractPeerDataEventListener;
+import org.pivxj.core.listeners.PeerConnectedEventListener;
+import org.pivxj.core.listeners.PeerDataEventListener;
+import org.pivxj.core.listeners.PeerDisconnectedEventListener;
+import org.pivxj.core.listeners.TransactionConfidenceEventListener;
+import org.pivxj.store.BlockStore;
+import org.pivxj.wallet.Wallet;
+import org.pivxj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,7 +190,7 @@ public class PivxWalletService extends Service{
 
         @Override
         public void run() {
-            org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
+            org.pivxj.core.Context.propagate(PivxContext.CONTEXT);
             lastMessageTime = System.currentTimeMillis();
             broadcastBlockchainState(false);
         }
@@ -237,7 +237,7 @@ public class PivxWalletService extends Service{
         @Override
         public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
             //todo: acá falta una validación para saber si la transaccion es mia.
-            org.bitcoinj.core.Context.propagate(CONTEXT);
+            org.pivxj.core.Context.propagate(CONTEXT);
 
             try {
 
@@ -290,7 +290,7 @@ public class PivxWalletService extends Service{
     private TransactionConfidenceEventListener transactionConfidenceEventListener = new TransactionConfidenceEventListener() {
         @Override
         public void onTransactionConfidenceChanged(Wallet wallet, Transaction transaction) {
-            org.bitcoinj.core.Context.propagate(CONTEXT);
+            org.pivxj.core.Context.propagate(CONTEXT);
             try {
                 if (transaction != null) {
                     if (transaction.getConfidence().getDepthInBlocks() > 1) {

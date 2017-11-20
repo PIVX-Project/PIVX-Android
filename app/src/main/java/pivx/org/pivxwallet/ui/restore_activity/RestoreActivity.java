@@ -169,7 +169,7 @@ public class RestoreActivity extends BaseActivity {
                 @Override
                 public void run() {
                     try {
-                        org.bitcoinj.core.Context.propagate(PivxContext.CONTEXT);
+                        org.pivxj.core.Context.propagate(PivxContext.CONTEXT);
                         File file = (File) spinnerFiles.getSelectedItem();
                         if (WalletUtils.BACKUP_FILE_FILTER.accept(file)) {
                             pivxModule.restoreWallet(file);

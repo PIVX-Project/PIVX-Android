@@ -19,8 +19,8 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.uri.PivxURI;
+import org.pivxj.core.Address;
+import org.pivxj.uri.PivxURI;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;

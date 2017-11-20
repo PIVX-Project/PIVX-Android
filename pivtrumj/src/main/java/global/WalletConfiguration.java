@@ -1,7 +1,7 @@
 package global;
 
-import org.bitcoinj.core.Context;
-import org.bitcoinj.core.NetworkParameters;
+import org.pivxj.core.Context;
+import org.pivxj.core.NetworkParameters;
 
 /**
  * Created by furszy on 6/4/17.

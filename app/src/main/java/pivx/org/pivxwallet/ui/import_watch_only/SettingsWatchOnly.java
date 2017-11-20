@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.bitcoinj.wallet.DeterministicKeyChain;
+import org.pivxj.wallet.DeterministicKeyChain;
 
 import java.io.IOException;
 

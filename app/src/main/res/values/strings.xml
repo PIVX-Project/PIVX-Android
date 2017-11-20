@@ -377,5 +377,6 @@
     <string name="option_multi_outputs">Multi send</string>
     <string name="option_coin_selection">Coin selection</string>
     <string name="change_address_remember">Remember selection</string>
+    <string name="my_address">My Address</string>
 
 </resources>

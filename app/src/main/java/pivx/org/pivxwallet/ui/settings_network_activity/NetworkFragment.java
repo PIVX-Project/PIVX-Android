@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.bitcoinj.core.Peer;
+import org.pivxj.core.Peer;
 
 import java.util.List;
 

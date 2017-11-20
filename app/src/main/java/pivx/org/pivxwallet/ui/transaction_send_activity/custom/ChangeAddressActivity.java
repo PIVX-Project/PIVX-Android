@@ -13,8 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.uri.PivxURI;
+import org.pivxj.core.AddressFormatException;
+import org.pivxj.uri.PivxURI;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;

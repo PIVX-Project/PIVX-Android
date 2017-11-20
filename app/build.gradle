@@ -8,8 +8,8 @@ android {
         applicationId "pivx.tech.furszy"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 14
-        versionName "2.0"
+        versionCode 16
+        versionName "2.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 

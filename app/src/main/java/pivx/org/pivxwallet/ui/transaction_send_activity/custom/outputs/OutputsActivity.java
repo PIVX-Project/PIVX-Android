@@ -10,7 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bitcoinj.core.Coin;
+import org.pivxj.core.Coin;
 
 import java.io.Serializable;
 import java.util.List;

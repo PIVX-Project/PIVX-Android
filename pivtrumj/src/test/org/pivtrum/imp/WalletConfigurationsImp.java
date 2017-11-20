@@ -1,8 +1,8 @@
 package org.pivtrum.imp;
 
-import org.bitcoinj.core.Context;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.TestNet3Params;
+import org.pivxj.core.Context;
+import org.pivxj.core.NetworkParameters;
+import org.pivxj.params.TestNet3Params;
 
 import global.WalletConfiguration;
 
@@ -106,7 +106,7 @@ public class WalletConfigurationsImp implements WalletConfiguration {
     }
 
     @Override
-    public String getProtocolVersion() {
-        return null;
+    public int getProtocolVersion() {
+        return 0;
     }
 }

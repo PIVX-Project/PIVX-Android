@@ -3,10 +3,10 @@ package pivx.org.pivxwallet.module;
 import android.os.Environment;
 import android.text.format.DateUtils;
 
-import org.bitcoinj.core.Context;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
+import org.pivxj.core.Context;
+import org.pivxj.core.NetworkParameters;
+import org.pivxj.params.MainNetParams;
+import org.pivxj.params.TestNet3Params;
 
 import java.io.File;
 

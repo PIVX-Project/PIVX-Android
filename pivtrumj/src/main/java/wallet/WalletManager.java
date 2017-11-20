@@ -2,30 +2,30 @@ package wallet;
 
 import com.google.common.base.Charsets;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.BlockChain;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.InsufficientMoneyException;
-import org.bitcoinj.core.PeerGroup;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionInput;
-import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.core.Utils;
-import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
-import org.bitcoinj.crypto.DeterministicKey;
-import org.bitcoinj.crypto.LinuxSecureRandom;
-import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.crypto.MnemonicException;
-import org.bitcoinj.wallet.DeterministicKeyChain;
-import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.Protos;
-import org.bitcoinj.wallet.SendRequest;
-import org.bitcoinj.wallet.UnreadableWalletException;
-import org.bitcoinj.wallet.Wallet;
-import org.bitcoinj.wallet.WalletFiles;
-import org.bitcoinj.wallet.WalletProtobufSerializer;
-import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.pivxj.core.Address;
+import org.pivxj.core.BlockChain;
+import org.pivxj.core.Coin;
+import org.pivxj.core.InsufficientMoneyException;
+import org.pivxj.core.PeerGroup;
+import org.pivxj.core.Sha256Hash;
+import org.pivxj.core.Transaction;
+import org.pivxj.core.TransactionInput;
+import org.pivxj.core.TransactionOutput;
+import org.pivxj.core.Utils;
+import org.pivxj.core.listeners.TransactionConfidenceEventListener;
+import org.pivxj.crypto.DeterministicKey;
+import org.pivxj.crypto.LinuxSecureRandom;
+import org.pivxj.crypto.MnemonicCode;
+import org.pivxj.crypto.MnemonicException;
+import org.pivxj.wallet.DeterministicKeyChain;
+import org.pivxj.wallet.DeterministicSeed;
+import org.pivxj.wallet.Protos;
+import org.pivxj.wallet.SendRequest;
+import org.pivxj.wallet.UnreadableWalletException;
+import org.pivxj.wallet.Wallet;
+import org.pivxj.wallet.WalletFiles;
+import org.pivxj.wallet.WalletProtobufSerializer;
+import org.pivxj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -188,7 +188,7 @@ public class WalletManager {
         wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
             @Override
             public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
-                org.bitcoinj.core.Context.propagate(conf.getWalletContext());
+                org.pivxj.core.Context.propagate(conf.getWalletContext());
                 saveWallet();
             }
         });

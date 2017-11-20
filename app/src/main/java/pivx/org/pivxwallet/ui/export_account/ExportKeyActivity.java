@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.google.zxing.WriterException;
 
-import org.bitcoinj.crypto.DeterministicKey;
+import org.pivxj.crypto.DeterministicKey;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;

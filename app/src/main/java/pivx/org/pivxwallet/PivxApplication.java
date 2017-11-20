@@ -15,7 +15,7 @@ import com.snappydb.SnappydbException;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
-import org.bitcoinj.store.BlockStore;
+import org.pivxj.store.BlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

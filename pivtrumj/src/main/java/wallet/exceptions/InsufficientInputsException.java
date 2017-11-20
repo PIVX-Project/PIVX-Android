@@ -1,6 +1,6 @@
 package wallet.exceptions;
 
-import org.bitcoinj.core.Coin;
+import org.pivxj.core.Coin;
 
 /**
  * Created by furszy on 8/9/17.
