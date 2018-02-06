@@ -8,11 +8,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,25 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.pivxj.core.Coin;
-import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Transaction;
 import org.pivxj.uri.PivxURI;
-import org.pivxj.wallet.Wallet;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.CantSweepBalanceException;
 import pivx.org.pivxwallet.module.NoPeerConnectedException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
-import pivx.org.pivxwallet.service.IntentsConstants;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
-import pivx.org.pivxwallet.ui.base.dialogs.DialogListener;
-import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
@@ -308,9 +298,9 @@ public class WalletActivity extends BaseDrawerActivity {
         if (pivxRate!=null) {
             txt_local_currency.setText(
                     pivxApplication.getCentralFormats().format(
-                            new BigDecimal(availableBalance.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                            new BigDecimal(availableBalance.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
                     )
-                    + " "+pivxRate.getCoin()
+                    + " "+pivxRate.getCode()
             );
         }else {
             txt_local_currency.setText("0 USD");

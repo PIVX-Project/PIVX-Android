@@ -164,4 +164,7 @@ public interface PivxModule {
     boolean sweepBalanceToNewSchema() throws InsufficientMoneyException, CantSweepBalanceException;
 
     boolean upgradeWallet(String upgradeCode) throws UpgradeException;
+
+    List<PivxRate> listRates();
+
 }

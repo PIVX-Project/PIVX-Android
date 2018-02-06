@@ -66,8 +66,8 @@ public class RateDb extends AbstractSqliteDb<PivxRate> {
     @Override
     protected ContentValues buildContent(PivxRate obj) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_COIN,obj.getCoin());
-        contentValues.put(KEY_VALUE,obj.getValue().toEngineeringString());
+        contentValues.put(KEY_COIN,obj.getCode());
+        contentValues.put(KEY_VALUE,obj.getRate().toEngineeringString());
         contentValues.put(KEY_TIMESTAMP,obj.getTimestamp());
         contentValues.put(KEY_LINK,obj.getLink());
         return contentValues;
@@ -78,8 +78,7 @@ public class RateDb extends AbstractSqliteDb<PivxRate> {
         String coin = cursor.getString(KEY_POS_COIN);
         BigDecimal value = new BigDecimal(cursor.getString(KEY_POS_VALUE));
         long timestap = cursor.getLong(KEY_POS_TIMESTAMP);
-        String link = cursor.getString(KEY_POS_LINK);
-        return new PivxRate(coin,value,timestap,link);
+        return new PivxRate(coin,value,timestap);
     }
 
     public PivxRate getRate(String coin){
@@ -88,10 +87,10 @@ public class RateDb extends AbstractSqliteDb<PivxRate> {
 
 
     public void insertOrUpdateIfExist(PivxRate pivxRate) {
-        if (getRate(pivxRate.getCoin())==null){
+        if (getRate(pivxRate.getCode())==null){
             insert(pivxRate);
         }else {
-            updateByKey(KEY_COIN,pivxRate.getCoin(),pivxRate);
+            updateByKey(KEY_COIN,pivxRate.getCode(),pivxRate);
         }
     }
 }

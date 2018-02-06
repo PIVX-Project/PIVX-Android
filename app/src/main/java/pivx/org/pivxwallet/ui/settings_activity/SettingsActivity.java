@@ -31,6 +31,7 @@ import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
+import pivx.org.pivxwallet.ui.settings_rates.SettingsRatesActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -100,6 +101,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         btn_reset_blockchain = (Button) findViewById(R.id.btn_reset_blockchain);
         btn_reset_blockchain.setOnClickListener(this);
+
+        // rates
+        findViewById(R.id.btn_rates).setOnClickListener(this);
 
         // Open Network Monitor
         buttonChange = (Button) findViewById(R.id.btn_network);
@@ -182,6 +186,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(new Intent(v.getContext(), ExportKeyActivity.class));
         }else if (id == R.id.btn_import_xpub){
             startActivity(new Intent(v.getContext(), SettingsWatchOnly.class));
+        }else if (id == R.id.btn_rates){
+            startActivity(new Intent(v.getContext(), SettingsRatesActivity.class));
         }
     }
 

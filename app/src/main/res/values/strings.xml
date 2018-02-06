@@ -115,7 +115,7 @@
     <string name="restore">Restore</string>
     <string name="start">Start</string>
     <string name="title_slide1">Pivx is secure</string>
-    <string name="desc_slide1">First coin with BIP38 Encryption and Decryption of Private Keys</string>
+    <string name="desc_slide1">First code with BIP38 Encryption and Decryption of Private Keys</string>
     <string name="title_slide2">60 SECOND BLOCK TIME</string>
     <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required.</string>
     <string name="title_slide3">Extremely secure and private</string>
@@ -204,7 +204,7 @@
     <string name="invalid_last_amount">Invalid last address amount</string>
     <string name="inputs_explanation">Select coins to consume in the transaction</string>
     <string name="bad_address">Bad address</string>
-    <string name="invalid_amount_value">Invalid amount value</string>
+    <string name="invalid_amount_value">Invalid amount rate</string>
     <string name="select_all">Select all</string>
     <string name="total_amount">Total:</string>
     <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
@@ -238,7 +238,7 @@
     <string name="options_menu">Options Menu</string>
     <string name="delete_address_label_text">Label for address\n%s\nis going to be deleted.\n\nAre you sure?</string>
     <string name="address_label_deleted">Address label deleted.</string>
-    <string name="no_available_inputs">You don\'t have any coin to spend</string>
+    <string name="no_available_inputs">You don\'t have any code to spend</string>
     <string name="restore_mnemonic_screen_title">Restore Mnemonic</string>
     <string name="invalid_mnemonic_code">Invalid mnemonic code, please check every word again.</string>
     <string name="restore_mnemonic">Restoring wallet from mnemonic..</string>
@@ -294,8 +294,8 @@
     <string name="title_activity_transaction_fees">Transaction fees</string>
     <!-- Example: Bitcoin transaction fees-->
     <string name="tx_fees_title">%1$s transaction fees</string>
-    <!-- Example: The fee value is per kilobyte.-->
-    <string name="tx_fees_description">The fee value is %1$s.</string>
+    <!-- Example: The ratealue is per kilobyte.-->
+    <string name="tx_fees_description">The fee rate is %1$s.</string>
     <string name="tx_fees_per_kilobyte">per kilobyte of transaction data</string>
     <string name="tx_fees_per_byte">per byte of transaction data</string>
     <string name="tx_fees_per_transaction">per transaction</string>
@@ -310,7 +310,7 @@
     \n
     Furszy and/or PIVX will not be responsible for any losses, damages or claims arising from events falling within the scope of the following five categories:\n
     \n
-    (1) Mistakes made by the user of any cryptocurrency-related software or service, e.g., forgotten passwords, payments sent to wrong coin addresses, and accidental deletion of wallets.\n
+    (1) Mistakes made by the user of any cryptocurrency-related software or service, e.g., forgotten passwords, payments sent to wrong code addresses, and accidental deletion of wallets.\n
     \n
     (2) Software problems of the wallet and/or any cryptocurrency-related software or service, e.g., corrupted wallet file, incorrectly constructed transactions, unsafe cryptographic libraries, malware affecting the wallet and/or any cryptocurrency-related software or service.\n
     \n
@@ -368,7 +368,7 @@
     <string name="write_external_denied">Permission denied to write in the external storage</string>
     <string name="message_connection_is_needed">Peer connection is needed to execute this task, please check if your internet is active or if you are using a trusted node check if it is online.</string>
     <string name="no_rate">No rate</string>
-    <string name="change_address_explain">You can customize the change address of your transaction specifing it or checking the box below and sending the amount to the origin (if there is more than one origin the wallet will chose the address with the highest value).</string>
+    <string name="change_address_explain">You can customize the change address of your transaction specifing it or checking the box below and sending the amount to the origin (if there is more than one origin the wallet will chose the address with the highest rate).</string>
     <string name="change_address_origin">Send it to origin.</string>
     <string name="clean">Clean</string>
     <string name="origin_address">Origin address</string>
@@ -378,5 +378,7 @@
     <string name="option_coin_selection">Coin selection</string>
     <string name="change_address_remember">Remember selection</string>
     <string name="my_address">My Address</string>
+    <string name="settings_rates">Currency Rate</string>
+    <string name="rate_selected">Rate selected</string>
 
 </resources>

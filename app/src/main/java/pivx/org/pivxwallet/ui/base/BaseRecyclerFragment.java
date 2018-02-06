@@ -39,7 +39,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     private ImageView imgEmptyView;
 
     private BaseRecyclerAdapter adapter;
-    private List<T> list;
+    protected List<T> list;
     protected ExecutorService executor;
 
     private String emptyText;

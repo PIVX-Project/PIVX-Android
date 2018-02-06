@@ -38,7 +38,7 @@ Identifies the client to the server.
 
   **protocol_verion**
 
-    Optional.  The value passed is ignored.
+    Optional.  The rate passed is ignored.
 
 **Response**
 

@@ -8,36 +8,37 @@ import java.math.BigDecimal;
 
 public class PivxRate {
 
-    private long id;
     /** Coin letters (USD,EUR,etc..) */
-    private String coin;
+    private final String code;
     /** Value of 1 piv in this rate */
-    private BigDecimal value;
+    private final BigDecimal rate;
     /** Last update time */
-    private long timestamp;
-    /** Link to get currency price */
-    private String link;
+    private final long timestamp;
 
-    public PivxRate(String coin, BigDecimal value, long timestamp, String link) {
-        this.coin = coin;
-        this.value = value;
+    public PivxRate(String code, BigDecimal rate, long timestamp) {
+        this.code = code;
+        this.rate = rate;
         this.timestamp = timestamp;
-        this.link = link;
+
     }
 
-    public String getCoin() {
-        return coin;
+    public String getCode() {
+        return code;
     }
 
-    public BigDecimal getValue() {
-        return value;
+    public BigDecimal getRate() {
+        return rate;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public String getLink() {
-        return link;
+    /**
+     * Old method..
+     */
+    public String getLink(){
+        return null;
     }
+
 }

@@ -628,6 +628,11 @@ public class PivxModuleImp implements PivxModule {
         }
     }
 
+    @Override
+    public List<PivxRate> listRates() {
+        return rateDb.list();
+    }
+
 
     public void saveRate(PivxRate pivxRate){
         rateDb.insertOrUpdateIfExist(pivxRate);

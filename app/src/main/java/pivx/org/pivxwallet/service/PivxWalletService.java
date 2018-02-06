@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -54,7 +55,6 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
-import pivx.org.pivxwallet.rate.CoinTypes;
 import pivx.org.pivxwallet.rate.RequestPivxRateException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
@@ -491,9 +491,25 @@ public class PivxWalletService extends Service{
                 public void run() {
                     try {
                         CoinMarketCapApiClient c = new CoinMarketCapApiClient();
-                        BigDecimal usdValue = c.getPivxPrice();
-                        PivxRate pivxRate = new PivxRate(CoinTypes.USD.name(),usdValue,System.currentTimeMillis(),"coinmarketcap");
+                        CoinMarketCapApiClient.PivxMarket pivxMarket = c.getPivxPxrice();
+                        PivxRate pivxRate = new PivxRate("USD",pivxMarket.priceUsd,System.currentTimeMillis());
                         module.saveRate(pivxRate);
+                        final PivxRate pivxBtcRate = new PivxRate("BTC",pivxMarket.priceBtc,System.currentTimeMillis());
+                        module.saveRate(pivxBtcRate);
+
+                        // Get the rest of the rates:
+                        List<PivxRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<PivxRate>() {
+                            @Override
+                            public PivxRate convertRate(String code, String name, BigDecimal bitcoinRate) {
+                                BigDecimal rate = bitcoinRate.multiply(pivxBtcRate.getRate());
+                                return new PivxRate(code,rate,System.currentTimeMillis());
+                            }
+                        });
+
+                        for (PivxRate rate : rates) {
+                            module.saveRate(rate);
+                        }
+
                     } catch (RequestPivxRateException e) {
                         e.printStackTrace();
                     } catch (Exception e){

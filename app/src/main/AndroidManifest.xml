@@ -83,6 +83,7 @@
         <activity android:name=".ui.donate.DonateActivity" />
         <activity android:name=".ui.export_account.ExportKeyActivity"/>
         <activity android:name=".ui.import_watch_only.SettingsWatchOnly"/>
+        <activity android:name=".ui.settings_rates.SettingsRatesActivity"/>
 
         <activity android:name=".ui.crash_activity.CrashPopupActivity"
             android:launchMode="singleInstance"

@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -197,10 +196,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         if (valueStr.charAt(0) == '.') {
                             valueStr = "0" + valueStr;
                         }
-                        BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getValue(), 6, BigDecimal.ROUND_DOWN);
+                        BigDecimal result = new BigDecimal(valueStr).divide(pivxRate.getRate(), 6, BigDecimal.ROUND_DOWN);
                         txtShowPiv.setText(result.toPlainString() + " PIV");
                     } else {
-                        txtShowPiv.setText("0 " + pivxRate.getCoin());
+                        txtShowPiv.setText("0 " + pivxRate.getCode());
                     }
                 }else {
                     txtShowPiv.setText(R.string.no_rate);
@@ -231,9 +230,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         Coin coin = Coin.parseCoin(valueStr);
                         txt_local_currency.setText(
                                 pivxApplication.getCentralFormats().format(
-                                        new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                                        new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
                                 )
-                                        + " " + pivxRate.getCoin()
+                                        + " " + pivxRate.getCode()
                         );
                     }else {
                         // rate null -> no connection.
@@ -241,7 +240,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }
                 }else {
                     if (pivxRate!=null)
-                        txt_local_currency.setText("0 "+pivxRate.getCoin());
+                        txt_local_currency.setText("0 "+pivxRate.getCode());
                     else
                         txt_local_currency.setText(R.string.no_rate);
                 }
@@ -388,14 +387,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     edit_amount.setText(coin.toPlainString());
                     txt_local_currency.setText(
                             pivxApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                                    new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
                             )
-                                    + " " + pivxRate.getCoin()
+                                    + " " + pivxRate.getCode()
                     );
                 } else {
                     editCurrency.setText(
                             pivxApplication.getCentralFormats().format(
-                                    new BigDecimal(coin.getValue() * pivxRate.getValue().doubleValue()).movePointLeft(8)
+                                    new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
                             )
                     );
                     txtShowPiv.setText(coin.toFriendlyString());
@@ -604,7 +603,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (valueStr.charAt(0) == '.') {
                     valueStr = "0" + valueStr;
                 }
-                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getValue());
+                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getRate());
                 amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
         }
@@ -616,7 +615,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             edit_amount.setText(amount.toPlainString());
             edit_amount.setEnabled(false);
         }else {
-            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getValue()).setScale(6,RoundingMode.FLOOR);
+            BigDecimal result = new BigDecimal(amount.toPlainString()).multiply(pivxRate.getRate()).setScale(6,RoundingMode.FLOOR);
             editCurrency.setText(result.toPlainString());
             edit_amount.setEnabled(false);
         }
