@@ -303,7 +303,7 @@ public class WalletActivity extends BaseDrawerActivity {
                     + " "+pivxRate.getCode()
             );
         }else {
-            txt_local_currency.setText("0 USD");
+            txt_local_currency.setText("0");
         }
     }
 }
