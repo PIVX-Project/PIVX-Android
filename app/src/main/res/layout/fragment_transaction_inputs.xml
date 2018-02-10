@@ -79,7 +79,7 @@
             android:textCursorDrawable="@drawable/color_cursor"
             android:background="@drawable/transaction_inputs"
             android:layout_marginBottom="10dp"
-            android:maxLines="1"
+            android:singleLine="true"
             android:hint="@string/set_description"
             android:text = ""
             android:textColor = "#434343"

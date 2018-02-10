@@ -3,9 +3,11 @@ package pivx.org.pivxwallet.ui.transaction_request_activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,10 +40,13 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.AmountInputFragment;
 import pivx.org.pivxwallet.ui.transaction_send_activity.MyFilterableAdapter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.NavigationUtils;
+import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
+import static android.Manifest.permission_group.CAMERA;
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.ui.qr_activity.MyAddressFragment.convertDpToPx;
 import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
+import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -49,6 +54,8 @@ import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 
 public class RequestActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final int SCANNER_RESULT = 202
+            ;
     private AmountInputFragment amountFragment;
     private EditText edit_memo;
     private AutoCompleteTextView edit_address;
@@ -69,6 +76,7 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
         edit_address = (AutoCompleteTextView) root.findViewById(R.id.edit_address);
         amountFragment = (AmountInputFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_amount);
         root.findViewById(R.id.btnRequest).setOnClickListener(this);
+        findViewById(R.id.button_qr).setOnClickListener(this);
 
     }
 
@@ -107,6 +115,15 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
                 e.printStackTrace();
                 showErrorDialog(e.getMessage());
             }
+        }else if (id == R.id.button_qr) {
+            if (!checkPermission(CAMERA)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    int permsRequestCode = 200;
+                    String[] perms = {"android.permission.CAMERA"};
+                    requestPermissions(perms, permsRequestCode);
+                }
+            }
+            startActivityForResult(new Intent(this, ScanActivity.class), SCANNER_RESULT);
         }
     }
 
@@ -162,6 +179,30 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
             errorDialog.setBody(message);
         }
         errorDialog.show(getFragmentManager(), getResources().getString(R.string.send_error_dialog_tag));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SCANNER_RESULT) {
+            if (resultCode == RESULT_OK) {
+                String address = "";
+                try {
+                    address = data.getStringExtra(INTENT_EXTRA_RESULT);
+                    String usedAddress;
+                    if (pivxModule.chechAddress(address)) {
+                        usedAddress = address;
+                    } else {
+                        PivxURI pivxUri = new PivxURI(address);
+                        usedAddress = pivxUri.getAddress().toBase58();
+                    }
+                    final String tempPubKey = usedAddress;
+                    edit_address.setText(tempPubKey);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Invalid address " + address, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     public static class QrDialog extends DialogFragment {
