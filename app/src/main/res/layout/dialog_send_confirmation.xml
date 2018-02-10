@@ -45,7 +45,7 @@
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
             android:layout_marginBottom="14dp"
-            tools:text = "14710 USD"
+            tools:text = "14710"
             android:textColor = "#4c4c4c"
             android:padding="8dp"
             android:background="@drawable/transaction_inputs"

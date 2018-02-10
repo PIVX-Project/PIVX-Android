@@ -2,6 +2,8 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,6 +26,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.google.zxing.WriterException;
 
 import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
@@ -64,13 +68,16 @@ import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.NavigationUtils;
+import pivx.org.pivxwallet.utils.QrUtils;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 
 import static android.Manifest.permission_group.CAMERA;
+import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
+import static pivx.org.pivxwallet.ui.qr_activity.MyAddressFragment.convertDpToPx;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_MEMO;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
@@ -84,6 +91,7 @@ import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeF
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_CLEAR;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
+import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**

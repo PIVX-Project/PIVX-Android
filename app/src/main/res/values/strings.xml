@@ -380,5 +380,8 @@
     <string name="my_address">My Address</string>
     <string name="settings_rates">Currency Rate</string>
     <string name="rate_selected">Rate selected</string>
+    <string name="fab_send">Send</string>
+    <string name="fab_request">Request</string>
+    <string name="scan_request">Scan Request</string>
 
 </resources>

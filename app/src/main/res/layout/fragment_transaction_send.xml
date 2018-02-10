@@ -186,7 +186,7 @@
                     android:hint="@string/set_address"
                     android:text = ""
                     android:textColor = "#434343"
-                    android:textSize = "15sp"
+                    android:textSize = "14.5sp"
                     android:layout_alignParentBottom="true" />
 
 
@@ -278,21 +278,21 @@
                 android:paddingBottom="12dp"
                 />
 
-
             <Button
                 android:id="@+id/btnSend"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
                 android:background="@drawable/bg_button_border"
                 android:elevation="2dp"
                 android:gravity="center"
                 android:layout_gravity="bottom"
-                android:onClick="trySend"
                 android:text="@string/btn_send"
                 android:textColor="@color/textColorPurple"
                 android:textSize="14sp" />
+
 
             <TextView
                 android:layout_width="match_parent"

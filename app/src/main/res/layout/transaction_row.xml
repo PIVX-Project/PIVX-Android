@@ -99,7 +99,7 @@
                 android:layout_gravity="end"
                 android:gravity="end"
                 android:layout_height="wrap_content"
-                android:text="0.002 USD"
+                tools:text="0.002 USD"
                 android:lines="1"
                 android:textColor="#7f7f7f"
                 android:textSize="14sp" />

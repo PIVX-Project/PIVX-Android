@@ -4,35 +4,49 @@
     android:orientation="vertical"
     android:background="@color/bgWhite"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/fragment_transaction_inputs">
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="pivx.org.pivxwallet.ui.transaction_send_activity.AmountInputFragment"
+        android:id="@+id/fragment_amount"
+        />
 
-    </include>
+    <include layout="@layout/fragment_transaction_inputs"/>
+
     <LinearLayout
         android:layout_weight="1"
         android:layout_width="fill_parent"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        android:background="@android:color/transparent">
 
         <Button
             android:id="@+id/btnRequest"
-            android:layout_width="314dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="100dp"
             android:background="@drawable/bg_button_border"
             android:elevation="2dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:onClick="trySend"
+            android:gravity="center"
+            android:layout_gravity="bottom"
             android:text="@string/btn_request"
             android:textColor="@color/textColorPurple"
             android:textSize="14sp" />
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fee_included"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"/>
+
     </LinearLayout>
+
 
 </LinearLayout>

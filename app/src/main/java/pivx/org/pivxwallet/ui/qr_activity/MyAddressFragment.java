@@ -102,7 +102,6 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
             int px = convertDpToPx(r,225);
             Log.i("Util",uri);
             qrBitmap = encodeAsBitmap(uri, px, px, Color.parseColor("#1A1A1A"), WHITE );
-            //Cache.setQrBigBitmapCache(qrBitmap);
         }
         img_qr.setImageBitmap(qrBitmap);
         txt_address.setText(addressStr);

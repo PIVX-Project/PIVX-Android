@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionMenu;
+
 import org.pivxj.core.Coin;
 import org.pivxj.core.Transaction;
 import org.pivxj.uri.PivxURI;
@@ -25,6 +27,7 @@ import org.pivxj.uri.PivxURI;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.NoPeerConnectedException;
@@ -33,8 +36,10 @@ import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
+import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.ui.upgrade.UpgradeWalletActivity;
+import pivx.org.pivxwallet.utils.AnimationUtils;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
@@ -54,12 +59,12 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private View root;
     private View container_txs;
-    private FloatingActionButton fab_add;
 
     private TextView txt_value;
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
     private TextView txt_watch_only;
+    private View view_background;
     private PivxRate pivxRate;
     private TransactionsFragmentBase txsFragment;
 
@@ -105,10 +110,9 @@ public class WalletActivity extends BaseDrawerActivity {
         container_txs = root.findViewById(R.id.container_txs);
         txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
         txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
-
+        view_background = root.findViewById(R.id.view_background);
         // Open Send
-        fab_add = (FloatingActionButton) root.findViewById(R.id.fab_add);
-        fab_add.setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (pivxModule.isWalletWatchOnly()){
@@ -116,6 +120,24 @@ public class WalletActivity extends BaseDrawerActivity {
                     return;
                 }
                 startActivity(new Intent(v.getContext(), SendActivity.class));
+            }
+        });
+        root.findViewById(R.id.fab_request).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), RequestActivity.class));
+            }
+        });
+
+        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+        floatingActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean opened) {
+                if (opened){
+                    AnimationUtils.fadeInView(view_background,400);
+                }else {
+                    AnimationUtils.fadeOutGoneView(view_background,400);
+                }
             }
         });
 
