@@ -383,5 +383,8 @@
     <string name="fab_send">Send</string>
     <string name="fab_request">Request</string>
     <string name="scan_request">Scan Request</string>
+    <string name="payment_request_received">Request Received</string>
+    <string name="description">Description</string>
+    <string name="amount">Amount</string>
 
 </resources>

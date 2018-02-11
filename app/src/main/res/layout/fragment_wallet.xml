@@ -86,7 +86,7 @@
                     android:id="@+id/fab_request"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_arrow_next"
+                    android:src="@drawable/ic_fab_recieve"
                     app:fab_size="mini"
                     app:fab_label="@string/btn_request" />
 

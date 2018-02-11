@@ -100,8 +100,11 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 
 public class SendActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String INTENT_EXTRA_TOTAL_AMOUNT = "total_amount";
     private Logger logger = LoggerFactory.getLogger(SendActivity.class);
+
+    public static final String INTENT_EXTRA_TOTAL_AMOUNT = "total_amount";
+    public static final String INTENT_ADDRESS = "intent_address";
+    public static final String INTENT_MEMO = "intent_memo";
 
     private static final int PIN_RESULT = 121;
     private static final int SCANNER_RESULT = 122;
@@ -258,6 +261,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
+
+        // Load data if exists
+        Intent intent = getIntent();
+        String address = intent.getStringExtra(INTENT_ADDRESS);
+        if (intent != null && address != null){
+            edit_address.setText(address);
+            Coin amount = (Coin) intent.getSerializableExtra(INTENT_EXTRA_TOTAL_AMOUNT);
+            edit_amount.setText(amount.toPlainString());
+            String memo = intent.getStringExtra(INTENT_MEMO);
+            if (memo != null)
+                edit_memo.setText(memo);
+        }
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
+import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.NoPeerConnectedException;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
@@ -47,6 +49,9 @@ import static android.Manifest.permission.CAMERA;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_ADDRESS;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
+import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_MEMO;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
@@ -284,12 +289,40 @@ public class WalletActivity extends BaseDrawerActivity {
             if (resultCode==RESULT_OK) {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
-                    String usedAddress;
+                    final String usedAddress;
                     if (pivxModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
                         PivxURI pivxUri = new PivxURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
+                        final Coin amount = pivxUri.getAmount();
+                        if (amount != null){
+                            final String memo = pivxUri.getMessage();
+                            StringBuilder text = new StringBuilder();
+                            text.append(getString(R.string.amount)).append(": ").append(amount.toFriendlyString());
+                            if (memo != null){
+                                text.append("\n").append(getString(R.string.description)).append(": ").append(memo);
+                            }
+
+                            SimpleTextDialog dialogFragment = DialogsUtil.buildSimpleTextDialog(this,
+                                    getString(R.string.payment_request_received),
+                                    text.toString())
+                                .setOkBtnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(v.getContext(), SendActivity.class);
+                                        intent.putExtra(INTENT_ADDRESS,usedAddress);
+                                        intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,amount);
+                                        intent.putExtra(INTENT_MEMO,memo);
+                                        startActivity(intent);
+                                    }
+                                });
+                            dialogFragment.setAlignBody(SimpleTextDialog.Align.LEFT);
+                            dialogFragment.setImgAlertRes(R.drawable.ic_fab_recieve);
+                            dialogFragment.show(getFragmentManager(),"payment_request_dialog");
+                            return;
+                        }
+
                     }
                     DialogsUtil.showCreateAddressLabelDialog(this,usedAddress);
                 }catch (Exception e){

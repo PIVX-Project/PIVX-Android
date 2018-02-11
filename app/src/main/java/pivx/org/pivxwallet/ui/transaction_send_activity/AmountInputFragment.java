@@ -60,7 +60,10 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
 
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
-        txt_local_currency.setText("0 " + pivxRate.getCode());
+        if (pivxRate != null)
+            txt_local_currency.setText("0 " + pivxRate.getCode());
+        else
+            txt_local_currency.setText("0");
 
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
