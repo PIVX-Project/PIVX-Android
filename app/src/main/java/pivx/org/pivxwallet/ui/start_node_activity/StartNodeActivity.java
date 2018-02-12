@@ -80,6 +80,23 @@ public class StartNodeActivity extends BaseActivity {
             }
 
         });
+        findViewById(R.id.btn_default).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check this..
+                pivxApplication.setTrustedServer(null);
+                pivxApplication.stopBlockchain();
+                // now that everything is good, start the service
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pivxApplication.startPivxService();
+                    }
+                }, TimeUnit.SECONDS.toMillis(5));
+                goNext();
+                finish();
+            }
+        });
 
         // Node selected
         btnSelectNode = (Button) findViewById(R.id.btnSelectNode);
