@@ -44,8 +44,49 @@
             android:drawableLeft="@drawable/ic_arrow_back"
             android:drawablePadding="10dp"
             android:text="@string/back"
-            android:onClick="btnBackClick"
             android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55476C"
+        android:visibility="gone"
+        android:id="@+id/container_loading"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingBottom="60dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_loading"
+                android:text="@string/restoring_wallet"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:paddingBottom="24dp"
+                android:gravity="center"/>
+
+            <ProgressBar
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:id="@+id/loading"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="true"
+                android:layout_below="@+id/txt_loading"
+                />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

@@ -36,7 +36,7 @@
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word17"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -51,7 +51,7 @@
                 android:maxLines="1"
                 android:layout_marginRight="4dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word18"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word19"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -91,7 +91,7 @@
                 android:lines="1"
                 android:layout_marginRight="4dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word20"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word21"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -130,7 +130,7 @@
                 android:lines="1"
                 android:layout_marginRight="4dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word22"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word23"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -168,7 +168,7 @@
                 android:maxLines="1"
                 android:layout_marginRight="4dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word24"
                 android:layout_width="0dp"
                 android:layout_weight="1"

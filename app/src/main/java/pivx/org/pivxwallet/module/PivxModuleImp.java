@@ -633,6 +633,11 @@ public class PivxModuleImp implements PivxModule {
         return rateDb.list();
     }
 
+    @Override
+    public List<String> getAvailableMnemonicWordsList() {
+        return walletManager.getAvailableMnemonicWordsList();
+    }
+
 
     public void saveRate(PivxRate pivxRate){
         rateDb.insertOrUpdateIfExist(pivxRate);
