@@ -3,10 +3,10 @@ package pivx.org.pivxwallet.module;
 import android.os.Environment;
 import android.text.format.DateUtils;
 
-import org.bitcoinj.core.Context;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
+import org.pivxj.core.Context;
+import org.pivxj.core.NetworkParameters;
+import org.pivxj.params.MainNetParams;
+import org.pivxj.params.TestNet3Params;
 
 import java.io.File;
 
@@ -16,7 +16,7 @@ import java.io.File;
 
 public class PivxContext {
 
-    public static final boolean IS_TEST = false;
+    public static final boolean IS_TEST = true;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
@@ -24,8 +24,13 @@ public class PivxContext {
     public static final String DEFAULT_RATE_COIN = "USD";
     public static final long RATE_UPDATE_TIME = 72000000;
 
+    public static final String ENABLE_BIP44_APP_VERSION = "1.03";
+
     /** Pivx wallet released time */
     public static final long PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME = 1500940800;
+
+    /** Currency exchange rate */
+    public static final String URL_FIAT_CURRENCIES_RATE = "https://bitpay.com/rates";
 
     // report mail
     public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.com";

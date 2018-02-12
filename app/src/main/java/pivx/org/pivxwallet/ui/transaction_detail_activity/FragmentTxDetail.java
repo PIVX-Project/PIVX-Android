@@ -1,7 +1,6 @@
 package pivx.org.pivxwallet.ui.transaction_detail_activity;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionInput;
-import org.bitcoinj.core.TransactionOutPoint;
-import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.script.Script;
+import org.pivxj.core.Coin;
+import org.pivxj.core.Transaction;
+import org.pivxj.core.TransactionInput;
+import org.pivxj.core.TransactionOutPoint;
+import org.pivxj.core.TransactionOutput;
+import org.pivxj.script.Script;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
 import pivx.org.pivxwallet.utils.DialogsUtil;
-import wallet.TxNotFoundException;
+import wallet.exceptions.TxNotFoundException;
 
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity.INTENT_NO_TOTAL_AMOUNT;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
@@ -114,7 +114,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
             txt_confirmations.setVisibility(View.GONE);
         }else {
             // set date
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
             txt_date.setText(simpleDateFormat.format(transactionWrapper.getTransaction().getUpdateTime()));
         }
         txt_transaction_id.setText(transactionWrapper.getTransaction().getHashAsString());

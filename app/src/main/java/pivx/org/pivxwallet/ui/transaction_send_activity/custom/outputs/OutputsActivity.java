@@ -10,18 +10,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bitcoinj.core.Coin;
+import org.pivxj.core.Coin;
 
 import java.io.Serializable;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.AddressLabel;
-import pivx.org.pivxwallet.module.ContactAlreadyExistException;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
-
-import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
 
 /**
  * Created by furszy on 8/4/17.

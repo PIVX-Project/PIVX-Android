@@ -2,8 +2,7 @@ package pivtrum;
 
 import com.google.protobuf.ByteString;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Sha256Hash;
+import org.pivxj.core.Sha256Hash;
 import org.furszy.client.IoManager;
 import org.furszy.client.basic.BaseMsgFuture;
 import org.furszy.client.basic.IoSessionConfImp;
@@ -25,20 +24,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.util.encoders.Hex;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -54,6 +49,7 @@ import pivtrum.messages.ListUnspentMsg;
 import pivtrum.messages.Method;
 import pivtrum.messages.SubscribeAddressMsg;
 import pivtrum.messages.VersionMsg;
+import pivtrum.messages.responses.StatusHistory;
 import pivtrum.messages.responses.Unspent;
 import pivtrum.utility.TxHashHeightWrapper;
 
@@ -373,7 +369,7 @@ public class PivtrumPeer implements IoHandler{
         byte[] hash = Sha256Hash.hash(ByteString.copyFromUtf8(stringBuilder.toString()).toByteArray());
         String hashHex = Hex.toHexString(hash);
         for (PeerDataListener peerDataListener : peerDataListeners) {
-            peerDataListener.onGetHistory(this,address,list,hashHex);
+            peerDataListener.onGetHistory(this,new StatusHistory(address,list,hashHex));
         }
     }
 

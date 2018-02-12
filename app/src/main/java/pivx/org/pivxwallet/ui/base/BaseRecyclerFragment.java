@@ -14,14 +14,13 @@ import android.widget.TextView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 /**
  * Created by furszy on 6/20/17.
@@ -40,7 +39,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     private ImageView imgEmptyView;
 
     private BaseRecyclerAdapter adapter;
-    private List<T> list;
+    protected List<T> list;
     protected ExecutorService executor;
 
     private String emptyText;
@@ -130,32 +129,34 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     protected Runnable loadRunnable = new Runnable() {
         @Override
         public void run() {
-            boolean res = false;
-            try {
-                list = onLoading();
-                res = true;
-            } catch (Exception e){
-                e.printStackTrace();
-                res = false;
-                log.info("cantLoadListException: "+e.getMessage());
-            }
-            final boolean finalRes = res;
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(false);
-                    if (finalRes) {
-                        adapter.changeDataSet(list);
-                        if (list!=null && !list.isEmpty()) {
-                            hideEmptyScreen();
-                        } else {
-                            showEmptyScreen();
-                            txt_empty.setText(emptyText);
-                            txt_empty.setTextColor(Color.BLACK);
+            if (getActivity()!=null) {
+                boolean res = false;
+                try {
+                    list = onLoading();
+                    res = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    res = false;
+                    log.info("cantLoadListException: " + e.getMessage());
+                }
+                final boolean finalRes = res;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        if (finalRes) {
+                            adapter.changeDataSet(list);
+                            if (list != null && !list.isEmpty()) {
+                                hideEmptyScreen();
+                            } else {
+                                showEmptyScreen();
+                                txt_empty.setText(emptyText);
+                                txt_empty.setTextColor(Color.BLACK);
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
     };
 

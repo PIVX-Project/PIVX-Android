@@ -1,6 +1,6 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs;
 
-import org.bitcoinj.core.Coin;
+import org.pivxj.core.Coin;
 
 import java.io.Serializable;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import org.bitcoinj.core.Sha256Hash;
+import org.pivxj.core.Sha256Hash;
 import org.json.JSONArray;
 import org.json.JSONException;
 

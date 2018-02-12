@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -14,7 +13,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:focusableInTouchMode="true"
-        tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+        >
 
 
         <ViewFlipper android:id="@+id/viewFlipper"
@@ -63,7 +62,7 @@
                     android:id = "@+id/txt_local_currency"
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
-                    android:text = "0 USD"
+                    android:text = "0"
                     android:textColor = "#858585"
                     android:textSize = "16sp" />
 
@@ -187,7 +186,7 @@
                     android:hint="@string/set_address"
                     android:text = ""
                     android:textColor = "#434343"
-                    android:textSize = "15sp"
+                    android:textSize = "14.5sp"
                     android:layout_alignParentBottom="true" />
 
 
@@ -267,20 +266,41 @@
                 android:paddingBottom="12dp"
                 />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_change_address"
+                android:text="@string/option_change_address"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="#d0011b"
+                android:textStyle="bold"
+                android:paddingBottom="12dp"
+                />
+
             <Button
                 android:id="@+id/btnSend"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
                 android:background="@drawable/bg_button_border"
                 android:elevation="2dp"
                 android:gravity="center"
                 android:layout_gravity="bottom"
-                android:onClick="trySend"
                 android:text="@string/btn_send"
                 android:textColor="@color/textColorPurple"
                 android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fee_included"
+                android:gravity="center"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"/>
 
         </LinearLayout>
 

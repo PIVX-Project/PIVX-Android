@@ -1,21 +1,32 @@
 package pivx.org.pivxwallet.ui.settings_network_activity;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import org.bitcoinj.core.Peer;
+import org.pivxj.core.Peer;
 
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
-import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 /**
  * Created by furszy on 7/2/17.
  */
 
 public class NetworkFragment extends BaseRecyclerFragment<Peer> {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        setEmptyText("No connection to any node.");
+        setEmptyTextColor(Color.parseColor("#cccccc"));
+        return view;
+    }
 
     @Override
     protected List<Peer> onLoading() {

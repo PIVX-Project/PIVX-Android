@@ -106,5 +106,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="NormalText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/gray_87_text</item>
+        <item name="android:textColorLink">@color/gray_87_text</item>
+    </style>
+
+    <style name="fab_text_style">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

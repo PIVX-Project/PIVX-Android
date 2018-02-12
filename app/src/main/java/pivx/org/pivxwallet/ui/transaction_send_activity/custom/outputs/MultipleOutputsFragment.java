@@ -5,31 +5,28 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.uri.PivxURI;
+
+import org.pivxj.core.Coin;
+import org.pivxj.uri.PivxURI;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputHolder;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission_group.CAMERA;
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.INPUT_METHOD_SERVICE;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**

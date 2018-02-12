@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Merkur</item>
+        <item>Venus</item>
+        <item>Erde</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptun</item>
+    </string-array>
+    <string name="app_name">PIVX Geldbörse</string>
+    <string name="btn_create_wallet">Geldbörse erstellen</string>
+    <string name="btn_restore_wallet">Geldbörse wiederherstellen</string>
+    <string name="restore_wallet_message">Wähle eine Sicherheitskopie einer Geldbörse aus einer Datei</string>
+    <string name="pincode_message">Für deine Sicherheit ist eine PIN notwendig</string>
+    <string name="select_file">Datei auswählen</string>
+    <string name="action_qr">QR-Code</string>
+    <string name="action_add">Kontakt hinzufügen</string>
+    <string name="string_password">Passwort</string>
+    <string name="appbar_scrolling_view_behavior">appbar_scrolling_ansicht_verhalten</string>
+    <string name="navigation_drawer_open">Öffne Navigationsleiste</string>
+    <string name="navigation_drawer_close">Schließe Navigationsleiste</string>
+    <string name="set_amount">Sendebetrag eingeben</string>
+    <string name="title_amount">Betrag</string>
+    <string name="title_address">Adresse</string>
+    <string name="title_name">Name</string>
+    <string name="title_description">Beschreibung</string>
+    <string name="title_receiver_name">Name des Empfängers</string>
+    <string name="title_date">Datum</string>
+    <string name="set_address">Adresse oder Kontaktname eingeben</string>
+    <string name="add_address">Sendebetrag eingeben</string>
+    <string name="set_name">Name hinzufügen</string>
+    <string name="set_description">Eine Beschreibung hinzufügen</string>
+    <string name="btn_send">Senden</string>
+    <string name="btn_request">Empfangen</string>
+    <string name="settings_subtitle_security">Sicherheit</string>
+    <string name="backup_wallet_message">Dein Sicherheitskopie wird mit dem gewählten Passwort verschlüsselt und auf ein externen Datenträger gespeichert.</string>
+    <string name="settings_subtitle_preference">Einstellungen </string>
+    <string name="settings_subtitle_about">Über</string>
+    <string name="restore_wallet">Geldbörse wiederherstellen</string>
+    <string name="backup_wallet">Geldbörse sichern</string>
+    <string name="change_pincode">PIN-Code ändern</string>
+    <string name="local_currency">Lokale Währung</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Passwort wiederholen</string>
+    <string name="add_name">Einen Namen hinzufügen</string>
+
+    <string name="scan_camera_problem_dialog_title">Entschuldigung</string>
+    <string name="scan_camera_problem_dialog_message">Die Kamera ist defekt. Vielleicht hilft ein Neustart des Geräts.</string>
+    <string name="scan_camera_permission_dialog_title">Kamera zulassen</string>
+    <string name="scan_camera_permission_dialog_message">Um einen QR-Code zu scannen, musst du die Nutzung der Kamera zustimmen. </string>
+    <string name="scan_result_title">Scannergebnis</string>
+    <string name="scan_result_address_title">Adresse erkannt</string>
+    <string name="node_selection_message">Du kannst einen verfügbaren Knoten auswählen oder einen hinzufügen</string>
+    <string name="select_node">Knoten auswählen</string>
+
+    <string name="select">Einen Knoten auswählen</string>
+    <string name="text_version">Version</string>
+    <string name="network_monitor">Netzwerk-Betrachter</string>
+    <string name="settings_report">Problem melden</string>
+    <string name="send_message">Details der Transaktion</string>
+    <string name="save_message">Willst du die Adresse speichern?</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="action_scan">Scanner</string>
+    <string name="btn_select_node">Knoten hinzufügen</string>
+
+    <string name="title_no_trusted_peer_connection">Peer Ausgabe</string>
+    <string name="message_no_trusted_peer_connection">Vertraute Peer-Verbindung fehlgeschlagen</string>
+    <string name="share_address_text">Adresse teilen</string>
+    <string name="error_sending_coins">Senden der Münzen fehlgeschlagen</string>
+
+    <string name="ssl_port">SSL Port</string>
+    <string name="hint_ssl_port">Standard SSL Port</string>
+    <string name="host">Host</string>
+    <string name="hint_host">Ein Host hinzufügen</string>
+    <string name="tcp_port">TCP Port</string>
+    <string name="hint_tcp_port">Standard TCP Port </string>
+    <string name="add_memo">Monatliche Zahlung</string>
+    <string name="backup_create">erstellen</string>
+    <string name="backup_passwords_doesnt_match">Passwort stimmt nicht überein. Bitte Passwort erneut eingeben.</string>
+    <string name="backup_completed">Datensicherung abgeschlossen</string>
+    <string name="backup_completed_text">Glückwunsch! Deine Geldbörsen-Sicherung ist abgeschlossen. \n Sie wurde im Ordner\n %s \n gespeichert.</string>
+    <string name="import_keys_dialog_message">Wähle eine Sicherheitskopie von %s aus.</string>
+    <string name="backup_restore">Wiederherstellen</string>
+    <string name="import_export_keys_dialog_failure_title">Wiederherstellung der Geldbörse fehlgeschlagen</string>
+    <string name="import_keys_dialog_failure">Fehler beim importieren der Sicherheitskopie \n%s</string>
+    <string name="button_dismiss">Verwerfen</string>
+    <string name="button_retry">Wiederholung</string>
+    <string name="restore_wallet_dialog_success">Geldbörse wurde wiederhergestellt</string>
+    <string name="restore_wallet_dialog_success_replay">Deine Geldbörse wurde erfolgreich wiederhergestellt. Das Guthaben wird berechnet. Dies kann etwas Zeit beanspruchen.</string>
+    <string name="unavailable">Betragt nicht ausgebbar</string>
+    <string name="sending_tx">Sende Transaktion ..</string>
+    <string name="currency_message">Wähle die lokale Währung \n deiner Wahl</string>
+    <string name="title_fee">Gebühren</string>
+    <string name="title_currency">Lokale Währung</string>
+    <string name="title_pivx_send">Betrag senden</string>
+    <string name="empty_message_address">Du hast bisher keine gespeicherten Adressen.</string>
+    <string name="error_message">Es scheint einen Fehler mit\n deiner Transaktion zu geben.</string>
+    <string name="settings_change_trusted_node">Wechseln des vertrauenswürdigen Knoten</string>
+    <string name="settings_reset_blockchain">Blockchain zurücksetzen</string>
+    <string name="save">Speichern</string>
+    <string name="tutorial_message">Vertraulich-Sofort- Verifizierte-Transaktion\nist eine dezentralisierte Open-Source-Kryptowährung - gestützt durch eine globale Community von Vordenkern, organisiert durch Technologieenthusiasten und getrieben durch Erfinder. </string>
+    <!-- Tutorial -->
+    <string name="next">weiter</string>
+    <string name="skip">überspringen</string>
+    <string name="start">Start</string>
+    <string name="title_slide1">PIVIX ist Sicherheit</string>
+    <string name="desc_slide1">Erste Kryptowährung, die private Schlüssel mit BIP38 ent- bzw. verschlüsselt.</string>
+    <string name="title_slide2">60 Sekunden Block-Zeit</string>
+    <string name="desc_slide2">Obwohl PIVX-Transaktionen ohnehin sehr schnell sind, werden sie unter Verwendung von SwiftTX sofort ausgeführt und brauchen KEINE Wartezeit zur Bestätigung. </string>
+    <string name="title_slide3">Extrem sicher und vertraulich</string>
+    <string name="desc_slide3">PIVX ist außergewöhnlich. Es geht darum, die erste wirklich anonyme Krypto-Währung zu etablieren.</string>
+    <string name="title_slide4">Verbund vertrauter Knoten</string>
+    <string name="desc_slide4">Der Verbund vertrauter Knoten macht Light-PoS-Wallets möglich. Du kannst dich auf diese verlassen oder erstelle deinen eigenen vertrauenswürdigen Knoten!</string>
+    <string name="option_add_node">Knoten hinzufügen</string>
+    <string name="report_issue_dialog_description">Problem Beschreibung</string>
+    <string name="report_issue_dialog_collect_device_info">Geräteinformationen anhängen</string>
+    <string name="report_issue_dialog_collect_application_log">Anwendungsprotokoll anhängen</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Geldbörden Dummy anhängen</string>
+    <string name="report_issue_dialog_collect_installed_packages">Liste der installierten Pakete anhängen</string>
+    <string name="report_issue_dialog_collect_db_data">Datenbankdaten anhängen</string>
+    <string name="report_issue_dialog_report">Bericht</string>
+    <string name="button_cancel">Abrechnen </string>
+    <string name="report_issue_dialog_mail_intent_chooser">Gesendeten Bericht verwenden... </string>
+    <string name="report_issue_dialog_mail_intent_failed">Bericht senden fehlgeschlagen.</string>
+    <string name="report_issue_dialog_message_issue">Bitte beschreiben dein Problem genau genug, damit er nachvollzogen werden kann.</string>
+    <string name="report_issuea_dialog_title">Problembericht </string>
+    <string name="invalid_inputs">Ungültige Eingabe</string>
+    <string name="send_error_dialog_tag">Sende Fehler-Dialog-Etikett</string>
+    <string name="restore_dialog_tag">Dialog-Etikett wiederherstellen</string>
+    <string name="restore_dialog_error">Fehler-Dialog wiederherstellen</string>
+    <string name="settings_support">Support</string>
+    <string name="support_subject">PIVX Geldbörsen Support</string>
+    <string name="tutorial">undefined</string>
+    <string name="copy">Kopie</string>
+    <string name="share">Teilen</string>
+    <string name="copy_message">Adresse in Zwischenablage kopieren</string>
+    <string name="security_message">Bitte notiere diese Worte gewissenhaft</string>
+    <string name="security_message_confirmation">Du musst sie im nächsten Schritt betätigen.</string>
+    <string name="confirmation_message">Verifiziere diene Sicherheitswörter </string>
+    <string name="order_message_confirmation">Setze die Wörter in die richtige Reihenfolge</string>
+    <string name="btn_secure">Schon bemerkt</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ali</string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">löschen</string>
+    <string name="btn_backspace">zurück</string>
+    <string name="pincode_saved">Öffne Navigationsleiste</string>
+    <string name="insert_old_pin">Gebe deine aktuelle PIN ein</string>
+    <string name="insert_new_pin">Gebe die neue PIN ein</string>
+    <string name="invalid_pincode">Ungültige PIN</string>
+    <string name="contact_already_exist">Kontaktadresse existiere bereits</string>
+    <string name="invalid_input_address">Ungültige Adresse</string>
+    <string name="reminder_backup">Sicherheitskopie Erinnerung</string>
+    <string name="reminder_backup_body">Eines der wichtigsten Dinge eines Mobile-Wallet ist die Sicherheitskopie. Möchtest du das jetzt durchführen? </string>
+    <string name="button_ok">Okay</string>
+    <string name="backup_succed_dialog">backup_succed_dialog</string>
+    <string name="error_no_connectivity_title">Keine Internet-Verbindung</string>
+    <string name="error_no_connectivity_body">Die App speichert deine Transaktion, bis die Verbindung wieder hergestellt ist.\n Willst du fortfahren?</string>
+    <string name="cannot_restore_wallet">Fehler, Geldbörse kann nicht wiederhergestellt werden.\n Bitte überprüfe dein Passwort</string>
+    <string name="dialog_reset_blockchain_title">Blockchain zurücksetzen</string>
+    <string name="dialog_reset_blockchain_body">Deine Blockchain-Datein wird zurückgesetzt.\n Der Abgleich kann eine Weile dauern.\n\n Bist du dir sicher?</string>
+    <string name="reseting_blockchain">Blockchain wird zurückgesetzen..</string>
+    <string name="donations">Spenden</string>
+    <string name="donation_message">Spenden helfen bei der Erhaltung und der Entwicklung dieser App, Vielen Dank im Voraus.</string>
+    <string name="donation_title">Ich werde spenden</string>
+    <string name="btn_donate">Spende</string>
+    <string name="donation_thanks">Sende die Spende.. Vielen Dank für deine Unterstützung!</string>
+</resources>

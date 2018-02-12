@@ -1,6 +1,6 @@
 package chain;
 
-import org.bitcoinj.core.PeerGroup;
+import org.pivxj.core.PeerGroup;
 
 import java.util.Set;
 

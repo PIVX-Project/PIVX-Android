@@ -20,7 +20,6 @@ package pivx.org.pivxwallet.utils;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -30,7 +29,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.common.base.Charsets;
 
@@ -46,11 +44,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.List;
 
 import global.utils.Io;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxContext;
+
+import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
 import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 

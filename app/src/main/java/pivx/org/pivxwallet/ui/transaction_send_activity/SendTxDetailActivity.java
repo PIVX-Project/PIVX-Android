@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
-import pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail;
 
 /**
  * Created by furszy on 8/7/17.

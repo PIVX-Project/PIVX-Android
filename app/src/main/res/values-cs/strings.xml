@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Merkur</item>
+        <item>Venuše</item>
+        <item>Země</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uran</item>
+        <item>Neptun</item>
+    </string-array>
+    <string name="app_name">PIVX Peněženka</string>
+    <string name="btn_create_wallet">Vytvořit Peněženku</string>
+    <string name="btn_restore_wallet">Obnovit Peněženku</string>
+    <string name="restore_wallet_message">Vybrat zálohu peněžneky \n z úložiště</string>
+    <string name="pincode_message">Kvůli zabezpečení je vyžadován PIN kód</string>
+    <string name="select_file">Vybrat Soubor</string>
+    <string name="action_qr">QR Kód</string>
+    <string name="action_add">Přidat kontakt</string>
+    <string name="string_password">Heslo</string>
+    <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
+    <string name="navigation_drawer_open">Zobrazit Menu</string>
+    <string name="navigation_drawer_close">Schovat Menu</string>
+    <string name="set_amount">Zadejte částku pro odeslání</string>
+    <string name="title_amount">Částka</string>
+    <string name="title_address">Adresa</string>
+    <string name="title_name">Jméno</string>
+    <string name="title_description">Popis</string>
+    <string name="title_receiver_name">Jméno příjemce</string>
+    <string name="title_date">Datum</string>
+    <string name="set_address">Zadejte adresu nebo jméno kontaktu</string>
+    <string name="add_address">Zadejte adresu nebo jméno kontaktu</string>
+    <string name="set_name">Přidat jméno</string>
+    <string name="set_description">Přidat popis</string>
+    <string name="btn_send">Odeslat</string>
+    <string name="btn_request">Požadavek</string>
+    <string name="settings_subtitle_security">Bezpečnost</string>
+    <string name="backup_wallet_message">Vaše záloha bude zašifrována \n heslem, který jste si zvolil(a) a uložil(a), \n na externí úložiště.</string>
+    <string name="settings_subtitle_preference">Volby</string>
+    <string name="settings_subtitle_about">O produktu</string>
+    <string name="restore_wallet">Obnovit Peněženku</string>
+    <string name="backup_wallet">Zálohovat Peněženku</string>
+    <string name="change_pincode">Změnit PIN Kód</string>
+    <string name="local_currency">Lokální Měna</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">Zopakujte Heslo</string>
+    <string name="add_name">Přidat jméno</string>
+
+    <string name="scan_camera_problem_dialog_title">Omlouváme se</string>
+    <string name="scan_camera_problem_dialog_message">Vyskytl se problém při komunikaci s kamerou. Prosím, zkuste restartovat zařízení.</string>
+    <string name="scan_camera_permission_dialog_title">Oprávnění kamery</string>
+    <string name="scan_camera_permission_dialog_message">Pro skenování QR kódů, prosím, povolte oprávnení pro kameru.</string>
+    <string name="scan_result_title">Výsledek skenování</string>
+    <string name="scan_result_address_title">Adresa rozpoznána</string>
+    <string name="node_selection_message">Můžete si vybrat některý z dostupných uzlů nebo nějaký přidat</string>
+    <string name="select_node">Vybrat Uzel</string>
+
+    <string name="select">Vybrat Uzel</string>
+    <string name="text_version">Verze</string>
+    <string name="network_monitor">Monitor Sítě</string>
+    <string name="settings_report">Nahlásit Problém</string>
+    <string name="send_message">Detail Transakce:</string>
+    <string name="save_message">Chcete uložit tuto adresu?</string>
+    <string name="confirm">Potvrdit</string>
+    <string name="action_scan">skener</string>
+    <string name="btn_select_node">Přidat Uzel</string>
+
+    <string name="title_no_trusted_peer_connection">Problém s peery</string>
+    <string name="message_no_trusted_peer_connection">Nepodařilo se spojit s důvěryhodným peerem</string>
+    <string name="share_address_text">Sdílet adresu</string>
+    <string name="error_sending_coins">Odeslání mincí selhalo</string>
+
+    <string name="ssl_port">SSL port</string>
+    <string name="hint_ssl_port">Defaultní SSL port</string>
+    <string name="host">Host</string>
+    <string name="hint_host">Přidat Host</string>
+    <string name="tcp_port">TCP port</string>
+    <string name="hint_tcp_port">Defaultní TCP port</string>
+    <string name="add_memo">Měsíční platba</string>
+    <string name="backup_create">vytvořit</string>
+    <string name="backup_passwords_doesnt_match">Zadaná hesla se neshodují, prosím, zadejte heslo znovu.</string>
+    <string name="backup_completed">Zálohování dokončeno</string>
+    <string name="backup_completed_text">Gratulujeme! Záloha Vaší peněženky byla úspěšně dokončena. Záloha byla uložena do složky %s</string>
+    <string name="import_keys_dialog_message">Vyberte jeden ze souborů obsahující zálohu z %s</string>
+    <string name="backup_restore">Obnovit</string>
+    <string name="import_export_keys_dialog_failure_title">Obnova peněžneky selhala</string>
+    <string name="import_keys_dialog_failure">Import zálohy peněženky selhal \n%s</string>
+    <string name="button_dismiss">Odmítnout</string>
+    <string name="button_retry">Znovu</string>
+    <string name="restore_wallet_dialog_success">Peněženka byla obnovena</string>
+    <string name="restore_wallet_dialog_success_replay">Vaše peněženka byla úspěšně obnovena. Její balance bude aktualizována. Prosím, mějte strpení, než dojde k aktualizaci.</string>
+    <string name="unavailable">Nedostupné prostředky:</string>
+    <string name="sending_tx">Odesílání transakce...</string>
+    <string name="currency_message">Vyberte Vaší lokální měnu \n podle svého uvážení</string>
+    <string name="title_fee">Poplatek</string>
+    <string name="title_currency">Lokální měna</string>
+    <string name="title_pivx_send">Částka k odeslání</string>
+    <string name="empty_message_address">Dosud nemáte uloženou žádnou adresu.</string>
+    <string name="error_message">Objevila se chyba \npři zpracování Vaší transakce</string>
+    <string name="settings_change_trusted_node">Změnit důvěryhodný uzel</string>
+    <string name="settings_reset_blockchain">Resetovat blockchain</string>
+    <string name="save">Uložit</string>
+    <string name="tutorial_message">Privátní, Instantí, Ověřená, Transakce\nje decentralizovaná, privátně zaměřená open source měna užívaná globální komunitou stávající se z jejích tvůrců, inovátorů, a technologických nadšenců.</string>
+    <!-- Tutorial -->
+    <string name="next">Další</string>
+    <string name="skip">Přeskočit</string>
+    <string name="start">Start</string>
+    <string name="title_slide1">Pivx je zabezpečen</string>
+    <string name="desc_slide1">První měna s BIP38 šifrováním a dešifrováním Privátních Klíčů</string>
+    <string name="title_slide2">60 VTEŘIN PRO ZPRACOVÁNÍ BLOKU</string>
+    <string name="desc_slide2">Velmi rychlé, PIVX transakce využívající SwiftX jsou provedeny inhned s NULOVÝM časem potřebným na potvrzení.</string>
+    <string name="title_slide3">Mimořádně zabezpečená a privátní</string>
+    <string name="desc_slide3">PIVX míří za cílem vytvořit první opravdu anonymní kryptoměnu.</string>
+    <string name="title_slide4">Federace důvěryhodných uzlů</string>
+    <string name="desc_slide4">Federace důveryhodných uzlů umožnila tvorbu lehkého klienta, peněženky, pro PoS, můžete se spolehnout na jejich důvěryhodnost nebo vytvořit vlastní důvěryhodný uzel! </string>
+    <string name="option_add_node">Přidat uzel</string>
+    <string name="report_issue_dialog_description">Popis Problému</string>
+    <string name="report_issue_dialog_collect_device_info">Přidat informaci o zařízení</string>
+    <string name="report_issue_dialog_collect_application_log">Přidat log aplikace</string>
+    <string name="report_issue_dialog_collect_wallet_dump">Přidat dump peněženky</string>
+    <string name="report_issue_dialog_collect_installed_packages">Přidat seznam nainstalovaných balíčků</string>
+    <string name="report_issue_dialog_collect_db_data">Přidat data z databáze</string>
+    <string name="report_issue_dialog_report">Nahlásit</string>
+    <string name="button_cancel">Zrušit</string>
+    <string name="report_issue_dialog_mail_intent_chooser">Odeslat report pomocí...</string>
+    <string name="report_issue_dialog_mail_intent_failed">Odeslání reportu selhalo.</string>
+    <string name="report_issue_dialog_message_issue">Prosím, popište problém co nejvíce, abychom jej mohli zreprodukovat.</string>
+    <string name="report_issuea_dialog_title">Nahlásit problém</string>
+    <string name="invalid_inputs">Nevalidní vstup</string>
+    <string name="send_error_dialog_tag">odeslat chybový dialog tag</string>
+    <string name="restore_dialog_tag">obnovit dialog tag</string>
+    <string name="restore_dialog_error">obnovit dialog chyba</string>
+    <string name="settings_support">Podpora</string>
+    <string name="support_subject">Podpora PIVX peněženky</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="copy">Kopírovat</string>
+    <string name="share">Sdílet</string>
+    <string name="copy_message">Adresa byla zkopírována do mezi paměti</string>
+    <string name="security_message">Prosím zadejte pozorně tato slova</string>
+    <string name="security_message_confirmation">Budete je muset potvrdit na další obrazovce</string>
+    <string name="confirmation_message">Ověřte Vaše bezpečnostní slova</string>
+    <string name="order_message_confirmation">Vyberte Vaše slove ve správném pořadí</string>
+    <string name="btn_secure">Již zaznamenáno</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Vymazat</string>
+    <string name="btn_backspace">Zpět</string>
+    <string name="pincode_saved">Nový PIN uložen</string>
+    <string name="insert_old_pin">Zadejte Váš aktuální PIN</string>
+    <string name="insert_new_pin">Zadejte nový PIN</string>
+    <string name="invalid_pincode">Nevalidní PIN</string>
+    <string name="contact_already_exist">Adresa již ve Vašich kontaktech existuje</string>
+    <string name="invalid_input_address">Nevalidní adresa</string>
+    <string name="reminder_backup">Připomenutí zálohování</string>
+    <string name="reminder_backup_body">Jedna z nejdůležitějších věcí mobilní peněženky je její záloha, chcete ji vytvořit hned?</string>
+    <string name="button_ok">Ok</string>
+    <string name="backup_succed_dialog">backup_succed_dialog</string>
+    <string name="error_no_connectivity_title">Nedostupné připojení k internetu</string>
+    <string name="error_no_connectivity_body">Aplikace uloží Vaší transakci dokud se nebude moci znovu připojit.\nCHcete pokračovat?</string>
+    <string name="cannot_restore_wallet">Chyba, obnovení peneženky se nepodařilo,\nprosím, zkontrolujte své heslo</string>
+    <string name="dialog_reset_blockchain_title">Resetovat Blockchain</string>
+    <string name="dialog_reset_blockchain_body">Váš soubor s blockchainem bude resetován\nSynchronizace může chvíli trvat.\n\nOpravdu chcete pokračovat?</string>
+    <string name="reseting_blockchain">Resetuji blockchain...</string>
+    <string name="donations">Darování</string>
+    <string name="donation_message">Dary pohou udržovat a dále vyvíjet aplikaci. Děkujeme za podporu.</string>
+    <string name="donation_title">Chci darovat</string>
+    <string name="btn_donate">Darovat</string>
+    <string name="donation_thanks">Odeslání daru... Děkujeme za Vaši podporu!</string>
+</resources>

@@ -9,11 +9,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
+import com.github.anrwatchdog.ANRWatchDog;
 import com.snappydb.SnappydbException;
 
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.pivxj.store.BlockStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -34,6 +39,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
+import global.WalletConfiguration;
 import global.utils.Io;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
@@ -42,11 +48,9 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.PivxModule;
 import pivx.org.pivxwallet.module.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
-import global.WalletConfiguration;
-import pivx.org.pivxwallet.module.store.SnappyStore;
+import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
-import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.CentralFormats;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -134,6 +138,8 @@ public class PivxApplication extends Application implements ContextWrapper {
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 
+            //Bugsee.launch(this, "9b3473f1-984c-4f70-9aef-b0cf485839fd");
+
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
             //if (BuildConfig.DEBUG)
@@ -147,18 +153,11 @@ public class PivxApplication extends Application implements ContextWrapper {
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
             //todo: add this on the initial wizard..
             //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
-            AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
+            //AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
-            pivxModule = new PivxModuleImp(this, walletConfiguration,addressStore,contactsStore,new RateDb(this));
+            pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
             pivxModule.start();
 
-            if(appConf.getShowReportOnStart()){
-                Intent intent = new Intent(this, CrashPopupActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        } catch (SnappydbException e) {
-            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -290,23 +289,5 @@ public class PivxApplication extends Application implements ContextWrapper {
     public void setLastTimeBackupRequested(long lastTimeBackupRequested) {
         this.lastTimeRequestBackup = lastTimeBackupRequested;
     }
-
-    /*public ServiceConnection pivxServiceConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            log.info("profile service connected");
-            pivxWalletService = ((PivxWalletService.PivxBinder)binder).getService();
-            //isConnected.set(true);
-            //listener.onConnected();
-        }
-        //binder comes from server to communicate with method's of
-
-        public void onServiceDisconnected(ComponentName className) {
-            Log.d("ServiceConnection","disconnected");
-            //isConnected.set(false);
-            pivxWalletService = null;
-            //listener.onDisconnected();
-        }
-    };*/
-
 
 }

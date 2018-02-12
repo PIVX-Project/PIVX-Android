@@ -3,27 +3,28 @@ package chain;
 import com.google.common.base.Stopwatch;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import org.bitcoinj.core.BlockChain;
-import org.bitcoinj.core.CheckpointManager;
-import org.bitcoinj.core.Peer;
-import org.bitcoinj.core.PeerGroup;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.StoredBlock;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionBroadcast;
-import org.bitcoinj.core.listeners.PeerConnectedEventListener;
-import org.bitcoinj.core.listeners.PeerDataEventListener;
-import org.bitcoinj.core.listeners.PeerDisconnectedEventListener;
-import org.bitcoinj.net.discovery.MultiplexingDiscovery;
-import org.bitcoinj.net.discovery.PeerDiscovery;
-import org.bitcoinj.net.discovery.PeerDiscoveryException;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.RegTestParams;
-import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.store.BlockStore;
-import org.bitcoinj.store.BlockStoreException;
-import org.bitcoinj.store.SPVBlockStore;
-import org.bitcoinj.wallet.Wallet;
+import org.pivxj.core.BlockChain;
+import org.pivxj.core.CheckpointManager;
+import org.pivxj.core.Peer;
+import org.pivxj.core.PeerGroup;
+import org.pivxj.core.Sha256Hash;
+import org.pivxj.core.StoredBlock;
+import org.pivxj.core.Transaction;
+import org.pivxj.core.TransactionBroadcast;
+import org.pivxj.core.listeners.PeerConnectedEventListener;
+import org.pivxj.core.listeners.PeerDataEventListener;
+import org.pivxj.core.listeners.PeerDisconnectedEventListener;
+import org.pivxj.net.discovery.MultiplexingDiscovery;
+import org.pivxj.net.discovery.PeerDiscovery;
+import org.pivxj.net.discovery.PeerDiscoveryException;
+import org.pivxj.params.MainNetParams;
+import org.pivxj.params.RegTestParams;
+import org.pivxj.params.TestNet3Params;
+import org.pivxj.store.BlockStore;
+import org.pivxj.store.BlockStoreException;
+import org.pivxj.store.LevelDBBlockStore;
+import org.pivxj.store.SPVBlockStore;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -32,13 +33,11 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import wallet.WalletManager;
@@ -78,11 +77,11 @@ public class BlockchainManager {
         this.blockchainManagerListeners = new ArrayList<>();
     }
 
-    public void init(){
+    public void init(BlockStore blockStore,File blockStoreDir,String blockStoreFilename,boolean blockStoreFileExists){
         synchronized (this) {
 
             // todo: en vez de que el service este maneje el blockchain deberia crear una clase que lo haga..
-            blockChainFile = new File(context.getDirPrivateMode("blockstore"), conf.getBlockchainFilename());
+            blockChainFile = new File(blockStoreDir, blockStoreFilename);
             final boolean blockChainFileExists = blockChainFile.exists();
 
             if (!blockChainFileExists) {
@@ -92,12 +91,12 @@ public class BlockchainManager {
 
             // Create the blockstore
             try {
-                blockStore = new SPVBlockStore(conf.getNetworkParams(), blockChainFile);
+                this.blockStore = (blockStore!=null) ? blockStore : new LevelDBBlockStore(conf.getWalletContext(), blockChainFile);
                 blockStore.getChainHead(); // detect corruptions as early as possible
 
                 final long earliestKeyCreationTime = walletManager.getEarliestKeyCreationTime();
 
-                if (!blockChainFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
+                if (!blockStoreFileExists && earliestKeyCreationTime > 0 && !(conf.getNetworkParams() instanceof RegTestParams)) {
                     try {
                         String filename = conf.getCheckpointFilename();
                         String suffix = conf.getNetworkParams() instanceof MainNetParams ? "":"-testnet";
@@ -108,6 +107,8 @@ public class BlockchainManager {
                         LOG.info("checkpoints loaded from '{}', took {}", conf.getCheckpointFilename(), watch);
                     }catch (final IOException x) {
                         LOG.error("problem reading checkpoints, continuing without", x);
+                    }catch (Exception e){
+                        LOG.error("problem reading checkpoints, continuing without", e);
                     }
                 }
 
@@ -167,15 +168,19 @@ public class BlockchainManager {
     public ListenableFuture<Transaction> broadcastTransaction(byte[] transactionHash) {
         final Sha256Hash hash = Sha256Hash.wrap(transactionHash);
         final Transaction tx = walletManager.getTransaction(hash);
+        return broadcastTransaction(tx);
+    }
+    public ListenableFuture<Transaction> broadcastTransaction(Transaction tx){
         if (peerGroup != null) {
             LOG.info("broadcasting transaction " + tx.getHashAsString());
             boolean onlyTrustedNode =
                     (conf.getNetworkParams() instanceof RegTestParams || conf.getNetworkParams() instanceof TestNet3Params)
-                    ||
-                    conf.getTrustedNodeHost()!=null;
+                            ||
+                            conf.getTrustedNodeHost()!=null;
             TransactionBroadcast transactionBroadcast = peerGroup.broadcastTransaction(
                     tx,
-                    onlyTrustedNode?1:2);
+                    onlyTrustedNode?1:2,
+                    false);
             return transactionBroadcast.broadcast();
         } else {
             LOG.info("peergroup not available, not broadcasting transaction " + tx.getHashAsString());

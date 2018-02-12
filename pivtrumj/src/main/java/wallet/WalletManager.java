@@ -1,34 +1,31 @@
 package wallet;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Stopwatch;
-import com.google.protobuf.ByteString;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.BlockChain;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.InsufficientMoneyException;
-import org.bitcoinj.core.PeerGroup;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionInput;
-import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.core.Utils;
-import org.bitcoinj.core.listeners.TransactionConfidenceEventListener;
-import org.bitcoinj.crypto.DeterministicKey;
-import org.bitcoinj.crypto.LinuxSecureRandom;
-import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.crypto.MnemonicException;
-import org.bitcoinj.wallet.DeterministicSeed;
-import org.bitcoinj.wallet.KeyChainGroup;
-import org.bitcoinj.wallet.Protos;
-import org.bitcoinj.wallet.SendRequest;
-import org.bitcoinj.wallet.UnreadableWalletException;
-import org.bitcoinj.wallet.Wallet;
-import org.bitcoinj.wallet.WalletFiles;
-import org.bitcoinj.wallet.WalletProtobufSerializer;
-import org.bitcoinj.wallet.listeners.WalletCoinsReceivedEventListener;
+import org.pivxj.core.Address;
+import org.pivxj.core.BlockChain;
+import org.pivxj.core.Coin;
+import org.pivxj.core.InsufficientMoneyException;
+import org.pivxj.core.PeerGroup;
+import org.pivxj.core.Sha256Hash;
+import org.pivxj.core.Transaction;
+import org.pivxj.core.TransactionInput;
+import org.pivxj.core.TransactionOutput;
+import org.pivxj.core.Utils;
+import org.pivxj.core.listeners.TransactionConfidenceEventListener;
+import org.pivxj.crypto.DeterministicKey;
+import org.pivxj.crypto.LinuxSecureRandom;
+import org.pivxj.crypto.MnemonicCode;
+import org.pivxj.crypto.MnemonicException;
+import org.pivxj.wallet.DeterministicKeyChain;
+import org.pivxj.wallet.DeterministicSeed;
+import org.pivxj.wallet.Protos;
+import org.pivxj.wallet.SendRequest;
+import org.pivxj.wallet.UnreadableWalletException;
+import org.pivxj.wallet.Wallet;
+import org.pivxj.wallet.WalletFiles;
+import org.pivxj.wallet.WalletProtobufSerializer;
+import org.pivxj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,19 +43,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.security.SecureRandom;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import global.utils.Io;
-
-import static com.google.common.base.Preconditions.checkState;
+import wallet.exceptions.InsufficientInputsException;
+import wallet.exceptions.TxNotFoundException;
 
 /**
  * Created by furszy on 6/4/17.
@@ -109,8 +103,12 @@ public class WalletManager {
      *
      * @return
      */
-    public boolean isMarkedAddress() {
+    public boolean isMarkedAddress(Address address) {
         return false;
+    }
+
+    public boolean isWatchingAddress(Address address){
+        return wallet.isAddressWatched(address);
     }
 
     public void completeSend(SendRequest sendRequest) throws InsufficientMoneyException {
@@ -176,19 +174,9 @@ public class WalletManager {
             afterLoadWallet();
 
         } else {
-            if (Utils.isAndroidRuntime()) {
-                new LinuxSecureRandom();
-            }
-            /*SecureRandom secureRandom = new SecureRandom();
-            byte[] seed = secureRandom.generateSeed(32);
-            DeterministicSeed deterministicSeed = new DeterministicSeed(seed, ByteString.copyFrom(seed).toStringUtf8(),System.currentTimeMillis());
-            KeyChainGroup keyChainGroup = new KeyChainGroup(conf.getNetworkParams(),deterministicSeed);
-            wallet = new Wallet(conf.getNetworkParams(),keyChainGroup);*/
-            // coinomi compatibility..
-            List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
 
-            DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
-            wallet = Wallet.fromSeed(conf.getNetworkParams(), seed);
+            // generate wallet from random mnemonic
+            wallet = generateRandomWallet();
 
             saveWallet();
             backupWallet();
@@ -200,10 +188,19 @@ public class WalletManager {
         wallet.addCoinsReceivedEventListener(new WalletCoinsReceivedEventListener() {
             @Override
             public void onCoinsReceived(Wallet wallet, Transaction transaction, Coin coin, Coin coin1) {
-                org.bitcoinj.core.Context.propagate(conf.getWalletContext());
+                org.pivxj.core.Context.propagate(conf.getWalletContext());
                 saveWallet();
             }
         });
+    }
+
+    public Wallet generateRandomWallet(){
+        if (Utils.isAndroidRuntime()) {
+            new LinuxSecureRandom();
+        }
+        List<String> words = generateMnemonic(SEED_ENTROPY_EXTRA);
+        DeterministicSeed seed = new DeterministicSeed(words, null, "", System.currentTimeMillis());
+        return Wallet.fromSeed(conf.getNetworkParams(), seed, DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY);
     }
 
     public static List<String> generateMnemonic(int entropyBitsSize){
@@ -278,8 +275,13 @@ public class WalletManager {
         }
     }
 
-    public void restoreWalletFrom(List<String> mnemonic, long timestamp) throws IOException {
-        wallet = Wallet.fromSeed(conf.getNetworkParams(),new DeterministicSeed(mnemonic,null,"",timestamp));
+    public void restoreWalletFrom(List<String> mnemonic, long timestamp, boolean bip44) throws IOException, MnemonicException {
+        MnemonicCode.INSTANCE.check(mnemonic);
+        wallet = Wallet.fromSeed(
+                conf.getNetworkParams(),
+                new DeterministicSeed(mnemonic,null,"",timestamp),
+                bip44? DeterministicKeyChain.KeyChainType.BIP44_PIVX_ONLY: DeterministicKeyChain.KeyChainType.BIP32
+        );
         restoreWallet(wallet);
     }
 
@@ -352,7 +354,19 @@ public class WalletManager {
      * @param password
      * @throws IOException
      */
+
     public boolean backupWallet(File file, final String password) throws IOException {
+        return backupWallet(wallet,file,password);
+    }
+
+    /**
+     * Backup wallet file with a given password
+     *
+     * @param file
+     * @param password
+     * @throws IOException
+     */
+    public boolean backupWallet(Wallet wallet,File file, final String password) throws IOException {
 
         final Protos.Wallet walletProto = new WalletProtobufSerializer().walletToProto(wallet);
 
@@ -423,7 +437,7 @@ public class WalletManager {
     }
 
     public Coin getAvailableBalance() {
-        return wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE);
+        return wallet.getBalance(Wallet.BalanceType.AVAILABLE);
     }
 
     public Coin getValueSentFromMe(Transaction transaction) {
@@ -499,6 +513,15 @@ public class WalletManager {
         logger.info("successfully restored encrypted wallet: {}", file);
     }
 
+    /**
+     * Restart the wallet and re create it in a watch only mode.
+     * @param xpub
+     */
+    public void watchOnlyMode(String xpub, DeterministicKeyChain.KeyChainType keyChainType) throws IOException {
+        Wallet wallet = Wallet.fromWatchingKeyB58(conf.getNetworkParams(),xpub,0,keyChainType);
+        restoreWallet(wallet);
+    }
+
     public Set<Transaction> listTransactions() {
         return wallet.getTransactions(true);
     }
@@ -517,7 +540,7 @@ public class WalletManager {
     }
 
     public Coin getUnspensableBalance() {
-        return wallet.getBalance(Wallet.BalanceType.ESTIMATED_SPENDABLE).minus(wallet.getBalance(Wallet.BalanceType.AVAILABLE_SPENDABLE));
+        return wallet.getBalance(Wallet.BalanceType.ESTIMATED).minus(wallet.getBalance(Wallet.BalanceType.AVAILABLE));
     }
 
     public boolean isAddressMine(Address address) {
@@ -553,8 +576,15 @@ public class WalletManager {
     public DeterministicKey getKeyPairForAddress(Address address) {
         DeterministicKey deterministicKey = wallet.getActiveKeyChain().findKeyFromPubHash(address.getHash160());
         logger.info("Key pub: "+deterministicKey.getPublicKeyAsHex());
-        logger.info("Key priv: "+deterministicKey.getPrivateKeyEncoded(conf.getNetworkParams()));
         return deterministicKey;
+    }
+
+    /**
+     * If the wallet doesn't contain any private key.
+     * @return
+     */
+    public boolean isWatchOnly(){
+        return wallet.isWatching();
     }
 
     public TransactionOutput getUnspent(Sha256Hash parentTxHash, int index) throws TxNotFoundException {
@@ -570,7 +600,9 @@ public class WalletManager {
             boolean found = false;
             if (inputs!=null) {
                 for (TransactionInput input : inputs) {
-                    if (input.getConnectedOutput().equals(transactionOutput)) {
+                    if (input.getConnectedOutput().getParentTransactionHash().equals(transactionOutput.getParentTransactionHash())
+                            &&
+                        input.getConnectedOutput().getIndex() == transactionOutput.getIndex()) {
                         found = true;
                     }
                 }
@@ -585,7 +617,7 @@ public class WalletManager {
                 }
             }
         }
-        throw new InsufficientInputsException("No unspent available");
+        throw new InsufficientInputsException("No unspent available",amount.minus(total));
     }
 
     public Coin getUnspentValue(Sha256Hash parentTransactionHash, int index) {
@@ -594,8 +626,32 @@ public class WalletManager {
         return tx.getOutput(index).getValue();
     }
 
+    public void checkMnemonic(List<String> mnemonic) throws MnemonicException {
+        MnemonicCode.INSTANCE.check(mnemonic);
+    }
 
+    public DeterministicKey getWatchingPubKey() {
+        return wallet.getWatchingKey();
+    }
 
+    public String getExtPubKey() {
+        return wallet.getWatchingKey().serializePubB58(conf.getNetworkParams());
+    }
+
+    public boolean isBip32Wallet() {
+        return wallet.getActiveKeyChain().getKeyChainType() == DeterministicKeyChain.KeyChainType.BIP32;
+    }
+
+    /**
+     * Create a clean transaction from the wallet balance to the sweep address
+     * @param sweepAddress
+     * @return
+     */
+    public Transaction createCleanWalletTx(Address sweepAddress) throws InsufficientMoneyException {
+        SendRequest sendRequest = SendRequest.emptyWallet(sweepAddress);
+        wallet.completeTx(sendRequest);
+        return sendRequest.tx;
+    }
 
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 

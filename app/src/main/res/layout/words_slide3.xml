@@ -22,9 +22,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/container"
         android:paddingTop="30dp"
+        android:orientation="vertical"
         android:layout_below="@+id/restoreMessage"
-        android:orientation="vertical">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:id="@+id/wordsLayout"
@@ -171,6 +173,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="4dp"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:lines="1"
                 android:textColor="@color/mainText"
                 android:background="@drawable/bg_inputs"
                 android:layout_height="wrap_content"
@@ -181,5 +186,24 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/container"
+        android:id="@+id/txt_bip32_message"
+        android:paddingTop="16dp"
+        android:paddingBottom="7dp"
+        android:textColor="@color/warning"
+        android:text="@string/restore_bip32_warning"
+        />
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/check_bip32"
+        android:layout_below="@+id/txt_bip32_message"
+        android:text="BIP32 wallet"
+        />
 
 </RelativeLayout>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+    <string name="app_name">PIVX 지갑</string>
+    <string name="btn_create_wallet">지갑 생성</string>
+    <string name="btn_restore_wallet">지갑 복구</string>
+    <string name="restore_wallet_message">저장매체에서 백업 지갑을 선택해주세요.</string>
+    <string name="pincode_message">보안을 위해서 PIN 코드가 필요합니다.</string>
+    <string name="select_file">파일 선택</string>
+    <string name="action_qr">QR 코드</string>
+    <string name="action_add">주소록 추가</string>
+    <string name="string_password">비밀 번호</string>
+    <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
+    <string name="navigation_drawer_open">Navigation 서랍 열기</string>
+    <string name="navigation_drawer_close">Navigation 서랍 닫기</string>
+    <string name="set_amount">보내실 금액을 적어주세요.</string>
+    <string name="title_amount">금액</string>
+    <string name="title_address">주소</string>
+    <string name="title_name">이름</string>
+    <string name="title_description">설명</string>
+    <string name="title_receiver_name">받는 이의 이름</string>
+    <string name="title_date">날짜</string>
+    <string name="set_address">주소나 주소록 이름을 쓰세요</string>
+    <string name="add_address">주소나 주소록 이름을 쓰세요</string>
+    <string name="set_name">이름 추가</string>
+    <string name="set_description">설명 추가</string>
+    <string name="btn_send">보내기</string>
+    <string name="btn_request">요청하기</string>
+    <string name="settings_subtitle_security">보안</string>
+    <string name="backup_wallet_message">백업파일은 암호와 함께 안전하게 암호화됩니다. \n 백업파일을 저장한 외부 저장 매체를 선택해주세요.</string>
+    <string name="settings_subtitle_preference">설정</string>
+    <string name="settings_subtitle_about">About</string>
+    <string name="restore_wallet">지갑 복구</string>
+    <string name="backup_wallet">지갑 백업</string>
+    <string name="change_pincode">PIN Code 바꾸기</string>
+    <string name="local_currency">현지 통화</string>
+    <string name="local_currency_usd">USD</string>
+    <string name="repeat_password">비밀 번호 다시 쓰기</string>
+    <string name="add_name">이름 추가하기</string>
+
+    <string name="scan_camera_problem_dialog_title">죄송합니다</string>
+    <string name="scan_camera_problem_dialog_message">카메라에 문제가 있습니다. 기기를 다시 시작해야 할 것 같습니다.</string>
+    <string name="scan_camera_permission_dialog_title">카메라 허가</string>
+    <string name="scan_camera_permission_dialog_message">QR 코드를 스캔하기 위하여, 카메라 사용 승인이 필요합니다</string>
+    <string name="scan_result_title">스캐너 결과</string>
+    <string name="scan_result_address_title">주소 찾음</string>
+    <string name="node_selection_message">당신은 사용가능한 노드를 선택하거나 추가할 수 있습니다</string>
+    <string name="select_node">노드 선택</string>
+
+    <string name="select">노드 하나 선택</string>
+    <string name="text_version">버젼</string>
+    <string name="network_monitor">네트워크 모니터</string>
+    <string name="settings_report">문제점 보고</string>
+    <string name="send_message">거래 상세 내역:</string>
+    <string name="save_message">이 주소를 저장할까요?</string>
+    <string name="confirm">확인</string>
+    <string name="action_scan">스캐너</string>
+    <string name="btn_select_node">노드 추가</string>
+
+    <string name="title_no_trusted_peer_connection">Peer 생성</string>
+    <string name="message_no_trusted_peer_connection">신뢰할수 있는 peer 연결 실패</string>
+    <string name="share_address_text">주소 공유</string>
+    <string name="error_sending_coins">코인 보내기 실패</string>
+
+    <string name="ssl_port">SSL port</string>
+    <string name="hint_ssl_port">기본 SSL 포트</string>
+    <string name="host">Host</string>
+    <string name="hint_host">Host 추가</string>
+    <string name="tcp_port">TCP 포트</string>
+    <string name="hint_tcp_port">기본 TCP 포트</string>
+    <string name="add_memo">월간 지불</string>
+    <string name="backup_create">만들기</string>
+    <string name="backup_passwords_doesnt_match">비밀 번호가 틀렸습니다. 다시 입력해주세요.</string>
+    <string name="backup_completed">백업 완료</string>
+    <string name="backup_completed_text">당신의 지갑이 안전한게 백업되었습니다. \n 저장된 폴더는 %s 입니다.</string>
+    <string name="import_keys_dialog_message">1%s에서 읽어올 백업 화일을 선택해주세요.</string>
+    <string name="backup_restore">복원</string>
+    <string name="import_export_keys_dialog_failure_title">지갑 복원 실패</string>
+    <string name="import_keys_dialog_failure">1%s 에서 백업 화일 가져오기 실패</string>
+    <string name="button_dismiss">취소</string>
+    <string name="button_retry">재시도</string>
+    <string name="restore_wallet_dialog_success">지갑이 복원되었습니다.</string>
+    <string name="restore_wallet_dialog_success_replay">지갑 복원이 성공하였습니다. 잔액은 다음에 결정됩니다. 시간이 조금 소요될 수 있습니다.</string>
+    <string name="unavailable">사용 불가 금액</string>
+    <string name="sending_tx">거래진행중...</string>
+    <string name="currency_message">원하시는 현지 통화를 선택해주세요.</string>
+    <string name="title_fee">수수료</string>
+    <string name="title_currency">현지 통화</string>
+    <string name="title_pivx_send">송금 금액</string>
+    <string name="empty_message_address">저장된 주소가 없습니다</string>
+    <string name="error_message">거래내역중에 오류가 있습니다.</string>
+    <string name="settings_change_trusted_node">신뢰할수 있는 노드로 변경</string>
+    <string name="settings_reset_blockchain">블록체인 재설정</string>
+    <string name="save">저장</string>
+    <string name="tutorial_message">피벡스 (Private, Instant, Verified, Transaction) 는 크리에이터, 혁신가, 기술전문가들로 구성된 글로벌 커뮤니티에 의해 운영되는 개인 정보 중심의 분산형 오픈 소스 암호화 화폐입니다.</string>
+    <!-- Tutorial -->
+    <string name="next">다음</string>
+    <string name="skip">건너뛰기</string>
+    <string name="start">시작</string>
+    <string name="title_slide1">PIVX 는 안전합니다</string>
+    <string name="desc_slide1">개인키 BIP38 암호화 방식의 첫번째 코인</string>
+    <string name="title_slide2">60초 블록 생성 시간</string>
+    <string name="desc_slide2">SwiftX를 이용하시면 대기시간없이 더욱더 빠른 전송이 가능합니다.</string>
+    <string name="title_slide3">절대적으로 안전하고, 여러분의 프라이버시를 지킵니다.</string>
+    <string name="desc_slide3">PIVX는 최고의 익명성 암호화 화폐를 지향합니다.</string>
+    <string name="title_slide4">신뢰할수 있는 노드 연합</string>
+    <string name="desc_slide4">신뢰할수 있는 노드 연합은 가벼운 PoS 지갑을 가능하게 도움을 줍니다. 여러분도 신뢰할수 있는 노드를 만들고 릴레이 할수 있습니다.</string>
+    <string name="option_add_node">노드 추가</string>
+    <string name="report_issue_dialog_description">이슈 설명</string>
+    <string name="report_issue_dialog_collect_device_info">디바이스 정보 추가</string>
+    <string name="report_issue_dialog_collect_application_log">어플리케이션 로그 추가</string>
+    <string name="report_issue_dialog_collect_wallet_dump">지갑 덤프 추가</string>
+    <string name="report_issue_dialog_collect_installed_packages">설치된 패키지 목록 추가</string>
+    <string name="report_issue_dialog_collect_db_data">데이터베이스 데이터 추가</string>
+    <string name="report_issue_dialog_report">보고</string>
+    <string name="button_cancel">취소</string>
+    <string name="report_issue_dialog_mail_intent_chooser">다음을 사용하여 보고서 보냄</string>
+    <string name="report_issue_dialog_mail_intent_failed">보고서 전송 실패</string>
+    <string name="report_issue_dialog_message_issue">문제점이 발생한 상황을 정확히 적어주세요.</string>
+    <string name="report_issuea_dialog_title">문제점 신고</string>
+    <string name="invalid_inputs">잘못된 입력</string>
+    <string name="send_error_dialog_tag">error dialog tag 보내기</string>
+    <string name="restore_dialog_tag">dialog tag 저장하기</string>
+    <string name="restore_dialog_error">dialog error 저장하기</string>
+    <string name="settings_support">지원</string>
+    <string name="support_subject">PIVX 지갑 지원</string>
+    <string name="tutorial">투토리얼</string>
+    <string name="copy">복사</string>
+    <string name="share">공유</string>
+    <string name="copy_message">클립보드에 주소 복사 완료</string>
+    <string name="security_message">이 단어들을 조심히 써주세요</string>
+    <string name="security_message_confirmation">다음 화면에서 확인해야 합니다</string>
+    <string name="confirmation_message">당신의 보안 단어들을 검증하세요</string>
+    <string name="order_message_confirmation">바른 순서대로 단어들을 선택해주세요.</string>
+    <string name="btn_secure">이미 적었습니다.</string>
+    <string name="lorem_ipsum">고통 그 자체를 사랑하거나 추구하거나 소유하려는 자는 없다. 다만 노역과 고통이 아주 큰 즐거움을 선사하는 상황이 때로는 발생하기 때문에 고통을 찾는 사람이 있는 것이다.</string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">지우기</string>
+    <string name="btn_backspace">뒤로</string>
+    <string name="pincode_saved">새 PIN 이 저장됨</string>
+    <string name="insert_old_pin">현재의 PIN 입력</string>
+    <string name="insert_new_pin">새로운 PIN 입력</string>
+    <string name="invalid_pincode">잘못된 PIN</string>
+    <string name="contact_already_exist">이미 존재하는 주소</string>
+    <string name="invalid_input_address">잘못된 주소</string>
+    <string name="reminder_backup">백업 알림</string>
+    <string name="reminder_backup_body">모바일 지갑에서 가능 중요한것은 백업입니다. 백업을 진행하시겠습니까?</string>
+    <string name="button_ok">확인</string>
+    <string name="backup_succed_dialog">backup_succed_dialog</string>
+    <string name="error_no_connectivity_title">인터넷 접속 없음</string>
+    <string name="error_no_connectivity_body">앱은 연결이 끊어질때까지 거래내역을 저장합니다.\n 계속하시겠습니까?</string>
+    <string name="cannot_restore_wallet">오류. 지갑을 복원할 수 없습니다\n암호를 확인해 주세요</string>
+    <string name="dialog_reset_blockchain_title">블록체인 재설정</string>
+    <string name="dialog_reset_blockchain_body">당신의 블록체인 파일을 재설정하려고 합니다.\n
+동기화까지는 시간이 걸립니다.\n\n 계속하시겠습니까?</string>
+    <string name="reseting_blockchain">블록체인 재설정중입니다.</string>
+    <string name="donations">기부</string>
+    <string name="donation_message">기부는 앱의 유지와 개발에 도움을 줍니다. 감사합니다.</string>
+    <string name="donation_title">기부하려고 해요</string>
+    <string name="btn_donate">기부하기</string>
+    <string name="donation_thanks">기부중입니다. 대단히 감사합니다.</string>
+</resources>

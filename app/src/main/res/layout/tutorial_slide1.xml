@@ -16,28 +16,34 @@
             android:src="@drawable/img_step_1" />
 
         <LinearLayout
-            android:layout_below="@+id/tutorialImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="70dp"
-            android:layout_centerInParent="true"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_below="@+id/tutorialImage"
+            android:layout_alignParentStart="true">
 
             <pivx.org.pivxwallet.utils.CustomFontTextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_slide1"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_title"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:paddingLeft="16dp"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:paddingRight="16dp"
                 android:text="@string/desc_slide1"
                 android:textAlignment="center"

@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import pivx.org.pivxwallet.PivxApplication;
-import pivx.org.pivxwallet.ui.crash_activity.CrashPopupActivity;
 import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AppConf;

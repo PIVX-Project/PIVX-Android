@@ -2,25 +2,33 @@ package pivx.org.pivxwallet.ui.words_restore_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.common.collect.Lists;
+
+import org.pivxj.crypto.MnemonicException;
+
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
-import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.module.PivxContext.PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME;
@@ -38,6 +46,9 @@ public class RestoreWordsActivity extends BaseActivity {
     private Button btnBack, btnNext;
     private EditText txtWord1, txtWord2, txtWord3, txtWord4, txtWord5, txtWord6, txtWord7, txtWord8 , txtWord9, txtWord10, txtWord11, txtWord12 ;
     private EditText txtWord13, txtWord14, txtWord15, txtWord16, txtWord17, txtWord18 , txtWord19, txtWord20, txtWord21, txtWord22, txtWord23, txtWord24;
+
+    private TextView txt_bip32_message;
+    private CheckBox check_bip32;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -106,31 +117,32 @@ public class RestoreWordsActivity extends BaseActivity {
                 String word23 = txtWord23.getText().toString();
                 String word24 = txtWord24.getText().toString();
 
-                final List<String> mnemonic = new ArrayList<>();
-                mnemonic.add(word1);
-                mnemonic.add(word2);
-                mnemonic.add(word3);
-                mnemonic.add(word4);
-                mnemonic.add(word5);
-                mnemonic.add(word6);
-                mnemonic.add(word7);
-                mnemonic.add(word8);
-                mnemonic.add(word9);
-                mnemonic.add(word10);
-                mnemonic.add(word11);
-                mnemonic.add(word12);
-                mnemonic.add(word13);
-                mnemonic.add(word14);
-                mnemonic.add(word15);
-                mnemonic.add(word16);
-                mnemonic.add(word17);
-                mnemonic.add(word18);
-                mnemonic.add(word19);
-                mnemonic.add(word20);
-                mnemonic.add(word21);
-                mnemonic.add(word22);
-                mnemonic.add(word23);
-                mnemonic.add(word24);
+                final List<String> mnemonic = Lists.newArrayList(
+                        word1,
+                        word2,
+                        word3,
+                        word4,
+                        word5,
+                        word6,
+                        word7,
+                        word8,
+                        word9,
+                        word10,
+                        word11,
+                        word12,
+                        word13,
+                        word14,
+                        word15,
+                        word16,
+                        word17,
+                        word18,
+                        word19,
+                        word20,
+                        word21,
+                        word22,
+                        word23,
+                        word24
+                );
 
                 for (String s : mnemonic) {
                     if (s.equals("")){
@@ -149,9 +161,12 @@ public class RestoreWordsActivity extends BaseActivity {
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
                                 dialog.dismiss();
                                 try {
-                                    pivxApplication.stopBlockchain();
 
-                                    pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME);
+                                    pivxModule.checkMnemonic(mnemonic);
+
+                                    boolean isBip32 = check_bip32.isChecked();
+
+                                    pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
 
                                     Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
 
@@ -159,6 +174,15 @@ public class RestoreWordsActivity extends BaseActivity {
                                     finish();
                                 } catch (IOException e) {
                                     e.printStackTrace();
+                                    CrashReporter.saveBackgroundTrace(e, pivxApplication.getPackageInfo());
+                                    // todo: show an error message here..
+                                    Toast.makeText(RestoreWordsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                }catch (MnemonicException e){
+                                    e.printStackTrace();
+                                    Toast.makeText(RestoreWordsActivity.this, R.string.invalid_mnemonic_code, Toast.LENGTH_LONG).show();
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
                                     // todo: show an error message here..
                                     Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                 }
@@ -170,7 +194,11 @@ public class RestoreWordsActivity extends BaseActivity {
                             }
                         }
                 );
-                dialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    dialog.setRightBtnTextColor(getColor(R.color.bgPurple));
+                }else {
+                    dialog.setRightBtnTextColor(ContextCompat.getColor(this, R.color.bgPurple));
+                }
                 dialog.show();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -271,6 +299,10 @@ public class RestoreWordsActivity extends BaseActivity {
                 txtWord22 = (EditText) view.findViewById(R.id.text_word22);
                 txtWord23 = (EditText) view.findViewById(R.id.text_word23);
                 txtWord24 = (EditText) view.findViewById(R.id.text_word24);
+                txt_bip32_message = (TextView) root.findViewById(R.id.txt_bip32_message);
+                check_bip32 = (CheckBox) root.findViewById(R.id.check_bip32);
+                txt_bip32_message.setText(getString(R.string.restore_bip32_warning, PivxContext.ENABLE_BIP44_APP_VERSION));
+
             }
 
             return view;

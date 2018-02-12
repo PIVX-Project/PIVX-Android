@@ -53,16 +53,16 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             if (intent.hasExtra(INTENT_BROADCAST_DATA_TYPE)){
                 if (intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE)) {
                     BlockchainState blockchainStateNew = (BlockchainState) intent.getSerializableExtra(INTENT_EXTRA_BLOCKCHAIN_STATE);
+                    onBlockchainStateChange();
                     if (blockchainStateNew == null) {
                         Log.e("APP", "blockchain state null..");
                         return;
                     }
-                    if (blockchainState == null || blockchainState != blockchainStateNew) {
-                        blockchainState = blockchainStateNew;
-                        updateBlockchainState();
-                    }
+                    blockchainState = blockchainStateNew;
+                    updateBlockchainState();
                 }else if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_PEER_CONNECTED)){
                     checkState();
+                    updateBlockchainState();
                 }
             }
         }
@@ -223,6 +223,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             String text = null;
             int color = 0;
             int imgSrc = 0;
+            double progress = calculateBlockchainSyncProgress();
             switch (blockchainState) {
                 case SYNC:
                     text = getString(R.string.sync);
@@ -230,7 +231,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
                     imgSrc = 0;
                     break;
                 case SYNCING:
-                    text = getString(R.string.syncing);
+                    text = getString(R.string.syncing)+" "+progress+"%";
                     color = Color.parseColor("#f6a623");
                     imgSrc = R.drawable.ic_header_unsynced;
                     break;
@@ -250,6 +251,23 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         }
     }
 
+    private double calculateBlockchainSyncProgress() {
+        long nodeHeight = pivxModule.getConnectedPeerHeight();
+        if (nodeHeight>0){
+            // calculate the progress
+            // nodeHeight -> 100 %
+            // current height -> x %
+            return (pivxModule.getChainHeight()*100) / nodeHeight;
+        }
+        return -1;
+    }
+
+    /**
+     * Method to override
+     */
+    protected void onBlockchainStateChange() {
+
+    }
 
 
 }

@@ -1,7 +1,7 @@
 package pivtrum;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.CoinDefinition;
+import org.pivxj.core.Address;
+import org.pivxj.core.CoinDefinition;
 import org.furszy.client.IoManager;
 import org.furszy.client.exceptions.ConnectionFailureException;
 import org.slf4j.Logger;
@@ -20,6 +20,7 @@ import pivtrum.listeners.AddressListener;
 import pivtrum.listeners.PeerDataListener;
 import pivtrum.listeners.PeerListener;
 import pivtrum.messages.VersionMsg;
+import pivtrum.messages.responses.StatusHistory;
 import pivtrum.messages.responses.Unspent;
 import pivtrum.utility.TxHashHeightWrapper;
 import store.AddressBalance;
@@ -320,16 +321,16 @@ public class PivtrumPeergroup implements PeerListener, PeerDataListener {
     }
 
     @Override
-    public void onGetHistory(PivtrumPeer pivtrumPeer, String address, List<TxHashHeightWrapper> list, String status) {
+    public void onGetHistory(PivtrumPeer pivtrumPeer, StatusHistory statusHistory) {
         try {
-            log.info("onGetHistory, address: "+address+", status: "+status);
-            AddressBalance addressBalance = addressStore.getAddressStatus(address);
-            if (addressBalance.getStatus().equals(status)){
+            log.info("onGetHistory, address: "+statusHistory.getAddress()+", status: "+statusHistory.getStatus());
+            AddressBalance addressBalance = addressStore.getAddressStatus(statusHistory.getAddress());
+            if (addressBalance.getStatus().equals(statusHistory.getStatus())){
                 addressBalance.addStatusConfirmation();
                 if(pivtrumPeer == trustedPeer){
-                    addressBalance.addAllTx(list);
+                    addressBalance.addAllTx(statusHistory.getTxHashHeight());
                 }
-                addressStore.insert(address,addressBalance);
+                addressStore.insert(statusHistory.getAddress(),addressBalance);
             }
         } catch (AddressNotFoundException e) {
             e.printStackTrace();

@@ -1,20 +1,11 @@
 package pivx.org.pivxwallet.ui.pincode_activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -23,11 +14,12 @@ import java.util.Random;
 import global.PivtrumGlobalData;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
-import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
-import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+
+import static pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity.INTENT_EXTRA_INIT_VIEW;
 
 /**
  * Created by Neoperol on 4/20/17.
@@ -80,8 +72,10 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
             pivxApplication.stopBlockchain();
         }
 
-        Intent myIntent = new Intent(PincodeActivity.this,WalletActivity.class);
         pivxApplication.getAppConf().setAppInit(true);
+
+        Intent myIntent = new Intent(PincodeActivity.this,MnemonicActivity.class);
+        myIntent.putExtra(INTENT_EXTRA_INIT_VIEW,true);
         startActivity(myIntent);
         finish();
     }
@@ -114,8 +108,10 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
                     }
                 }
             } else if (key == KeyboardFragment.KEYS.DELETE) {
-                lastPos--;
-                unactiveCheck(lastPos);
+                if (lastPos!=0) {
+                    lastPos--;
+                    unactiveCheck(lastPos);
+                }
             } else if (key == KeyboardFragment.KEYS.CLEAR) {
                 clear();
             }

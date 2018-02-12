@@ -8,17 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.InsufficientMoneyException;
-import org.bitcoinj.core.Transaction;
+import org.pivxj.core.Coin;
+import org.pivxj.core.InsufficientMoneyException;
+import org.pivxj.core.Transaction;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
@@ -72,7 +72,7 @@ public class DonateActivity extends BaseDrawerActivity {
                 throw new IllegalArgumentException("Insuficient balance");
             String memo = "Donation!";
             // build a tx with the default fee
-            Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo);
+            Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo,pivxModule.getReceiveAddress());
             // send it
             pivxModule.commitTx(transaction);
             Intent intent = new Intent(DonateActivity.this, PivxWalletService.class);
@@ -96,5 +96,11 @@ public class DonateActivity extends BaseDrawerActivity {
             errorDialog.setBody(message);
         }
         errorDialog.show(getFragmentManager(),getResources().getString(R.string.send_error_dialog_tag));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        NavigationUtils.goBackToHome(this);
     }
 }

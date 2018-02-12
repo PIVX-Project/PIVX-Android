@@ -31,9 +31,14 @@ public class SplashActivity extends AppCompatActivity {
         if(PivxApplication.getInstance().getAppConf().isSplashSoundEnabled())
             video = Uri.parse("android.resource://" + getPackageName() + "/"
                 + R.raw.splash_video);
-        else
-            video = Uri.parse("android.resource://" + getPackageName() + "/"
-                    + R.raw.splash_video_muted);
+        else {
+            //video = Uri.parse("android.resource://" + getPackageName() + "/"
+            //        + R.raw.splash_video_muted);
+            Intent intent = new Intent(this, WalletActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
         if (videoView != null) {
             videoView.setVideoURI(video);
@@ -69,7 +74,6 @@ public class SplashActivity extends AppCompatActivity {
             // Jump to your Next Activity or MainActivity
             Intent intent = new Intent(this, StartActivity.class);
             startActivity(intent);
-            SplashActivity.this.finish();
         }
         finish();
     }

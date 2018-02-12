@@ -1,6 +1,6 @@
 package pivx.org.pivxwallet.utils;
 
-import org.bitcoinj.core.ScriptException;
+import org.pivxj.core.ScriptException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.bitcoinj.core.Transaction;
+import org.pivxj.core.Transaction;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
-import pivx.org.pivxwallet.ui.restore_activity.FileAdapter;
 
 /**
  * Created by furszy on 8/3/17.

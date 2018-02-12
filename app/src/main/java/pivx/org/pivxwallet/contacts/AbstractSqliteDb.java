@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import pivx.org.pivxwallet.rate.db.PivxRate;
-
 /**
  * Created by furszy on 6/6/17.
  */

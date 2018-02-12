@@ -2,13 +2,8 @@ package pivx.org.pivxwallet.module;
 
 import android.content.SharedPreferences;
 
-import org.bitcoinj.core.Context;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.TestNet3Params;
-
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
+import org.pivxj.core.Context;
+import org.pivxj.core.NetworkParameters;
 
 import global.WalletConfiguration;
 import pivx.org.pivxwallet.utils.Configurations;
@@ -30,6 +25,8 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
 
     private static final String PREF_TRUSTED_NODE = "trusted_node";
     private static final String PREFS_KEY_SCHEDULE_BLOCKCHAIN_SERVICE = "sch_block_serv";
+    private static final String PREF_CURRENCY_RATE = "currency_code";
+
 
     public WalletConfImp(SharedPreferences prefs) {
         super(prefs);

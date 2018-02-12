@@ -1,9 +1,9 @@
 /*
 package org.pivtrum;
 
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.utils.MonetaryFormat;
+import org.pivxj.core.Address;
+import org.pivxj.core.Coin;
+import org.pivxj.utils.MonetaryFormat;
 import org.furszy.client.exceptions.ConnectionFailureException;
 import org.junit.Test;
 import org.pivtrum.imp.AddressStoreImp;
