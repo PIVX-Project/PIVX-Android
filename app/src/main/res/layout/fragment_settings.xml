@@ -179,30 +179,52 @@
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
                 android:text="Splash video sound"
+                android:background="@drawable/settings_items"
                 android:textColor="@color/mainText"
                 android:textSize="16sp"
                 android:textStyle="normal"
-                android:padding="8dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:checked="true"
-                android:gravity="left"/>
-
-            <Button
-                android:id="@+id/btn_rates"
-                android:background="@drawable/settings_items"
-                android:stateListAnimator="@null"
                 android:padding="8dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="6dp"
-                android:height="40dp"
+                android:checked="true"
+                android:gravity="left"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textColor="@color/mainText"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                android:text="@string/settings_rates"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <Button
+                    android:background="@color/transparent"
+                    android:id="@+id/btn_rates"
+                    android:stateListAnimator="@null"
+                    android:height="40dp"
+                    android:padding="0dp"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/mainText"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:text="@string/settings_rates"/>
+
+                <TextView
+                    android:id="@+id/text_rates"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/mainText"
+                    android:text="USD"
+                    android:gravity="right"
+                    android:padding="0dp"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>
