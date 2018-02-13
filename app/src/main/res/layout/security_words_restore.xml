@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:background="#55476C"
         android:id="@+id/container_loading"
->
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="wrap_content"
