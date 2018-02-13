@@ -139,9 +139,9 @@ public class WalletActivity extends BaseDrawerActivity {
             @Override
             public void onMenuToggle(boolean opened) {
                 if (opened){
-                    AnimationUtils.fadeInView(view_background,400);
+                    AnimationUtils.fadeInView(view_background,200);
                 }else {
-                    AnimationUtils.fadeOutGoneView(view_background,400);
+                    AnimationUtils.fadeOutGoneView(view_background,200);
                 }
             }
         });

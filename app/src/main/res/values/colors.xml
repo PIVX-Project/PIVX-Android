@@ -13,6 +13,8 @@
     <color name="bgWhite">#ffffff</color>
     <color name="bgWhite30">#4Dffffff</color>
     <color name="bgBlack30">#4D000000</color>
+    <color name="bgBlack80">#CC000000</color>
+    <color name="bgWhite80">#E6ffffff</color>
     <color name="bgBlackX">#DD000000</color>
     <color name="bgBlack10">#1A000000</color>
     <color name="bgBlack05">#0D000000</color>
