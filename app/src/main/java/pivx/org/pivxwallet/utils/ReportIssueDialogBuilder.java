@@ -50,6 +50,8 @@ import pivx.org.pivxwallet.R;
 
 import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
+import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
+
 
 public abstract class ReportIssueDialogBuilder extends DialogBuilder implements OnClickListener {
 

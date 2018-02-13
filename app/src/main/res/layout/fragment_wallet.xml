@@ -36,7 +36,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/bgBlackX"
+                android:background="@color/bgWhite80"
                 android:id="@+id/view_background"
                 android:visibility="invisible"/>
 
@@ -64,7 +64,7 @@
                 app:menu_labels_paddingBottom="4dp"
                 app:menu_labels_paddingLeft="8dp"
                 app:menu_labels_padding="8dp"
-                app:menu_labels_textColor="#FFFFFF"
+                app:menu_labels_textColor="@color/mainText"
                 app:menu_labels_textSize="14sp"
                 app:menu_labels_cornerRadius="3dp"
                 app:menu_labels_colorNormal="#333333"
@@ -88,7 +88,8 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_fab_recieve"
                     app:fab_size="mini"
-                    android:background="#46385c"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    app:fab_colorPressed="@color/colorPrimary"
                     app:fab_label="@string/btn_request" />
 
                 <com.github.clans.fab.FloatingActionButton
@@ -97,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_send_action"
                     app:fab_size="mini"
-                    android:background="#46385c"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    app:fab_colorPressed="@color/colorPrimary"
                     app:fab_label="@string/btn_send" />
 
             </com.github.clans.fab.FloatingActionMenu>
