@@ -586,14 +586,10 @@ public class PivxWalletService extends Service{
         }
     }
 
-    private static int num = 0;
-
     private void broadcastBlockchainStateIntent(){
         final long now = System.currentTimeMillis();
         if (now-lastMessageTime> TimeUnit.SECONDS.toMillis(6)) {
             lastMessageTime = System.currentTimeMillis();
-            num++;
-            log.warn("broadcasting blockchain state change.. "+num);
             Intent intent = new Intent(ACTION_NOTIFICATION);
             intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE);
             intent.putExtra(INTENT_EXTRA_BLOCKCHAIN_STATE,blockchainState);

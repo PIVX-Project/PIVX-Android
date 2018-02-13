@@ -35,7 +35,7 @@
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:padding="8dp"
                 android:textColor="@color/mainText" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 android:padding="8dp"
                 android:textColor="@color/mainText" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word4"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word5"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -127,7 +127,7 @@
                 android:maxLines="1"
                 android:layout_marginRight="4dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word6"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word7"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -163,7 +163,7 @@
                 android:maxLines="1"
                 android:layout_marginRight="4dp"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/text_word8"
                 android:layout_width="0dp"
                 android:layout_weight="1"

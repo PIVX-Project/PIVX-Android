@@ -39,7 +39,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import global.ContextWrapper;
+import global.PivtrumGlobalData;
 import global.WalletConfiguration;
+import pivtrum.PivtrumPeerData;
 import wallet.WalletManager;
 
 import static global.PivtrumGlobalData.FURSZY_TESTNET_SERVER;
@@ -300,6 +302,10 @@ public class BlockchainManager {
                                     peers.add(new InetSocketAddress(FURSZY_TESTNET_SERVER,6444));
                                     needsTrimPeersWorkaround = false;
                                 }*/
+                            }else {
+                                for (PivtrumPeerData pivtrumPeerData : PivtrumGlobalData.listTrustedHosts()) {
+                                    peers.add(new InetSocketAddress(pivtrumPeerData.getHost(), pivtrumPeerData.getTcpPort()));
+                                }
                             }
 
                             if (!connectTrustedPeerOnly)

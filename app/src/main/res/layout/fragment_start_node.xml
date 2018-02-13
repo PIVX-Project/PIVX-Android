@@ -49,6 +49,18 @@
             android:textColor="@color/mainGreen"
             android:textSize="15sp" />
 
+        <Button
+            android:id="@+id/btn_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:elevation="0dp"
+            android:visibility="visible"
+            android:background="@color/transparent"
+            android:text="@string/node_default"
+            android:textColor="@color/mainGreen"
+            android:textSize="15sp" />
+
     </LinearLayout>
 
     <Button

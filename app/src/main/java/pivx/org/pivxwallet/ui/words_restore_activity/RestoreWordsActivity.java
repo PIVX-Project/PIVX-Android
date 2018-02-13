@@ -2,14 +2,19 @@ package pivx.org.pivxwallet.ui.words_restore_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,12 +27,17 @@ import org.pivxj.crypto.MnemonicException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.transaction_send_activity.MyFilterableAdapter;
+import pivx.org.pivxwallet.ui.transaction_send_activity.MyTextWatcher;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.AnimationUtils;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
@@ -44,11 +54,18 @@ public class RestoreWordsActivity extends BaseActivity {
     private RestoreWordsActivity.ViewPagerAdapter viewPagerAdapter;
     private int[] layouts;
     private Button btnBack, btnNext;
-    private EditText txtWord1, txtWord2, txtWord3, txtWord4, txtWord5, txtWord6, txtWord7, txtWord8 , txtWord9, txtWord10, txtWord11, txtWord12 ;
-    private EditText txtWord13, txtWord14, txtWord15, txtWord16, txtWord17, txtWord18 , txtWord19, txtWord20, txtWord21, txtWord22, txtWord23, txtWord24;
+    private AutoCompleteTextView txtWord1, txtWord2, txtWord3, txtWord4, txtWord5, txtWord6, txtWord7, txtWord8 , txtWord9, txtWord10, txtWord11, txtWord12 ;
+    private AutoCompleteTextView txtWord13, txtWord14, txtWord15, txtWord16, txtWord17, txtWord18 , txtWord19, txtWord20, txtWord21, txtWord22, txtWord23, txtWord24;
 
     private TextView txt_bip32_message;
     private CheckBox check_bip32;
+
+    private View container_loading;
+
+    private ArrayAdapter<String> mnemonicAdapter;
+    private List<String> mnemonicWords;
+
+    private ExecutorService executorService;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -60,7 +77,14 @@ public class RestoreWordsActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         btnBack = (Button) findViewById(R.id.btn_back);
         btnBack.setVisibility(View.GONE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnBackClick(v);
+            }
+        });
         btnNext = (Button) findViewById(R.id.btn_next);
+        container_loading = findViewById(R.id.container_loading);
 
         layouts = new int[]{
                 R.layout.words_slide1,
@@ -73,6 +97,9 @@ public class RestoreWordsActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(3);
 
         //Words
+        mnemonicWords = pivxModule.getAvailableMnemonicWordsList();
+        mnemonicAdapter =  new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, mnemonicWords);
     }
 
     public void btnBackClick(View v) {
@@ -80,6 +107,17 @@ public class RestoreWordsActivity extends BaseActivity {
         if (current < layouts.length) {
             // move to previus screen
             viewPager.setCurrentItem(current);
+        }
+    }
+
+    private void init(AutoCompleteTextView actv){
+        actv.setThreshold(1);//will start working from first character
+        actv.setAdapter(mnemonicAdapter);
+    }
+
+    private void init(AutoCompleteTextView... actvs){
+        for (AutoCompleteTextView actv : actvs) {
+            init(actv);
         }
     }
 
@@ -159,33 +197,64 @@ public class RestoreWordsActivity extends BaseActivity {
                         new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                             @Override
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                AnimationUtils.fadeInView(container_loading,500);
                                 dialog.dismiss();
-                                try {
 
-                                    pivxModule.checkMnemonic(mnemonic);
 
-                                    boolean isBip32 = check_bip32.isChecked();
-
-                                    pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
-
-                                    Toast.makeText(RestoreWordsActivity.this, R.string.restore_mnemonic, Toast.LENGTH_LONG).show();
-
-                                    startActivity(new Intent(RestoreWordsActivity.this, WalletActivity.class));
-                                    finish();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e, pivxApplication.getPackageInfo());
-                                    // todo: show an error message here..
-                                    Toast.makeText(RestoreWordsActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                                }catch (MnemonicException e){
-                                    e.printStackTrace();
-                                    Toast.makeText(RestoreWordsActivity.this, R.string.invalid_mnemonic_code, Toast.LENGTH_LONG).show();
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                    CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
-                                    // todo: show an error message here..
-                                    Toast.makeText(RestoreWordsActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                                if (executorService != null){
+                                    executorService.shutdownNow();
+                                    executorService = null;
                                 }
+
+                                executorService = Executors.newSingleThreadExecutor();
+                                executorService.submit(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String message = null;
+                                        boolean result = false;
+                                        try {
+                                            // loading here..
+                                            pivxModule.checkMnemonic(mnemonic);
+
+                                            boolean isBip32 = check_bip32.isChecked();
+
+                                            pivxModule.restoreWallet(mnemonic, PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME,!isBip32);
+
+                                            message = getString(R.string.restore_mnemonic);
+                                            result = true;
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            CrashReporter.saveBackgroundTrace(e, pivxApplication.getPackageInfo());
+                                            // todo: show an error message here..
+                                            message = e.getMessage();
+                                        }catch (MnemonicException e){
+                                            e.printStackTrace();
+                                            message = getString(R.string.invalid_mnemonic_code);
+                                        }catch (Exception e){
+                                            e.printStackTrace();
+                                            CrashReporter.saveBackgroundTrace(e,pivxApplication.getPackageInfo());
+                                            // todo: show an error message here..
+                                            message = e.getMessage();
+                                        }
+                                        final boolean finalResult = result;
+                                        final String finalMessage = message;
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (finalResult){
+                                                    Toast.makeText(RestoreWordsActivity.this, finalMessage, Toast.LENGTH_LONG).show();
+                                                    startActivity(new Intent(RestoreWordsActivity.this, WalletActivity.class));
+                                                    finish();
+                                                }else {
+                                                    AnimationUtils.fadeOutGoneView(container_loading,500);
+                                                    Toast.makeText(RestoreWordsActivity.this, finalMessage, Toast.LENGTH_LONG).show();
+                                                }
+                                            }
+                                        });
+
+
+                                    }
+                                });
                             }
 
                             @Override
@@ -249,8 +318,6 @@ public class RestoreWordsActivity extends BaseActivity {
     };
 
 
-
-
     private int getItem(int i) {
         return viewPager.getCurrentItem() + i;
     }
@@ -273,32 +340,35 @@ public class RestoreWordsActivity extends BaseActivity {
             container.addView(view);
 
             if (position==0) {
-                txtWord1 = (EditText) view.findViewById(R.id.text_word1);
-                txtWord2 = (EditText) view.findViewById(R.id.text_word2);
-                txtWord3 = (EditText) view.findViewById(R.id.text_word3);
-                txtWord4 = (EditText) view.findViewById(R.id.text_word4);
-                txtWord5 = (EditText) view.findViewById(R.id.text_word5);
-                txtWord6 = (EditText) view.findViewById(R.id.text_word6);
-                txtWord7 = (EditText) view.findViewById(R.id.text_word7);
-                txtWord8 = (EditText) view.findViewById(R.id.text_word8);
+                txtWord1 = (AutoCompleteTextView) view.findViewById(R.id.text_word1);
+                txtWord2 = (AutoCompleteTextView) view.findViewById(R.id.text_word2);
+                txtWord3 = (AutoCompleteTextView) view.findViewById(R.id.text_word3);
+                txtWord4 = (AutoCompleteTextView) view.findViewById(R.id.text_word4);
+                txtWord5 = (AutoCompleteTextView) view.findViewById(R.id.text_word5);
+                txtWord6 = (AutoCompleteTextView) view.findViewById(R.id.text_word6);
+                txtWord7 = (AutoCompleteTextView) view.findViewById(R.id.text_word7);
+                txtWord8 = (AutoCompleteTextView) view.findViewById(R.id.text_word8);
+                init(txtWord1,txtWord2,txtWord3,txtWord4,txtWord5,txtWord6,txtWord7,txtWord8);
             }else if (position==1){
-                txtWord9 = (EditText) view.findViewById(R.id.text_word9);
-                txtWord10 = (EditText) view.findViewById(R.id.text_word10);
-                txtWord11 = (EditText) view.findViewById(R.id.text_word11);
-                txtWord12 = (EditText) view.findViewById(R.id.text_word12);
-                txtWord13 = (EditText) view.findViewById(R.id.text_word13);
-                txtWord14 = (EditText) view.findViewById(R.id.text_word14);
-                txtWord15 = (EditText) view.findViewById(R.id.text_word15);
-                txtWord16 = (EditText) view.findViewById(R.id.text_word16);
+                txtWord9 = (AutoCompleteTextView) view.findViewById(R.id.text_word9);
+                txtWord10 = (AutoCompleteTextView) view.findViewById(R.id.text_word10);
+                txtWord11 = (AutoCompleteTextView) view.findViewById(R.id.text_word11);
+                txtWord12 = (AutoCompleteTextView) view.findViewById(R.id.text_word12);
+                txtWord13 = (AutoCompleteTextView) view.findViewById(R.id.text_word13);
+                txtWord14 = (AutoCompleteTextView) view.findViewById(R.id.text_word14);
+                txtWord15 = (AutoCompleteTextView) view.findViewById(R.id.text_word15);
+                txtWord16 = (AutoCompleteTextView) view.findViewById(R.id.text_word16);
+                init(txtWord9,txtWord10,txtWord11,txtWord12,txtWord13,txtWord14,txtWord15,txtWord16);
             }else if(position==2){
-                txtWord17 = (EditText) view.findViewById(R.id.text_word17);
-                txtWord18 = (EditText) view.findViewById(R.id.text_word18);
-                txtWord19 = (EditText) view.findViewById(R.id.text_word19);
-                txtWord20 = (EditText) view.findViewById(R.id.text_word20);
-                txtWord21 = (EditText) view.findViewById(R.id.text_word21);
-                txtWord22 = (EditText) view.findViewById(R.id.text_word22);
-                txtWord23 = (EditText) view.findViewById(R.id.text_word23);
-                txtWord24 = (EditText) view.findViewById(R.id.text_word24);
+                txtWord17 = (AutoCompleteTextView) view.findViewById(R.id.text_word17);
+                txtWord18 = (AutoCompleteTextView) view.findViewById(R.id.text_word18);
+                txtWord19 = (AutoCompleteTextView) view.findViewById(R.id.text_word19);
+                txtWord20 = (AutoCompleteTextView) view.findViewById(R.id.text_word20);
+                txtWord21 = (AutoCompleteTextView) view.findViewById(R.id.text_word21);
+                txtWord22 = (AutoCompleteTextView) view.findViewById(R.id.text_word22);
+                txtWord23 = (AutoCompleteTextView) view.findViewById(R.id.text_word23);
+                txtWord24 = (AutoCompleteTextView) view.findViewById(R.id.text_word24);
+                init(txtWord17,txtWord18,txtWord19,txtWord20,txtWord21,txtWord22,txtWord23,txtWord24);
                 txt_bip32_message = (TextView) root.findViewById(R.id.txt_bip32_message);
                 check_bip32 = (CheckBox) root.findViewById(R.id.check_bip32);
                 txt_bip32_message.setText(getString(R.string.restore_bip32_warning, PivxContext.ENABLE_BIP44_APP_VERSION));

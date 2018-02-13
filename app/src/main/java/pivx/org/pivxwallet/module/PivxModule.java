@@ -167,4 +167,5 @@ public interface PivxModule {
 
     List<PivxRate> listRates();
 
+    List<String> getAvailableMnemonicWordsList();
 }

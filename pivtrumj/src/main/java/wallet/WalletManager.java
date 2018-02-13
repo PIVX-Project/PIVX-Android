@@ -653,6 +653,10 @@ public class WalletManager {
         return sendRequest.tx;
     }
 
+    public List<String> getAvailableMnemonicWordsList() {
+        return MnemonicCode.INSTANCE.getWordList();
+    }
+
     private static final class WalletAutosaveEventListener implements WalletFiles.Listener {
 
         WalletConfiguration conf;
