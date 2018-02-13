@@ -62,7 +62,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button btn_report;
     private Button btn_support;
     private Button buttonTutorial;
-    private TextView textAbout;
+    private TextView textAbout, text_rates;
     private TextView txt_network_info;
 
     @Override
@@ -104,6 +104,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         // rates
         findViewById(R.id.btn_rates).setOnClickListener(this);
+        text_rates = (TextView) findViewById(R.id.text_rates);
+        text_rates.setText(pivxApplication.getAppConf().getSelectedRateCoin());
 
         // Open Network Monitor
         buttonChange = (Button) findViewById(R.id.btn_network);
@@ -136,6 +138,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         // to check current activity in the navigation drawer
         setNavigationMenuItemChecked(2);
         updateNetworkStatus();
+        text_rates.setText(pivxApplication.getAppConf().getSelectedRateCoin());
     }
 
     private void updateNetworkStatus() {
@@ -258,7 +261,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         };
         dialog.show();
     }
-
     @Override
     protected void onBlockchainStateChange() {
         updateNetworkStatus();
