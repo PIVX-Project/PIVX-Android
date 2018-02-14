@@ -4,315 +4,323 @@
     android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <RelativeLayout
-        android:orientation="vertical"
-        android:background="@color/bgWhite"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:focusableInTouchMode="true"
-        >
+        android:layout_height="match_parent">
 
-
-        <ViewFlipper android:id="@+id/viewFlipper"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:background="@android:color/transparent"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id = "@+id/titleAmount"
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "wrap_content"
-                    android:text = "@string/title_amount"
-                    android:layout_marginBottom="10dp"
-                    android:textColor = "#757575"
-                    android:textSize = "14sp" />
-
-                <EditText
-                    android:id = "@+id/edit_amount"
-                    android:ellipsize="start"
-                    android:gravity="center_horizontal"
-                    android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
-                    android:padding="8dp"
-                    android:paddingBottom="11dp"
-                    android:paddingTop="11dp"
-                    android:inputType="numberDecimal"
-                    android:background="@drawable/transaction_inputs"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:layout_marginBottom="10dp"
-                    android:maxLines="1"
-                    android:maxLength="8"
-                    android:hint="@string/set_amount_piv"
-                    android:text = ""
-                    android:textColor = "#434343"
-                    android:textSize = "20sp" />
-
-
-                <TextView
-                    android:id = "@+id/txt_local_currency"
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "wrap_content"
-                    android:text = "0"
-                    android:textColor = "#858585"
-                    android:textSize = "16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:background="@android:color/transparent"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "wrap_content"
-                    android:id="@+id/txt_currency_amount"
-                    android:text = "@string/title_amount"
-                    android:layout_marginBottom="10dp"
-                    android:textColor = "#757575"
-                    android:textSize = "14sp" />
-
-                <EditText
-                    android:id = "@+id/edit_amount_currency"
-                    android:ellipsize="start"
-                    android:gravity="center_horizontal"
-                    android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
-                    android:padding="8dp"
-                    android:paddingBottom="11dp"
-                    android:paddingTop="11dp"
-                    android:inputType="numberDecimal"
-                    android:background="@drawable/transaction_inputs"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:layout_marginBottom="10dp"
-                    android:maxLines="1"
-                    android:maxLength="8"
-                    android:hint="@string/set_amount_usd"
-                    android:text = ""
-                    android:textColor = "#434343"
-                    android:textSize = "20sp" />
-
-
-                <TextView
-                    android:id = "@+id/txt_show_piv"
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "wrap_content"
-                    android:text = "0 PIV"
-                    android:textColor = "#858585"
-                    android:textSize = "16sp" />
-
-            </LinearLayout>
-        </ViewFlipper>
-
-        <Button
-            android:id="@+id/btn_add_all"
-            android:layout_below="@+id/viewFlipper"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:textColor="@color/colorPurple"
-            android:text="@string/add_all"/>
-
-        <LinearLayout
-            android:layout_below="@+id/btn_add_all"
-            android:id="@+id/layoutDescription"
+        <RelativeLayout
             android:orientation="vertical"
+            android:background="@color/bgWhite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@android:color/transparent"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:id = "@+id/titleAddress"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text = "@string/title_address"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_multiple_outputs"
-                android:background="@drawable/transaction_inputs"
-                android:layout_marginBottom="20dp"
-                tools:text="Sending to 5 different addresses"
-                android:gravity="center"
-                android:padding="7dp"
-                android:visibility="gone"
-                android:textStyle="bold"
-                android:textColor="#d0011b"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/container_address"
-                android:background="@drawable/transaction_inputs"
-                android:layout_marginBottom="20dp">
-
-
-                <AutoCompleteTextView
-                    android:id = "@+id/edit_address"
-                    android:ellipsize="start"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width = "0dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="4"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:paddingEnd="16dp"
-                    android:background="@color/transparent"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:hint="@string/set_address"
-                    android:text = ""
-                    android:textColor = "#434343"
-                    android:textSize = "14.5sp"
-                    android:layout_alignParentBottom="true" />
-
-
-                <ImageButton
-                    android:id="@+id/button_qr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_qr_code"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:text="Button"/>
-
-            </LinearLayout>
-            <TextView
-                android:id = "@+id/titleDescription"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:text = "@string/title_description"
-                android:layout_marginBottom="10dp"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
-
-            <EditText
-                android:id = "@+id/edit_memo"
-                android:ellipsize="start"
-                android:gravity="center_horizontal"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:padding="8dp"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:background="@drawable/transaction_inputs"
-                android:layout_marginBottom="10dp"
-                android:maxLines="1"
-                android:hint="@string/set_description"
-                android:text = ""
-                android:textColor = "#434343"
-                android:textSize = "15sp" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_below="@+id/layoutDescription"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:padding="20dp"
+            android:focusable="true"
             android:gravity="center"
-            android:orientation="vertical"
-            android:background="@android:color/transparent">
+            android:layout_gravity="center"
+            android:focusableInTouchMode="true"
+            >
 
 
-            <TextView
-                android:layout_width="match_parent"
+            <ViewFlipper android:id="@+id/viewFlipper"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_coin_selection"
-                android:text="@string/coin_selection"
-                android:gravity="center"
-                android:textColor="#d0011b"
-                android:visibility="gone"
-                android:textStyle="bold"
-                android:paddingBottom="12dp"
-                />
+                android:layout_width="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_custom_fee"
-                android:text="@string/custom_fee"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textColor="#d0011b"
-                android:textStyle="bold"
-                android:paddingBottom="12dp"
-                />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_change_address"
-                android:text="@string/option_change_address"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textColor="#d0011b"
-                android:textStyle="bold"
-                android:paddingBottom="12dp"
-                />
+                    <TextView
+                        android:id = "@+id/titleAmount"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:text = "@string/title_amount"
+                        android:layout_marginBottom="10dp"
+                        android:textColor = "#757575"
+                        android:textSize = "14sp" />
+
+                    <EditText
+                        android:id = "@+id/edit_amount"
+                        android:ellipsize="start"
+                        android:gravity="center_horizontal"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:padding="8dp"
+                        android:paddingBottom="11dp"
+                        android:paddingTop="11dp"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/transaction_inputs"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_marginBottom="10dp"
+                        android:maxLines="1"
+                        android:maxLength="8"
+                        android:hint="@string/set_amount_piv"
+                        android:text = ""
+                        android:textColor = "#434343"
+                        android:textSize = "20sp" />
+
+
+                    <TextView
+                        android:id = "@+id/txt_local_currency"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:text = "0"
+                        android:textColor = "#858585"
+                        android:textSize = "16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:id="@+id/txt_currency_amount"
+                        android:text = "@string/title_amount"
+                        android:layout_marginBottom="10dp"
+                        android:textColor = "#757575"
+                        android:textSize = "14sp" />
+
+                    <EditText
+                        android:id = "@+id/edit_amount_currency"
+                        android:ellipsize="start"
+                        android:gravity="center_horizontal"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:padding="8dp"
+                        android:paddingBottom="11dp"
+                        android:paddingTop="11dp"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/transaction_inputs"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:layout_marginBottom="10dp"
+                        android:maxLines="1"
+                        android:maxLength="8"
+                        android:hint="@string/set_amount_usd"
+                        android:text = ""
+                        android:textColor = "#434343"
+                        android:textSize = "20sp" />
+
+
+                    <TextView
+                        android:id = "@+id/txt_show_piv"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:text = "0 PIV"
+                        android:textColor = "#858585"
+                        android:textSize = "16sp" />
+
+                </LinearLayout>
+            </ViewFlipper>
 
             <Button
-                android:id="@+id/btnSend"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_button_border"
-                android:elevation="2dp"
+                android:id="@+id/btn_add_all"
+                android:layout_below="@+id/viewFlipper"
                 android:gravity="center"
-                android:layout_gravity="bottom"
-                android:text="@string/btn_send"
-                android:textColor="@color/textColorPurple"
-                android:textSize="14sp" />
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:textColor="@color/colorPurple"
+                android:text="@string/add_all"/>
 
-
-            <TextView
+            <LinearLayout
+                android:layout_below="@+id/btn_add_all"
+                android:id="@+id/layoutDescription"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/fee_included"
-                android:gravity="center"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"/>
+                android:padding="16dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:id = "@+id/titleAddress"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text = "@string/title_address"
+                    android:textColor = "#757575"
+                    android:textSize = "14sp" />
 
 
-        <ImageButton
-            android:id="@+id/btn_swap"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:background="@color/transparent"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_swap"/>
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_multiple_outputs"
+                    android:background="@drawable/transaction_inputs"
+                    android:layout_marginBottom="20dp"
+                    tools:text="Sending to 5 different addresses"
+                    android:gravity="center"
+                    android:padding="7dp"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:textColor="#d0011b"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/container_address"
+                    android:background="@drawable/transaction_inputs"
+                    android:layout_marginBottom="20dp">
+
+
+                    <AutoCompleteTextView
+                        android:id = "@+id/edit_address"
+                        android:ellipsize="start"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width = "0dp"
+                        android:layout_height="wrap_content"
+                        android:maxLines="4"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="16dp"
+                        android:background="@color/transparent"
+                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:hint="@string/set_address"
+                        android:text = ""
+                        android:textColor = "#434343"
+                        android:textSize = "14.5sp"
+                        android:layout_alignParentBottom="true" />
+
+
+                    <ImageButton
+                        android:id="@+id/button_qr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_qr_code"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:text="Button"/>
+
+                </LinearLayout>
+                <TextView
+                    android:id = "@+id/titleDescription"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:text = "@string/title_description"
+                    android:layout_marginBottom="10dp"
+                    android:textColor = "#757575"
+                    android:textSize = "14sp" />
+
+                <EditText
+                    android:id = "@+id/edit_memo"
+                    android:ellipsize="start"
+                    android:gravity="center_horizontal"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:padding="8dp"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:background="@drawable/transaction_inputs"
+                    android:layout_marginBottom="10dp"
+                    android:maxLines="1"
+                    android:hint="@string/set_description"
+                    android:text = ""
+                    android:textColor = "#434343"
+                    android:textSize = "15sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_below="@+id/layoutDescription"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|bottom"
+                android:padding="20dp"
+                android:gravity="center|bottom"
+                android:orientation="vertical"
+                android:background="@android:color/transparent">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_coin_selection"
+                    android:text="@string/coin_selection"
+                    android:gravity="center"
+                    android:textColor="#d0011b"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:paddingBottom="12dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_custom_fee"
+                    android:text="@string/custom_fee"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textColor="#d0011b"
+                    android:textStyle="bold"
+                    android:paddingBottom="12dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_change_address"
+                    android:text="@string/option_change_address"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:textColor="#d0011b"
+                    android:textStyle="bold"
+                    android:paddingBottom="12dp"
+                    />
+
+                <Button
+                    android:id="@+id/btnSend"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button_border"
+                    android:elevation="2dp"
+                    android:gravity="center"
+                    android:layout_gravity="bottom"
+                    android:text="@string/btn_send"
+                    android:textColor="@color/textColorPurple"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fee_included"
+                    android:gravity="center"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"/>
+
+            </LinearLayout>
+
+
+            <ImageButton
+                android:id="@+id/btn_swap"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/transparent"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_swap"/>
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </ScrollView>

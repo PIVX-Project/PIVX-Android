@@ -83,6 +83,8 @@ public class WalletActivity extends BaseDrawerActivity {
             String action = intent.getAction();
             if (action.equals(ACTION_NOTIFICATION)){
                 if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_ON_COIN_RECEIVED)){
+                    // Check if the app is on foreground to update the view.
+                    if (!isOnForeground)return;
                     updateBalance();
                     txsFragment.refresh();
                 }

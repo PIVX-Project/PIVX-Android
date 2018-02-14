@@ -142,6 +142,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     }
 
     private void updateNetworkStatus() {
+        // Check if the activity is on foreground
+        if (!isOnForeground)return;
         txt_network_info.setText(
                 Html.fromHtml(
                         "Network<br><font color=#55476c>"+pivxModule.getConf().getNetworkParams().getId()+

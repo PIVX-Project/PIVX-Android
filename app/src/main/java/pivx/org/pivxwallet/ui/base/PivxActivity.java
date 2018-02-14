@@ -33,6 +33,8 @@ public class PivxActivity extends AppCompatActivity {
     private static final IntentFilter intentFilter = new IntentFilter(ACTION_TRUSTED_PEER_CONNECTION_FAIL);
     private static final IntentFilter errorIntentFilter = new IntentFilter(ACTION_STORED_BLOCKCHAIN_ERROR);
 
+    protected boolean isOnForeground = false;
+
     private BroadcastReceiver trustedPeerConnectionDownReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -58,6 +60,7 @@ public class PivxActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isOnForeground = true;
         localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver,intentFilter);
         localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver,errorIntentFilter);
     }
@@ -65,6 +68,7 @@ public class PivxActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        isOnForeground = false;
         localBroadcastManager.unregisterReceiver(trustedPeerConnectionDownReceiver);
     }
 }
