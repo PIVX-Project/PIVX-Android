@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bgPurple">
 
     <TextView
@@ -40,7 +41,7 @@
             android:id = "@+id/txt_local_currency"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:text = "14710 USD"
+            tools:text = "14710 USD"
             android:textColor = "@color/textColorLightPurple"
             android:textSize = "16sp"
             android:paddingBottom="20dp"/>
