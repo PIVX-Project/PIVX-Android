@@ -17,7 +17,8 @@ public class TransactionWrapper implements Serializable{
     public static enum TransactionUse{
         SENT_SINGLE,
         RECEIVE,
-        STAKE
+        STAKE,
+        ZC_SPEND
         ;
 
     }
@@ -75,6 +76,10 @@ public class TransactionWrapper implements Serializable{
 
     public boolean isStake() {
         return transactionUse == TransactionUse.STAKE;
+    }
+
+    public boolean isZcSpend(){
+        return transactionUse == TransactionUse.ZC_SPEND;
     }
 
     @Override

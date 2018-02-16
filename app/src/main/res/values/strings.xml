@@ -387,5 +387,6 @@
     <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="restoring_wallet">Restoring wallet..</string>
+    <string name="no_transactions">You don\'t have any transfers yet.</string>
 
 </resources>
