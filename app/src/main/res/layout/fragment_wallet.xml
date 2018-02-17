@@ -90,7 +90,7 @@
                     app:fab_size="mini"
                     app:fab_colorNormal="@color/colorPrimary"
                     app:fab_colorPressed="@color/colorPrimary"
-                    app:fab_label="@string/btn_request" />
+                    app:fab_label="@string/payment_request" />
 
                 <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_add"

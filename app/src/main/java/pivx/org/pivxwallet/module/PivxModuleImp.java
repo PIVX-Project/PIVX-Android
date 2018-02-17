@@ -140,6 +140,15 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
+    public Address getFreshNewAddress(){
+        Address address = walletManager.newFreshReceiveAddress();
+        if (peergroup!=null && peergroup.isRunning()){
+            peergroup.addWatchedAddress(address);
+        }
+        return address;
+    }
+
+    @Override
     public boolean isAddressUsed(Address address) {
         return walletManager.isAddressMine(address);
     }

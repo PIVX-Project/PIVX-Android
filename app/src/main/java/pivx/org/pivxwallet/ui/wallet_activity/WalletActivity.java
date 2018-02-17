@@ -319,6 +319,7 @@ public class WalletActivity extends BaseDrawerActivity {
                                         startActivity(intent);
                                     }
                                 });
+                            dialogFragment.setImgAlertRes(R.drawable.ic_send_action);
                             dialogFragment.setAlignBody(SimpleTextDialog.Align.LEFT);
                             dialogFragment.setImgAlertRes(R.drawable.ic_fab_recieve);
                             dialogFragment.show(getFragmentManager(),"payment_request_dialog");

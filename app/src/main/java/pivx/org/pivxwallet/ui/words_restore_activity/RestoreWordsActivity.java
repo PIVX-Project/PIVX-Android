@@ -243,6 +243,10 @@ public class RestoreWordsActivity extends BaseActivity {
                                             public void run() {
                                                 if (finalResult){
                                                     Toast.makeText(RestoreWordsActivity.this, finalMessage, Toast.LENGTH_LONG).show();
+                                                    // Check if the app is starting
+                                                    if(!pivxApplication.getAppConf().isAppInit()){
+                                                        pivxApplication.getAppConf().setAppInit(true);
+                                                    }
                                                     startActivity(new Intent(RestoreWordsActivity.this, WalletActivity.class));
                                                     finish();
                                                 }else {

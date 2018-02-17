@@ -69,6 +69,8 @@ public interface PivxModule {
      */
     Address getReceiveAddress();
 
+    Address getFreshNewAddress();
+
     boolean isAddressUsed(Address address);
 
     long getAvailableBalance();
@@ -168,4 +170,5 @@ public interface PivxModule {
     List<PivxRate> listRates();
 
     List<String> getAvailableMnemonicWordsList();
+
 }

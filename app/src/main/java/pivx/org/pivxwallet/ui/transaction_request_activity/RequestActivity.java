@@ -54,13 +54,9 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 
 public class RequestActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int SCANNER_RESULT = 202
-            ;
     private AmountInputFragment amountFragment;
     private EditText edit_memo;
-    private AutoCompleteTextView edit_address;
     private String addressStr;
-    private MyFilterableAdapter filterableAdapter;
     private SimpleTextDialog errorDialog;
 
     private QrDialog qrDialog;
@@ -68,27 +64,19 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         View root = getLayoutInflater().inflate(R.layout.fragment_transaction_request, container);
-        setTitle(R.string.btn_request);
+        setTitle(R.string.payment_request);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         edit_memo = (EditText) root.findViewById(R.id.edit_memo);
-        edit_address = (AutoCompleteTextView) root.findViewById(R.id.edit_address);
         amountFragment = (AmountInputFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_amount);
         root.findViewById(R.id.btnRequest).setOnClickListener(this);
-        findViewById(R.id.button_qr).setOnClickListener(this);
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // todo: This is not updating the filter..
-        if (filterableAdapter == null) {
-            List<AddressLabel> list = new ArrayList<>(pivxModule.getContacts());
-            filterableAdapter = new MyFilterableAdapter(this, list);
-            edit_address.setAdapter(filterableAdapter);
-        }
 
         if (getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -115,15 +103,6 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
                 e.printStackTrace();
                 showErrorDialog(e.getMessage());
             }
-        }else if (id == R.id.button_qr) {
-            if (!checkPermission(CAMERA)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    int permsRequestCode = 200;
-                    String[] perms = {"android.permission.CAMERA"};
-                    requestPermissions(perms, permsRequestCode);
-                }
-            }
-            startActivityForResult(new Intent(this, ScanActivity.class), SCANNER_RESULT);
         }
     }
 
@@ -145,9 +124,7 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
         // memo
         String memo = edit_memo.getText().toString();
 
-        addressStr = edit_address.getText().toString();
-        if (!pivxModule.chechAddress(addressStr))
-            throw new IllegalArgumentException("Address not valid");
+        addressStr = pivxModule.getFreshNewAddress().toBase58();
 
         NetworkParameters params = pivxModule.getConf().getNetworkParams();
 
@@ -155,7 +132,7 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
                 params,
                 addressStr,
                 amount,
-                getString(R.string.btn_request),
+                getString(R.string.payment_request),
                 memo
         );
 
@@ -179,30 +156,6 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
             errorDialog.setBody(message);
         }
         errorDialog.show(getFragmentManager(), getResources().getString(R.string.send_error_dialog_tag));
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SCANNER_RESULT) {
-            if (resultCode == RESULT_OK) {
-                String address = "";
-                try {
-                    address = data.getStringExtra(INTENT_EXTRA_RESULT);
-                    String usedAddress;
-                    if (pivxModule.chechAddress(address)) {
-                        usedAddress = address;
-                    } else {
-                        PivxURI pivxUri = new PivxURI(address);
-                        usedAddress = pivxUri.getAddress().toBase58();
-                    }
-                    final String tempPubKey = usedAddress;
-                    edit_address.setText(tempPubKey);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Invalid address " + address, Toast.LENGTH_LONG).show();
-                }
-            }
-        }
     }
 
     public static class QrDialog extends DialogFragment {
