@@ -389,5 +389,6 @@
     <string name="amount">Amount</string>
     <string name="restoring_wallet">Restoring wallet..</string>
     <string name="no_transactions">You don\'t have any transfers yet.</string>
+    <string name="sync_in_progress">The wallet is out of sync, some transactions may be missing.\nPlease wait until the sync process finishes to see your current balance.</string>
 
 </resources>
