@@ -13,4 +13,3 @@ gradlew
 gradle.properties
 .idea
 app/release
-app/apk*
