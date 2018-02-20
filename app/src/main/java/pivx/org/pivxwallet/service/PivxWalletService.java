@@ -485,7 +485,7 @@ public class PivxWalletService extends Service{
     private void requestRateCoin(){
         final AppConf appConf = pivxApplication.getAppConf();
         PivxRate pivxRate = module.getRate(appConf.getSelectedRateCoin());
-        if (pivxRate==null || pivxRate.getTimestamp()+PivxContext.RATE_UPDATE_TIME<System.currentTimeMillis()){
+        if (pivxRate == null || pivxRate.getTimestamp() + PivxContext.RATE_UPDATE_TIME < System.currentTimeMillis()){
             new Thread(new Runnable() {
                 @Override
                 public void run() {

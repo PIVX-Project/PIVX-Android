@@ -624,13 +624,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         if (inPivs) {
             amountStr = edit_amount.getText().toString();
         }else {
-            String valueStr = editCurrency.getText().toString();
-            if(valueStr.length()>0) {
+            // the value is already converted
+            String valueStr = txtShowPiv.getText().toString();
+            amountStr = valueStr.replace(" PIV","");
+            if(valueStr.length() > 0) {
                 if (valueStr.charAt(0) == '.') {
-                    valueStr = "0" + valueStr;
+                    amountStr = "0" + valueStr;
                 }
-                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getRate());
-                amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
         }
         return amountStr;
