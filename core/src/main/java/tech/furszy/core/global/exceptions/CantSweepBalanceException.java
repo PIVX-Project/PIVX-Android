@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package tech.furszy.core.global.exceptions;
 
 import java.util.concurrent.TimeoutException;
 

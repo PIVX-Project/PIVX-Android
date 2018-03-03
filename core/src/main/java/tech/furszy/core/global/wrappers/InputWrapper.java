@@ -1,12 +1,12 @@
-package pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs;
+package tech.furszy.core.global.wrappers;
 
+import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Sha256Hash;
 import org.pivxj.core.TransactionOutput;
 
 import java.io.Serializable;
 
-import pivx.org.pivxwallet.contacts.AddressLabel;
-import pivx.org.pivxwallet.module.PivxContext;
+import tech.furszy.core.global.AddressLabel;
 
 /**
  * Created by furszy on 8/4/17.
@@ -49,8 +49,8 @@ public class InputWrapper implements Serializable{
     }
 
 
-    public String getLabel() {
-        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(PivxContext.NETWORK_PARAMETERS,true).toBase58();
+    public String getLabel(NetworkParameters param) {
+        return addressLabel !=null? addressLabel.toLabel():unspent.getScriptPubKey().getToAddress(param,true).toBase58();
     }
 
     @Override

@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
-import pivx.org.pivxwallet.contacts.AddressLabel;
-import pivx.org.pivxwallet.module.PivxModule;
-import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import tech.furszy.core.global.AddressLabel;
+import tech.furszy.core.global.PivxModule;
+import tech.furszy.core.global.wrappers.TransactionWrapper;
 
 /**
  * Created by furszy on 8/14/17.

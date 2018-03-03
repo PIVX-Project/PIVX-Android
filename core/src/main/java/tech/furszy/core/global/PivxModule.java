@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package tech.furszy.core.global;
 
 import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
@@ -16,15 +16,18 @@ import org.pivxj.wallet.Wallet;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import global.WalletConfiguration;
-import pivx.org.pivxwallet.contacts.AddressLabel;
-import pivx.org.pivxwallet.rate.db.PivxRate;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
-import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import tech.furszy.core.global.AddressLabel;
+import tech.furszy.core.global.PivxRate;
+import tech.furszy.core.global.exceptions.UpgradeException;
+import tech.furszy.core.global.wrappers.InputWrapper;
+import tech.furszy.core.global.wrappers.TransactionWrapper;
+import tech.furszy.core.global.exceptions.CantSweepBalanceException;
+import tech.furszy.core.global.exceptions.ContactAlreadyExistException;
+import tech.furszy.core.global.exceptions.NoPeerConnectedException;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 import wallet.exceptions.CantRestoreEncryptedWallet;

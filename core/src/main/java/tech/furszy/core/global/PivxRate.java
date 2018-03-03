@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.rate.db;
+package tech.furszy.core.global;
 
 import java.math.BigDecimal;
 

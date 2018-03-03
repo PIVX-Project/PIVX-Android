@@ -11,10 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxModule;
-import pivx.org.pivxwallet.service.IntentsConstants;
+import tech.furszy.core.global.PivxModule;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
-import pivx.org.pivxwallet.utils.DialogBuilder;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR;

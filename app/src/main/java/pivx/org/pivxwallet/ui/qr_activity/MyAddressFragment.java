@@ -24,7 +24,7 @@ import org.pivxj.uri.PivxURI;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxModule;
+import tech.furszy.core.global.PivxModule;
 
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;

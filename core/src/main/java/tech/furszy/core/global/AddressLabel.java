@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.contacts;
+package tech.furszy.core.global;
 
 import org.pivxj.core.Sha256Hash;
 

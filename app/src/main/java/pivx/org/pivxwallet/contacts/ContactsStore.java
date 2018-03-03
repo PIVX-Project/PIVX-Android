@@ -12,6 +12,8 @@ import org.json.JSONException;
 import java.util.HashSet;
 import java.util.Set;
 
+import tech.furszy.core.global.AddressLabel;
+
 /**
  * Created by furszy on 6/22/17.
  */

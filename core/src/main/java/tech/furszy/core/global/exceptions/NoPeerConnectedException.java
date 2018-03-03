@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package tech.furszy.core.global.exceptions;
 
 /**
  * Created by furszy on 8/26/17.

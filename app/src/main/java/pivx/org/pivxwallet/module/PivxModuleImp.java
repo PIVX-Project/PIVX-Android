@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,21 +35,23 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import pivtrum.PivtrumPeergroup;
-import pivx.org.pivxwallet.contacts.AddressLabel;
+import tech.furszy.core.global.AddressLabel;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import tech.furszy.core.global.PivxModule;
+import tech.furszy.core.global.PivxRate;
 import pivx.org.pivxwallet.rate.db.RateDb;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
-import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
-import store.AddressBalance;
+import tech.furszy.core.global.exceptions.UpgradeException;
+import tech.furszy.core.global.wrappers.InputWrapper;
+import tech.furszy.core.global.wrappers.TransactionWrapper;
+import tech.furszy.core.global.exceptions.CantSweepBalanceException;
+import tech.furszy.core.global.exceptions.ContactAlreadyExistException;
+import tech.furszy.core.global.exceptions.NoPeerConnectedException;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 import wallet.WalletManager;
@@ -640,7 +641,7 @@ public class PivxModuleImp implements PivxModule {
     }
 
     @Override
-    public boolean upgradeWallet(String upgradeCode) throws UpgradeException{
+    public boolean upgradeWallet(String upgradeCode) throws UpgradeException {
         try {
             return sweepBalanceToNewSchema();
         } catch (InsufficientMoneyException e) {

@@ -1,6 +1,5 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
-import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
@@ -28,12 +26,11 @@ import org.pivxj.uri.PivxURI;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import chain.BlockchainState;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.NoPeerConnectedException;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import tech.furszy.core.global.exceptions.NoPeerConnectedException;
+import tech.furszy.core.global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
