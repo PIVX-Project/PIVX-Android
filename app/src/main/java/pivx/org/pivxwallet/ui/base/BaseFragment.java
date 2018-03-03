@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import pivx.org.pivxwallet.PivxApplication;
-import tech.furszy.core.global.PivxModule;
+import global.PivxModule;
 
 /**
  * Created by furszy on 6/29/17.

@@ -24,7 +24,7 @@ import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import tech.furszy.core.global.wrappers.InputWrapper;
+import global.wrappers.InputWrapper;
 import wallet.exceptions.TxNotFoundException;
 
 /**

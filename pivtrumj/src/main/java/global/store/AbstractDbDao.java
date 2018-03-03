@@ -1,4 +1,4 @@
-package tech.furszy.core.global.store;
+package global.store;
 
 import java.util.ArrayList;
 

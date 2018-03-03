@@ -86,7 +86,7 @@ dependencies {
     compile 'ch.acra:acra:4.9.2'
     //compile 'com.bugsee:bugsee-android:+'
 
-    compile project(':core')
+    compile project(':pivtrumj')
 
     testCompile project(':pivtrumj')
 

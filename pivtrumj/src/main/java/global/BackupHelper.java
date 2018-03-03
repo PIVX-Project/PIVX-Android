@@ -1,4 +1,4 @@
-package tech.furszy.core.global;
+package global;
 
 import java.io.File;
 

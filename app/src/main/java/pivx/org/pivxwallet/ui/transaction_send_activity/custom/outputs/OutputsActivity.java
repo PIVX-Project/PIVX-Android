@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import tech.furszy.core.global.AddressLabel;
+import global.AddressLabel;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 

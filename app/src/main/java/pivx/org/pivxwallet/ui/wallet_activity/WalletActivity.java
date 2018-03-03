@@ -29,8 +29,8 @@ import java.util.List;
 
 import chain.BlockchainState;
 import pivx.org.pivxwallet.R;
-import tech.furszy.core.global.exceptions.NoPeerConnectedException;
-import tech.furszy.core.global.PivxRate;
+import global.exceptions.NoPeerConnectedException;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;

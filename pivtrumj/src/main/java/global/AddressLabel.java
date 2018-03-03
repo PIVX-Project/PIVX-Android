@@ -1,4 +1,4 @@
-package tech.furszy.core.global;
+package global;
 
 import org.pivxj.core.Sha256Hash;
 

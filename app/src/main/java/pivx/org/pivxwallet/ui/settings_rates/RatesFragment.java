@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import tech.furszy.core.global.PivxRate;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;

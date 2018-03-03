@@ -8,7 +8,7 @@ import java.util.TimeZone;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.module.PivxContext;
 import global.utils.Iso8601Format;
-import tech.furszy.core.global.BackupHelper;
+import global.BackupHelper;
 
 import static com.google.common.base.Preconditions.checkState;
 

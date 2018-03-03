@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import tech.furszy.core.global.AddressLabel;
+import global.AddressLabel;
 
 public class MyFilterableAdapter extends BaseAdapter implements Filterable {
     private Context context;

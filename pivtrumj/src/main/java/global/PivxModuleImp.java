@@ -1,4 +1,4 @@
-package tech.furszy.core.global;
+package global;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -37,17 +37,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import chain.BlockchainManager;
-import global.ContextWrapper;
-import global.WalletConfiguration;
-import tech.furszy.core.global.exceptions.UpgradeException;
-import tech.furszy.core.global.store.ContactsStoreDao;
-import tech.furszy.core.global.store.RateDbDao;
-import tech.furszy.core.global.utils.pivx.DefaultCoinSelector;
-import tech.furszy.core.global.wrappers.InputWrapper;
-import tech.furszy.core.global.wrappers.TransactionWrapper;
-import tech.furszy.core.global.exceptions.CantSweepBalanceException;
-import tech.furszy.core.global.exceptions.ContactAlreadyExistException;
-import tech.furszy.core.global.exceptions.NoPeerConnectedException;
+import global.exceptions.UpgradeException;
+import global.store.ContactsStoreDao;
+import global.store.RateDbDao;
+import global.pivx.DefaultCoinSelector;
+import global.wrappers.InputWrapper;
+import global.wrappers.TransactionWrapper;
+import global.exceptions.CantSweepBalanceException;
+import global.exceptions.ContactAlreadyExistException;
+import global.exceptions.NoPeerConnectedException;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 import wallet.WalletManager;

@@ -1,4 +1,4 @@
-package tech.furszy.core.global.wrappers;
+package global.wrappers;
 
 import org.pivxj.core.Coin;
 import org.pivxj.core.Sha256Hash;
@@ -7,7 +7,7 @@ import org.pivxj.core.Transaction;
 import java.io.Serializable;
 import java.util.Map;
 
-import tech.furszy.core.global.AddressLabel;
+import global.AddressLabel;
 
 /**
  * Created by furszy on 6/29/17.

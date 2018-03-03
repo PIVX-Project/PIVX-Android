@@ -1,6 +1,4 @@
-package tech.furszy.core.global.exceptions;
-
-import java.util.concurrent.TimeoutException;
+package global.exceptions;
 
 /**
  * Created by furszy on 10/7/17.

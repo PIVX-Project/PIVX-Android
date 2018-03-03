@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import tech.furszy.core.global.store.AbstractDbDao;
+import global.store.AbstractDbDao;
 
 /**
  * Created by furszy on 6/6/17.

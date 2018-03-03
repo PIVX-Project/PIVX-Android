@@ -1,4 +1,4 @@
-package tech.furszy.core.global.utils.pivx;
+package global.pivx;
 
 import org.pivxj.core.Coin;
 import org.pivxj.core.NetworkParameters;

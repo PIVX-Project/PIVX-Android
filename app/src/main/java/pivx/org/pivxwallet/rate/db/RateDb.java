@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.math.BigDecimal;
 
 import pivx.org.pivxwallet.contacts.AbstractSqliteDb;
-import tech.furszy.core.global.PivxRate;
-import tech.furszy.core.global.store.RateDbDao;
+import global.PivxRate;
+import global.store.RateDbDao;
 
 /**
  * Created by furszy on 7/5/17.

@@ -18,7 +18,7 @@ import org.pivxj.core.Coin;
 import java.math.BigDecimal;
 
 import pivx.org.pivxwallet.R;
-import tech.furszy.core.global.PivxRate;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 
 /**

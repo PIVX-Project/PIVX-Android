@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
-import tech.furszy.core.global.AddressLabel;
-import tech.furszy.core.global.PivxModule;
-import tech.furszy.core.global.wrappers.TransactionWrapper;
+import global.AddressLabel;
+import global.PivxModule;
+import global.wrappers.TransactionWrapper;
 
 /**
  * Created by furszy on 8/14/17.

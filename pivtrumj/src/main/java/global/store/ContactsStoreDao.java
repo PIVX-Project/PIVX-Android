@@ -1,6 +1,6 @@
-package tech.furszy.core.global.store;
+package global.store;
 
-import tech.furszy.core.global.AddressLabel;
+import global.AddressLabel;
 
 /**
  * Created by furszy on 3/3/18.

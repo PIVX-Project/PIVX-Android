@@ -1,4 +1,4 @@
-package tech.furszy.core.global.exceptions;
+package global.exceptions;
 
 /**
  * Created by furszy on 7/11/17.

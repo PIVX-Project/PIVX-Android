@@ -12,8 +12,8 @@ import org.json.JSONException;
 import java.util.HashSet;
 import java.util.Set;
 
-import tech.furszy.core.global.AddressLabel;
-import tech.furszy.core.global.store.ContactsStoreDao;
+import global.AddressLabel;
+import global.store.ContactsStoreDao;
 
 /**
  * Created by furszy on 6/22/17.

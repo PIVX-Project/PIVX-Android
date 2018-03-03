@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
-import tech.furszy.core.global.PivxModule;
+import global.PivxModule;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
