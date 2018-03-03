@@ -9,12 +9,13 @@ import java.math.BigDecimal;
 
 import pivx.org.pivxwallet.contacts.AbstractSqliteDb;
 import tech.furszy.core.global.PivxRate;
+import tech.furszy.core.global.store.RateDbDao;
 
 /**
  * Created by furszy on 7/5/17.
  */
 
-public class RateDb extends AbstractSqliteDb<PivxRate> {
+public class RateDb extends AbstractSqliteDb<PivxRate> implements RateDbDao<PivxRate> {
 
 
     private static final String DATABASE_NAME = "Rates";

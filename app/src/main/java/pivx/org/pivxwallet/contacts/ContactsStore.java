@@ -13,12 +13,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import tech.furszy.core.global.AddressLabel;
+import tech.furszy.core.global.store.ContactsStoreDao;
 
 /**
  * Created by furszy on 6/22/17.
  */
 
-public class ContactsStore extends AbstractSqliteDb<AddressLabel>{
+public class ContactsStore extends AbstractSqliteDb<AddressLabel> implements ContactsStoreDao<AddressLabel> {
 
     private static final String DATABASE_NAME = "db";
     private static final int DATABASE_VERSION = 2;

@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module;
+package tech.furszy.core.global;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -39,14 +39,10 @@ import java.util.concurrent.Executors;
 import chain.BlockchainManager;
 import global.ContextWrapper;
 import global.WalletConfiguration;
-import pivtrum.PivtrumPeergroup;
-import tech.furszy.core.global.AddressLabel;
-import pivx.org.pivxwallet.contacts.ContactsStore;
-import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
-import tech.furszy.core.global.PivxModule;
-import tech.furszy.core.global.PivxRate;
-import pivx.org.pivxwallet.rate.db.RateDb;
 import tech.furszy.core.global.exceptions.UpgradeException;
+import tech.furszy.core.global.store.ContactsStoreDao;
+import tech.furszy.core.global.store.RateDbDao;
+import tech.furszy.core.global.utils.pivx.DefaultCoinSelector;
 import tech.furszy.core.global.wrappers.InputWrapper;
 import tech.furszy.core.global.wrappers.TransactionWrapper;
 import tech.furszy.core.global.exceptions.CantSweepBalanceException;
@@ -68,19 +64,22 @@ public class PivxModuleImp implements PivxModule {
     private WalletConfiguration walletConfiguration;
     private WalletManager walletManager;
     private BlockchainManager blockchainManager;
-    private PivtrumPeergroup peergroup;
-    private ContactsStore contactsStore;
-    private RateDb rateDb;
+    private ContactsStoreDao contactsStore;
+    private RateDbDao rateDb;
 
-    // cache balance
+    // cached balance --> todo: check this..
     private long availableBalance = 0;
     private BigDecimal pivInUsdHardcoded = new BigDecimal("1.5");
 
-    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStore contactsStore,RateDb rateDb) {
+    // OS dependent helper.
+    private BackupHelper backupHelper;
+
+    public PivxModuleImp(ContextWrapper contextWrapper, WalletConfiguration walletConfiguration,ContactsStoreDao contactsStore,RateDbDao rateDb,BackupHelper backupHelper) {
         this.context = contextWrapper;
         this.walletConfiguration = walletConfiguration;
         this.contactsStore = contactsStore;
         this.rateDb = rateDb;
+        this.backupHelper = backupHelper;
         walletManager = new WalletManager(contextWrapper,walletConfiguration);
         blockchainManager = new BlockchainManager(context,walletManager,walletConfiguration);
     }
@@ -133,20 +132,12 @@ public class PivxModuleImp implements PivxModule {
 
     @Override
     public Address getReceiveAddress() {
-        Address address = walletManager.getCurrentAddress();
-        if (peergroup!=null && peergroup.isRunning()){
-            peergroup.addWatchedAddress(address);
-        }
-        return address;
+        return walletManager.getCurrentAddress();
     }
 
     @Override
     public Address getFreshNewAddress(){
-        Address address = walletManager.newFreshReceiveAddress();
-        if (peergroup!=null && peergroup.isRunning()){
-            peergroup.addWatchedAddress(address);
-        }
-        return address;
+        return walletManager.newFreshReceiveAddress();
     }
 
     @Override
@@ -247,7 +238,7 @@ public class PivxModuleImp implements PivxModule {
             for (TransactionInput input : transaction.getInputs()) {
                 unspent.add(input.getConnectedOutput());
             }
-            sendRequest.coinSelector = new pivx.org.pivxwallet.module.wallet.DefaultCoinSelector(unspent);
+            sendRequest.coinSelector = new DefaultCoinSelector(unspent);
         }
         sendRequest.signInputs = true;
         sendRequest.shuffleOutputs = false; // don't shuffle outputs to know the contact
@@ -594,7 +585,7 @@ public class PivxModuleImp implements PivxModule {
             logger.info("sweepBalanceToNewSchema");
 
             // backup the current wallet first
-            File backupFileOld = new WalletBackupHelper().determineBackupFile("old");
+            File backupFileOld = backupHelper.determineBackupFile("old");
             backupWallet(backupFileOld,"");
 
             // new wallet
@@ -606,7 +597,7 @@ public class PivxModuleImp implements PivxModule {
             logger.info("sweep tx: "+transaction);
 
             // backup the new wallet
-            File backupFile = new WalletBackupHelper().determineBackupFile("upgrade");
+            File backupFile = backupHelper.determineBackupFile("upgrade");
             backupWallet(newWallet,backupFile,"");
 
             // broadcast

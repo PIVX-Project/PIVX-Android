@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.module.wallet;
+package tech.furszy.core.global.utils.pivx;
 
 import org.pivxj.core.Coin;
 import org.pivxj.core.NetworkParameters;

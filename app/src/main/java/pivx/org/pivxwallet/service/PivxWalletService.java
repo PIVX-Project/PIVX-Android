@@ -50,7 +50,7 @@ import pivtrum.listeners.AddressListener;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
-import pivx.org.pivxwallet.module.PivxModuleImp;
+import tech.furszy.core.global.PivxModuleImp;
 import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
 import pivx.org.pivxwallet.rate.RequestPivxRateException;

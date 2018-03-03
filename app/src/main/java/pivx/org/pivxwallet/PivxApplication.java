@@ -38,8 +38,9 @@ import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import tech.furszy.core.global.PivxModule;
-import pivx.org.pivxwallet.module.PivxModuleImp;
+import tech.furszy.core.global.PivxModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
 import pivx.org.pivxwallet.rate.db.RateDb;
 import pivx.org.pivxwallet.service.PivxWalletService;
@@ -146,7 +147,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
             //AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
-            pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this));
+            pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
             pivxModule.start();
 
         } catch (Exception e){
