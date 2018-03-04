@@ -86,9 +86,9 @@ dependencies {
     compile 'ch.acra:acra:4.9.2'
     //compile 'com.bugsee:bugsee-android:+'
 
-    compile project(':pivtrumj')
+    compile project(':pivx_light_wallets_core')
 
-    testCompile project(':pivtrumj')
+    testCompile project(':pivx_light_wallets_core')
 
     compile 'com.github.clans:fab:1.6.4'
 
