@@ -16,3 +16,8 @@ pivx-core-0.14.3-12.1: pivxj.
 You can build all sub-projects at once using Gradle:
 
 gradle clean build
+
+
+### Cloning repository.
+
+Use git clone --recurse-submodules https://github.com/<PIVX or furszy>/PIVX-Android.git
