@@ -21,3 +21,11 @@ gradle clean build
 ### Cloning repository.
 
 Use git clone --recurse-submodules https://github.com/<PIVX or furszy>/PIVX-Android.git
+  
+#### or
+
+Use git clone https://github.com/<PIVX or furszy>/PIVX-Android.git
+  
+git submodule init
+
+git submodule update
