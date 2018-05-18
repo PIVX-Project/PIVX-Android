@@ -18,8 +18,17 @@
             android:id="@+id/nav_donations"
             android:icon="@drawable/ic_donations"
             android:title="@string/donations" />
-    </group>
+        <item
+            android:id="@+id/nav_buywithcash"
+            android:icon="@drawable/ic_menu_sell_dash"
+            android:title="@string/title_buy_pivx" />
 
+      <!--  <item
+            android:id="@+id/nav_sell_piv"
+            android:icon="@drawable/ic_menu_sell_dash"
+            android:title="@string/title_selling" />-->
+
+    </group>
 
 
 </menu>

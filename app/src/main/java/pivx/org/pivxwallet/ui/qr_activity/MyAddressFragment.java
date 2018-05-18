@@ -25,6 +25,7 @@ import org.pivxj.uri.PivxURI;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
+import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
 
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;
@@ -41,7 +42,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
     private View root;
     private TextView txt_address;
     private Button btn_share;
-    private Button btn_copy;
+    private Button btn_copy,btn_buy;
     private ImageView img_qr;
 
     private Address address;
@@ -62,7 +63,9 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         btn_copy = (Button) root.findViewById(R.id.btn_copy);
         btn_copy.setOnClickListener(this);
         img_qr = (ImageView) root.findViewById(R.id.img_qr);
+        btn_buy = (Button) root.findViewById(R.id.btn_buy);
         btn_share.setOnClickListener(this);
+        btn_buy.setOnClickListener(this);
         img_qr.setOnClickListener(this);
         return root;
     }
@@ -131,6 +134,9 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         }else if (id == R.id.btn_copy){
             copyToClipboard(getActivity(),address.toBase58());
             Toast.makeText(v.getContext(), R.string.copy_message, Toast.LENGTH_LONG).show();
+        }
+        else if (id == R.id.btn_buy) {
+            startActivity(new Intent(getActivity(), BuyDashBaseActivity.class));
         }
     }
 }

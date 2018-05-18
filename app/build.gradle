@@ -18,7 +18,9 @@ android {
     lintOptions {
         abortOnError false
     }
-
+    dataBinding {
+        enabled = true
+    }
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -44,7 +46,14 @@ android {
     }
 
 
+    packagingOptions {
 
+        exclude 'org/bitcoinj/crypto/mnemonic/wordlist/english.txt'
+        exclude 'org/bitcoinj/crypto/cacerts'
+        exclude 'org.bitcoin.production.checkpoints.txt'
+        exclude 'org.bitcoin.test.checkpoints.txt'
+
+    }
 
 }
 
@@ -87,4 +96,20 @@ dependencies {
     testCompile 'org.json:json:20170516'
     testCompile 'org.apache.httpcomponents:httpclient:4.5.3'
     testCompile 'org.mockito:mockito-core:2.8.9'
+
+
+    //wall of coins
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    compile 'com.squareup.okhttp:logging-interceptor:2.7.5'
+    compile 'com.google.code.findbugs:jsr305:2.0.3'
+    compile 'org.dashj:dashj-core:0.14.4.3'
+
+
+    //selling dependencies
+
+    compile 'com.github.joielechong:countrycodepicker:2.1.5'
+
 }
+

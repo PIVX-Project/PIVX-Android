@@ -26,6 +26,8 @@ import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
+import pivx.org.pivxwallet.wallofcoins.selling_wizard.SellingBaseActivity;
 
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
@@ -50,7 +52,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private BroadcastReceiver walletServiceReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.hasExtra(INTENT_BROADCAST_DATA_TYPE)){
+            if (intent.hasExtra(INTENT_BROADCAST_DATA_TYPE)) {
                 if (intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE)) {
                     BlockchainState blockchainStateNew = (BlockchainState) intent.getSerializableExtra(INTENT_EXTRA_BLOCKCHAIN_STATE);
                     onBlockchainStateChange();
@@ -60,7 +62,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
                     }
                     blockchainState = blockchainStateNew;
                     updateBlockchainState();
-                }else if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_PEER_CONNECTED)){
+                } else if (intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_PEER_CONNECTED)) {
                     checkState();
                     updateBlockchainState();
                 }
@@ -91,39 +93,39 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         txt_app_version = (TextView) navigationView.findViewById(R.id.txt_app_version);
         txt_app_version.setText(BuildConfig.VERSION_NAME);
 
-        onCreateView(savedInstanceState,frameLayout);
+        onCreateView(savedInstanceState, frameLayout);
 
-        localBroadcastManager.registerReceiver(walletServiceReceiver,new IntentFilter(ACTION_NOTIFICATION));
+        localBroadcastManager.registerReceiver(walletServiceReceiver, new IntentFilter(ACTION_NOTIFICATION));
     }
 
-    private void checkState(){
+    private void checkState() {
         long now = System.currentTimeMillis();
         long lastBlockTime = pivxApplication.getAppConf().getLastBestChainBlockTime();
-        if (lastBlockTime+OUT_OF_SYNC_TIME>now){
+        if (lastBlockTime + OUT_OF_SYNC_TIME > now) {
             // check if i'm syncing or i'm synched
             long peerHeight = pivxModule.getConnectedPeerHeight();
-            if (peerHeight!=-1){
-                if (pivxModule.getChainHeight()+10>peerHeight) {
+            if (peerHeight != -1) {
+                if (pivxModule.getChainHeight() + 10 > peerHeight) {
                     blockchainState = BlockchainState.SYNC;
-                }else {
+                } else {
                     blockchainState = BlockchainState.SYNCING;
                 }
-            }else {
+            } else {
                 blockchainState = BlockchainState.NOT_CONNECTION;
             }
-        }else {
+        } else {
             if (pivxModule.isAnyPeerConnected()) {
                 long peerHeight = pivxModule.getConnectedPeerHeight();
-                if (peerHeight!=-1){
-                    if (pivxModule.getChainHeight()+10>peerHeight) {
+                if (peerHeight != -1) {
+                    if (pivxModule.getChainHeight() + 10 > peerHeight) {
                         blockchainState = BlockchainState.SYNC;
-                    }else {
+                    } else {
                         blockchainState = BlockchainState.SYNCING;
                     }
-                }else {
+                } else {
                     blockchainState = BlockchainState.NOT_CONNECTION;
                 }
-            }else {
+            } else {
                 blockchainState = BlockchainState.NOT_CONNECTION;
             }
         }
@@ -148,7 +150,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     /**
      * Empty method to check some status before set the main layout of the activity
      */
-    protected void beforeCreate(){
+    protected void beforeCreate() {
 
     }
 
@@ -157,7 +159,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
      *
      * @param savedInstanceState
      */
-    protected void onCreateView(Bundle savedInstanceState, ViewGroup container){
+    protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
 
     }
 
@@ -192,13 +194,13 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         int id = item.getItemId();
 
         //to prevent current item select over and over
-        if (item.isChecked()){
+        if (item.isChecked()) {
             drawer.closeDrawer(GravityCompat.START);
             return false;
         }
 
         if (id == R.id.nav_wallet) {
-            Intent intent = new Intent(this,WalletActivity.class);
+            Intent intent = new Intent(this, WalletActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
@@ -206,23 +208,28 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
-        } else if (id == R.id.nav_donations){
+        } else if (id == R.id.nav_donations) {
             startActivity(new Intent(this, DonateActivity.class));
-        }
+        } else if (id == R.id.nav_buywithcash) {
+            startActivity(new Intent(this, BuyDashBaseActivity.class));
+        } /*else if (id == R.id.nav_sell_piv) {
+            startActivity(new Intent(this, SellingBaseActivity.class));
+        }*/
+
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    protected void setNavigationMenuItemChecked(int pos){
+    protected void setNavigationMenuItemChecked(int pos) {
         navigationView.getMenu().getItem(pos).setChecked(true);
     }
 
     private void updateBlockchainState() {
         // Check if the activity is on foreground
-        if (!isOnForeground)return;
+        if (!isOnForeground) return;
 
-        if (txt_sync_status!=null) {
+        if (txt_sync_status != null) {
             String text = null;
             int color = 0;
             int imgSrc = 0;
@@ -234,7 +241,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
                     imgSrc = 0;
                     break;
                 case SYNCING:
-                    text = getString(R.string.syncing)+" "+progress+"%";
+                    text = getString(R.string.syncing) + " " + progress + "%";
                     color = Color.parseColor("#f6a623");
                     imgSrc = R.drawable.ic_header_unsynced;
                     break;
@@ -246,21 +253,21 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             }
             txt_sync_status.setText(text);
             txt_sync_status.setTextColor(color);
-            if (imgSrc!=0) {
+            if (imgSrc != 0) {
                 img_sync.setImageResource(imgSrc);
                 img_sync.setVisibility(View.VISIBLE);
-            }else
+            } else
                 img_sync.setVisibility(View.INVISIBLE);
         }
     }
 
     private double calculateBlockchainSyncProgress() {
         long nodeHeight = pivxModule.getConnectedPeerHeight();
-        if (nodeHeight>0){
+        if (nodeHeight > 0) {
             // calculate the progress
             // nodeHeight -> 100 %
             // current height -> x %
-            return (pivxModule.getChainHeight()*100) / nodeHeight;
+            return (pivxModule.getChainHeight() * 100) / nodeHeight;
         }
         return -1;
     }

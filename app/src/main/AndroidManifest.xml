@@ -2,95 +2,145 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pivx.org.pivxwallet">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".PivxApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".PivxApplication">
-        <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.splash_activity.SplashActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.initial.InitialActivity"
-            android:noHistory="true"
-            >
+        <activity
+            android:name=".ui.initial.InitialActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait"
+        <activity
+            android:name=".ui.wallet_activity.WalletActivity"
             android:launchMode="singleInstance"
-            >
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.start_activity.StartActivity"  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.start_activity.StartActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".ui.backup_mnemonic_activity.MnemonicActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.backup_mnemonic_activity.MnemonicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.words_restore_activity.RestoreWordsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.contacts_activity.ContactsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings_activity.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings_backup_activity.SettingsBackupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings_restore_activity.SettingsRestoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.start_node_activity.StartNodeActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.restore_activity.RestoreActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.pincode_activity.PincodeActivity"  android:screenOrientation="portrait">
+        <activity
+            android:name=".ui.address_add_activity.AddContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings_network_activity.SettingsNetworkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.settings_node_activity.SettingsNodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.start_node_activity.StartNodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.restore_activity.RestoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.pincode_activity.PincodeActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.transaction_detail_activity.TransactionDetailActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".ui.transaction_detail_activity.TransactionDetailActivity"
             android:parentActivityName=".ui.wallet_activity.WalletActivity"
-            />
-        <activity android:name=".ui.transaction_detail_activity.InputsDetailActivity" android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_detail_activity.InputsDetailActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.transaction_send_activity.SendActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
+        <activity
+            android:name=".ui.transaction_send_activity.SendActivity"
             android:parentActivityName=".ui.wallet_activity.WalletActivity"
-            ></activity>
-        <activity android:name=".ui.upgrade.UpgradeWalletActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.CustomFeeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.ChangeAddressActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.custom.inputs.InputsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_send_activity.SendTxDetailActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.transaction_request_activity.RequestActivity"  android:screenOrientation="portrait"
-            android:parentActivityName=".ui.wallet_activity.WalletActivity">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity
+            android:name=".ui.upgrade.UpgradeWalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_send_activity.custom.CustomFeeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_send_activity.custom.ChangeAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_send_activity.custom.outputs.OutputsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_send_activity.custom.inputs.InputsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_send_activity.SendTxDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction_request_activity.RequestActivity"
+            android:parentActivityName=".ui.wallet_activity.WalletActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.qr_activity.QrActivity"/>
-        <activity android:name=".utils.scanner.ScanActivity"/>
+        <activity
+            android:name=".ui.tutorial_activity.TutorialActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.qr_activity.QrActivity" />
+        <activity android:name=".utils.scanner.ScanActivity" />
         <activity android:name=".ui.donate.DonateActivity" />
-        <activity android:name=".ui.export_account.ExportKeyActivity"/>
-        <activity android:name=".ui.import_watch_only.SettingsWatchOnly"/>
-        <activity android:name=".ui.settings_rates.SettingsRatesActivity"/>
+        <activity android:name=".ui.export_account.ExportKeyActivity" />
+        <activity android:name=".ui.import_watch_only.SettingsWatchOnly" />
+        <activity android:name=".ui.settings_rates.SettingsRatesActivity" />
 
-        <activity android:name=".ui.crash_activity.CrashPopupActivity"
-            android:launchMode="singleInstance"
+        <activity
+            android:name=".ui.crash_activity.CrashPopupActivity"
             android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
             android:taskAffinity=""
             android:theme="@android:style/Theme.Dialog" />
 
@@ -106,6 +156,13 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
+        <activity
+            android:name=".wallofcoins.buyingwizard.BuyDashBaseActivity"
+            android:theme="@style/BuyDashBaseActivity" />
+
+        <activity
+            android:name=".wallofcoins.selling_wizard.SellingBaseActivity"
+            android:theme="@style/SellingBaseTheme" />
     </application>
 
 </manifest>

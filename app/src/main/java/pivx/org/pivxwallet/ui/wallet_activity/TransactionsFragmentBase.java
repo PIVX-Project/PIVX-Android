@@ -45,8 +45,10 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        setEmptyView(R.drawable.img_transaction_empty);
-        setEmptyText("You don't have any transfers yet.");
+        setEmptyView(R.drawable.wall_of_coins);
+        setEmptyText("Load up your Wallet ->");
+
+        //setEmptyText("You don't have any transfers yet.");
         setEmptyTextColor(Color.parseColor("#cccccc"));
         return view;
     }

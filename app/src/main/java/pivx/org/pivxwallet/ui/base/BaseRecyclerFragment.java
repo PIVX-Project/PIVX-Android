@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.base;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
+import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
 
 /**
  * Created by furszy on 6/20/17.
@@ -75,6 +77,21 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                     }
                 }
         );
+
+        imgEmptyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BuyDashBaseActivity.class);
+                startActivity(intent);
+            }
+        });
+        txt_empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BuyDashBaseActivity.class);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 

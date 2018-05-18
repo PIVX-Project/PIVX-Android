@@ -59,6 +59,7 @@ import store.AddressStore;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
 import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
+import pivx.org.pivxwallet.wallofcoins.selling_wizard.storage.SharedPreferenceUtil;
 /**
  * Created by mati on 18/04/17.
  */
@@ -131,6 +132,7 @@ public class PivxApplication extends Application implements ContextWrapper {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        SharedPreferenceUtil.init(getApplicationContext());
         try {
             initLogging();
             log = LoggerFactory.getLogger(PivxApplication.class);
