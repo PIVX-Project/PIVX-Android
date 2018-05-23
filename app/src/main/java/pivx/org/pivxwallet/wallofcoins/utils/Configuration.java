@@ -25,8 +25,8 @@ import android.text.format.DateUtils;
 
 import com.google.common.base.Strings;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.utils.MonetaryFormat;
+import org.pivxj.core.Coin;
+import org.pivxj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

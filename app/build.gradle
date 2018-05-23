@@ -104,8 +104,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     compile 'com.squareup.okhttp:logging-interceptor:2.7.5'
     compile 'com.google.code.findbugs:jsr305:2.0.3'
-    compile 'org.dashj:dashj-core:0.14.4.3'
-
 
     //selling dependencies
 

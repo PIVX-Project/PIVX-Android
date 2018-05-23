@@ -102,7 +102,7 @@
             android:name=".ui.transaction_send_activity.SendActivity"
             android:parentActivityName=".ui.wallet_activity.WalletActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.upgrade.UpgradeWalletActivity"
             android:screenOrientation="portrait" />
@@ -155,6 +155,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths" />
         </provider>
+        <provider
+            android:name=".wallofcoins.addressbook.AddressBookProvider"
+            android:authorities="${applicationId}.address_book"
+            android:exported="false" />
 
         <activity
             android:name=".wallofcoins.buyingwizard.BuyDashBaseActivity"

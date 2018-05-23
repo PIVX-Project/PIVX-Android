@@ -23,8 +23,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import org.bitcoinj.wallet.Wallet;
 import org.pivxj.core.Address;
+import org.pivxj.wallet.Wallet;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +32,11 @@ import java.util.List;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
-import pivx.org.pivxwallet.wallofcoins.buyingwizard.adapters.BuyDashOffersAdapter;
 import pivx.org.pivxwallet.wallofcoins.WOCConstants;
 import pivx.org.pivxwallet.wallofcoins.api.WallofCoins;
 import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
 import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseFragment;
+import pivx.org.pivxwallet.wallofcoins.buyingwizard.adapters.BuyDashOffersAdapter;
 import pivx.org.pivxwallet.wallofcoins.buyingwizard.email_phone.EmailAndPhoneFragment;
 import pivx.org.pivxwallet.wallofcoins.buyingwizard.order_history.OrderHistoryFragment;
 import pivx.org.pivxwallet.wallofcoins.buyingwizard.utils.BuyDashAddressPref;
@@ -199,7 +199,7 @@ public class BuyDashOfferAmountFragment extends BuyDashBaseFragment implements V
     }
 
     private boolean isValidAmount() {
-       String amt=edtViewDollar.getText().toString().trim();
+        String amt = edtViewDollar.getText().toString().trim();
 
         if (edtViewDollar.getText().toString().trim().isEmpty()) {
             showToast(mContext.getString(R.string.alert_amount));

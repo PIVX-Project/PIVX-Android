@@ -37,8 +37,8 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     private RecyclerView recycler;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View container_empty_screen;
-    private TextView txt_empty;
-    private ImageView imgEmptyView;
+    protected TextView txt_empty;
+    protected ImageView imgEmptyView;
 
     private BaseRecyclerAdapter adapter;
     protected List<T> list;
@@ -78,20 +78,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                 }
         );
 
-        imgEmptyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BuyDashBaseActivity.class);
-                startActivity(intent);
-            }
-        });
-        txt_empty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BuyDashBaseActivity.class);
-                startActivity(intent);
-            }
-        });
+
         return root;
     }
 

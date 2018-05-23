@@ -19,9 +19,10 @@ package pivx.org.pivxwallet.wallofcoins.utils;
 
 import android.view.View;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.utils.ExchangeRate;
-import org.bitcoinj.utils.Fiat;
+
+import org.pivxj.core.Coin;
+import org.pivxj.utils.ExchangeRate;
+import org.pivxj.utils.Fiat;
 
 import javax.annotation.Nullable;
 

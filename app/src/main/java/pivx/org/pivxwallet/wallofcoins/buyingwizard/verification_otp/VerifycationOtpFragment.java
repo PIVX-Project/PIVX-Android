@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.bitcoinj.wallet.Wallet;
+
+import org.pivxj.wallet.Wallet;
 
 import java.util.HashMap;
 import java.util.List;

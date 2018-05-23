@@ -25,8 +25,9 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.ScaleXSpan;
 import android.util.AttributeSet;
 
-import org.bitcoinj.core.Monetary;
-import org.bitcoinj.utils.MonetaryFormat;
+
+import org.pivxj.core.Monetary;
+import org.pivxj.utils.MonetaryFormat;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.wallofcoins.utils.Constants;

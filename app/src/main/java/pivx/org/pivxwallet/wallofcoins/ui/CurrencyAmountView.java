@@ -35,9 +35,10 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.bitcoinj.core.Coin;
-import org.bitcoinj.core.Monetary;
-import org.bitcoinj.utils.MonetaryFormat;
+
+import org.pivxj.core.Coin;
+import org.pivxj.core.Monetary;
+import org.pivxj.utils.MonetaryFormat;
 
 import javax.annotation.Nullable;
 

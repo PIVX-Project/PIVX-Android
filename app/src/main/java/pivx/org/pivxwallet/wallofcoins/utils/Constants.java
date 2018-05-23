@@ -26,12 +26,12 @@ import com.squareup.okhttp.HttpUrl;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 
-import org.bitcoinj.core.CoinDefinition;
-import org.bitcoinj.core.Context;
-import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
-import org.bitcoinj.utils.MonetaryFormat;
+import org.pivxj.core.CoinDefinition;
+import org.pivxj.core.Context;
+import org.pivxj.core.NetworkParameters;
+import org.pivxj.params.MainNetParams;
+import org.pivxj.params.TestNet3Params;
+import org.pivxj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -296,7 +296,6 @@ public final class Constants {
     public static String WALLET_URI_SCHEME = "dashwallet";
 
     public static boolean ENABLE_ZERO_FEES = TEST; //Enable Zero Fee's on TestNet only.
-
 
 
 }

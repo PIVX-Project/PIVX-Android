@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.google.common.base.Charsets;
 
-import org.bitcoinj.core.WrongNetworkException;
+import org.pivxj.core.WrongNetworkException;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,7 +59,7 @@ public class BuyDashBaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-               module = PivxApplication.getInstance().getModule();
+        module = PivxApplication.getInstance().getModule();
         address = module.getReceiveAddress();
     }
 
@@ -203,8 +203,7 @@ public class BuyDashBaseFragment extends Fragment {
         try {
             if (KEY_ADDRESS != null && newLabel != null) {
 
-
-                org.bitcoinj.core.Address keyAddress = org.bitcoinj.core.Address.fromBase58(Constants.NETWORK_PARAMETERS, KEY_ADDRESS);
+                org.pivxj.core.Address keyAddress = org.pivxj.core.Address.fromBase58(Constants.NETWORK_PARAMETERS, KEY_ADDRESS);
                 final Uri uri = AddressBookProvider.contentUri(mContext.getPackageName()).buildUpon().appendPath(keyAddress.toBase58()).build();
                 final String addressLabel = AddressBookProvider.resolveLabel(mContext, keyAddress.toBase58());
 

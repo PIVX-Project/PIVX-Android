@@ -20,7 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.bitcoinj.core.Coin;
+
+import org.pivxj.core.Coin;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.wallofcoins.BuyDashPref;

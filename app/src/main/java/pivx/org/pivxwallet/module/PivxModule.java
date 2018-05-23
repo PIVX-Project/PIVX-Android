@@ -16,7 +16,6 @@ import org.pivxj.wallet.Wallet;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -25,9 +24,9 @@ import pivx.org.pivxwallet.contacts.AddressLabel;
 import pivx.org.pivxwallet.rate.db.PivxRate;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
 import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import wallet.exceptions.CantRestoreEncryptedWallet;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
-import wallet.exceptions.CantRestoreEncryptedWallet;
 
 /**
  * Created by mati on 18/04/17.
