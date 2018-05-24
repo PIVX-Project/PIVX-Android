@@ -25,7 +25,7 @@ import org.pivxj.uri.PivxURI;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxModule;
-import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
+import pivx.org.pivxwallet.wallofcoins.buying_wizard.BuyingWizardBaseActivity;
 
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;
@@ -136,7 +136,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(v.getContext(), R.string.copy_message, Toast.LENGTH_LONG).show();
         }
         else if (id == R.id.btn_buy) {
-            startActivity(new Intent(getActivity(), BuyDashBaseActivity.class));
+            startActivity(new Intent(getActivity(), BuyingWizardBaseActivity.class));
         }
     }
 }

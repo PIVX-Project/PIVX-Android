@@ -161,12 +161,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".wallofcoins.buyingwizard.BuyDashBaseActivity"
-            android:theme="@style/BuyDashBaseActivity" />
-
-        <activity
-            android:name=".wallofcoins.selling_wizard.SellingBaseActivity"
-            android:theme="@style/SellingBaseTheme" />
+            android:name=".wallofcoins.buying_wizard.BuyingWizardBaseActivity"
+            android:theme="@style/StyleBuyingBaseActivity" />
     </application>
 
 </manifest>

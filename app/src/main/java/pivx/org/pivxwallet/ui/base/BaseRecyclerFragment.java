@@ -1,6 +1,5 @@
 package pivx.org.pivxwallet.ui.base;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,7 +21,6 @@ import java.util.concurrent.Executors;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
-import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
 
 /**
  * Created by furszy on 6/20/17.
@@ -55,7 +53,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater,container,savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
         root = inflater.inflate(R.layout.base_recycler_fragment, container, false);
         recycler = (RecyclerView) root.findViewById(R.id.recycler_contacts);
         swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefresh);
@@ -66,7 +64,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recycler.setLayoutManager(layoutManager);
         adapter = initAdapter();
-        if (adapter==null) throw new IllegalStateException("Base adapter cannot be null");
+        if (adapter == null) throw new IllegalStateException("Base adapter cannot be null");
         recycler.setAdapter(adapter);
         swipeRefreshLayout.setEnabled(refreshSwipeEnabled);
         swipeRefreshLayout.setOnRefreshListener(
@@ -85,7 +83,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (executor==null){
+        if (executor == null) {
             executor = Executors.newSingleThreadExecutor();
         }
         load();
@@ -96,11 +94,11 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
      */
     private void load() {
         swipeRefreshLayout.setRefreshing(true);
-        if (executor!=null)
+        if (executor != null)
             executor.execute(loadRunnable);
     }
 
-    public void refresh(){
+    public void refresh() {
         load();
     }
 
@@ -108,32 +106,30 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     @Override
     public void onStop() {
         super.onStop();
-        if (executor!=null){
+        if (executor != null) {
             executor.shutdownNow();
             executor = null;
         }
     }
 
     /**
-     *
      * @return list of items
      */
     protected abstract List<T> onLoading();
 
     /**
-     *
      * @return the main adapter
      */
-    protected abstract BaseRecyclerAdapter<T,? extends BaseRecyclerViewHolder> initAdapter();
+    protected abstract BaseRecyclerAdapter<T, ? extends BaseRecyclerViewHolder> initAdapter();
 
-    protected <V>  V findViewById(int id,Class<V> clazz){
+    protected <V> V findViewById(int id, Class<V> clazz) {
         return (V) root.findViewById(id);
     }
 
     protected Runnable loadRunnable = new Runnable() {
         @Override
         public void run() {
-            if (getActivity()!=null) {
+            if (getActivity() != null) {
                 boolean res = false;
                 try {
                     list = onLoading();
@@ -164,37 +160,37 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         }
     };
 
-    protected void setSwipeRefresh(boolean enable){
+    protected void setSwipeRefresh(boolean enable) {
         this.refreshSwipeEnabled = enable;
     }
 
-    protected void setEmptyText(String text){
+    protected void setEmptyText(String text) {
         this.emptyText = text;
-        if (txt_empty!=null){
+        if (txt_empty != null) {
             txt_empty.setText(emptyText);
         }
     }
 
-    protected void setEmptyTextColor(int color){
-        if (txt_empty!=null){
+    protected void setEmptyTextColor(int color) {
+        if (txt_empty != null) {
             txt_empty.setTextColor(color);
         }
     }
 
-    protected void setEmptyView(int imgRes){
-        if (imgEmptyView!=null){
+    protected void setEmptyView(int imgRes) {
+        if (imgEmptyView != null) {
             imgEmptyView.setImageResource(imgRes);
         }
     }
 
-    private void showEmptyScreen(){
+    private void showEmptyScreen() {
 //        if (container_empty_screen!=null)
 //            AnimationUtils.fadeInView(container_empty_screen,300);
         container_empty_screen.setVisibility(View.VISIBLE);
 
     }
 
-    private void hideEmptyScreen(){
+    private void hideEmptyScreen() {
         container_empty_screen.setVisibility(View.GONE);
 //        if (container_empty_screen!=null)
 //            AnimationUtils.fadeOutView(container_empty_screen,300);

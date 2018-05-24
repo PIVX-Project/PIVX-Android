@@ -154,7 +154,7 @@ public final class Constants {
      * Currency code for the wallet name resolver.
      */
     public static final String WALLET_NAME_CURRENCY_CODE = NETWORK_PARAMETERS.getId()
-            .equals(NetworkParameters.ID_MAINNET) ? "dash" : "tdash";
+            .equals(NetworkParameters.ID_MAINNET) ? "piv" : "tpiv";
 
     /**
      * URL to fetch version alerts from.
@@ -204,7 +204,7 @@ public final class Constants {
     /**
      * Subject line for manually reported issues.
      */
-    public static final String REPORT_SUBJECT_ISSUE = "Dash Wallet: Reported issue";
+    public static final String REPORT_SUBJECT_ISSUE = "Piv Wallet: Reported issue";
 
     /**
      * Subject line for crash reports.
@@ -241,9 +241,6 @@ public final class Constants {
     public static final long DELAYED_TRANSACTION_THRESHOLD_MS = 2 * DateUtils.HOUR_IN_MILLIS;
 
     public static final int SDK_DEPRECATED_BELOW = Build.VERSION_CODES.JELLY_BEAN;
-
-    public static final boolean BUG_OPENSSL_HEARTBLEED = Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN
-            && Build.VERSION.RELEASE.startsWith("4.1.1");
 
     public static final int MEMORY_CLASS_LOWEND = 64;
 
@@ -290,10 +287,10 @@ public final class Constants {
 
     private static final Logger log = LoggerFactory.getLogger(Constants.class);
 
-    //Dash Specific
-    public static long EARLIEST_HD_SEED_CREATION_TIME = 1427610960l;
+    //piv Specific
+    public static long EARLIEST_HD_SEED_CREATION_TIME = 1427610960;
 
-    public static String WALLET_URI_SCHEME = "dashwallet";
+    public static String WALLET_URI_SCHEME = "pivwallet";
 
     public static boolean ENABLE_ZERO_FEES = TEST; //Enable Zero Fee's on TestNet only.
 

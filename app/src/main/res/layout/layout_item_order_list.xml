@@ -78,7 +78,7 @@
                             tools:text="TextView" />
 
                         <TextView
-                            android:id="@+id/button_buy_dash_item_location"
+                            android:id="@+id/button_buy_piv_item_location"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -173,14 +173,14 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/order_dash"
+                    android:id="@+id/order_piv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/order_dash_instruction"
+                    android:id="@+id/order_piv_instruction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"

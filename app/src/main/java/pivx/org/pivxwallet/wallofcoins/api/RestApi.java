@@ -50,7 +50,7 @@ public interface RestApi {
     Call<GetAuthTokenResp> getAuthToken(@Path("phone") String username, @FieldMap Map<String, String> partMap);
 
 
-    //--------------dash wizard
+    //--------------buy wizard
     @GET("api/v1/banks/")
     Call<List<GetReceivingOptionsResp>> getReceivingOptions();
     //----------------------

@@ -25,7 +25,7 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
-import pivx.org.pivxwallet.wallofcoins.buyingwizard.BuyDashBaseActivity;
+import pivx.org.pivxwallet.wallofcoins.buying_wizard.BuyingWizardBaseActivity;
 
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
@@ -54,14 +54,14 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
         imgEmptyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BuyDashBaseActivity.class);
+                Intent intent = new Intent(getActivity(), BuyingWizardBaseActivity.class);
                 startActivity(intent);
             }
         });
         txt_empty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), BuyDashBaseActivity.class);
+                Intent intent = new Intent(getActivity(), BuyingWizardBaseActivity.class);
                 startActivity(intent);
             }
         });

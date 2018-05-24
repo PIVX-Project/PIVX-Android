@@ -7,7 +7,7 @@ public class DiscoveryInputsResp {
      * id : 2948e301f2dbc2cd52c7284e2ebbd6bd
      * usdAmount : 500
      * cryptoAmount : 0
-     * crypto : DASH
+     * crypto : PIVX
      * fiat : USD
      * zipCode : 34236
      * bank : null

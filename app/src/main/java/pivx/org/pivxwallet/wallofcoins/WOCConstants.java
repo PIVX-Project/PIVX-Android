@@ -33,12 +33,12 @@ public final class WOCConstants {
     public static final String KEY_DEVICE_NAME = "name";
     public static final String KEY_DEVICE_CODE = "code";
     public static final String KEY_PHONE = "phone";
-    public static final String KEY_DEVICE_NAME_VALUE = "Dash Wallet (Android)";
+    public static final String KEY_DEVICE_NAME_VALUE = "Piv Wallet (Android)";
     public static final String KEY_OFFER = "offer";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_deviceName = "deviceName";
 
-    //BuyDash General Constants
+    //BuyPiv General Constants
     public static final String KEY_WEB_URL = "https://wallofcoins.com/";
     public static final String KEY_FORGOT_PASSWORD_URL = "https://wallofcoins.com/forgotPassword/";
     public static final String SUPPORT_EMAIL = "support@wallofcoins.com";
@@ -56,5 +56,4 @@ public final class WOCConstants {
     public static String VERIFICATION_OTP = "otp";
     public static String SCREEN_TYPE = "screenType";
 
-    public static int DIVIDENT_VALUE=1000000;
 }
