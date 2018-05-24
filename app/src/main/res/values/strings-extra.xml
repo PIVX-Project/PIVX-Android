@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+
+
+    <string name="WALLOFCOINS_PUBLISHER_ID">46</string>
+
+    <string name="base_url">https://wallofcoins.com/</string>
+
+
+    <string name="send_coins_fragment_instantx_enable">Use InstantSend</string>
+    <string name="transaction_row_message_own_instantx_lock_request_notsent">This InstantSend payment has not been transmitted yet.</string>
+    <string name="transaction_row_message_own_instantx_lock_request">This InstantSend payment is awaiting verification by the PIV Network.</string>
+    <string name="transaction_row_message_own_instantx_locked">Sent InstantSend transaction (locked)</string>
+    <string name="transaction_row_message_received_instantx_lock_request">This InstantSend payment is awaiting verification by the PIV Network.</string>
+    <string name="transaction_row_message_received_instantx_locked">This InstantSend payment has been verified by the PIV Network.</string>
+    <string name="transaction_row_message_received_unconfirmed_instantx">Unconfirmed InstantSend</string>
+    <string name="transaction_row_message_received_instantx_locked2">Locked InstantSend</string>
+
+    <string name="wallet_options_disconnect">Disconnect</string>
+
+    <string name="network_monitor_masternodes_title">Masternodes</string>
+    <string name="export_keys_dialog_title_to_seed">View recovery phrase</string>
+    <string name="import_keys_dialog_title_from_seed">Restore from recovery phrase</string>
+    <string name="backup_to_seed_wallet_dialog_message">This is your recovery phrase.  Please write it down.</string>
+    <string name="backup_wallet_to_seed_dialog_warning">DO NOT let anyone see your recovery phrase or they can spend your PIV.  This phrase is not compatible with other PIVX Software.</string>
+    <string name="backup_to_seed_wallet_dialog_enter_pin_message">Your wallet is protected by a spending PIN.  Enter your PIN and press Show to view your recovery phrase.</string>
+    <string name="import_keys_from_seed_dialog_message">Enter your recovery phrase here.</string>
+    <string name="import_export_keys_dialog_password_phrase">Recovery phrase goes here.</string>
+    <string name="navigation_configuration">Configuration</string>
+    <string name="button_copy_address">Copy address</string>
+    <string name="request_coins_clipboard_address_msg">PIV address copied to clipboard</string>
+    <string name="backup_wallet_to_seed_show_recovery_phrase">Show</string>
+    <string name="restore_wallet_from_invalid_seed_warning_message">%s is an invalid word.</string>
+
+    <string name="send_coins_options_fee_category_zero">No Fee</string>
+    <string name="send_coins_fragment_hint_fee_zero">No fee of will be paid. Use \'no fee\' only if you don\'t care about confirmation time.</string>
+    <string name="wallet_disclaimer_fragment_buy_wizard">Find a location nearby to &lt;u&gt;load your new PIV Wallet&lt;/u&gt;!</string>
+    <string name="buy_pivx_coins_amount_lable">I\'m looking to spend</string>
+
+    <string name="wallet_uri_handler_public_key_request_dialog_msg">Application %s would like to receive your Master Public Key.  This can be used to keep track of your wallet, this can not be used to move your PIVX.</string>
+    <string name="wallet_uri_handler_address_request_dialog_msg">Application %s is requesting an address so it can pay you.  Would you like to authorize this?</string>
+
+    <string name="sell_pivx_for_cash">Sell PIV For Cash</string>
+    <string name="hint_phone">Phone</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="text_create_auth">Create Auth</string>
+    <string name="text_create_ad">Create Ad</string>
+    <string name="maximum_payment">Maximum payment</string>
+    <string name="seller_fee">Seller fee (%)</string>
+    <string name="minimum_payment">Minimum payment</string>
+    <string name="use_dynamic_pricing">Use Dynamic Pricing?</string>
+    <string name="select_pricing_option">SELECT PRICING OPTIONS</string>
+    <string name="static_price">You can say how much you want per PIV</string>
+    <string name="text_otp">Your Purchase Code has been sent via text message. Enter the code in the field below.</string>
+    <string name="enter_purchase_code">Enter Purchase Code</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="country_flag">Country Flag</string>
+    <string name="all_field_required">All Fields Are Required!</string>
+    <string name="error_primary_secondry_same">Primary And Secondary Market Can Not Be Same.</string>
+    <string name="secondary_empty">Please Select Secondary Market</string>
+    <string name="primary_empty">Please Select Primary Market</string>
+    <string name="receivnig_option_empty">Please Select Your Cash Account</string>
+    <string name="buy_pivx_with_cash">Buy PIV With Cash</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="get_offers">Get Offers</string>
+    <string name="try_again">Something went wrong, Try Again!</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="date_format">%1$td/%1$tm/%1$tY</string>
+    <string name="text_above_phone">A mobile phone that can receive text messages is required for order verification.</string>
+    <string name="create_an_ad">Create an Ad</string>
+    <string name="price">Price:</string>
+
+
+    <!-- <string name="pivUnicode">\u2C63 %s</string>
+     <string name="dotUnicode">(\u1D7D %1$s)\n(at %2$s%3$.2f/\u2C63)</string>
+     <string name="dotUnicodeNoRate">(\u1D7D %s)</string>-->
+
+    <string name="pivUnicode">\u2C63 %s</string>
+    <string name="dotUnicode">(μⱣiv %1$s)\n(at %2$s%3$.2f/\u2C63)</string>
+    <string name="dotUnicodeNoRate">(μⱣiv %s)</string>
+
+    <string name="location_rationale">Your location is used to find nearest payment centers.</string>
+    <string name="find_my_location">Find My Location</string>
+    <string name="no_thanks">No Thanks</string>
+    <string name="created_hold">You already have an open hold or a pending order with Wall of Coins. Before you can create a new order, you must finish these orders.</string>
+    <string name="str_zip_code_blank">Leave Zip Code blank to see all available bank deposit destinations.</string>
+    <string name="select_payment_center">Select a nearby payment center...</string>
+    <string name="text_above_email">For your records, we can email you a receipt along with buying instructions.</string>
+    <string name="deposit_finish_confirmation_title">Confirmation!</string>
+    <string name="deposit_finish_confirmation_message">Are you sure you finished making the payment?</string>
+    <string name="user_pass_wrong">Unable to Sign In. Check that you input your right phone number and re-try your password.</string>
+    <string name="deposit_cancel_confirmation_title">Confirmation!</string>
+    <string name="deposit_cancel_confirmation_message">Are you sure you want to Cancel your order?</string>
+    <string name="show_on_map_nearby">Show on Map Nearby</string>
+    <string name="cash_to_deposit">Cash to Deposit: $%1$.2f</string>
+    <string name="phone">Phone: %s</string>
+    <string name="name_on_account">Name on Account: %s</string>
+    <string name="deposit_instruction" formatted="false">You are ordering: %s PIV (%s dots) .\n You must deposit cash at the above Payment Center. Additional fees may apply. Paying in another method other than cash may delay your order.</string>
+    <string name="order_completion_instruction">Do not throw away or misplace your receipt. A receipt is required before you will receive PIV!
+    \nFor your convenience, we are texting you these payment instructions.
+    \nWhen you are finished making the payment, you must press "Deposit Finished" to receive your PIV.</string>
+    <string name="text_send_email_receipt">Wall of Coins will verify your payment. This usually takes up to 10 minutes. To expedite your order, take a picture of your receipt and &lt;u&gt;click here&lt;/u&gt; to email your receipt to Wall of Coins.</string>
+    <string name="order_contact_instruction">If you have any questions, there is a live chat window at <u>wallofcoins.com</u> or you may call the phone number that sent you a text message.</string>
+    <string name="locationsPhone">Location\'s phone #: %s</string>
+    <string name="password_authenticate_dialog_message">You\'re already signed up for <a href="https://wallofcoins.com">Wall of Coins.</a></string>
+    <string name="password_authenticate_dialog_set_title">Input your password below:</string>
+    <string name="password_authenticate_dialog_info_message">Your password is transmitted securely.</string>
+    <string name="password_alert">Please enter password in password filed</string>
+    <string name="x_coins_api">X-Coins-Api-Token</string>
+    <string name="reject_execution">rejected execution</string>
+    <string name="publisher_id">publisher-id</string>
+    <string name="location_denied">Location permission denied,</string>
+    <string name="enable_location">You can enable it from Settings</string>
+    <string name="onresponce">onResponse:</string>
+    <string name="alert_thanks_for_payment">Thank you for making the payment! Once we verify your payment, we will send the PIVX to your wallet!</string>
+    <string name="alert_location_permission_denied">Location permission denied, \nYou can enable it from Settings</string>
+    <string name="label_select_payment_center">Select Payment Center</string>
+    <string name="alert_select_any_payment_center">Select Any Payment Center</string>
+    <string name="alert_enter_valid_email">Enter Valid Email or click [Do Not send me email] to skip</string>
+    <string name="label_buy_more_pivx">Buy More PIV!</string>
+    <string name="label_buy_more_bitcoin">Buy More PIV!</string>
+    <string name="alert_puchase_amout">Purchase amount must be at least $5</string>
+    <string name="alert_amount">Enter amount</string>
+    <string name="alert_purchase_code">Please Enter Purchase Code!</string>
+    <string name="alert_title_purchase_code">Whoops!</string>
+    <string name="alert_description_purchase_code">"The Purchase Code has expired. \n After you receive the Purchase Code, you will need to type quickly. " +
+		"You will need to create another order to receive another Purchase Code."</string>
+    <string name="alert_no_offers">No offers available</string>
+    <string name="alert_phone_password_required">Phone and Password is required</string>
+    <string name="alert_sign_out">Signed Out Successfully</string>
+    <string name="alert_phone">Enter phone number</string>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="enable_gps_location">Please enable GPS for Find My Location</string>
+    <string name="enable_label">Enable</string>
+    <string name="ignore_label">Ignore</string>
+    <string name="alert_cancel_order">Your Order cancelled successfully</string>
+    <string name="alert_payment_done">Thank you for making the payment! Once Wall of Coins verifies the payment, you will receive your PIV!</string>
+
+    <!--Buying wizard -->
+    <string name="title_buy_pivx">Buy PIV With Cash</string>
+    <string name="wallet_is_signed">Your wallet is signed into Wall of Coins using your mobile number</string>
+    <string name="pivx_wallet_name">PIV Wallet (Android)</string>
+    <string name="next_action">Next</string>
+    <string name="action_sign_out">Sign Out</string>
+    <string name="or">Or</string>
+    <string name="action_buy_more_bitcoin">Buy More PIV!</string>
+    <string name="action_confirm_purchase_code">Confirm Purchase Code</string>
+    <string name="status_waiting_deposit">Status: Waiting Deposit</string>
+    <string name="status_waiting_deposit_verification">Status: Waiting Deposit Verification</string>
+    <string name="status_issue_with_receipt">Status: Issue with Receipt</string>
+    <string name="status_issue_with_deposit">Status: Issue with Deposit</string>
+    <string name="status_reserved_for_deposit">Status: Reserved for Deposit</string>
+    <string name="status_remit_address_missing">Status: Remit Address Missing</string>
+    <string name="status_under_review">Status: Under Review</string>
+    <string name="status_done_pending_delivery">Status: Done - Pending Delivery</string>
+    <string name="status_done_units_delivered">Status: Done - Units Delivered</string>
+    <string name="call_for_help">Call (866) 841-2646 for help.   Help is also available on the website.</string>
+    <string name="do_not_send_me_email">[Do Not send me email]</string>
+    <string name="please_enter_phone_no">Please enter phone number</string>
+    <string name="please_enter_10_digits_phone_no">Please enter 10 digits phone number</string>
+    <string name="action_deposit_finished">Deposit Finished</string>
+    <string name="action_cancel_order">Cancel Order</string>
+    <string name="wallofcoins_com">WALLOFCOINS.COM</string>
+    <string name="action_check_location">Check Location</string>
+    <string name="subject_to_local_availability">Subject to local availability</string>
+    <string name="action_order_history">Order History</string>
+    <string name="no_order_history">You have no order history with PIV for Android. To see your full order history across all devices, visit <a href="https://wallofcoins.com">https://wallofcoins.com</a></string>
+    <string name="import_export_keys_dialog_password">password</string>
+    <string name="exchange_rates_fragment_rate">rate</string>
+    <string name="exchange_rates_fragment_default">(default)</string>
+    <string name="exchange_rates_fragment_balance">balance</string>
+    <string name="exchange_rates_context_set_as_default_title">Set as default</string>
+    <string name="button_set_as_default">Set as default</string>
+    <string name="wallet_balance_fragment_too_much">This amount is quite high for carrying in your pocket. Please move some to a safer place.</string>
+    <string name="exchange_rates_fragment_empty_text">Could not load exchange rates.</string>
+    <string name="exchange_rates_options_search">Search exchange rate</string>
+    <string name="exchange_rates_fragment_empty_search">Could not find exchange rate.</string>
+    <string name="amount_less_than_1000000">Amount should be less than $1000000.</string>
+    <string name="to_acquire_bitcoin_n_1_000_000_bits_1_pivx">to acquire PIV (Ᵽ)\n(1,000,000 μⱣiv = 1 ⱣIV)</string>
+    <string name="buy_cash">Buy PIV with Cash</string>
+    <string name="network_not_avaialable">Please check internet connection</string>
+    <string name="action_order">Order</string>
+    <string name="wallofcoins_sign_up">WALLOFCOINS SIGN UP</string>
+    <string name="existing_wallofcoins_account_sign_in">Existing WallofCoins Account Sign in:</string>
+    <string name="action_sign_in">sign in</string>
+    <string name="action_sign_in_here">sign in here</string>
+    <string name="sign_in2">SIGN IN: %s</string>
+    <string name="no_phones_available">No phones available</string>
+    <string name="do_you_already_have_an_order">Do you already have an order?</string>
+    <string name="enter_valid_amt">Enter valid Amount</string>
+    <string name="offerid_not_available">Offerid not available</string>
+    <string name="invalid_zip_code">Zip code shold be between 5 to 6 digits.</string>
+
+</resources>

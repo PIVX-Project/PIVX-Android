@@ -92,7 +92,7 @@
         <item name="android:stateListAnimator">@null</item>
     </style>
 
-    <style name="spinner_style" >
+    <style name="spinner_style">
         <item name="android:background">@drawable/bg_spinner</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingTop">5dp</item>
@@ -114,9 +114,20 @@
     <style name="fab_text_style">
         <item name="android:background">@color/transparent</item>
         <item name="android:textColor">@color/mainText</item>
-        <item name="fab_colorNormal">@color/colorPrimary</item> <item name="fab_colorPressed">@color/colorPrimaryDark</item>
+        <item name="fab_colorNormal">@color/colorPrimary</item>
+        <item name="fab_colorPressed">@color/colorPrimaryDark</item>
         <item name="android:textStyle">bold</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- wall of coins -->
+    <style name="My.Widget.Button.Borderless.Small" parent="@android:style/Widget.Holo.Button.Borderless.Small">
+        <item name="android:minWidth">40dp</item>
+        <item name="android:minHeight">40dp</item>
+    </style>
+
+    <style name="StyleBuyingBaseActivity" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
 

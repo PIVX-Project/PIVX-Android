@@ -25,6 +25,7 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
+import pivx.org.pivxwallet.wallofcoins.buying_wizard.BuyingWizardBaseActivity;
 
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
@@ -45,9 +46,25 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        setEmptyView(R.drawable.img_transaction_empty);
-        setEmptyText("You don't have any transfers yet.");
+        setEmptyView(R.drawable.wall_of_coins);
+        setEmptyText("Load up your Wallet ->");
+
+        //setEmptyText("You don't have any transfers yet.");
         setEmptyTextColor(Color.parseColor("#cccccc"));
+        imgEmptyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BuyingWizardBaseActivity.class);
+                startActivity(intent);
+            }
+        });
+        txt_empty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BuyingWizardBaseActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
