@@ -36,6 +36,7 @@ import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.transaction_send_activity.MyFilterableAdapter;
 import pivx.org.pivxwallet.ui.transaction_send_activity.MyTextWatcher;
+import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AnimationUtils;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -243,11 +244,16 @@ public class RestoreWordsActivity extends BaseActivity {
                                             public void run() {
                                                 if (finalResult){
                                                     Toast.makeText(RestoreWordsActivity.this, finalMessage, Toast.LENGTH_LONG).show();
-                                                    // Check if the app is starting
-                                                    if(!pivxApplication.getAppConf().isAppInit()){
-                                                        pivxApplication.getAppConf().setAppInit(true);
+                                                    // Check if the pin has been set
+                                                    if (pivxApplication.getAppConf().getPincode() != null){
+                                                        // Check if the app is starting
+                                                        if(!pivxApplication.getAppConf().isAppInit()){
+                                                            pivxApplication.getAppConf().setAppInit(true);
+                                                        }
+                                                        startActivity(new Intent(RestoreWordsActivity.this, WalletActivity.class));
+                                                    }else {
+                                                        startActivity(new Intent(RestoreWordsActivity.this, TutorialActivity.class));
                                                     }
-                                                    startActivity(new Intent(RestoreWordsActivity.this, WalletActivity.class));
                                                     finish();
                                                 }else {
                                                     AnimationUtils.fadeOutGoneView(container_loading,500);
