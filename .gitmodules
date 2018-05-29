@@ -1,0 +1,3 @@
+[submodule "pivx_light_wallets_core"]
+	path = pivx_light_wallets_core
+	url = https://github.com/furszy/pivx_light_wallets_core.git

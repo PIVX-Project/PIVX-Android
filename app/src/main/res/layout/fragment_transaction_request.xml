@@ -13,7 +13,40 @@
         android:id="@+id/fragment_amount"
         />
 
-    <include layout="@layout/fragment_transaction_inputs"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+
+        <TextView
+            android:id = "@+id/titleDescription"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/title_description"
+            android:paddingBottom="12dp"
+            android:layout_gravity="center"
+            android:textColor = "#757575"
+            android:textSize = "14sp" />
+
+        <EditText
+            android:id = "@+id/edit_memo"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:padding="8dp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:background="@drawable/transaction_inputs"
+            android:layout_marginBottom="10dp"
+            android:singleLine="true"
+            android:hint="@string/set_description"
+            android:text = ""
+            android:textColor = "#434343"
+            android:textSize = "17.5sp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_weight="1"

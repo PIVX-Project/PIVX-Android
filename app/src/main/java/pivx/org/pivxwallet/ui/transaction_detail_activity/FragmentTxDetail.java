@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.AddressLabel;
+import global.AddressLabel;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
-import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import global.wrappers.TransactionWrapper;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import wallet.exceptions.TxNotFoundException;
 

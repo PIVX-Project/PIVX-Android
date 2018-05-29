@@ -2,8 +2,6 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,8 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.google.zxing.WriterException;
-
 import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
 import org.pivxj.core.InsufficientMoneyException;
@@ -50,9 +46,9 @@ import java.util.List;
 import java.util.Set;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.AddressLabel;
-import pivx.org.pivxwallet.module.NoPeerConnectedException;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import global.AddressLabel;
+import global.exceptions.NoPeerConnectedException;
+import global.PivxRate;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
@@ -60,24 +56,21 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment;
-import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputWrapper;
+import global.wrappers.InputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputWrapper;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity;
-import pivx.org.pivxwallet.ui.wallet_activity.TransactionWrapper;
+import global.wrappers.TransactionWrapper;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.NavigationUtils;
-import pivx.org.pivxwallet.utils.QrUtils;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import wallet.exceptions.InsufficientInputsException;
 import wallet.exceptions.TxNotFoundException;
 
 import static android.Manifest.permission_group.CAMERA;
-import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
-import static pivx.org.pivxwallet.ui.qr_activity.MyAddressFragment.convertDpToPx;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_MEMO;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
@@ -91,7 +84,6 @@ import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeF
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.inputs.InputsFragment.INTENT_EXTRA_UNSPENT_WRAPPERS;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_CLEAR;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.outputs.OutputsActivity.INTENT_EXTRA_OUTPUTS_WRAPPERS;
-import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
@@ -624,13 +616,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         if (inPivs) {
             amountStr = edit_amount.getText().toString();
         }else {
-            String valueStr = editCurrency.getText().toString();
-            if(valueStr.length()>0) {
+            // the value is already converted
+            String valueStr = txtShowPiv.getText().toString();
+            amountStr = valueStr.replace(" PIV","");
+            if(valueStr.length() > 0) {
                 if (valueStr.charAt(0) == '.') {
-                    valueStr = "0" + valueStr;
+                    amountStr = "0" + valueStr;
                 }
-                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getRate());
-                amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
         }
         return amountStr;

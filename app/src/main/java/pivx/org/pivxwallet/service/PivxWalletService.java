@@ -13,7 +13,6 @@ import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -31,7 +30,6 @@ import org.pivxj.core.listeners.PeerConnectedEventListener;
 import org.pivxj.core.listeners.PeerDataEventListener;
 import org.pivxj.core.listeners.PeerDisconnectedEventListener;
 import org.pivxj.core.listeners.TransactionConfidenceEventListener;
-import org.pivxj.store.BlockStore;
 import org.pivxj.wallet.Wallet;
 import org.pivxj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
@@ -52,11 +50,11 @@ import pivtrum.listeners.AddressListener;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
-import pivx.org.pivxwallet.module.PivxModuleImp;
+import global.PivxModuleImp;
 import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
 import pivx.org.pivxwallet.rate.RequestPivxRateException;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -485,7 +483,7 @@ public class PivxWalletService extends Service{
     private void requestRateCoin(){
         final AppConf appConf = pivxApplication.getAppConf();
         PivxRate pivxRate = module.getRate(appConf.getSelectedRateCoin());
-        if (pivxRate==null || pivxRate.getTimestamp()+PivxContext.RATE_UPDATE_TIME<System.currentTimeMillis()){
+        if (pivxRate == null || pivxRate.getTimestamp() + PivxContext.RATE_UPDATE_TIME < System.currentTimeMillis()){
             new Thread(new Runnable() {
                 @Override
                 public void run() {

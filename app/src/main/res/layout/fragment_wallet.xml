@@ -10,14 +10,19 @@
     tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.base.BaseDrawerActivity"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp"
+        android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
+        <include layout="@layout/sincyng_view"
+            android:id="@+id/container_syncing"
+            android:visibility="gone"/>
 
 
         <FrameLayout
@@ -90,7 +95,7 @@
                     app:fab_size="mini"
                     app:fab_colorNormal="@color/colorPrimary"
                     app:fab_colorPressed="@color/colorPrimary"
-                    app:fab_label="@string/btn_request" />
+                    app:fab_label="@string/payment_request" />
 
                 <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_add"
@@ -111,7 +116,7 @@
 
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 

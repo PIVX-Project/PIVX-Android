@@ -17,8 +17,8 @@ import android.widget.Toast;
 import org.pivxj.uri.PivxURI;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.AddressLabel;
-import pivx.org.pivxwallet.module.ContactAlreadyExistException;
+import global.AddressLabel;
+import global.exceptions.ContactAlreadyExistException;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 

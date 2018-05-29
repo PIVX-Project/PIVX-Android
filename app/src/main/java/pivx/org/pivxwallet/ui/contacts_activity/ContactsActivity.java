@@ -14,13 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.AddressLabel;
+import global.AddressLabel;
 import pivx.org.pivxwallet.ui.address_add_activity.AddContactActivity;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;

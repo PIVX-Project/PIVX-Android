@@ -8,19 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.pivxj.core.Peer;
-
 import java.util.List;
 
-import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
-import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
-import pivx.org.pivxwallet.ui.settings_network_activity.NetworkViewHolder;
 
 /**
  * Created by furszy on 7/2/17.

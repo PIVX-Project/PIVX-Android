@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.contacts.AddressLabel;
+import global.AddressLabel;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 
 /**

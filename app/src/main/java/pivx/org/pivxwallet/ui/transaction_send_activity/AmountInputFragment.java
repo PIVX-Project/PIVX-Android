@@ -2,7 +2,6 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -12,16 +11,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import org.pivxj.core.Coin;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 
 /**
@@ -145,13 +142,13 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
         if (inPivs) {
             amountStr = edit_amount.getText().toString();
         }else {
-            String valueStr = editCurrency.getText().toString();
-            if(valueStr.length()>0) {
+            // the value is already converted
+            String valueStr = txtShowPiv.getText().toString();
+            amountStr = valueStr.replace(" PIV","");
+            if(valueStr.length() > 0) {
                 if (valueStr.charAt(0) == '.') {
-                    valueStr = "0" + valueStr;
+                    amountStr = "0" + valueStr;
                 }
-                BigDecimal result = new BigDecimal(valueStr).multiply(pivxRate.getRate());
-                amountStr = result.setScale(6, RoundingMode.FLOOR).toPlainString();
             }
         }
         return amountStr;

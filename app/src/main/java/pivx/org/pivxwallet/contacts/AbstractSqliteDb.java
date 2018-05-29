@@ -10,11 +10,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import global.store.AbstractDbDao;
+
 /**
  * Created by furszy on 6/6/17.
  */
 
-public abstract class AbstractSqliteDb<T> extends SQLiteOpenHelper {
+public abstract class AbstractSqliteDb<T> extends SQLiteOpenHelper implements AbstractDbDao<T> {
 
     public AbstractSqliteDb(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

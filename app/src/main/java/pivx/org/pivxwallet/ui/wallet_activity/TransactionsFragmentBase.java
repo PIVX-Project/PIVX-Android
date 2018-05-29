@@ -19,12 +19,13 @@ import java.util.Comparator;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 import pivx.org.pivxwallet.ui.base.tools.adapter.ListItemListeners;
 import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActivity;
+import global.wrappers.TransactionWrapper;
 
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
@@ -46,7 +47,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         setEmptyView(R.drawable.img_transaction_empty);
-        setEmptyText("You don't have any transfers yet.");
+        setEmptyText(getString(R.string.no_transactions));
         setEmptyTextColor(Color.parseColor("#cccccc"));
         return view;
     }
@@ -108,10 +109,13 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     //holder.cv.setBackgroundColor(Color.RED);Color.GREEN
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
-                }else if (!data.isStake()){
+                }else if (data.isZcSpend()) {
+                    holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
+                } else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
-                }else {
+                } else {
                     holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 }

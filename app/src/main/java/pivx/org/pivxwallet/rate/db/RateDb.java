@@ -8,12 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import java.math.BigDecimal;
 
 import pivx.org.pivxwallet.contacts.AbstractSqliteDb;
+import global.PivxRate;
+import global.store.RateDbDao;
 
 /**
  * Created by furszy on 7/5/17.
  */
 
-public class RateDb extends AbstractSqliteDb<PivxRate> {
+public class RateDb extends AbstractSqliteDb<PivxRate> implements RateDbDao<PivxRate> {
 
 
     private static final String DATABASE_NAME = "Rates";

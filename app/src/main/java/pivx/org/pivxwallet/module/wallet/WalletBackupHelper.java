@@ -8,6 +8,7 @@ import java.util.TimeZone;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.module.PivxContext;
 import global.utils.Iso8601Format;
+import global.BackupHelper;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -15,7 +16,7 @@ import static com.google.common.base.Preconditions.checkState;
  * Created by furszy on 6/29/17.
  */
 
-public class WalletBackupHelper {
+public class WalletBackupHelper implements BackupHelper{
 
     public File determineBackupFile(String extraData) {
         PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();

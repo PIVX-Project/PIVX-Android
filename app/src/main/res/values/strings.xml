@@ -38,6 +38,7 @@
     <string name="set_description">Add a description</string>
     <string name="btn_send">Send</string>
     <string name="btn_request">Request</string>
+    <string name="payment_request">Payment Request</string>
     <string name="settings_subtitle_security">Security</string>
     <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
@@ -387,5 +388,7 @@
     <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="restoring_wallet">Restoring wallet..</string>
+    <string name="no_transactions">You don\'t have any transfers yet.</string>
+    <string name="sync_in_progress">The wallet is out of sync, some transactions may be missing.\nPlease wait until the sync process finishes to see your current balance.</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package pivx.org.pivxwallet.ui.wallet_activity;
 
-import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Menu;
@@ -28,11 +26,11 @@ import org.pivxj.uri.PivxURI;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
+import chain.BlockchainState;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.NoPeerConnectedException;
-import pivx.org.pivxwallet.rate.db.PivxRate;
+import global.exceptions.NoPeerConnectedException;
+import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
@@ -70,6 +68,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_local_currency;
     private TextView txt_watch_only;
     private View view_background;
+    private View container_syncing;
     private PivxRate pivxRate;
     private TransactionsFragmentBase txsFragment;
 
@@ -118,6 +117,7 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
         txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
         view_background = root.findViewById(R.id.view_background);
+        container_syncing = root.findViewById(R.id.container_syncing);
         // Open Send
         root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,6 +319,7 @@ public class WalletActivity extends BaseDrawerActivity {
                                         startActivity(intent);
                                     }
                                 });
+                            dialogFragment.setImgAlertRes(R.drawable.ic_send_action);
                             dialogFragment.setAlignBody(SimpleTextDialog.Align.LEFT);
                             dialogFragment.setImgAlertRes(R.drawable.ic_fab_recieve);
                             dialogFragment.show(getFragmentManager(),"payment_request_dialog");
@@ -361,6 +362,17 @@ public class WalletActivity extends BaseDrawerActivity {
             );
         }else {
             txt_local_currency.setText("0");
+        }
+    }
+
+    @Override
+    protected void onBlockchainStateChange(){
+        if (blockchainState == BlockchainState.SYNCING){
+            AnimationUtils.fadeInView(container_syncing,500);
+        }else if (blockchainState == BlockchainState.SYNC){
+            AnimationUtils.fadeOutGoneView(container_syncing,500);
+        }else if (blockchainState == BlockchainState.NOT_CONNECTION){
+            AnimationUtils.fadeInView(container_syncing,500);
         }
     }
 }
