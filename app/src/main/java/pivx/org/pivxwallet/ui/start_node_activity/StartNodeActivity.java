@@ -127,7 +127,7 @@ public class StartNodeActivity extends BaseActivity {
 
         // add connected node if it's not on the list
         PivtrumPeerData pivtrumPeer = pivxApplication.getAppConf().getTrustedNode();
-        if (pivtrumPeer!=null && !pivtrumPeer.getHost().equals(FURSZY_TESTNET_SERVER)){
+        if (pivtrumPeer!=null && !trustedNodes.contains(pivtrumPeer)){
             trustedNodes.add(pivtrumPeer);
         }
 
