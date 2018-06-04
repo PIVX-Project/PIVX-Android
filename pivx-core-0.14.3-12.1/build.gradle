@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('pivxj-core-0.14.3-12.1.jar'))
