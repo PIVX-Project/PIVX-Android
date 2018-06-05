@@ -135,7 +135,7 @@ public class StartNodeActivity extends BaseActivity {
 
         for (int i=0;i<trustedNodes.size();i++){
             PivtrumPeerData trustedNode = trustedNodes.get(i);
-            if (pivtrumPeer!=null && pivtrumPeer.getHost().equals(trustedNode)){
+            if (pivtrumPeer!=null && pivtrumPeer.getHost().equals(trustedNode.getHost())){
                 selectionPos = i;
             }
             if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)){
@@ -161,8 +161,8 @@ public class StartNodeActivity extends BaseActivity {
                 return view;
             }
         };
-        dropdown.setSelection(selectionPos);
         dropdown.setAdapter(adapter);
+        dropdown.setSelection(selectionPos);
     }
 
     private void goNext() {
