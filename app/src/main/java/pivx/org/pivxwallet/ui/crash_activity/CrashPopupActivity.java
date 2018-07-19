@@ -26,6 +26,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
+import global.PivxModuleImp;
 import global.utils.Io;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
@@ -248,6 +249,6 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
 
     @Nullable
     protected CharSequence collectWalletDump() throws IOException{
-        return pivxApplication.getModule().getWallet().toString(false,true,true,null);
+        return ((PivxModuleImp)pivxApplication.getModule()).getWallet().toString(false,true,true,null);
     }
 }

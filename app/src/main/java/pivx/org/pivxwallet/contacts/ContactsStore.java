@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import global.AddressLabel;
@@ -131,5 +132,16 @@ public class ContactsStore extends AbstractSqliteDb<AddressLabel> implements Con
 
     public void delete(AddressLabel data) {
         delete(KEY_ADDRESS,data.getAddresses().get(0));
+    }
+
+    // TODO: Check this..
+    @Override
+    public List<AddressLabel> getMyAddresses() {
+        return null;
+    }
+
+    @Override
+    public List<AddressLabel> getContacts() {
+        return null;
     }
 }

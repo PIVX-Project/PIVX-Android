@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
+import global.PivxModuleImp;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.module.PivxContext;
 
@@ -250,7 +251,7 @@ public class CrashReporter {
 		report.append(
 				"Time of backup: " + (lastBackupTime > 0 ? String.format(Locale.US, "%tF %tT %tZ", calendar, calendar, calendar) : "none") + "\n");
 		report.append("Network: " + PivxContext.NETWORK_PARAMETERS.getId() + "\n");
-		final Wallet wallet = application.getModule().getWallet();
+		final Wallet wallet = ((PivxModuleImp)application.getModule()).getWallet();
 		report.append("Encrypted: " + wallet.isEncrypted() + "\n");
 		report.append("Keychain size: " + wallet.getKeyChainGroupSize() + "\n");
 

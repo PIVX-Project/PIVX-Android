@@ -83,8 +83,8 @@ dependencies {
     compile 'com.snappydb:snappydb-lib:0.5.2'
     compile 'ch.acra:acra:4.9.2'
     //compile 'com.bugsee:bugsee-android:+'
-    compile project(':pivx_light_wallets_core')
-    testCompile project(':pivx_light_wallets_core')
+    compile project(':mobile')
+    testCompile project(':mobile')
     compile 'com.github.clans:fab:1.6.4'
     testCompile 'org.slf4j:slf4j-api:1.7.20'
     testCompile 'org.slf4j:slf4j-simple:1.7.5'

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import chain.BlockchainState;
+import global.PivxModuleImp;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
@@ -258,7 +259,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence collectWalletDump() throws IOException {
-                return pivxModule.getWallet().toString(false,true,true,null);
+                return ((PivxModuleImp)pivxModule).getWallet().toString(false,true,true,null);
             }
         };
         dialog.show();

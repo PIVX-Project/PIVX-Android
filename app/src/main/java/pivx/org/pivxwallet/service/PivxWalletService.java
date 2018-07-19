@@ -531,7 +531,9 @@ public class PivxWalletService extends Service{
                         impediments,
                         peerConnectivityListener,
                         peerConnectivityListener,
-                        blockchainDownloadListener);
+                        blockchainDownloadListener,
+                        null
+                        );
                 //todo: ver si conviene esto..
                 broadcastBlockchainState(true);
                 isChecking.set(false);
