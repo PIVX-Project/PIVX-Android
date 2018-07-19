@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.settings_rates;
+package pivx.org.pivxwallet.ui.settings.settings_rates;
 
 import android.graphics.Color;
 import android.os.Bundle;

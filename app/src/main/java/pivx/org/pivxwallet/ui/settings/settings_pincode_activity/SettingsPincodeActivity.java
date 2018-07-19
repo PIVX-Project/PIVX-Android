@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.settings_pincode_activity;
+package pivx.org.pivxwallet.ui.settings.settings_pincode_activity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;

@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.settings_restore_activity;
+package pivx.org.pivxwallet.ui.settings.settings_restore_activity;
 
 import android.os.Bundle;
 import android.view.ViewGroup;

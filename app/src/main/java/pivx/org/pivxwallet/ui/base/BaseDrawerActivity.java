@@ -24,7 +24,8 @@ import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
-import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
+import pivx.org.pivxwallet.ui.privacy.PrivacyActivity;
+import pivx.org.pivxwallet.ui.settings.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
@@ -204,6 +205,11 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             finish();
         } else if (id == R.id.nav_address) {
             startActivity(new Intent(this, ContactsActivity.class));
+        } else if (id == R.id.nav_privacy){
+            Intent intent = new Intent(this, PrivacyActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_donations){

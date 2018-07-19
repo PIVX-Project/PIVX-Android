@@ -11,6 +11,7 @@
     <color name="sync_green">#B7FFF9</color>
     <color name="lightGreen">#50e3c2</color>
     <color name="colorPurple">#55476c</color>
+    <color name="darkPurple">#2A2235</color>
     <color name="bgWhite">#ffffff</color>
     <color name="bgWhite30">#4Dffffff</color>
     <color name="bgBlack30">#4D000000</color>
@@ -23,7 +24,7 @@
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorLightPurple">#ffffff</color>
     <color name="transation_title">#55476c</color>
-    <color name="mainText">#4F4F4F</color>
+    <color name="mainText">#262626</color>
     <color name="subtitle">#757575</color>
     <color name="bgInput">#F5F6F7</color>
     <color name="hintInput">#979899</color>
@@ -31,6 +32,22 @@
     <color name="warning">#d74759</color>
 
     <color name="gray_87_text">#dd000000</color>
+
+    <!-- White Opacity -->
+
+    <color name="white_a_80">#E6ffffff</color>
+    <color name="white_a_60">#99FFFFFF</color>
+    <color name="white_a_30">#4DFFFFFF</color>
+    <color name="white_a_20">#33FFFFFF</color>
+    <color name="white_a_10">#1aFFFFFF</color>
+
+    <!-- Black Opacity -->
+
+    <color name="black_a_60">#99000000</color>
+    <color name="black_a_20">#33000000</color>
+    <color name="black_a_30">#33000000</color>
+    <color name="black_a_10">#1a000000</color>
+
 
     <!-- scanner -->
     <color name="scan_mask">#60000000</color>

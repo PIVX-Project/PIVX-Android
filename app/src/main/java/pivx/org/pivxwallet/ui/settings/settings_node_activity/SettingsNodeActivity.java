@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.settings_node_activity;
+package pivx.org.pivxwallet.ui.settings.settings_node_activity;
 
 import android.content.Intent;
 import android.os.Bundle;

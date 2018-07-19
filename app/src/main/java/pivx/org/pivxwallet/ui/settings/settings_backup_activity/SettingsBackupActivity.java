@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.settings_backup_activity;
+package pivx.org.pivxwallet.ui.settings.settings_backup_activity;
 
 import android.Manifest;
 import android.content.Intent;

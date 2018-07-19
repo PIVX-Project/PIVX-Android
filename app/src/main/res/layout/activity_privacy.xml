@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/bgWhite"
+    tools:context="pivx.org.pivxwallet.ui.base.BaseDrawerActivity">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.base.BaseDrawerActivity"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <include layout="@layout/sincyng_view"
+            android:id="@+id/container_syncing"
+            android:visibility="gone"/>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/container_txs">
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="pivx.org.pivxwallet.ui.wallet_activity.TransactionsFragmentBase"
+                android:id="@+id/transactions_fragment"
+                android:paddingBottom="66dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bgWhite80"
+                android:id="@+id/view_background"
+                android:visibility="invisible"/>
+
+            <com.github.clans.fab.FloatingActionMenu
+                android:id="@+id/fab_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:menu_fab_size="normal"
+                app:menu_showShadow="true"
+                app:menu_shadowColor="#66000000"
+                app:menu_shadowRadius="4dp"
+                app:menu_shadowXOffset="1dp"
+                app:menu_shadowYOffset="3dp"
+                app:menu_colorNormal="@color/green"
+                app:menu_colorPressed="@color/lightGreen1"
+                app:menu_colorRipple="#99FFFFFF"
+                app:menu_animationDelayPerItem="60"
+                app:menu_icon="@drawable/fab_add"
+                app:menu_buttonSpacing="0dp"
+                app:menu_labels_margin="0dp"
+                app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+                app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+                app:menu_labels_paddingTop="4dp"
+                app:menu_labels_paddingRight="8dp"
+                app:menu_labels_paddingBottom="4dp"
+                app:menu_labels_paddingLeft="8dp"
+                app:menu_labels_padding="8dp"
+                app:menu_labels_textColor="@color/mainText"
+                app:menu_labels_textSize="14sp"
+                app:menu_labels_cornerRadius="3dp"
+                app:menu_labels_colorNormal="#333333"
+                app:menu_labels_colorPressed="#444444"
+                app:menu_labels_colorRipple="#66FFFFFF"
+                app:menu_labels_showShadow="true"
+                app:menu_labels_singleLine="false"
+                app:menu_labels_ellipsize="none"
+                app:menu_labels_maxLines="-1"
+                app:menu_labels_style="@style/fab_text_style"
+                app:menu_labels_position="left"
+                app:menu_openDirection="up"
+                app:menu_backgroundColor="@android:color/transparent"
+                app:menu_fab_show_animation="@anim/fab_scale_up"
+                app:menu_fab_hide_animation="@anim/fab_scale_down"
+                android:layout_gravity="bottom|end">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_send_zpiv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_send_action"
+                    app:fab_size="mini"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    app:fab_colorPressed="@color/colorPrimary"
+                    app:fab_label="@string/btn_send_zpiv" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_convert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fab_convert"
+                    app:fab_size="mini"
+                    app:fab_colorNormal="@color/colorPrimary"
+                    app:fab_colorPressed="@color/colorPrimary"
+                    app:fab_label="@string/btn_convert" />
+
+            </com.github.clans.fab.FloatingActionMenu>
+
+
+        </FrameLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

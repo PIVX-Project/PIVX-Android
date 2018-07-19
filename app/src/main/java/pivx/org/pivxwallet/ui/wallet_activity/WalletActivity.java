@@ -35,7 +35,7 @@ import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
-import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
+import pivx.org.pivxwallet.ui.settings.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.ui.upgrade.UpgradeWalletActivity;

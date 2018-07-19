@@ -1,4 +1,4 @@
-package pivx.org.pivxwallet.ui.settings_network_activity;
+package pivx.org.pivxwallet.ui.settings.settings_network_activity;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

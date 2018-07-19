@@ -389,6 +389,18 @@
     <string name="amount">Amount</string>
     <string name="restoring_wallet">Restoring wallet..</string>
     <string name="no_transactions">You don\'t have any transfers yet.</string>
-    <string name="sync_in_progress">The wallet is out of sync, some transactions may be missing.\nPlease wait until the sync process finishes to see your current balance.</string>
+    <string name="sync_in_progress">The wallet is out of sync, some transactions may be missing.</string>
+
+    <!-- Privacy -->
+    <string name="nav_privacy">Privacy</string>
+    <string name="title_privacy">Privacy</string>
+    <string name="btn_convert">Convert</string>
+    <string name="title_convert">Convert</string>
+    <string name="convert_piv">Convert to Piv</string>
+    <string name="convert_zpiv">Convert to zPiv</string>
+    <string name="btn_send_zpiv">Send zPIV</string>
+    <string name="label_amount_convert">Amount to convert</string>
+    <string name="message_convert_zpiv">PIV can be converted to zPIV to remove transaction history. Sending zPIV is 100% anonymous and untraceable</string>
+    <string name="coin_control">Coin Control</string>
 
 </resources>

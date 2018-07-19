@@ -1,13 +1,10 @@
-package pivx.org.pivxwallet.ui.settings_activity;
+package pivx.org.pivxwallet.ui.settings.settings_activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,7 +16,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import chain.BlockchainState;
 import global.PivxModuleImp;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
@@ -29,10 +25,10 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.export_account.ExportKeyActivity;
 import pivx.org.pivxwallet.ui.import_watch_only.SettingsWatchOnly;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
-import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
-import pivx.org.pivxwallet.ui.settings_network_activity.SettingsNetworkActivity;
-import pivx.org.pivxwallet.ui.settings_pincode_activity.SettingsPincodeActivity;
-import pivx.org.pivxwallet.ui.settings_rates.SettingsRatesActivity;
+import pivx.org.pivxwallet.ui.settings.settings_backup_activity.SettingsBackupActivity;
+import pivx.org.pivxwallet.ui.settings.settings_network_activity.SettingsNetworkActivity;
+import pivx.org.pivxwallet.ui.settings.settings_pincode_activity.SettingsPincodeActivity;
+import pivx.org.pivxwallet.ui.settings.settings_rates.SettingsRatesActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -41,10 +37,6 @@ import pivx.org.pivxwallet.utils.IntentsUtils;
 import pivx.org.pivxwallet.utils.NavigationUtils;
 import pivx.org.pivxwallet.utils.ReportIssueDialogBuilder;
 
-import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
-import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
-import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
-import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity.INTENT_EXTRA_INFO_TUTORIAL;
 
 /**
