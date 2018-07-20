@@ -79,7 +79,6 @@
             android:parentActivityName=".ui.wallet_activity.WalletActivity">
 
         </activity>
-        <activity android:name=".ui.privacy.PrivacyActivity"/>
         <activity android:name=".ui.privacy.privacy_convert.ConvertActivity"/>
         <activity android:name=".ui.privacy.privacy_coin_control.PrivacyCoinControlActivity"/>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
