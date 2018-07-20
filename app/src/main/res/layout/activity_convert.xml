@@ -48,31 +48,18 @@
         </RadioGroup>
 
         <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
             android:id="@+id/txt_currency_amount"
             android:text = "@string/label_amount_convert"
-            android:layout_marginBottom="10dp"
-            android:textColor = "@color/subtitle"
-            android:textSize = "14sp" />
+            style="@style/Label"/>
 
         <EditText
             android:id = "@+id/edit_amount"
-            android:gravity="center_horizontal"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:padding="8dp"
-            android:paddingBottom="11dp"
-            android:paddingTop="11dp"
             android:inputType="number"
-            android:background="@drawable/transaction_inputs"
-            android:textCursorDrawable="@drawable/color_cursor"
             android:layout_marginBottom="10dp"
-            android:maxLines="1"
             android:hint="@string/set_amount_usd"
             android:text = "12313434 PIV"
-            android:textColor = "@color/mainText"
-            android:textSize = "20sp" />
+            android:textSize = "18sp"
+            style="@style/InputPrimary"/>
 
 
         <TextView
@@ -85,13 +72,11 @@
 
         <Button
             android:id="@+id/btn_add_all"
-            android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:textColor="@color/colorPurple"
-            android:text="@string/add_all"/>
+            android:text="@string/add_all"
+            style="@style/ButtonText"/>
 
     </LinearLayout>
 
@@ -102,8 +87,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
         android:paddingBottom="40dp"
         android:layout_alignParentBottom="true">
 
@@ -121,18 +104,8 @@
 
         <Button
             android:id="@+id/btn_convert"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_button_purple"
-            android:elevation="2dp"
-            android:gravity="center"
-            android:layout_gravity="bottom"
             android:text="@string/convert_zpiv"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            style="@style/ButtonPrimary"/>
 
 
         <TextView

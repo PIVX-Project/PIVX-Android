@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
-    <color name="colorPrimary">#55476c</color>
-    <color name="colorPrimaryDark">#45385a</color>
+    <color name="colorPrimary">#5c4c7c</color>
+    <color name="colorPrimaryDark">#372f44</color>
     <color name="colorAccent">#009688</color>
-    <color name="bgPurple">#55476c</color>
+    <color name="bgPurple">#5c4c7c</color>
     <color name="green">#009688</color>
     <color name="lightGreen1">#36c6a5</color>
     <color name="mainGreen">#63ece0</color>
     <color name="sync_green">#B7FFF9</color>
     <color name="lightGreen">#50e3c2</color>
-    <color name="colorPurple">#55476c</color>
-    <color name="darkPurple">#2A2235</color>
+    <color name="colorPurple">#5c4c7c</color>
+    <color name="darkPurple">#372f44</color>
     <color name="bgWhite">#ffffff</color>
     <color name="bgWhite30">#4Dffffff</color>
     <color name="bgBlack30">#4D000000</color>
@@ -20,7 +20,7 @@
     <color name="bgBlackX">#DD000000</color>
     <color name="bgBlack10">#1A000000</color>
     <color name="bgBlack05">#0D000000</color>
-    <color name="textColorPurple">#55476c</color>
+    <color name="textColorPurple">#5c4c7c</color>
     <color name="textColorWhite">#ffffff</color>
     <color name="textColorLightPurple">#ffffff</color>
     <color name="transation_title">#55476c</color>
@@ -32,6 +32,10 @@
     <color name="warning">#d74759</color>
 
     <color name="gray_87_text">#dd000000</color>
+
+    <!-- Text -->
+
+    <color name="color_label">#7a8392</color>
 
     <!-- White Opacity -->
 
@@ -58,7 +62,7 @@
 
     <!-- Tutorial -->
 
-    <color name="bg_screen1">#55476c</color>
+    <color name="bg_screen1">#5c4c7c</color>
     <color name="bg_screen2">#73bdc5</color>
     <color name="bg_screen3">#ed8557</color>
 

@@ -67,7 +67,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 String temp = s.toString();
                 if(pivxModule.chechAddress(temp)){
                     address = temp;
-                    edit_address.setTextColor(Color.parseColor("#55476c"));;
+                    edit_address.setTextColor(Color.parseColor("#5c4c7c"));;
                 }else {
                     edit_address.setTextColor(Color.parseColor("#4d4d4d"));;
                 }
