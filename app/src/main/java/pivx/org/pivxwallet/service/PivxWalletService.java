@@ -313,14 +313,14 @@ public class PivxWalletService extends Service{
         serviceCreatedAt = System.currentTimeMillis();
         super.onCreate();
         try {
-            log.info("Pivx service started");
+            log.info("PIVX service started");
             // Android stuff
             final String lockName = getPackageName() + " blockchain sync";
             final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             broadcastManager = LocalBroadcastManager.getInstance(this);
-            // Pivx
+            // PIVX
             pivxApplication = PivxApplication.getInstance();
             module = (PivxModuleImp) pivxApplication.getModule();
             blockchainManager = module.getBlockchainManager();
@@ -376,7 +376,7 @@ public class PivxWalletService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        log.info("Pivx service onStartCommand");
+        log.info("PIVX service onStartCommand");
         try {
             if (intent != null) {
                 try {

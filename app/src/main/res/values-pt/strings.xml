@@ -116,7 +116,7 @@ de código aberto, descentralizada e de alta privacidade, dirigida por uma comun
     <string name="next">Próximo</string>
     <string name="skip">Pular</string>
     <string name="start">Iniciar</string>
-    <string name="title_slide1">Pivx é seguro</string>
+    <string name="title_slide1">PIVX é seguro</string>
     <string name="desc_slide1">Primeira moeda com a encriptação BIP38 e decodificação de chaves privadas</string>
     <string name="title_slide2">60 segundos tempo de bloqueio</string>
     <string name="desc_slide2">Além de muito rápidas, as trasações PIVX usando SwiftX possuem um tempo de espera de confirmação iguais a ZERO.</string>

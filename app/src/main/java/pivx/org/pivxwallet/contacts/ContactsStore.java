@@ -142,6 +142,6 @@ public class ContactsStore extends AbstractSqliteDb<AddressLabel> implements Con
 
     @Override
     public List<AddressLabel> getContacts() {
-        return null;
+        return list();
     }
 }

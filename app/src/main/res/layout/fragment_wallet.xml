@@ -88,16 +88,6 @@
                 android:layout_gravity="bottom|end">
 
                 <com.github.clans.fab.FloatingActionButton
-                    android:id="@+id/fab_send_zpiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_send_action"
-                    app:fab_size="mini"
-                    app:fab_colorNormal="@color/darkPurple"
-                    app:fab_colorPressed="@color/colorPrimary"
-                    app:fab_label="@string/btn_send_zpiv" />
-
-                <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_convert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

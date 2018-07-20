@@ -107,7 +107,7 @@
     <string name="next">Siguiente</string>
     <string name="skip">Saltar</string>
     <string name="start">Empezar</string>
-    <string name="title_slide1">Pivx es seguro</string>
+    <string name="title_slide1">PIVX es seguro</string>
     <string name="desc_slide1">La primera moneda digital con Encriptado y Desencriptado de Llaves Privadas BIP38</string>
     <string name="title_slide2">BLOQUES CADA 60 SEGUNDOS</string>
     <string name="desc_slide2">De por sí ya muy rápida, pero las transacciones PIVX que usan SwiftX son instantáneas sin tiempo de espera de confirmaciones.</string>

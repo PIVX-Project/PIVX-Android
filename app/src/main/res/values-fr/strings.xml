@@ -97,7 +97,7 @@
     <string name="next">Suivant</string>
     <string name="skip">Passer</string>
     <string name="start">Commencer</string>
-    <string name="title_slide1">Pivx est sécurisé</string>
+    <string name="title_slide1">PIVX est sécurisé</string>
     <string name="desc_slide1">Première cryptomonnaie qui utilise le chiffrement BIP38 pour les clés privées.</string>
     <string name="title_slide2">Temps de bloc de 60 secondes</string>
     <string name="desc_slide2">Déjà très rapide, les transactions PIVX utilisant SwiftX sont instantanée avec ZERO temps de confirmation requis.</string>

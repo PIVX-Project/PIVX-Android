@@ -107,7 +107,7 @@
     <string name="next">Další</string>
     <string name="skip">Přeskočit</string>
     <string name="start">Start</string>
-    <string name="title_slide1">Pivx je zabezpečen</string>
+    <string name="title_slide1">PIVX je zabezpečen</string>
     <string name="desc_slide1">První měna s BIP38 šifrováním a dešifrováním Privátních Klíčů</string>
     <string name="title_slide2">60 VTEŘIN PRO ZPRACOVÁNÍ BLOKU</string>
     <string name="desc_slide2">Velmi rychlé, PIVX transakce využívající SwiftX jsou provedeny inhned s NULOVÝM časem potřebným na potvrzení.</string>
