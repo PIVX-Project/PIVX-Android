@@ -24,7 +24,6 @@ import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
-import pivx.org.pivxwallet.ui.privacy.PrivacyActivity;
 import pivx.org.pivxwallet.ui.settings.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
