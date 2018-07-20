@@ -7,11 +7,13 @@ import android.support.v7.app.ActionBar;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 
 public class PrivacyCoinControlActivity extends BaseActivity {
+    private TextView text_balance, text_selected;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {

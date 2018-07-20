@@ -402,5 +402,15 @@
     <string name="label_amount_convert">Amount to convert</string>
     <string name="message_convert_zpiv">PIV can be converted to zPIV to remove transaction history. Sending zPIV is 100% anonymous and untraceable</string>
     <string name="coin_control">Coin Control</string>
+    <string name="coin_balance">Balance</string>
+    <string name="total_selected">Total Selected</string>
+    <string name="demon1">Demon. 1 x</string>
+    <string name="demon5">Demon. 5 x</string>
+    <string name="demon10">Demon. 10 x</string>
+    <string name="demon50">Demon. 50 x</string>
+    <string name="demon100">Demon. 100 x</string>
+    <string name="demon500">Demon. 500 x</string>
+    <string name="demon1000">Demon. 1000 x </string>
+
 
 </resources>

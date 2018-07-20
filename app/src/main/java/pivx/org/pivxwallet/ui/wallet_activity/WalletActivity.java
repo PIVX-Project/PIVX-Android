@@ -166,6 +166,7 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
         view_background = root.findViewById(R.id.view_background);
         container_syncing = root.findViewById(R.id.container_syncing);
+
         // Open Send
         root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
             @Override

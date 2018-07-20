@@ -1,6 +1,564 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:background="@color/black_a_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="1,323 zPIV"
+            android:textStyle="bold"
+            android:textColor="@color/mainText"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/coin_balance"
+            android:textSize="10dp"
+            android:textColor="@color/subtitle"
+            android:textAllCaps="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_selected"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_selected"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="14555"
+                android:textSize="16dp"
+                android:textColor="@color/mainText"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon1"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon1"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon1"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon5"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon5"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon5"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon10"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon10"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon10"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon50"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon50"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon50"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon100"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon100"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon100"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon500"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon500"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon500"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_demon1000"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon1000"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon1000"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+                <EditText
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
