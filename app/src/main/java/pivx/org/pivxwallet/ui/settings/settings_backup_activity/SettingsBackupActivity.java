@@ -44,7 +44,7 @@ public class SettingsBackupActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_settings_backup, container);
-        setTitle("Backup Wallet");
+        setTitle(R.string.backup_wallet);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         edit_password = (EditText) root.findViewById(R.id.edit_password);
