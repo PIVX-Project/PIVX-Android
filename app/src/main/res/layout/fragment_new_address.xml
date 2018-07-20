@@ -27,7 +27,7 @@
             <EditText
                 android:id="@+id/edit_name"
                 android:ellipsize="start"
-                android:gravity="start"
+                android:gravity="start|center_vertical"
                 style="@style/InputPrimary"
                 android:textSize = "15sp"
                 android:hint="@string/set_name"

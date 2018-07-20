@@ -22,7 +22,7 @@
         android:hint="@string/hint_host"
         android:text = ""
         android:inputType="text"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:textSize="15dp"
         style="@style/InputPrimary"/>
 
@@ -36,7 +36,7 @@
         android:text = ""
         android:inputType="number"
         android:maxLength="10"
-        android:gravity="left"
+        android:gravity="left|center_vertical"
         android:textSize="15dp"
         style="@style/InputPrimary"/>
     <TextView
@@ -50,6 +50,7 @@
         android:hint="@string/hint_ssl_port"
         android:text = ""
         android:inputType="number"
+        android:gravity="left|center_vertical"
         style="@style/InputPrimary"/>
 
 

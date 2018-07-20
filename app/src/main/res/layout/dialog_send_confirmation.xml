@@ -15,6 +15,7 @@
 
         <TextView
             android:text = "@string/title_pivx_send"
+            android:layout_marginBottom="4dp"
             style="@style/Label"/>
 
         <TextView
