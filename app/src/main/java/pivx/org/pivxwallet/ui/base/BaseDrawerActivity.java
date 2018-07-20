@@ -201,14 +201,16 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         if (id == R.id.nav_wallet) {
             Intent intent = new Intent(this,WalletActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("Private",false);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_address) {
             startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_privacy){
-            Intent intent = new Intent(this, PrivacyActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            Intent myintent = new Intent(this, WalletActivity.class);
+            myintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            myintent.putExtra("Private",true);
+            startActivity(myintent);
             finish();
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
