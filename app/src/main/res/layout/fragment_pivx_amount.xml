@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/bg_balance"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp"
+        android:paddingTop="4dp"
         android:gravity="center"
         >
 
@@ -31,10 +32,25 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_centerHorizontal="true"
-            android:paddingBottom="10dp"
+            android:layout_marginBottom="6dp"
             android:text = "13.135 PIV"
             android:textColor = "@color/textColorWhite"
             android:textSize = "24sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/zpivValue"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:textColor = "@color/textColorWhite"
+            android:textSize = "14sp"
+            android:text="0 zPIV"/>
+        <View
+            android:layout_width="120dp"
+            android:layout_marginBottom="6dp"
+            android:layout_height="1dp"
+            android:background="@color/white_a_60"/>
+
         <TextView
             android:layout_below="@+id/pivValue"
             android:layout_centerHorizontal="true"
@@ -43,10 +59,11 @@
             android:layout_height = "wrap_content"
             tools:text = "14710 USD"
             android:textColor = "@color/textColorLightPurple"
-            android:textSize = "16sp"
-            android:paddingBottom="20dp"/>
+            android:textSize = "16sp" />
 
         <LinearLayout
+            android:id="@+id/layout_blocked"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bgBlack30"

@@ -71,7 +71,7 @@
         <fragment
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment"
+            android:name="pivx.org.pivxwallet.ui.settings.settings_pincode_activity.KeyboardFragment"
             android:id="@+id/fragment_keyboard"
             android:layout_centerInParent="true"
             />

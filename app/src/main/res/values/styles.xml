@@ -50,9 +50,13 @@
     <style name="MessageTextStart">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
         <item name="android:textColor">@color/textColorWhite</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="MessageTextDark" parent="MessageTextStart">
@@ -68,6 +72,35 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <!-- Labels -->
+
+    <style name="Label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_label</item>
+    </style>
+
+    <!-- Inputs -->
+
+    <style name="InputPrimary">
+        <item name="android:background">@drawable/bg_inputs_primary</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textCursorDrawable">@drawable/color_cursor</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:textColorHint">@color/subtitle</item>
+
+    </style>
+
     <style name="Inputs">
         <item name="android:ellipsize">start</item>
         <item name="android:gravity">start</item>
@@ -81,6 +114,45 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <!-- Buttons -->
+
+    <style name="ButtonPrimary">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:translationZ">1dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPurple</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="ButtonPrimaryWhite">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">42dp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:translationZ">1dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPurple</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+
     <style name="ButtomWhite">
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:padding">6dp</item>
@@ -92,11 +164,17 @@
         <item name="android:stateListAnimator">@null</item>
     </style>
 
+    <style name="ButtonText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPurple</item>
+    </style>
+
     <style name="spinner_style" >
         <item name="android:background">@drawable/bg_spinner</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
     </style>
 
     <!-- custom dialog activity theme -->

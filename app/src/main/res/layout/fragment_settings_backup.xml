@@ -2,69 +2,57 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/bgWhite">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <TextView
         android:id="@+id/backupMessage"
-        android:layout_width="280dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/backup_wallet_message"
-        android:textColor="@color/mainText"
-        android:textSize="18sp"
+        style="@style/MessageTextDark"
         android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:text = "@string/string_password"
+        style="@style/Label"/>
 
     <EditText
         android:id="@+id/edit_password"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/bg_settings_input_top"
-        android:textCursorDrawable="@drawable/color_cursor"
         android:gravity="left|center_vertical"
         android:hint="@string/string_password"
         android:inputType="textPassword"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:textColor="@color/mainText"
-        android:textColorHint="@color/hintInput"
-        android:textSize="14sp"
-        android:layout_below="@+id/backupMessage"
-        android:layout_centerHorizontal="true" />
+        style="@style/InputPrimary" />
 
+    <TextView
+        android:text = "@string/repeat_password"
+        style="@style/Label"/>
 
     <EditText
         android:id="@+id/edit_repeat_password"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
         android:layout_below="@+id/edit_password"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/bg_settings_input_bottom"
-        android:textCursorDrawable="@drawable/color_cursor"
         android:gravity="left|center_vertical"
         android:hint="@string/repeat_password"
         android:inputType="textPassword"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:textColor="@color/mainText"
-        android:textColorHint="@color/hintInput"
-        android:textSize="14sp" />
+        style="@style/InputPrimary" />
+
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@+id/edit_repeat_password"
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="40dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
+        android:paddingBottom="20dp"
         android:gravity="bottom|center"
         android:orientation="vertical"
         android:background="@android:color/transparent"
@@ -80,15 +68,8 @@
 
         <Button
             android:id="@+id/btn_backup"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_button_border"
-            android:elevation="2dp"
-            android:gravity="center"
-            android:layout_gravity="bottom"
             android:text="@string/backup_wallet"
-            android:textColor="@color/textColorPurple"
-            android:textSize="14sp" />
+            style="@style/ButtonPrimary" />
 
     </LinearLayout>
 

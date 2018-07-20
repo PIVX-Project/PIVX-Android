@@ -143,24 +143,8 @@ public class StartNodeActivity extends BaseActivity {
             }else
                 hosts.add(trustedNode.getHost());
         }
-        adapter = new ArrayAdapter<String>(this, R.layout.simple_spinner_dropdown_item,hosts){
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                CheckedTextView view = (CheckedTextView) super.getDropDownView(position, convertView, parent);
-                view.setTextColor(Color.BLACK);
-                view.setPadding(16, 16, 16, 16);
-                return view;
-            }
-
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                CheckedTextView view = (CheckedTextView) super.getView(position, convertView, parent);
-                view.setTextColor(Color.BLACK);
-                view.setPadding(8, 8, 8, 8);
-                return view;
-            }
-        };
+        adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_white,hosts);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
         dropdown.setSelection(selectionPos);
     }

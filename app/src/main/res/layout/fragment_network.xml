@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgWhite"
-    tools:context=".ui.settings_network_activity.SettingsNetworkActivity">
+    tools:context=".ui.settings.settings_network_activity.SettingsNetworkActivity">
 
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="pivx.org.pivxwallet.ui.settings_network_activity.NetworkFragment"
+        android:name="pivx.org.pivxwallet.ui.settings.settings_network_activity.NetworkFragment"
         android:id="@+id/peers_fragment"
         />
 

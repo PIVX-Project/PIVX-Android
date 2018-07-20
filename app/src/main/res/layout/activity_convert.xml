@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/header_container"></FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_below="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal">
+
+        <RadioGroup
+            android:id="@+id/radio_convert_type"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/radio_zpiv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/convert_zpiv"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/radio_piv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/convert_piv"
+                android:checked="false" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/txt_currency_amount"
+            android:text = "@string/label_amount_convert"
+            style="@style/Label"/>
+
+        <EditText
+            android:id = "@+id/edit_amount"
+            android:inputType="number"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/set_amount_usd"
+            android:text = "12313434 PIV"
+            android:textSize = "18sp"
+            style="@style/InputPrimary"/>
+
+
+        <TextView
+            android:id = "@+id/txt_local"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "14 USD"
+            android:textColor = "@color/mainText"
+            android:textSize = "16sp" />
+
+        <Button
+            android:id="@+id/btn_add_all"
+            android:layout_centerHorizontal="true"
+            android:background="@color/transparent"
+            android:textColor="@color/colorPurple"
+            android:text="@string/add_all"
+            style="@style/ButtonText"/>
+
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="40dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_coin_selection"
+            android:text="@string/coin_selection"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:paddingBottom="12dp"
+            />
+
+        <Button
+            android:id="@+id/btn_convert"
+            android:text="@string/convert_zpiv"
+            style="@style/ButtonPrimary"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:text="@string/fee_included"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"/>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

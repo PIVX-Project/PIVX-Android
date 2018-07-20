@@ -16,7 +16,7 @@ import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
-import pivx.org.pivxwallet.ui.settings_pincode_activity.KeyboardFragment;
+import pivx.org.pivxwallet.ui.settings.settings_pincode_activity.KeyboardFragment;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 
 import static pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity.INTENT_EXTRA_INIT_VIEW;

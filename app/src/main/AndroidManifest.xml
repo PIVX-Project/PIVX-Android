@@ -42,16 +42,16 @@
         <activity android:name=".ui.backup_mnemonic_activity.MnemonicActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.words_restore_activity.RestoreWordsActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.contacts_activity.ContactsActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_activity.SettingsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".ui.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
+        <activity android:name=".ui.settings.settings_activity.SettingsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings.settings_backup_activity.SettingsBackupActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings.settings_restore_activity.SettingsRestoreActivity"  android:screenOrientation="portrait" />
+        <activity android:name=".ui.settings.settings_pincode_activity.SettingsPincodeActivity"  android:screenOrientation="portrait">
 
         </activity>
 
         <activity android:name=".ui.address_add_activity.AddContactActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_network_activity.SettingsNetworkActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".ui.settings_node_activity.SettingsNodeActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings.settings_network_activity.SettingsNetworkActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".ui.settings.settings_node_activity.SettingsNodeActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.start_node_activity.StartNodeActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.restore_activity.RestoreActivity"  android:screenOrientation="portrait"/>
         <activity android:name=".ui.pincode_activity.PincodeActivity"  android:screenOrientation="portrait">
@@ -79,13 +79,15 @@
             android:parentActivityName=".ui.wallet_activity.WalletActivity">
 
         </activity>
+        <activity android:name=".ui.privacy.privacy_convert.ConvertActivity"/>
+        <activity android:name=".ui.privacy.privacy_coin_control.PrivacyCoinControlActivity"/>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
         <activity android:name=".utils.scanner.ScanActivity"/>
         <activity android:name=".ui.donate.DonateActivity" />
         <activity android:name=".ui.export_account.ExportKeyActivity"/>
         <activity android:name=".ui.import_watch_only.SettingsWatchOnly"/>
-        <activity android:name=".ui.settings_rates.SettingsRatesActivity"/>
+        <activity android:name=".ui.settings.settings_rates.SettingsRatesActivity"/>
 
         <activity android:name=".ui.crash_activity.CrashPopupActivity"
             android:launchMode="singleInstance"

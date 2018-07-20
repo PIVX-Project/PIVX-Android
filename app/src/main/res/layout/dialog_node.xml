@@ -15,18 +15,20 @@
 
     <TextView
         android:text = "@string/host"
-        style="@style/Subtitles"/>
+        style="@style/Label"/>
 
     <EditText
         android:id="@+id/hostText"
         android:hint="@string/hint_host"
         android:text = ""
         android:inputType="text"
-        style="@style/Inputs"/>
+        android:gravity="left|center_vertical"
+        android:textSize="15dp"
+        style="@style/InputPrimary"/>
 
     <TextView
         android:text = "@string/tcp_port"
-        style="@style/Subtitles"/>
+        style="@style/Label"/>
 
     <EditText
         android:id="@+id/tcpText"
@@ -34,11 +36,13 @@
         android:text = ""
         android:inputType="number"
         android:maxLength="10"
-        style="@style/Inputs"/>
+        android:gravity="left|center_vertical"
+        android:textSize="15dp"
+        style="@style/InputPrimary"/>
     <TextView
         android:text = "@string/ssl_port"
         android:visibility="gone"
-        style="@style/Subtitles"/>
+        style="@style/Label"/>
 
     <EditText
         android:id="@+id/sslText"
@@ -46,7 +50,8 @@
         android:hint="@string/hint_ssl_port"
         android:text = ""
         android:inputType="number"
-        style="@style/Inputs"/>
+        android:gravity="left|center_vertical"
+        style="@style/InputPrimary"/>
 
 
 

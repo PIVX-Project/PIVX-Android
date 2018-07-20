@@ -14,101 +14,67 @@
         android:gravity="left">
 
         <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "match_parent"
             android:text = "@string/title_pivx_send"
             android:layout_marginBottom="4dp"
-            android:textColor = "@color/subtitle"
-            android:textSize = "14sp" />
-        <TextView
-            android:id = "@+id/txt_amount"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:text = "3.13532 PIV"
-            android:padding="8dp"
-            android:background="@drawable/transaction_inputs"
-            android:layout_marginBottom="14dp"
-            android:textColor = "#434343"
-            android:textSize = "22sp"
-            android:textStyle="bold"/>
+            style="@style/Label"/>
 
         <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
+            android:id = "@+id/txt_amount"
+            android:text = "3.13532 PIV"
+            android:gravity="left"
+            android:textSize = "22sp"
+            style="@style/InputPrimary"/>
+
+        <TextView
             android:text = "@string/title_currency"
             android:layout_marginBottom="4dp"
-            android:textColor = "@color/subtitle"
-            android:textSize = "14sp" />
+            style="@style/Label" />
 
         <TextView
             android:id = "@+id/txt_local_currency"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:layout_marginBottom="14dp"
             tools:text = "14710"
-            android:textColor = "#4c4c4c"
-            android:padding="8dp"
-            android:background="@drawable/transaction_inputs"
-            android:textSize = "16sp" />
+            android:gravity="left"
+            android:textSize="14dp"
+            style="@style/InputPrimary" />
 
 
         <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
             android:text = "@string/title_fee"
             android:layout_marginBottom="4dp"
-            android:textColor = "@color/subtitle"
-            android:textSize = "14sp" />
+            style="@style/Label" />
 
 
         <TextView
             android:id = "@+id/txt_fee"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:layout_marginBottom="14dp"
             android:text = "0.13532 PIV"
-            android:textColor = "@color/mainText"
-            android:padding="8dp"
-            android:background="@drawable/transaction_inputs"
-            android:textSize = "16sp" />
+            android:gravity="left"
+            android:textSize="14dp"
+            style="@style/InputPrimary" />
 
         <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
             android:text = "@string/title_description"
             android:layout_marginBottom="4dp"
-            android:textColor = "@color/subtitle"
-            android:textSize = "14sp" />
+            style="@style/Label" />
 
 
         <TextView
             android:id = "@+id/txt_memo"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:layout_marginBottom="20dp"
-            android:padding="8dp"
-            android:background="@drawable/transaction_inputs"
             android:hint = "@string/add_memo"
-            android:textColor = "@color/mainText"
-            android:textSize = "16sp" />
+            android:gravity="left"
+            android:textSize="14dp"
+            style="@style/InputPrimary" />
 
         <TextView
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
             android:text = "@string/title_receiver_name"
             android:layout_marginBottom="4dp"
-            android:textColor = "@color/subtitle"
-            android:textSize = "14sp" />
+            style="@style/Label"/>
 
         <EditText
             android:id = "@+id/edit_receiver"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:padding="8dp"
-            android:background="@drawable/transaction_inputs"
             android:hint = "@string/title_receiver_name"
-            android:textColor = "@color/mainText"
-            android:textSize = "16sp" />
+            android:gravity="left"
+            android:textSize="14dp"
+            style="@style/InputPrimary" />
 
     </LinearLayout>
 

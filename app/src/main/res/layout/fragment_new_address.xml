@@ -21,45 +21,30 @@
 
             <TextView
                 android:id = "@+id/titleName"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
                 android:text = "@string/title_name"
-                android:layout_marginBottom="10dp"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
+                style="@style/Label" />
 
             <EditText
                 android:id="@+id/edit_name"
                 android:ellipsize="start"
-                android:gravity="start"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:padding="8dp"
-                android:background="@drawable/transaction_inputs"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:layout_marginBottom="10dp"
-                android:maxLines="1"
+                android:gravity="start|center_vertical"
+                style="@style/InputPrimary"
+                android:textSize = "15sp"
                 android:hint="@string/set_name"
-                android:text = ""
-                android:textColor = "#434343"
-                android:textSize = "18sp" />
+                android:text = "" />
 
 
             <TextView
                 android:id = "@+id/titleAddress"
-                android:layout_marginTop="20dp"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:layout_marginBottom="10dp"
                 android:text = "@string/title_address"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
+                style="@style/Label" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/transaction_inputs">
+                android:padding="12dp"
+                android:background="@drawable/bg_inputs_primary">
 
                 <EditText
                     android:id = "@+id/edit_address"
@@ -68,12 +53,11 @@
                     android:layout_width = "0dp"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
-                    android:padding="8dp"
                     android:background="@color/transparent"
                     android:textCursorDrawable="@drawable/color_cursor"
                     android:hint="@string/add_address"
                     android:textColor = "#434343"
-                    android:textSize = "14sp"
+                    android:textSize = "15sp"
                      />
 
 
@@ -84,7 +68,6 @@
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_qr_code"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
                     android:text="Button"/>
 
             </LinearLayout>

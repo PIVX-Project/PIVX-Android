@@ -55,8 +55,8 @@
                 app:menu_shadowRadius="4dp"
                 app:menu_shadowXOffset="1dp"
                 app:menu_shadowYOffset="3dp"
-                app:menu_colorNormal="@color/green"
-                app:menu_colorPressed="@color/lightGreen1"
+                app:menu_colorNormal="@color/colorPrimaryDark"
+                app:menu_colorPressed="@color/colorPrimary"
                 app:menu_colorRipple="#99FFFFFF"
                 app:menu_animationDelayPerItem="60"
                 app:menu_icon="@drawable/fab_add"
@@ -86,6 +86,26 @@
                 app:menu_fab_show_animation="@anim/fab_scale_up"
                 app:menu_fab_hide_animation="@anim/fab_scale_down"
                 android:layout_gravity="bottom|end">
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_send_zpiv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_send_action"
+                    app:fab_size="mini"
+                    app:fab_colorNormal="@color/darkPurple"
+                    app:fab_colorPressed="@color/colorPrimary"
+                    app:fab_label="@string/btn_send_zpiv" />
+
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/fab_convert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_fab_convert"
+                    app:fab_size="mini"
+                    app:fab_colorNormal="@color/darkPurple"
+                    app:fab_colorPressed="@color/colorPrimary"
+                    app:fab_label="@string/btn_convert" />
 
                 <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/fab_request"

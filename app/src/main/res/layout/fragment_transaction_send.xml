@@ -45,21 +45,11 @@
                     <EditText
                         android:id = "@+id/edit_amount"
                         android:ellipsize="start"
-                        android:gravity="center_horizontal"
-                        android:layout_width = "match_parent"
-                        android:layout_height = "wrap_content"
-                        android:padding="8dp"
-                        android:paddingBottom="11dp"
-                        android:paddingTop="11dp"
                         android:inputType="numberDecimal"
-                        android:background="@drawable/transaction_inputs"
-                        android:textCursorDrawable="@drawable/color_cursor"
-                        android:layout_marginBottom="10dp"
-                        android:maxLines="1"
                         android:maxLength="8"
                         android:hint="@string/set_amount_piv"
                         android:text = ""
-                        android:textColor = "#434343"
+                        style="@style/InputPrimary"
                         android:textSize = "20sp" />
 
 
@@ -94,20 +84,11 @@
                         android:id = "@+id/edit_amount_currency"
                         android:ellipsize="start"
                         android:gravity="center_horizontal"
-                        android:layout_width = "match_parent"
-                        android:layout_height = "wrap_content"
-                        android:padding="8dp"
-                        android:paddingBottom="11dp"
-                        android:paddingTop="11dp"
                         android:inputType="numberDecimal"
-                        android:background="@drawable/transaction_inputs"
-                        android:textCursorDrawable="@drawable/color_cursor"
-                        android:layout_marginBottom="10dp"
-                        android:maxLines="1"
                         android:maxLength="8"
                         android:hint="@string/set_amount_usd"
                         android:text = ""
-                        android:textColor = "#434343"
+                        style="@style/InputPrimary"
                         android:textSize = "20sp" />
 
 
@@ -171,7 +152,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/container_address"
-                    android:background="@drawable/transaction_inputs"
+                    android:padding="12dp"
+                    android:background="@drawable/bg_inputs_primary"
                     android:layout_marginBottom="20dp">
 
 
@@ -183,15 +165,12 @@
                         android:layout_width = "0dp"
                         android:layout_height="wrap_content"
                         android:maxLines="4"
-                        android:paddingBottom="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingEnd="16dp"
                         android:background="@color/transparent"
                         android:textCursorDrawable="@drawable/color_cursor"
                         android:hint="@string/set_address"
                         android:text = ""
                         android:textColor = "#434343"
-                        android:textSize = "14.5sp"
+                        android:textSize = "15sp"
                         android:layout_alignParentBottom="true" />
 
 
@@ -219,18 +198,10 @@
                 <EditText
                     android:id = "@+id/edit_memo"
                     android:ellipsize="start"
-                    android:gravity="center_horizontal"
-                    android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
-                    android:padding="8dp"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:background="@drawable/transaction_inputs"
-                    android:layout_marginBottom="10dp"
-                    android:maxLines="1"
                     android:hint="@string/set_description"
                     android:text = ""
-                    android:textColor = "#434343"
-                    android:textSize = "15sp" />
+                    android:textSize = "15sp"
+                    style="@style/InputPrimary" />
 
             </LinearLayout>
 
@@ -241,7 +212,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center|bottom"
-                android:padding="20dp"
                 android:gravity="center|bottom"
                 android:orientation="vertical"
                 android:background="@android:color/transparent">
@@ -287,16 +257,9 @@
                     android:id="@+id/btnSend"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_button_border"
-                    android:elevation="2dp"
-                    android:gravity="center"
                     android:layout_gravity="bottom"
                     android:text="@string/btn_send"
-                    android:textColor="@color/textColorPurple"
-                    android:textSize="14sp" />
+                    style="@style/ButtonPrimary" />
 
 
                 <TextView
@@ -317,7 +280,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:background="@color/transparent"
-                android:layout_margin="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/ic_swap"/>
         </RelativeLayout>
 

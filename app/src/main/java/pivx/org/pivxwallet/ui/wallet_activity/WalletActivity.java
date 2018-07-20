@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -14,9 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import org.pivxj.core.Coin;
@@ -34,8 +39,9 @@ import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.privacy.privacy_convert.ConvertActivity;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
-import pivx.org.pivxwallet.ui.settings_backup_activity.SettingsBackupActivity;
+import pivx.org.pivxwallet.ui.settings.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.ui.upgrade.UpgradeWalletActivity;
@@ -62,7 +68,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private View root;
     private View container_txs;
-
+    private RelativeLayout bg_balance;
     private TextView txt_value;
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
@@ -71,6 +77,9 @@ public class WalletActivity extends BaseDrawerActivity {
     private View container_syncing;
     private PivxRate pivxRate;
     private TransactionsFragmentBase txsFragment;
+    private Boolean isPrivate = false;
+    private FloatingActionButton fab_send_zpiv,fab_convert, fab_request, fab_add ;
+
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
@@ -107,10 +116,49 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        setTitle(R.string.my_wallet);
+        Bundle extras = getIntent().getExtras();
         root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
         header_container.setVisibility(View.VISIBLE);
+        bg_balance = (RelativeLayout) containerHeader.findViewById(R.id.bg_balance);
+        if (extras != null) {
+            isPrivate = getIntent().getExtras().getBoolean("Private");
+            Toast.makeText(this, "asdf", Toast.LENGTH_LONG).show();
+        }
+
+        fab_send_zpiv = (FloatingActionButton) findViewById(R.id.fab_send_zpiv);
+        fab_convert = (FloatingActionButton) findViewById(R.id.fab_convert);
+        fab_request = (FloatingActionButton) findViewById(R.id.fab_request);
+        fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
+
+        if (isPrivate) {
+            setTitle(R.string.title_privacy);
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                    .getColor(R.color.darkPurple)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
+            }
+            bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
+            fab_add.setVisibility(View.GONE);
+            fab_request.setVisibility(View.GONE);
+
+        } else {
+            setTitle(R.string.my_wallet);
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                    .getColor(R.color.bgPurple)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
+            }
+            bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
+            fab_send_zpiv.setVisibility(View.GONE);
+            fab_convert.setVisibility(View.GONE);
+        }
+
+
         txt_value = (TextView) containerHeader.findViewById(R.id.pivValue);
         txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
         container_txs = root.findViewById(R.id.container_txs);
@@ -118,6 +166,7 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
         view_background = root.findViewById(R.id.view_background);
         container_syncing = root.findViewById(R.id.container_syncing);
+
         // Open Send
         root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +185,23 @@ public class WalletActivity extends BaseDrawerActivity {
             }
         });
 
+        // Send zPIV
+        root.findViewById(R.id.fab_send_zpiv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), SendActivity.class));
+            }
+        });
+
+        // Convert
+
+        root.findViewById(R.id.fab_convert).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(v.getContext(), ConvertActivity.class));
+            }
+        });
+
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
         floatingActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
@@ -149,6 +215,7 @@ public class WalletActivity extends BaseDrawerActivity {
         });
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+
 
     }
 
