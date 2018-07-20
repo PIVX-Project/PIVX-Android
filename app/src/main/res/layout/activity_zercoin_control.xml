@@ -22,7 +22,7 @@
             android:text="1,323 zPIV"
             android:textStyle="bold"
             android:textColor="@color/mainText"
-            android:textSize="18dp"
+            android:textSize="20dp"
             />
 
         <TextView
@@ -62,9 +62,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingRight="16dp"
                 android:gravity="right"
                 android:text="14555"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:textColor="@color/mainText"/>
 
 
@@ -107,13 +108,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon1"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon1"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,6 +132,7 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon1"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
@@ -177,13 +181,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon5"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon5"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -199,6 +205,7 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon5"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
@@ -247,13 +254,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon10"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon10"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -269,6 +278,7 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon10"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
@@ -316,13 +326,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon50"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon50"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -338,6 +350,7 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon50"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
@@ -386,13 +399,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon100"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon100"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -408,6 +423,7 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon100"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
@@ -455,13 +471,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon500"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon500"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -477,6 +495,7 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon500"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
@@ -524,13 +543,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/btn_minus_demon1000"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:padding="4dp"
-                    android:src="@drawable/ic_add"/>
+                    android:src="@drawable/ic_minus"/>
 
                 <EditText
+                    android:id="@+id/edit_count_demon1000"
                     android:background="@drawable/bg_inputs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -546,6 +567,81 @@
                     android:textSize="14dp"/>
 
                 <ImageView
+                    android:id="@+id/btn_add_demon1000"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_add"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_demon5000"
+            android:background="@drawable/bg_border_bottom_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demon5000"
+                android:textColor="@color/subtitle"
+                android:textSize="14dp"
+                />
+
+            <TextView
+                android:id="@+id/text_demon5000"
+                android:paddingLeft="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="1 = 5 zPiv"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/mainText"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_minus_demon5000"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_minus"/>
+
+                <EditText
+                    android:id="@+id/edit_count_demon5000"
+                    android:background="@drawable/bg_inputs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:maxLines="1"
+                    android:maxLength="3"
+                    android:text="999"
+                    android:textColor="@color/mainText"
+                    android:textSize="14dp"/>
+
+                <ImageView
+                    android:id="@+id/btn_add_demon5000"
                     android:layout_gravity="center_vertical"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
