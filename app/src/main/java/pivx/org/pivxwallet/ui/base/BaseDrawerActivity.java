@@ -208,7 +208,6 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_privacy){
             Intent myintent = new Intent(this, WalletActivity.class);
-            myintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             myintent.putExtra("Private",true);
             startActivity(myintent);
             finish();

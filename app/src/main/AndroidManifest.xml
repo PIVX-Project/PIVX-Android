@@ -31,7 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.wallet_activity.WalletActivity"  android:screenOrientation="portrait"
-            android:launchMode="singleInstance"
             >
 
         </activity>

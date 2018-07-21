@@ -107,10 +107,10 @@
     <string name="next">Volgende</string>
     <string name="skip">Overslaan</string>
     <string name="start">Beginnen</string>
-    <string name="title_slide1">Pivx is veilig</string>
+    <string name="title_slide1">PIVX is veilig</string>
     <string name="desc_slide1">Eerste munt met BIP38 encryptie en decryptie van private keys</string>
     <string name="title_slide2">60 seconden block time</string>
-    <string name="desc_slide2">Pivx transacties zijn nu al supersnel door het gebruik van SwiftTX zijn de transacties direct zonder dat er bevestiging nodig is.</string>
+    <string name="desc_slide2">PIVX transacties zijn nu al supersnel door het gebruik van SwiftTX zijn de transacties direct zonder dat er bevestiging nodig is.</string>
     <string name="title_slide3">Enorm veilig en privé</string>
     <string name="desc_slide3">PIVX richt zich er op om de eerste echte anonieme crypto-currency te zijn.</string>
     <string name="title_slide4">Trusted nodes federatie</string>

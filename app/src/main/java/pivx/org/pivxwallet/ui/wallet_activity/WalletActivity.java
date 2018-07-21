@@ -27,6 +27,8 @@ import com.github.clans.fab.FloatingActionMenu;
 import org.pivxj.core.Coin;
 import org.pivxj.core.Transaction;
 import org.pivxj.uri.PivxURI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -64,6 +66,8 @@ import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT
 
 public class WalletActivity extends BaseDrawerActivity {
 
+    private static final Logger log = LoggerFactory.getLogger(WalletActivity.class);
+
     private static final int SCANNER_RESULT = 122;
 
     private View root;
@@ -78,7 +82,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private PivxRate pivxRate;
     private TransactionsFragmentBase txsFragment;
     private Boolean isPrivate = false;
-    private FloatingActionButton fab_send_zpiv,fab_convert, fab_request, fab_add ;
+    private FloatingActionButton fab_request, fab_add, fab_convert ;
 
 
     // Receiver
@@ -116,20 +120,21 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        Bundle extras = getIntent().getExtras();
         root = getLayoutInflater().inflate(R.layout.fragment_wallet, container);
         View containerHeader = getLayoutInflater().inflate(R.layout.fragment_pivx_amount,header_container);
         header_container.setVisibility(View.VISIBLE);
         bg_balance = (RelativeLayout) containerHeader.findViewById(R.id.bg_balance);
-        if (extras != null) {
-            isPrivate = getIntent().getExtras().getBoolean("Private");
-            Toast.makeText(this, "asdf", Toast.LENGTH_LONG).show();
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("Private")) {
+            isPrivate = intent.getBooleanExtra("Private",false);
         }
 
-        fab_send_zpiv = (FloatingActionButton) findViewById(R.id.fab_send_zpiv);
-        fab_convert = (FloatingActionButton) findViewById(R.id.fab_convert);
         fab_request = (FloatingActionButton) findViewById(R.id.fab_request);
         fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
+        fab_convert = (FloatingActionButton) findViewById(R.id.fab_convert);
+
+        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
         if (isPrivate) {
             setTitle(R.string.title_privacy);
@@ -141,9 +146,9 @@ public class WalletActivity extends BaseDrawerActivity {
                 window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
             }
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
-            fab_add.setVisibility(View.GONE);
-            fab_request.setVisibility(View.GONE);
-
+            fab_add.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
+            fab_add.setImageDrawable(getDrawable(R.drawable.ic_send_action));
+            fab_request.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
         } else {
             setTitle(R.string.my_wallet);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
@@ -154,8 +159,8 @@ public class WalletActivity extends BaseDrawerActivity {
                 window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
             }
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
-            fab_send_zpiv.setVisibility(View.GONE);
             fab_convert.setVisibility(View.GONE);
+            floatingActionMenu.setMenuButtonColorNormal(ContextCompat.getColor(this, R.color.bgPurple));
         }
 
 
@@ -185,16 +190,7 @@ public class WalletActivity extends BaseDrawerActivity {
             }
         });
 
-        // Send zPIV
-        root.findViewById(R.id.fab_send_zpiv).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), SendActivity.class));
-            }
-        });
-
         // Convert
-
         root.findViewById(R.id.fab_convert).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +198,8 @@ public class WalletActivity extends BaseDrawerActivity {
             }
         });
 
-        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+
+        // Floating menu
         floatingActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
             public void onMenuToggle(boolean opened) {
@@ -223,7 +220,7 @@ public class WalletActivity extends BaseDrawerActivity {
     protected void onResume() {
         super.onResume();
         // to check current activity in the navigation drawer
-        setNavigationMenuItemChecked(0);
+        setNavigationMenuItemChecked(isPrivate ? 2 : 0);
 
         init();
 
@@ -254,7 +251,7 @@ public class WalletActivity extends BaseDrawerActivity {
                 }
             }
         } catch (NoPeerConnectedException e) {
-            e.printStackTrace();
+            log.info("No peer connection on walletUpdate",e.getMessage());
         }
     }
 
@@ -335,19 +332,19 @@ public class WalletActivity extends BaseDrawerActivity {
 
         List<TransactionData> data = new ArrayList<>();
 
-        data.add(new TransactionData("Sent Pivx", "18:23", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
-        data.add(new TransactionData("Sent Pivx", "1 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "3 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "3 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "18:23", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
+        data.add(new TransactionData("Sent PIVX", "1 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "3 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "3 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
 
-        data.add(new TransactionData("Sent Pivx", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
+        data.add(new TransactionData("Sent PIVX", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
 
         return data;
     }

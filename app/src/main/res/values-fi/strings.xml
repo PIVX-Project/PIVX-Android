@@ -107,7 +107,7 @@
     <string name="next">Seuraava</string>
     <string name="skip">Ohita</string>
     <string name="start">Aloita</string>
-    <string name="title_slide1">Pivx on turvallinen</string>
+    <string name="title_slide1">PIVX on turvallinen</string>
     <string name="desc_slide1">Ensimmäinen kolikko, jossa on BIP38 yksityisavainten salaus/avaus</string>
     <string name="title_slide2">60 SEKUNNIN LOHKO AIKA</string>
     <string name="desc_slide2">Jo valmiiksi erittäin nopea, PIVX rahansiirrot käyttäen SwiftTX:ää ovat välittömiä, nolla vahvistusta odotusaikaa.</string>

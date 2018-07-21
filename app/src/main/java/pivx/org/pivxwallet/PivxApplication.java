@@ -115,7 +115,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
             }
-            shareText(PivxApplication.this,"Pivx wallet crash", "Unexpected crash", attachments);
+            shareText(PivxApplication.this,"PIVX wallet crash", "Unexpected crash", attachments);
         }
     };
 
