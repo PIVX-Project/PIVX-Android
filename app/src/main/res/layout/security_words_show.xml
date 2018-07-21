@@ -1,79 +1,67 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:paddingLeft="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/secureMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/security_message"
+        style="@style/MessageTextDark" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="30dp"
-        android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        >
-
-        <TextView
-            android:id="@+id/secureMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="@string/security_message"
-            android:textStyle="bold"
-            android:textColor="@color/mainText"
-            android:textSize="18sp" />
-
-        <com.google.android.flexbox.FlexboxLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:flexWrap="wrap"
-            android:layout_below="@id/secureMessage"
-            android:id="@+id/securityWords"
-            android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:background="@color/transparent">
+        android:layout_height="wrap_content"
+        app:flexWrap="wrap"
+        android:layout_below="@id/secureMessage"
+        android:id="@+id/securityWords"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:background="@color/transparent">
 
 
-        </com.google.android.flexbox.FlexboxLayout>
+    </com.google.android.flexbox.FlexboxLayout>
 
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/container_continue_btn"
-            android:visibility="visible"
-            android:orientation="vertical"
-            android:layout_below="@+id/securityWords"
-            android:paddingTop="20dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:layout_alignParentStart="true">
-
-            <Button
-                android:id="@+id/btn_continue"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_button_border"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:layout_gravity="bottom"
-                android:text="@string/button_ok"
-                android:textColor="@color/textColorPurple"
-                android:textSize="14sp" />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/container_continue_btn"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:layout_below="@+id/securityWords"
+        android:paddingTop="20dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:layout_alignParentStart="true">
 
 
 
-        </LinearLayout>
 
-    </RelativeLayout>
 
-</ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_continue"
+            android:text="@string/button_ok"
+            style="@style/ButtonPrimary" />
+
+    </LinearLayout>
+
+</RelativeLayout>
