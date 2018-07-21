@@ -20,7 +20,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_alignParentBottom="true"
-        android:background="#009688">
+        android:background="@color/darkPurple">
 
         <Button
             android:id="@+id/btn_next"
