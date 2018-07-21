@@ -391,6 +391,35 @@
     <string name="no_transactions">You don\'t have any transfers yet.</string>
     <string name="sync_in_progress">The wallet is out of sync, some transactions may be missing.</string>
 
+    <!-- Restore words -->
+
+    <string name="mnemonic_word1">Word 1</string>
+    <string name="mnemonic_word2">Word 2</string>
+    <string name="mnemonic_word3">Word 3</string>
+    <string name="mnemonic_word4">Word 4</string>
+    <string name="mnemonic_word5">Word 5</string>
+    <string name="mnemonic_word6">Word 6</string>
+    <string name="mnemonic_word7">Word 7</string>
+    <string name="mnemonic_word8">Word 8</string>
+    <string name="mnemonic_word9">Word 9</string>
+    <string name="mnemonic_word10">Word 10</string>
+    <string name="mnemonic_word11">Word 11</string>
+    <string name="mnemonic_word12">Word 12</string>
+    <string name="mnemonic_word13">Word 13</string>
+    <string name="mnemonic_word14">Word 14</string>
+    <string name="mnemonic_word15">Word 15</string>
+    <string name="mnemonic_word16">Word 16</string>
+    <string name="mnemonic_word17">Word 17</string>
+    <string name="mnemonic_word18">Word 18</string>
+    <string name="mnemonic_word19">Word 19</string>
+    <string name="mnemonic_word20">Word 20</string>
+    <string name="mnemonic_word21">Word 21</string>
+    <string name="mnemonic_word22">Word 22</string>
+    <string name="mnemonic_word23">Word 23</string>
+    <string name="mnemonic_word24">Word 24</string>
+    <string name="restore_without_file">No file available</string>
+
+
     <!-- Privacy -->
     <string name="nav_privacy">Privacy</string>
     <string name="title_privacy">Privacy</string>
