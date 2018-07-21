@@ -17,34 +17,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         android:padding="12dp">
 
 
         <TextView
             android:id = "@+id/titleDescription"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
             android:text = "@string/title_description"
-            android:paddingBottom="12dp"
-            android:layout_gravity="center"
-            android:textColor = "#757575"
-            android:textSize = "14sp" />
+            style="@style/Label" />
 
         <EditText
             android:id = "@+id/edit_memo"
             android:ellipsize="start"
-            android:gravity="center_horizontal"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:padding="8dp"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:background="@drawable/transaction_inputs"
             android:layout_marginBottom="10dp"
             android:singleLine="true"
             android:hint="@string/set_description"
             android:text = ""
-            android:textColor = "#434343"
-            android:textSize = "17.5sp" />
+            style="@style/InputPrimary" />
 
     </LinearLayout>
 
@@ -52,7 +41,7 @@
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_gravity="center"
+        android:layout_gravity="center|bottom"
         android:padding="20dp"
         android:gravity="center|bottom"
         android:orientation="vertical"
@@ -65,10 +54,8 @@
             android:background="@drawable/bg_button_border"
             android:elevation="2dp"
             android:gravity="center"
-            android:layout_gravity="bottom"
             android:text="@string/btn_request"
-            android:textColor="@color/textColorPurple"
-            android:textSize="14sp" />
+            style="@style/ButtonPrimary" />
 
 
         <TextView

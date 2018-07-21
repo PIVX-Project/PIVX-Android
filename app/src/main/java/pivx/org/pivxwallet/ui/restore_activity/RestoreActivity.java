@@ -111,6 +111,7 @@ public class RestoreActivity extends BaseActivity {
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
         edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
         text_spinner = (TextView) root.findViewById(R.id.text_spinner);
+        text_spinner.setVisibility(View.GONE);
         spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
         fileAdapter = new FileAdapter(this) {
             @Override
@@ -151,9 +152,6 @@ public class RestoreActivity extends BaseActivity {
             path = backupPath;
 
         restoreMessage.setText(getString(R.string.import_keys_dialog_message, path));
-        if (fileAdapter.getCount() != 0) {
-            text_spinner.setVisibility(View.GONE);
-        }
 
         spinnerFiles.setAdapter(fileAdapter);
 

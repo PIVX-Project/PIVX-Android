@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/unavailable"
                 android:textSize="14sp"
-                android:textColor="@color/bgWhite"
+                android:textColor="@color/white_a_60"
                 android:layout_marginRight="8dp"/>
 
             <TextView
@@ -87,7 +87,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text = "Unspendable: 0"
-                android:textColor = "@color/mainGreen"
+                android:textColor = "@color/white"
                 android:textSize = "14sp" />
 
         </LinearLayout>
