@@ -243,7 +243,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
                 case SYNCING:
                     text = getString(R.string.syncing)+" "+progress+"%";
                     color = getResources().getColor(R.color.white_a_60);
-                    imgSrc = R.drawable.ic_header_unsynced;
+                    imgSrc = R.drawable.ic_header_synced;
                     break;
                 case NOT_CONNECTION:
                     text = getString(R.string.not_connection);

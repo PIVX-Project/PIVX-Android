@@ -44,7 +44,6 @@ import static pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity.INTENT_E
  */
 
 public class SettingsActivity extends BaseDrawerActivity implements View.OnClickListener {
-    private Switch videoSwitch;
     private Button buttonBackup;
     private Button buttonRestore;
     private Button btn_export_pub_key;
@@ -114,15 +113,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         buttonTutorial = (Button) findViewById(R.id.btn_tutorial);
         buttonTutorial.setOnClickListener(this);
 
-        // Video Switch
-        videoSwitch = (Switch) findViewById(R.id.videoSwitch);
-        videoSwitch.setChecked(pivxApplication.getAppConf().isSplashSoundEnabled());
-        videoSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                pivxApplication.getAppConf().setSplashSound(checked);
-            }
-        });
     }
 
     @Override

@@ -175,21 +175,6 @@
             android:layout_height="wrap_content">
 
 
-            <Switch
-                android:id="@+id/videoSwitch"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:text="Splash video sound"
-                android:background="@drawable/settings_items"
-                android:textColor="@color/mainText"
-                android:textSize="16sp"
-                android:textStyle="normal"
-                android:padding="8dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:checked="true"
-                android:gravity="left"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

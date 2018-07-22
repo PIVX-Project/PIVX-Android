@@ -12,7 +12,7 @@
     <item
         android:id="@+id/action_qr"
         android:orderInCategory="100"
-        android:icon="@mipmap/ic_qr_code_white"
+        android:icon="@drawable/ic_qr_code_white"
         android:title="@string/action_qr"
         app:showAsAction="always" />
 
