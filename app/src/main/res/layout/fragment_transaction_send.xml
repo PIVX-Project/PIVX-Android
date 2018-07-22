@@ -35,12 +35,8 @@
 
                     <TextView
                         android:id = "@+id/titleAmount"
-                        android:layout_width = "wrap_content"
-                        android:layout_height = "wrap_content"
                         android:text = "@string/title_amount"
-                        android:layout_marginBottom="10dp"
-                        android:textColor = "#757575"
-                        android:textSize = "14sp" />
+                        style="@style/Label" />
 
                     <EditText
                         android:id = "@+id/edit_amount"
@@ -58,7 +54,7 @@
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
                         android:text = "0"
-                        android:textColor = "#858585"
+                        android:textColor = "@color/subtitle"
                         android:textSize = "16sp" />
 
                 </LinearLayout>
@@ -72,13 +68,9 @@
                     android:gravity="center_horizontal">
 
                     <TextView
-                        android:layout_width = "wrap_content"
-                        android:layout_height = "wrap_content"
                         android:id="@+id/txt_currency_amount"
                         android:text = "@string/title_amount"
-                        android:layout_marginBottom="10dp"
-                        android:textColor = "#757575"
-                        android:textSize = "14sp" />
+                        style="@style/Label" />
 
                     <EditText
                         android:id = "@+id/edit_amount_currency"
@@ -97,8 +89,8 @@
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
                         android:text = "0 PIV"
-                        android:textColor = "#858585"
-                        android:textSize = "16sp" />
+                        android:textSize = "16sp"
+                        android:textColor = "@color/subtitle" />
 
                 </LinearLayout>
             </ViewFlipper>

@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:text="No list.."
-                        android:textColor="#000ccc"
+                        android:textColor="@color/mainText"
                         android:textSize="18sp" />
 
 

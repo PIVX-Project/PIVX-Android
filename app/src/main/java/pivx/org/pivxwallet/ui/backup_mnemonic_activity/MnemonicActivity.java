@@ -71,9 +71,10 @@ public class MnemonicActivity extends BaseActivity {
             llp.setMargins(0, 40, 20, 0);
             textView.setLayoutParams(llp);
             textView.setTextColor(Color.BLACK);
-            textView.setBackgroundResource(R.drawable.bg_button_grey);
-            textView.setPadding(10,8,10,8);
+            textView.setBackgroundResource(R.drawable.bg_inputs_primary);
+            textView.setPadding(18,8,18,8);
             textView.setText(word);
+            textView.setTextSize(15);
             txt_words.addView(textView);
         }
 

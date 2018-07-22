@@ -26,13 +26,13 @@
             android:text = "@string/select_file"
             style="@style/Label"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:padding="12dp"
             android:layout_height="42dp"
             android:gravity="left|center_vertical"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/bg_inputs_primary">
+            android:background="@drawable/bg_edit_text_primary_selector">
 
 
 
@@ -40,7 +40,6 @@
                 android:id="@+id/spinner_files"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/restoreMessage"
                 android:layout_centerHorizontal="true"
                 android:background="@color/transparent"
                 android:drawableRight="@mipmap/ic_add_file"
@@ -52,7 +51,15 @@
                 android:textColor="@color/mainText"
                 android:textSize="14sp" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/text_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/restore_without_file"
+                android:textColor="@color/hintInput"
+                android:textSize="15dp"/>
+
+        </RelativeLayout>
 
 
         <TextView
@@ -61,7 +68,7 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/passwordLayout"
-            android:background="@drawable/bg_inputs_primary"
+            android:background="@drawable/bg_edit_text_primary_selector"
             android:layout_below="@+id/spinner_files"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"

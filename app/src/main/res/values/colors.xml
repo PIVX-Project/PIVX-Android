@@ -33,6 +33,9 @@
     <color name="colorLightGrey">#EAEAEA</color>
     <color name="gray_87_text">#dd000000</color>
 
+    <!-- Gray -->
+    <color name="color_grey">#979899</color>
+
     <!-- Text -->
 
     <color name="color_label">#7a8392</color>

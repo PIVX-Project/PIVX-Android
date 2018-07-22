@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -22,7 +23,7 @@ import static pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeF
  */
 
 public class CustomFeeActivity extends BaseActivity {
-
+    private Button btnSave;
     private View root;
     private CustomFeeFragment customFeeFragment;
 
@@ -35,6 +36,25 @@ public class CustomFeeActivity extends BaseActivity {
 
         customFeeFragment = (CustomFeeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_custom_fee);
 
+        btnSave = (Button) findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent intent = new Intent();
+                    CustomFeeFragment.FeeSelector feeSelector = customFeeFragment.getFee();
+                    intent.putExtra(INTENT_EXTRA_IS_FEE_PER_KB,feeSelector.isFeePerKbSelected());
+                    intent.putExtra(INTENT_EXTRA_IS_TOTAL_FEE,!feeSelector.isFeePerKbSelected());
+                    intent.putExtra(INTENT_EXTRA_IS_MINIMUM_FEE,feeSelector.isPayMinimum());
+                    intent.putExtra(INTENT_EXTRA_FEE,feeSelector.getAmount());
+                    setResult(RESULT_OK,intent);
+                    finish();
+                } catch (InvalidFeeException e) {
+                    e.printStackTrace();
+                    DialogsUtil.buildSimpleErrorTextDialog(getBaseContext(),getString(R.string.invalid_inputs),e.getMessage()).show(getFragmentManager(),"custom_fee_invalid_inputs");
+                }
+            }
+        });
     }
 
     @Override
@@ -45,22 +65,7 @@ public class CustomFeeActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.option_ok){
-            try {
-                Intent intent = new Intent();
-                CustomFeeFragment.FeeSelector feeSelector = customFeeFragment.getFee();
-                intent.putExtra(INTENT_EXTRA_IS_FEE_PER_KB,feeSelector.isFeePerKbSelected());
-                intent.putExtra(INTENT_EXTRA_IS_TOTAL_FEE,!feeSelector.isFeePerKbSelected());
-                intent.putExtra(INTENT_EXTRA_IS_MINIMUM_FEE,feeSelector.isPayMinimum());
-                intent.putExtra(INTENT_EXTRA_FEE,feeSelector.getAmount());
-                setResult(RESULT_OK,intent);
-                finish();
-                return true;
-            } catch (InvalidFeeException e) {
-                e.printStackTrace();
-                DialogsUtil.buildSimpleErrorTextDialog(this,getString(R.string.invalid_inputs),e.getMessage()).show(getFragmentManager(),"custom_fee_invalid_inputs");
-            }
-        }else if (item.getItemId() == R.id.option_default){
+        if (item.getItemId() == R.id.option_default){
             Intent intent = new Intent();
             intent.putExtra(INTENT_EXTRA_CLEAR,true);
             setResult(RESULT_OK,intent);

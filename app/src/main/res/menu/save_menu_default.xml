@@ -2,9 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/option_ok" android:title="Ok" app:showAsAction="always"/>
-
-    <item android:id="@+id/option_default" android:title="Clean" app:showAsAction="never"/>
+    <item android:id="@+id/option_default" android:title="Clean" app:showAsAction="always"/>
 
 
 </menu>

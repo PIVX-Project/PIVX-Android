@@ -57,6 +57,7 @@ public class RestoreActivity extends BaseActivity {
     private static final int OPTIONS_ADVANCE = 2;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL = 502;
     private View root;
+    private TextView text_spinner;
     private TextInputEditText edit_password;
     private Spinner spinnerFiles;
     private TextView restoreMessage;
@@ -109,6 +110,8 @@ public class RestoreActivity extends BaseActivity {
         progress = (ProgressBar) root.findViewById(R.id.progress);
         restoreMessage = (TextView) root.findViewById(R.id.restoreMessage);
         edit_password = (TextInputEditText) root.findViewById(R.id.edit_password);
+        text_spinner = (TextView) root.findViewById(R.id.text_spinner);
+        text_spinner.setVisibility(View.GONE);
         spinnerFiles = (Spinner) root.findViewById(R.id.spinner_files);
         fileAdapter = new FileAdapter(this) {
             @Override
@@ -138,6 +141,7 @@ public class RestoreActivity extends BaseActivity {
 
                 return row;
             }
+
         };
         final String path;
         final String backupPath = PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.getAbsolutePath();

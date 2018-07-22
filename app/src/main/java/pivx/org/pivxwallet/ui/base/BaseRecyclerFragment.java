@@ -151,7 +151,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                             } else {
                                 showEmptyScreen();
                                 txt_empty.setText(emptyText);
-                                txt_empty.setTextColor(Color.BLACK);
+                                txt_empty.setTextColor(getResources().getColor(R.color.mainText));
                             }
                         }
                     }

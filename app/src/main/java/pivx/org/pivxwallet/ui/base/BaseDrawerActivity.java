@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -236,17 +237,17 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             switch (blockchainState) {
                 case SYNC:
                     text = getString(R.string.sync);
-                    color = Color.parseColor("#ffffffff");
+                    color = getResources().getColor(R.color.white);
                     imgSrc = 0;
                     break;
                 case SYNCING:
                     text = getString(R.string.syncing)+" "+progress+"%";
-                    color = Color.parseColor("#f6a623");
-                    imgSrc = R.drawable.ic_header_unsynced;
+                    color = getResources().getColor(R.color.white_a_60);
+                    imgSrc = R.drawable.ic_header_synced;
                     break;
                 case NOT_CONNECTION:
                     text = getString(R.string.not_connection);
-                    color = Color.parseColor("#f6a623");
+                    color = getResources().getColor(R.color.white_a_60);
                     imgSrc = R.drawable.ic_header_unsynced;
                     break;
             }

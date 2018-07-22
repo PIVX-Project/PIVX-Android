@@ -5,7 +5,8 @@
 
     <ViewFlipper android:id="@+id/viewFlipper"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_marginTop="4dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -17,32 +18,18 @@
 
             <TextView
                 android:id = "@+id/titleAmount"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
                 android:text = "@string/title_amount"
-                android:layout_marginBottom="10dp"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
+                style="@style/Label" />
 
             <EditText
                 android:id = "@+id/edit_amount"
                 android:ellipsize="start"
-                android:gravity="center_horizontal"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:padding="8dp"
-                android:paddingBottom="11dp"
-                android:paddingTop="11dp"
                 android:inputType="numberDecimal"
-                android:background="@drawable/transaction_inputs"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:layout_marginBottom="10dp"
-                android:maxLines="1"
                 android:maxLength="8"
                 android:hint="@string/set_amount_piv"
                 android:text = ""
-                android:textColor = "#434343"
-                android:textSize = "20sp" />
+                android:textSize = "20sp"
+                style="@style/InputPrimary"/>
 
 
             <TextView
@@ -50,8 +37,8 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text = "0"
-                android:textColor = "#858585"
-                android:textSize = "16sp" />
+                android:textSize = "16sp"
+                android:textColor = "@color/subtitle" />
 
         </LinearLayout>
 
@@ -64,33 +51,19 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
                 android:id="@+id/txt_currency_amount"
                 android:text = "@string/title_amount"
-                android:layout_marginBottom="10dp"
-                android:textColor = "#757575"
-                android:textSize = "14sp" />
+                style="@style/Label"/>
 
             <EditText
                 android:id = "@+id/edit_amount_currency"
                 android:ellipsize="start"
-                android:gravity="center_horizontal"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:padding="8dp"
-                android:paddingBottom="11dp"
-                android:paddingTop="11dp"
                 android:inputType="numberDecimal"
-                android:background="@drawable/transaction_inputs"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:layout_marginBottom="10dp"
-                android:maxLines="1"
                 android:maxLength="8"
                 android:hint="@string/set_amount_usd"
                 android:text = ""
-                android:textColor = "#434343"
-                android:textSize = "20sp" />
+                android:textSize = "20sp"
+                style="@style/InputPrimary" />
 
 
             <TextView
@@ -98,8 +71,8 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text = "0 PIV"
-                android:textColor = "#858585"
-                android:textSize = "16sp" />
+                android:textSize = "16sp"
+                android:textColor = "@color/subtitle" />
 
         </LinearLayout>
     </ViewFlipper>
@@ -111,7 +84,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:background="@color/transparent"
-        android:layout_margin="20dp"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_swap"/>
 
 </RelativeLayout>

@@ -9,17 +9,13 @@
 
     <Button
         android:id="@+id/btn_node"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="0dp"
-        android:background="@color/transparent"
+        android:layout_height="36dp"
         android:text="@string/btn_select_node"
-        android:textColor="@color/mainGreen"
         android:layout_alignParentEnd="true"
-        android:paddingTop="12dp"
-        android:paddingEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:visibility="invisible"
-        android:textSize="15sp" />
+        style="@style/ButtonTextTransparent" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
