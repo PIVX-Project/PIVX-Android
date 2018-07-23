@@ -37,7 +37,7 @@ public class ConvertActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.activity_convert, container);
-        setTitle(R.string.title_convert);
+
         header_container = (FrameLayout) findViewById(R.id.header_container);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -76,6 +76,7 @@ public class ConvertActivity extends BaseActivity {
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                     window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
                 }
+                setTitle(R.string.convert_piv);
                 bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
                 btn_convert.setBackgroundResource(R.drawable.bg_button_border);
                 btn_convert.setText(R.string.convert_piv);
@@ -94,6 +95,7 @@ public class ConvertActivity extends BaseActivity {
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                     window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
                 }
+                setTitle(R.string.convert_zpiv);
                 bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
                 btn_convert.setBackgroundResource(R.drawable.bg_button_purple);
                 btn_convert.setTextColor(getResources().getColor(R.color.white));
