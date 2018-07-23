@@ -2,7 +2,9 @@ package pivx.org.pivxwallet.ui.transaction_send_activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -10,17 +12,22 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -105,21 +112,22 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int CUSTOM_INPUTS = 125;
     private static final int SEND_DETAIL = 126;
     private static final int CUSTOM_CHANGE_ADDRESS = 127;
-
+    private Boolean isPrivate = false;
     private View root;
     private Button buttonSend, addAllPiv;
     private AutoCompleteTextView edit_address;
     private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
-    private TextView txt_multiple_outputs, txt_currency_amount;
-    private View container_address;
+    private TextView txt_multiple_outputs, txt_currency_amount, text_fee_message, title_amount_piv, title_amount_local, title_address, title_description;
+    private View container_address, layout_qr_button;
     private EditText edit_amount, editCurrency;
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
     private PivxRate pivxRate;
     private SimpleTextDialog errorDialog;
-    private ImageButton btnSwap;
+    private ImageButton btnSwap, button_qr;
     private ViewFlipper amountSwap;
+    private ScrollView layout_scroll;
 
     private boolean inPivs = true;
     private Transaction transaction;
@@ -141,7 +149,23 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
-        setTitle(R.string.btn_send);
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("Private")) {
+            isPrivate = intent.getBooleanExtra("Private",false);
+        }
+
+
+        layout_scroll = (ScrollView) findViewById(R.id.layout_scroll);
+        buttonSend = (Button) findViewById(R.id.btnSend);
+        buttonSend.setOnClickListener(this);
+        text_fee_message = (TextView) findViewById(R.id.text_fee_message);
+        title_amount_piv = (TextView) findViewById(R.id.title_amount_piv);
+        title_amount_local = (TextView) findViewById(R.id.title_amount_local);
+        title_address = (TextView) findViewById(R.id.title_address);
+        title_description = (TextView) findViewById(R.id.title_description);
+        addAllPiv =  (Button) findViewById(R.id.btn_add_all);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
@@ -157,10 +181,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         txt_custom_fee.setOnClickListener(this);
         txt_change_address = (TextView) root.findViewById(R.id.txt_change_address);
         txt_change_address.setOnClickListener(this);
+        button_qr = (ImageButton) root.findViewById(R.id.button_qr);
         findViewById(R.id.button_qr).setOnClickListener(this);
-        buttonSend = (Button) findViewById(R.id.btnSend);
-        buttonSend.setOnClickListener(this);
-
         //Swap type of ammounts
         amountSwap = (ViewFlipper) findViewById( R.id.viewFlipper );
         amountSwap.setInAnimation(AnimationUtils.loadAnimation(this,
@@ -176,12 +198,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
 
         //Sending amount piv
-        addAllPiv =  (Button) findViewById(R.id.btn_add_all);
         addAllPiv.setOnClickListener(this);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         txt_local_currency.setText("0 " + pivxRate.getCode());
-
+        editCurrency.setHint(pivxRate.getCode());
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -255,7 +276,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         });
 
         // Load data if exists
-        Intent intent = getIntent();
         String address = intent.getStringExtra(INTENT_ADDRESS);
         if (intent != null && address != null){
             edit_address.setText(address);
@@ -265,6 +285,72 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (memo != null)
                 edit_memo.setText(memo);
         }
+
+        layout_qr_button = (LinearLayout) findViewById(R.id.layout_qr_button);
+
+        // Layout changed zPIV
+
+        if (isPrivate) {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                    .getColor(R.color.darkPurple)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
+            }
+            setTitle(R.string.title_send_private);
+            layout_scroll.setBackgroundResource(R.color.bgPurple);
+            buttonSend.setText(R.string.btn_send_zpiv);
+            buttonSend.setBackgroundResource(R.color.white);
+            buttonSend.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPurple));
+            text_fee_message.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
+            title_description.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
+            title_address.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
+            title_amount_local.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
+            title_amount_piv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
+            addAllPiv.setBackgroundResource(R.color.black_a_30);
+            addAllPiv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
+            edit_amount.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
+            edit_amount.setHintTextColor(getResources().getColor(R.color.white_a_80));
+            edit_amount.setTextColor(getResources().getColor(R.color.white));
+            edit_amount.setPadding(convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12));
+            editCurrency.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
+            editCurrency.setPadding(convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12));
+            editCurrency.setHintTextColor(getResources().getColor(R.color.white_a_80));
+            editCurrency.setTextColor(getResources().getColor(R.color.white));
+            edit_address.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
+            edit_address.setPadding(convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12));
+            edit_address.setHintTextColor(getResources().getColor(R.color.white_a_80));
+            edit_address.setTextColor(getResources().getColor(R.color.white));
+            edit_memo.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
+            edit_memo.setPadding(convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12), convertDpToPx(getResources(), 12));
+            edit_memo.setHintTextColor(getResources().getColor(R.color.white_a_80));
+            edit_memo.setTextColor(getResources().getColor(R.color.white));
+            txt_local_currency.setTextColor(getResources().getColor(R.color.white));
+            txtShowPiv.setTextColor(getResources().getColor(R.color.white));
+            txt_multiple_outputs.setTextColor(getResources().getColor(R.color.black_a_60));
+            txt_coin_selection.setTextColor(getResources().getColor(R.color.black_a_60));
+            txt_custom_fee.setTextColor(getResources().getColor(R.color.black_a_60));
+            txt_change_address.setTextColor(getResources().getColor(R.color.black_a_60));
+            button_qr.setImageResource(R.drawable.ic_qr_code_white);
+            btnSwap.setImageResource(R.drawable.ic_swap_white);
+        }
+        else {
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
+                    .getColor(R.color.bgPurple)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
+            }
+            setTitle(R.string.btn_send);
+            layout_scroll.setBackgroundResource(R.color.white);
+            buttonSend.setText(R.string.btn_send);
+            buttonSend.setBackgroundResource(R.color.colorPurple);
+            buttonSend.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
+            text_fee_message.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.subtitle));
+        }
+
 
     }
 
@@ -410,6 +496,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                                     + " " + pivxRate.getCode()
                     );
                 } else {
+
                     editCurrency.setText(
                             pivxApplication.getCentralFormats().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
@@ -862,5 +949,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
         finish();
         NavigationUtils.goBackToHome(this);
+    }
+
+    public static int convertDpToPx(Resources resources, int dp){
+        return Math.round(dp*(resources.getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
 }
