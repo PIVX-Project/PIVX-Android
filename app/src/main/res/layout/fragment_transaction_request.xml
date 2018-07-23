@@ -17,8 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="12dp">
+        android:gravity="left"
+        android:paddingRight="16dp"
+        android:paddingLeft="16dp">
 
 
         <TextView
@@ -29,6 +30,7 @@
         <EditText
             android:id = "@+id/edit_memo"
             android:ellipsize="start"
+            android:gravity="left|center_vertical"
             android:layout_marginBottom="10dp"
             android:singleLine="true"
             android:hint="@string/set_description"
@@ -49,11 +51,6 @@
 
         <Button
             android:id="@+id/btnRequest"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_button_border"
-            android:elevation="2dp"
-            android:gravity="center"
             android:text="@string/btn_request"
             style="@style/ButtonPrimary" />
 
