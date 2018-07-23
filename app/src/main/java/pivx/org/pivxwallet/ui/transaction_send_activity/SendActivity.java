@@ -161,6 +161,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         buttonSend.setOnClickListener(this);
         text_fee_message = (TextView) findViewById(R.id.text_fee_message);
         title_amount_piv = (TextView) findViewById(R.id.title_amount_piv);
+        title_amount_piv.setText(getText(R.string.amount) + " "  + getText(R.string.set_amount_piv));
         title_amount_local = (TextView) findViewById(R.id.title_amount_local);
         title_address = (TextView) findViewById(R.id.title_address);
         title_description = (TextView) findViewById(R.id.title_description);
@@ -202,6 +203,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         txt_local_currency.setText("0 " + pivxRate.getCode());
+        title_amount_local.setText(getText(R.string.amount) + " " + pivxRate.getCode());
         editCurrency.setHint(pivxRate.getCode());
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
