@@ -15,7 +15,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:padding="16dp"
             android:gravity="left">
 
@@ -33,47 +32,51 @@
                 android:hint="@string/set_name"
                 android:text = "" />
 
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TextView
                 android:id = "@+id/titleAddress"
                 android:text = "@string/title_address"
                 style="@style/Label" />
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="12dp"
-                android:background="@drawable/bg_inputs_primary">
-
-                <EditText
-                    android:id = "@+id/edit_address"
-                    android:gravity="start"
-                    android:layout_weight="1"
-                    android:layout_width = "0dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="2"
-                    android:background="@color/transparent"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:hint="@string/add_address"
-                    android:textColor = "#434343"
-                    android:textSize = "15sp"
-                     />
-
-
-                <ImageButton
-                    android:id="@+id/img_qr"
+                <LinearLayout
+                    android:id="@+id/layout_qr_button"
+                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_qr_code"
-                    android:layout_centerVertical="true"
-                    android:text="Button"/>
+                    android:gravity="center">
 
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/img_qr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_qr_code"
+                        android:text="Button"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <EditText
+                android:id = "@+id/edit_address"
+                android:gravity="start"
+                android:layout_width = "match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="4"
+                android:minLines="1"
+                android:padding="12dp"
+                android:textSize="16dp"
+                android:background="@drawable/bg_edit_text_primary_selector"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:hint="@string/add_address"
+                android:textColor = "#434343"
+                />
 
 
         </LinearLayout>
+
     </RelativeLayout>
 
 

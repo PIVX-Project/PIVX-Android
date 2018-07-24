@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:background="@android:color/transparent"
-        android:gravity="center_horizontal">
+        android:gravity="left">
 
         <RadioGroup
             android:id="@+id/radio_convert_type"
@@ -55,6 +55,7 @@
         <EditText
             android:id = "@+id/edit_amount"
             android:inputType="number"
+            android:gravity="left|center_vertical"
             android:layout_marginBottom="10dp"
             android:hint="@string/set_amount_usd"
             android:text = "12313434 PIV"
@@ -72,11 +73,14 @@
 
         <Button
             android:id="@+id/btn_add_all"
-            android:layout_centerHorizontal="true"
-            android:background="@color/transparent"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@color/black_a_20"
             android:textColor="@color/colorPurple"
-            android:text="@string/add_all"
-            style="@style/ButtonText"/>
+            android:text="@string/add_all"/>
 
     </LinearLayout>
 
@@ -104,18 +108,17 @@
 
         <Button
             android:id="@+id/btn_convert"
-            android:text="@string/convert_zpiv"
+            android:text="@string/btn_convert"
             style="@style/ButtonPrimary"/>
 
 
         <TextView
+            android:id="@+id/text_fee_message"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:text="@string/fee_included"
             android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"/>
+            />
 
 
     </LinearLayout>

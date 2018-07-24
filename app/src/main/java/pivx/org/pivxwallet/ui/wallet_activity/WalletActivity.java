@@ -176,13 +176,20 @@ public class WalletActivity extends BaseDrawerActivity {
         root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent sendintent = new Intent(v.getContext(),SendActivity.class);
+                if (isPrivate) {
+                    sendintent.putExtra("Private",true);
+                } else {
+                    sendintent.putExtra("Private",false);
+                }
                 if (pivxModule.isWalletWatchOnly()){
                     Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                     return;
                 }
-                startActivity(new Intent(v.getContext(), SendActivity.class));
+                startActivity(sendintent);
             }
         });
+
         root.findViewById(R.id.fab_request).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

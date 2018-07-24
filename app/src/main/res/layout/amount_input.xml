@@ -14,16 +14,17 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@android:color/transparent"
-            android:gravity="center_horizontal">
+            android:gravity="left">
 
             <TextView
-                android:id = "@+id/titleAmount"
+                android:id = "@+id/title_amount_piv"
                 android:text = "@string/title_amount"
                 style="@style/Label" />
 
             <EditText
                 android:id = "@+id/edit_amount"
                 android:ellipsize="start"
+                android:gravity="left|center_vertical"
                 android:inputType="numberDecimal"
                 android:maxLength="8"
                 android:hint="@string/set_amount_piv"
@@ -48,16 +49,17 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@android:color/transparent"
-            android:gravity="center_horizontal">
+            android:gravity="left">
 
             <TextView
-                android:id="@+id/txt_currency_amount"
+                android:id="@+id/title_local_currency"
                 android:text = "@string/title_amount"
                 style="@style/Label"/>
 
             <EditText
                 android:id = "@+id/edit_amount_currency"
                 android:ellipsize="start"
+                android:gravity="left|center_vertical"
                 android:inputType="numberDecimal"
                 android:maxLength="8"
                 android:hint="@string/set_amount_usd"
@@ -80,7 +82,7 @@
     <ImageButton
         android:id="@+id/btn_swap"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:background="@color/transparent"

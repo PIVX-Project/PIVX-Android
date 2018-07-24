@@ -11,9 +11,11 @@
         android:layout_width="match_parent"
         tools:text="Public key"
         android:id="@+id/txt_title"
+        android:gravity="left"
         style="@style/Label"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,13 +31,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_warn"
         android:paddingBottom="9dp"
-        android:textColor="#ba0d01"
+        android:textColor="@color/red"
         android:textSize="14sp"
         tools:text="@string/warn_sharing_pub_key"
         android:layout_below="@+id/txt_key"/>
 
     <TextView
         android:layout_width="match_parent"
+        android:gravity="left"
         android:id="@+id/txt_title_derivation_path"
         android:layout_below="@+id/txt_warn"
         style="@style/Label"

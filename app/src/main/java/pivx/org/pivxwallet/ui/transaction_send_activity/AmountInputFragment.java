@@ -30,7 +30,7 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
     private View root;
 
     private EditText edit_amount, editCurrency;
-    private TextView txt_currency_amount, txtShowPiv,txt_local_currency;
+    private TextView title_local_currency, txtShowPiv,txt_local_currency, title_amount_piv;
     private ImageButton btnSwap;
     private ViewFlipper amountSwap;
     private PivxRate pivxRate;
@@ -43,7 +43,9 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
         edit_amount = (EditText) root.findViewById(R.id.edit_amount);
         //Sending amount currency
         editCurrency = (EditText) root.findViewById(R.id.edit_amount_currency);
-        txt_currency_amount = (TextView) root.findViewById(R.id.txt_currency_amount);
+        title_local_currency = (TextView) root.findViewById(R.id.title_local_currency);
+        title_amount_piv = (TextView) root.findViewById(R.id.title_amount_piv);
+        title_amount_piv.setText(getText(R.string.amount) + " "  + getText(R.string.set_amount_piv));
         txt_local_currency = (TextView) root.findViewById(R.id.txt_local_currency);
         txtShowPiv = (TextView) root.findViewById(R.id.txt_show_piv) ;
         //Swap type of ammounts
@@ -57,11 +59,14 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
 
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
-        if (pivxRate != null)
+        if (pivxRate != null) {
             txt_local_currency.setText("0 " + pivxRate.getCode());
-        else
+            editCurrency.setHint(pivxRate.getCode());
+            title_local_currency.setText(getText(R.string.amount) + " " + pivxRate.getCode());
+        }
+        else {
             txt_local_currency.setText("0");
-
+        }
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

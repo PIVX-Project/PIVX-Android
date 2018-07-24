@@ -16,12 +16,15 @@
 
     <TextView
         android:text = "@string/import_xpub"
+        android:layout_width="match_parent"
+        android:gravity="left"
         style="@style/Label"/>
 
     <EditText
         android:id="@+id/edit_xpub"
         android:maxLines="4"
         android:textSize="16dp"
+        android:gravity="left|center_vertical"
         android:hint="@string/hint_paste_xpub"
         style="@style/InputPrimary"
         />

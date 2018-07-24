@@ -441,5 +441,6 @@
     <string name="demon500">Demon. 500 x</string>
     <string name="demon1000">Demon. 1000 x </string>
     <string name="demon5000">Demon. 5000 x </string>
+    <string name="title_send_private">Send private transaction</string>
 
 </resources>
