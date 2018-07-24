@@ -35,7 +35,11 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/convert_zpiv"
+                style="@style/RadioButtonStyle"
                 android:checked="true" />
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"/>
 
             <RadioButton
                 android:id="@+id/radio_piv"
@@ -43,6 +47,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/convert_piv"
+                style="@style/RadioButtonStyle"
                 android:checked="false" />
 
         </RadioGroup>

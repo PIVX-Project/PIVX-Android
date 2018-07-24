@@ -90,7 +90,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_marginBottom="6dp"
+                android:layout_marginBottom="4dp"
                 android:layout_height="1dp"
                 android:background="@color/white_a_60"/>
 
@@ -98,6 +98,7 @@
                 android:id = "@+id/txt_local_total"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
+                android:layout_marginBottom="4dp"
                 android:gravity="right"
                 android:text = "14710 USD"
                 tools:text = "14710 USD"
