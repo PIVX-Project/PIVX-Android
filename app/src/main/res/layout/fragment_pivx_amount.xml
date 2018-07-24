@@ -27,39 +27,84 @@
         android:gravity="center"
         >
 
-        <TextView
-            android:id = "@+id/pivValue"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="6dp"
-            android:text = "13.135 PIV"
-            android:textColor = "@color/textColorWhite"
-            android:textSize = "24sp" />
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/zpivValue"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:textColor = "@color/textColorWhite"
-            android:textSize = "14sp"
-            android:text="0 zPIV"/>
-        <View
-            android:layout_width="120dp"
-            android:layout_marginBottom="6dp"
-            android:layout_height="1dp"
-            android:background="@color/white_a_60"/>
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-        <TextView
-            android:layout_below="@+id/pivValue"
-            android:layout_centerHorizontal="true"
-            android:id = "@+id/txt_local_currency"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            tools:text = "14710 USD"
-            android:textColor = "@color/textColorLightPurple"
-            android:textSize = "16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id = "@+id/pivValue"
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:layout_weight="1"
+                    android:text = "13.135 PIV"
+                    android:textColor = "@color/white"
+                    android:textSize = "24sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:id="@+id/txt_local_currency"
+                    android:textColor = "@color/white"
+                    android:textSize = "14sp"
+                    android:text="0 zPIV"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:id = "@+id/text_value_bottom"
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:layout_weight="1"
+                    android:text = "13.135 PIV"
+                    android:textColor = "@color/white_a_60"
+                    android:textSize = "16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:id="@+id/text_value_bottom_local"
+                    android:textColor = "@color/white_a_60"
+                    android:textSize = "14sp"
+                    android:text="0 USD"/>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginBottom="6dp"
+                android:layout_height="1dp"
+                android:background="@color/white_a_60"/>
+
+            <TextView
+                android:id = "@+id/txt_local_total"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:gravity="right"
+                android:text = "14710 USD"
+                tools:text = "14710 USD"
+                android:textColor = "@color/white_a_80"
+                android:textSize = "20sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_blocked"

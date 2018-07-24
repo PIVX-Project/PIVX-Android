@@ -301,7 +301,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
             }
             setTitle(R.string.title_send_private);
-            layout_scroll.setBackgroundResource(R.color.bgPurple);
+            layout_scroll.setBackgroundResource(R.color.darkPurple);
             buttonSend.setText(R.string.btn_send_zpiv);
             buttonSend.setBackgroundResource(R.color.white);
             buttonSend.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPurple));
@@ -310,7 +310,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             title_address.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
             title_amount_local.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
             title_amount_piv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
-            addAllPiv.setBackgroundResource(R.color.black_a_30);
             addAllPiv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
             edit_amount.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
             edit_amount.setHintTextColor(getResources().getColor(R.color.white_a_80));

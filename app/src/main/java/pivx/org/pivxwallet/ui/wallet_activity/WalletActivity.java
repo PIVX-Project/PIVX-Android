@@ -73,7 +73,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private View root;
     private View container_txs;
     private RelativeLayout bg_balance;
-    private TextView txt_value;
+    private TextView txt_value, text_value_bottom, text_value_bottom_local;
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
     private TextView txt_watch_only;
@@ -134,6 +134,10 @@ public class WalletActivity extends BaseDrawerActivity {
         fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
         fab_convert = (FloatingActionButton) findViewById(R.id.fab_convert);
 
+        // Header amount values
+        text_value_bottom =  (TextView) findViewById(R.id.text_value_bottom);
+        text_value_bottom_local =  (TextView) findViewById(R.id.text_value_bottom_local);
+
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
         if (isPrivate) {
@@ -147,6 +151,7 @@ public class WalletActivity extends BaseDrawerActivity {
             }
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
             fab_add.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
+            fab_add.setLabelText(getResources().getString(R.string.btn_send_zpiv));
             fab_add.setImageDrawable(getDrawable(R.drawable.ic_send_action));
             fab_request.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
         } else {
@@ -158,6 +163,7 @@ public class WalletActivity extends BaseDrawerActivity {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
             }
+            fab_add.setLabelText(getResources().getString(R.string.btn_send_piv));
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
             fab_convert.setVisibility(View.GONE);
             floatingActionMenu.setMenuButtonColorNormal(ContextCompat.getColor(this, R.color.bgPurple));
@@ -332,28 +338,6 @@ public class WalletActivity extends BaseDrawerActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    //Create a list of Data objects
-    public List<TransactionData> fill_with_data() {
-
-        List<TransactionData> data = new ArrayList<>();
-
-        data.add(new TransactionData("Sent PIVX", "18:23", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
-        data.add(new TransactionData("Sent PIVX", "1 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "3 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "3 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-
-        data.add(new TransactionData("Sent PIVX", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent PIVX", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
-
-        return data;
     }
 
     @Override
