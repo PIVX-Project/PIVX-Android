@@ -41,7 +41,7 @@ public class ConvertActivity extends BaseActivity {
         header_container = (FrameLayout) findViewById(R.id.header_container);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        btn_convert.setText(R.string.convert_zpiv);
+        setTitle(R.string.convert_zpiv);
         View headerView = getLayoutInflater().inflate(R.layout.fragment_pivx_amount, header_container);
 
         header_container.setVisibility(View.VISIBLE);
