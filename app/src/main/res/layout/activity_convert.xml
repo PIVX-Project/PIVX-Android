@@ -35,7 +35,11 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/convert_zpiv"
+                style="@style/RadioButtonStyle"
                 android:checked="true" />
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"/>
 
             <RadioButton
                 android:id="@+id/radio_piv"
@@ -43,6 +47,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/convert_piv"
+                style="@style/RadioButtonStyle"
                 android:checked="false" />
 
         </RadioGroup>
@@ -73,12 +78,14 @@
 
         <Button
             android:id="@+id/btn_add_all"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="-22dp"
             android:layout_marginBottom="12dp"
+            android:layout_gravity="right"
+            android:minWidth="0dp"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:background="@color/black_a_20"
+            android:background="@color/transparent"
             android:textColor="@color/colorPurple"
             android:text="@string/add_all"/>
 

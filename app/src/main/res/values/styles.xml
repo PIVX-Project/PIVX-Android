@@ -217,6 +217,20 @@
         <item name="android:background">@drawable/bg_spinner</item>
     </style>
 
+    <!-- Radio Buttons -->
+
+    <style name="RadioButtonStyle" parent="@android:style/Widget.CompoundButton">
+        <item name="android:background">@drawable/radiobutton_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/radio_text_selector</item>
+    </style>
+
+
     <!-- custom dialog activity theme -->
     <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog.FixedSize">
         <!-- removing the dialog's action bar -->

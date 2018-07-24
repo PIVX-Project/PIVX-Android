@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -41,7 +42,7 @@ public class ConvertActivity extends BaseActivity {
         header_container = (FrameLayout) findViewById(R.id.header_container);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        setTitle(R.string.convert_zpiv);
         View headerView = getLayoutInflater().inflate(R.layout.fragment_pivx_amount, header_container);
 
         header_container.setVisibility(View.VISIBLE);
@@ -85,6 +86,8 @@ public class ConvertActivity extends BaseActivity {
             }
         });
 
+        radio_zpiv.isChecked();
+
         radio_zpiv.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -103,7 +106,31 @@ public class ConvertActivity extends BaseActivity {
 
             }
         });
+/*
+        radio_zpiv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    radio_zpiv.setTextColor(getResources().getColor(R.color.mainText));
+                    radio_piv.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    radio_zpiv.setTextColor(getResources().getColor(R.color.white));
+                    radio_piv.setTextColor(getResources().getColor(R.color.mainText));
+                }
+            }
+        });
 
+        radio_piv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    radio_piv.setTextColor(getResources().getColor(R.color.mainText));
+                } else {
+                    radio_piv.setTextColor(getResources().getColor(R.color.white));
+                }
+            }
+        });
+*/
 
         // Convert
 

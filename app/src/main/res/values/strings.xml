@@ -428,6 +428,7 @@
     <string name="convert_piv">Convert to Piv</string>
     <string name="convert_zpiv">Convert to zPiv</string>
     <string name="btn_send_zpiv">Send zPIV</string>
+    <string name="btn_send_piv">Send PIV</string>
     <string name="label_amount_convert">Amount to convert</string>
     <string name="message_convert_zpiv">PIV can be converted to zPIV to remove transaction history. Sending zPIV is 100% anonymous and untraceable</string>
     <string name="coin_control">Coin Control</string>
@@ -442,5 +443,6 @@
     <string name="demon1000">Demon. 1000 x </string>
     <string name="demon5000">Demon. 5000 x </string>
     <string name="title_send_private">Send private transaction</string>
+    <string name="empty_zpiv_transactions">You don\'t have zPIV transactions</string>
 
 </resources>

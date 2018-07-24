@@ -45,7 +45,7 @@ public class PrivacyCoinControlActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE, MENU_ITEM_ITEM1, Menu.NONE, R.string.save);
+        menu.add(Menu.NONE, MENU_ITEM_ITEM1, Menu.NONE, R.string.save).setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return true;
     }
 

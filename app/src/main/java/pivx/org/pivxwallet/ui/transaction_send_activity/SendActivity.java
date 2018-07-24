@@ -60,6 +60,7 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.privacy.privacy_coin_control.PrivacyCoinControlActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment;
@@ -301,7 +302,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
             }
             setTitle(R.string.title_send_private);
-            layout_scroll.setBackgroundResource(R.color.bgPurple);
+            layout_scroll.setBackgroundResource(R.color.darkPurple);
             buttonSend.setText(R.string.btn_send_zpiv);
             buttonSend.setBackgroundResource(R.color.white);
             buttonSend.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorPurple));
@@ -310,7 +311,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             title_address.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
             title_amount_local.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
             title_amount_piv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
-            addAllPiv.setBackgroundResource(R.color.black_a_30);
             addAllPiv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
             edit_amount.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
             edit_amount.setHintTextColor(getResources().getColor(R.color.white_a_80));
@@ -372,7 +372,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startMultiAddressSendActivity(outputWrappers);
             return true;
         }else if(id == R.id.option_select_inputs){
-            startCoinControlActivity(unspent);
+            if (isPrivate){
+                Intent myinte = new Intent(this, PrivacyCoinControlActivity.class);
+                startActivity(myinte);
+            } else {
+                startCoinControlActivity(unspent);
+            }
         }else if (id == R.id.option_change_address){
             startChangeAddressActivity(changeAddress,changeToOrigin);
         }

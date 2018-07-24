@@ -22,95 +22,105 @@
             android:focusableInTouchMode="true"
             >
 
+            <RelativeLayout
+                android:id="@+id/layout_pager"
+                android:layout_width="match_parent"
+                android:layout_height="130dp">
 
-            <ViewFlipper android:id="@+id/viewFlipper"
-                android:layout_marginTop="12dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
+                <ViewFlipper android:id="@+id/viewFlipper"
+                    android:layout_marginTop="12dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:gravity="left">
+                    android:layout_width="match_parent">
 
-                    <TextView
-                        android:id = "@+id/title_amount_piv"
-                        android:text = "@string/title_amount"
-                        style="@style/Label" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="left">
 
-                    <EditText
-                        android:id = "@+id/edit_amount"
-                        android:gravity="left|center_vertical"
-                        android:ellipsize="start"
-                        android:inputType="numberDecimal"
-                        android:maxLength="8"
-                        android:hint="@string/set_amount_piv"
-                        android:text = ""
-                        style="@style/InputPrimary"
-                        android:textSize = "20sp" />
+                        <TextView
+                            android:id = "@+id/title_amount_piv"
+                            android:text = "@string/title_amount"
+                            style="@style/Label" />
 
-
-                    <TextView
-                        android:id = "@+id/txt_local_currency"
-                        android:layout_width = "wrap_content"
-                        android:layout_height = "wrap_content"
-                        android:text = "0"
-                        android:textColor = "@color/subtitle"
-                        android:textSize = "16sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:gravity="left">
-
-                    <TextView
-                        android:id="@+id/title_amount_local"
-                        android:text = "@string/title_amount"
-                        style="@style/Label" />
-
-                    <EditText
-                        android:id = "@+id/edit_amount_currency"
-                        android:gravity="left|center_vertical"
-                        android:ellipsize="start"
-                        android:inputType="numberDecimal"
-                        android:maxLength="8"
-                        android:hint="@string/set_amount_usd"
-                        android:text = ""
-                        style="@style/InputPrimary"
-                        android:textSize = "20sp" />
+                        <EditText
+                            android:id = "@+id/edit_amount"
+                            android:gravity="left|center_vertical"
+                            android:ellipsize="start"
+                            android:inputType="numberDecimal"
+                            android:maxLength="8"
+                            android:hint="@string/set_amount_piv"
+                            android:text = ""
+                            style="@style/InputPrimary"
+                            android:textSize = "20sp" />
 
 
-                    <TextView
-                        android:id = "@+id/txt_show_piv"
-                        android:layout_width = "wrap_content"
-                        android:layout_height = "wrap_content"
-                        android:text = "0 PIV"
-                        android:textSize = "16sp"
-                        android:textColor = "@color/subtitle" />
+                        <TextView
+                            android:id = "@+id/txt_local_currency"
+                            android:layout_width = "wrap_content"
+                            android:layout_height = "wrap_content"
+                            android:text = "0"
+                            android:textColor = "@color/subtitle"
+                            android:textSize = "16sp" />
 
-                </LinearLayout>
-            </ViewFlipper>
+                    </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_add_all"
-                android:layout_below="@+id/viewFlipper"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@color/black_a_20"
-                android:textColor="@color/colorPurple"
-                android:text="@string/add_all"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="left">
+
+                        <TextView
+                            android:id="@+id/title_amount_local"
+                            android:text = "@string/title_amount"
+                            style="@style/Label" />
+
+                        <EditText
+                            android:id = "@+id/edit_amount_currency"
+                            android:gravity="left|center_vertical"
+                            android:ellipsize="start"
+                            android:inputType="numberDecimal"
+                            android:maxLength="8"
+                            android:hint="@string/set_amount_usd"
+                            android:text = ""
+                            style="@style/InputPrimary"
+                            android:textSize = "20sp" />
+
+
+                        <TextView
+                            android:id = "@+id/txt_show_piv"
+                            android:layout_width = "wrap_content"
+                            android:layout_height = "wrap_content"
+                            android:text = "0 PIV"
+                            android:textSize = "16sp"
+                            android:textColor = "@color/subtitle" />
+
+                    </LinearLayout>
+
+                </ViewFlipper>
+
+                <Button
+                    android:id="@+id/btn_add_all"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="12dp"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@color/transparent"
+                    android:textColor="@color/colorPurple"
+                    android:text="@string/add_all"/>
+
+
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_below="@+id/btn_add_all"
+                android:layout_below="@+id/layout_pager"
                 android:id="@+id/layoutDescription"
                 android:orientation="vertical"
                 android:layout_width="match_parent"

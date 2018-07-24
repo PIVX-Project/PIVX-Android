@@ -42,13 +42,24 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
     private PivxRate pivxRate;
     private MonetaryFormat coinFormat = MonetaryFormat.BTC;
     private int scale = 3;
-
+    private Boolean isPrivate = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        setEmptyView(R.drawable.img_transaction_empty);
-        setEmptyText(getString(R.string.no_transactions));
+
+        Intent intent = getActivity().getIntent();
+        if (intent != null && intent.hasExtra("Private")) {
+            isPrivate = intent.getBooleanExtra("Private",false);
+        }
         setEmptyTextColor(Color.parseColor("#cccccc"));
+        if (isPrivate) {
+            setEmptyView(R.drawable.img_zpiv_transaction_empty);
+            setEmptyText(getString(R.string.empty_zpiv_transactions));
+
+        } else {
+            setEmptyView(R.drawable.img_transaction_empty);
+            setEmptyText(getString(R.string.no_transactions));
+        }
         return view;
     }
 
