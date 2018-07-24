@@ -60,6 +60,7 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.privacy.privacy_coin_control.PrivacyCoinControlActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeFragment;
@@ -371,7 +372,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startMultiAddressSendActivity(outputWrappers);
             return true;
         }else if(id == R.id.option_select_inputs){
-            startCoinControlActivity(unspent);
+            if (isPrivate){
+                Intent myinte = new Intent(this, PrivacyCoinControlActivity.class);
+                startActivity(myinte);
+            } else {
+                startCoinControlActivity(unspent);
+            }
         }else if (id == R.id.option_change_address){
             startChangeAddressActivity(changeAddress,changeToOrigin);
         }
