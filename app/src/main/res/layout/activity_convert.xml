@@ -64,7 +64,7 @@
             android:layout_marginBottom="10dp"
             android:hint="@string/set_amount_usd"
             android:text = "12313434 PIV"
-            android:textSize = "18sp"
+            android:textSize = "18dp"
             style="@style/InputPrimary"/>
 
 

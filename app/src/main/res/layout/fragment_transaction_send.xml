@@ -53,7 +53,7 @@
                             android:hint="@string/set_amount_piv"
                             android:text = ""
                             style="@style/InputPrimary"
-                            android:textSize = "20sp" />
+                            android:textSize = "18dp" />
 
 
                         <TextView
@@ -87,7 +87,7 @@
                             android:hint="@string/set_amount_usd"
                             android:text = ""
                             style="@style/InputPrimary"
-                            android:textSize = "20sp" />
+                            android:textSize = "18dp" />
 
 
                         <TextView
