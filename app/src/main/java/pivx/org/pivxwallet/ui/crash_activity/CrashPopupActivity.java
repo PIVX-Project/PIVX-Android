@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import global.PivxModuleImp;
 import global.utils.Io;
+import host.furszy.zerocoinj.wallet.MultiWallet;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -249,6 +250,9 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
 
     @Nullable
     protected CharSequence collectWalletDump() throws IOException{
-        return ((PivxModuleImp)pivxApplication.getModule()).getWallet().toString(false,true,true,null);
+        MultiWallet multiWallet = ((PivxModuleImp)pivxApplication.getModule()).getWallet();
+        return multiWallet.getPivWallet().toString(false, true, true, null) +
+                " |||| " +
+                multiWallet.getZpivWallet().toString(false, true, true, null);
     }
 }

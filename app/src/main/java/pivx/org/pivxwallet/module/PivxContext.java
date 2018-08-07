@@ -3,12 +3,16 @@ package pivx.org.pivxwallet.module;
 import android.os.Environment;
 import android.text.format.DateUtils;
 
+import com.zerocoinj.core.context.ZerocoinContext;
+
 import org.pivxj.core.Context;
 import org.pivxj.core.NetworkParameters;
 import org.pivxj.params.MainNetParams;
 import org.pivxj.params.TestNet3Params;
 
 import java.io.File;
+
+import pivx.org.pivxwallet.AndroidJniBridge;
 
 /**
  * Created by furszy on 6/4/17.
@@ -20,6 +24,10 @@ public class PivxContext {
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
+
+    {
+        CONTEXT.zerocoinContext = new ZerocoinContext(new AndroidJniBridge());
+    }
 
     public static final String DEFAULT_RATE_COIN = "USD";
     public static final long RATE_UPDATE_TIME = 72000000;

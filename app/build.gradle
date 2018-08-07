@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+def my_boost_dir = local_props("boost.dir")
+def my_boost_dir_libs = my_boost_dir + "/libs/llvm"
+def my_boost_dir_inc  = my_boost_dir + "/include"
+
+def my_crypto_dir = local_props("crypto.dir")
+def my_crypto_dir_libs = my_crypto_dir
+def my_crypto_dir_inc  = my_crypto_dir + "/include"
+
 android {
     compileSdkVersion 25
     buildToolsVersion '27.0.3'
@@ -9,10 +17,36 @@ android {
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 20
-        versionName "2.1.3"
+        versionName "3.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        externalNativeBuild {
+            cmake {
+                // flags for the c++ compiler eg "-std=c++14 -frtti -fexceptions"
+                cppFlags "-std=c++11"
 
+                // this causes libc++_shared.so to get packaged into .apk
+                arguments '-DANDROID_STL=c++_shared'
+                arguments '-DANDROID_TOOLCHAIN=clang'
+                //arguments '-DANDROID_ALLOW_UNDEFINED_SYMBOLS=true'
+
+
+
+                // This is used in CMakeLists.txt so our native code can find/use (prebuilt) boost
+                arguments '-DMY_BOOST_LIBS_DIR=' + my_boost_dir_libs
+                arguments '-DMY_BOOST_INC_DIR='  + my_boost_dir_inc
+
+
+                arguments '-DMY_OPENSSL_CRYPTO_LIBS_DIR=' + my_crypto_dir_libs
+                arguments '-DMY_OPENSSL_CRYPTO_INC_DIR='  + my_crypto_dir_inc
+
+            }
+        }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -29,6 +63,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
 
     sourceSets{
         main{
@@ -40,6 +79,10 @@ android {
             jniLibs {
                 srcDir 'libs'
             }
+            jniLibs.srcDirs = [
+                    my_boost_dir_libs,
+                    my_crypto_dir_libs
+            ]
         }
     }
 
@@ -91,4 +134,16 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.apache.httpcomponents:httpclient:4.5.3'
     testCompile 'org.mockito:mockito-core:2.8.9'
+}
+
+//------------------------------------------------------------
+def local_props(key) { // reads ~ value from local.properties file
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def val = properties.getProperty(key, null)
+    if (val == null)
+        throw new GradleException("""\
+                cant find value '${key}' in file 'local.properties'.  """)
+
+    return val
 }

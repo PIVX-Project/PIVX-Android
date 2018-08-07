@@ -46,10 +46,10 @@
 
                         <EditText
                             android:id = "@+id/edit_amount"
-                            android:gravity="left|center_vertical"
-                            android:ellipsize="start"
+                            android:gravity="start|center_vertical"
                             android:inputType="numberDecimal"
                             android:maxLength="8"
+                            android:lines="1"
                             android:hint="@string/set_amount_piv"
                             android:text = ""
                             style="@style/InputPrimary"

@@ -58,7 +58,7 @@
                 android:padding="8dp"
                 android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
-                android:text = "36 PIV"
+                android:text = "Error"
                 android:textStyle="bold"
                 android:textColor = "@color/mainText"
                 android:textSize = "18sp" />
@@ -103,7 +103,7 @@
                 android:padding="8dp"
                 android:textIsSelectable="true"
                 android:background="@drawable/transaction_inputs"
-                android:text = "45"
+                android:text = "Error"
                 android:textColor = "@color/mainText"
                 android:textSize = "16sp" />
 

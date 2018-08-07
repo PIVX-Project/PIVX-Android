@@ -49,15 +49,13 @@ public class MnemonicActivity extends BaseActivity {
         container_continue_btn = findViewById(R.id.container_continue_btn);
         if (!isInit){
             container_continue_btn.setVisibility(View.GONE);
+            findViewById(R.id.btn_continue).setVisibility(View.GONE);
         }else {
             btn_continue = (Button) findViewById(R.id.btn_continue);
-            btn_continue.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), WalletActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+            btn_continue.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), WalletActivity.class);
+                startActivity(intent);
+                finish();
             });
         }
 

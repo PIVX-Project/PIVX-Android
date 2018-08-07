@@ -25,18 +25,9 @@ public class TransactionViewHolderBase extends BaseRecyclerViewHolder {
     TextView amountLocal;
     ImageView imageView;
     TextView txt_scale;
-    private final Context context;
 
     public TransactionViewHolderBase(View itemView) {
         super(itemView);
-        context = itemView.getContext();
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Intent intent = new Intent(context, TransactionDetailActivity.class);
-                context.startActivity(intent);
-            }
-        });
         cv = (CardView) itemView.findViewById(R.id.cardView);
         title = (TextView) itemView.findViewById(R.id.title);
         description = (TextView) itemView.findViewById(R.id.description);

@@ -15,17 +15,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.pivxj.core.TransactionInput;
+import org.pivxj.core.TransactionOutput;
+
+import java.util.List;
+
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
+import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 
 public class PrivacyCoinControlActivity extends BaseActivity {
     private static final int MENU_ITEM_ITEM1 = 1;
-    private TextView text_balance, text_selected;
-    private EditText edit_count_demon1, edit_count_demon5, edit_count_demon10, edit_count_demon50, edit_count_demon100, edit_count_demon500, edit_count_demon1000, edit_count_demon5000;
-    private TextView text_demon1, text_demon5, text_demon10, text_demon50, text_demon100, text_demon500, text_demon1000, text_demon5000;
-    private LinearLayout layout_demon1, layout_demon5, layout_demon10, layout_demon50, layout_demon100, layout_demon500, layout_demon1000, layout_demon5000;
-    private ImageView btn_minus_demon1, btn_minus_demon5, btn_minus_demon10, btn_minus_demon50, btn_minus_demon100, btn_minus_demon500, btn_minus_demon1000, btn_minus_demon5000;
-    private ImageView btn_add_demon1, btn_add_demon5, btn_add_demon10, btn_add_demon50, btn_add_demon100, btn_add_demon500, btn_add_demon1000, btn_add_demon5000;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -57,6 +59,20 @@ public class PrivacyCoinControlActivity extends BaseActivity {
 
             default:
                 return false;
+        }
+    }
+
+
+    public static class CoinControlFragment extends BaseRecyclerFragment<TransactionOutput>{
+
+        @Override
+        protected List<TransactionOutput> onLoading() {
+            return pivxModule.listZpivUnspents();
+        }
+
+        @Override
+        protected BaseRecyclerAdapter<TransactionOutput, ? extends BaseRecyclerViewHolder> initAdapter() {
+            return null;
         }
     }
 }

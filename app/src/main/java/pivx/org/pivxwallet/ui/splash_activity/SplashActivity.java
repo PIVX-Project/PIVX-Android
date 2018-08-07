@@ -9,6 +9,7 @@ import android.widget.VideoView;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.loading.LoadingActivity;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
@@ -34,27 +35,20 @@ public class SplashActivity extends AppCompatActivity {
         else {
             //video = Uri.parse("android.resource://" + getPackageName() + "/"
             //        + R.raw.splash_video_muted);
-            Intent intent = new Intent(this, WalletActivity.class);
-            startActivity(intent);
-            finish();
+            //Intent intent = new Intent(this, WalletActivity.class);
+            //startActivity(intent);
+            jump();
             return;
         }
 
         if (videoView != null) {
             videoView.setVideoURI(video);
             videoView.setZOrderOnTop(true);
-            videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                public void onCompletion(MediaPlayer mp) {
-                    jump();
-                }
-            });
+            videoView.setOnCompletionListener(mp -> jump());
 
-            videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                @Override
-                public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                    jump();
-                    return true;
-                }
+            videoView.setOnErrorListener((mediaPlayer, i, i1) -> {
+                jump();
+                return true;
             });
 
             videoView.start();
@@ -66,15 +60,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void jump() {
-
-        if (PivxApplication.getInstance().getAppConf().isAppInit()){
-            Intent intent = new Intent(this, WalletActivity.class);
-            startActivity(intent);
-        }else {
-            // Jump to your Next Activity or MainActivity
-            Intent intent = new Intent(this, StartActivity.class);
-            startActivity(intent);
-        }
+        startActivity(new Intent(this, LoadingActivity.class));
         finish();
     }
 

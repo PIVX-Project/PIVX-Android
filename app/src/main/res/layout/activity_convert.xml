@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools">
 
     <FrameLayout
         android:layout_alignParentTop="true"
@@ -63,7 +64,7 @@
             android:gravity="left|center_vertical"
             android:layout_marginBottom="10dp"
             android:hint="@string/set_amount_usd"
-            android:text = "12313434 PIV"
+            tool:text = "12313434 PIV"
             android:textSize = "18sp"
             style="@style/InputPrimary"/>
 

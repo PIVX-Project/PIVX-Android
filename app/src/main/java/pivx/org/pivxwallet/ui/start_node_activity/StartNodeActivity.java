@@ -54,80 +54,58 @@ public class StartNodeActivity extends BaseActivity {
 
         // Open Dialog
         openDialog = (Button) findViewById(R.id.openDialog);
-        openDialog.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(StartNodeActivity.this, new DialogsUtil.TrustedNodeDialogListener() {
-                    @Override
-                    public void onNodeSelected(PivtrumPeerData pivtrumPeerData) {
-                        if(!trustedNodes.contains(pivtrumPeerData)) {
-                            dropdown.setAdapter(null);
-                            adapter.clear();
-                            hosts = new ArrayList<String>();
-                            trustedNodes.add(pivtrumPeerData);
-                            for (PivtrumPeerData trustedNode : trustedNodes) {
-                                if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)) {
-                                    hosts.add("pivt.furszy.tech");
-                                } else
-                                    hosts.add(trustedNode.getHost());
-                            }
-                            adapter.addAll(hosts);
-                            dropdown.setAdapter(adapter);
-                            dropdown.setSelection(hosts.size() - 1);
-                        }
+        openDialog.setOnClickListener(view -> {
+            DialogBuilder dialogBuilder = DialogsUtil.buildtrustedNodeDialog(StartNodeActivity.this, pivtrumPeerData -> {
+                if(!trustedNodes.contains(pivtrumPeerData)) {
+                    dropdown.setAdapter(null);
+                    adapter.clear();
+                    hosts = new ArrayList<>();
+                    trustedNodes.add(pivtrumPeerData);
+                    for (PivtrumPeerData trustedNode : trustedNodes) {
+                        if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)) {
+                            hosts.add("pivt.furszy.tech");
+                        } else
+                            hosts.add(trustedNode.getHost());
                     }
-                });
-                dialogBuilder.show();
-            }
-
+                    adapter.addAll(hosts);
+                    dropdown.setAdapter(adapter);
+                    dropdown.setSelection(hosts.size() - 1);
+                }
+            });
+            dialogBuilder.show();
         });
-        findViewById(R.id.btn_default).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Check this..
-                pivxApplication.setTrustedServer(null);
-                pivxApplication.stopBlockchain();
-                // now that everything is good, start the service
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pivxApplication.startPivxService();
-                    }
-                }, TimeUnit.SECONDS.toMillis(5));
-                goNext();
-                finish();
-            }
+        findViewById(R.id.btn_default).setOnClickListener(v -> {
+            // Check this..
+            pivxApplication.setTrustedServer(null);
+            pivxApplication.stopBlockchain();
+            // now that everything is good, start the service
+            new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+            goNext();
+            finish();
         });
 
         // Node selected
         btnSelectNode = (Button) findViewById(R.id.btnSelectNode);
-        btnSelectNode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selected = dropdown.getSelectedItemPosition();
-                PivtrumPeerData selectedNode = trustedNodes.get(selected);
-                boolean isStarted = pivxApplication.getAppConf().getTrustedNode()!=null;
-                pivxApplication.setTrustedServer(selectedNode);
+        btnSelectNode.setOnClickListener(v -> {
+            int selected = dropdown.getSelectedItemPosition();
+            PivtrumPeerData selectedNode = trustedNodes.get(selected);
+            boolean isStarted = pivxApplication.getAppConf().getTrustedNode() != null;
+            pivxApplication.setTrustedServer(selectedNode);
 
-                if (isStarted){
-                    pivxApplication.stopBlockchain();
-                    // now that everything is good, start the service
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            pivxApplication.startPivxService();
-                        }
-                    }, TimeUnit.SECONDS.toMillis(5));
-                }
-                goNext();
-                finish();
+            if (isStarted){
+                pivxApplication.stopBlockchain();
+                // now that everything is good, start the service
+                new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
             }
+            goNext();
+            finish();
         });
 
         dropdown = (Spinner)findViewById(R.id.spinner);
 
         // add connected node if it's not on the list
         PivtrumPeerData pivtrumPeer = pivxApplication.getAppConf().getTrustedNode();
-        if (pivtrumPeer!=null && !trustedNodes.contains(pivtrumPeer)){
+        if (pivtrumPeer != null && !trustedNodes.contains(pivtrumPeer)){
             trustedNodes.add(pivtrumPeer);
         }
 
@@ -143,7 +121,7 @@ public class StartNodeActivity extends BaseActivity {
             }else
                 hosts.add(trustedNode.getHost());
         }
-        adapter = new ArrayAdapter<String>(this, R.layout.spinner_dropdown_white,hosts);
+        adapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_white, hosts);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         dropdown.setAdapter(adapter);
         dropdown.setSelection(selectionPos);
@@ -151,7 +129,7 @@ public class StartNodeActivity extends BaseActivity {
 
     private void goNext() {
         Class clazz = null;
-        if (pivxApplication.getAppConf().getPincode()==null){
+        if (pivxApplication.getAppConf().getPincode() == null){
             clazz = PincodeActivity.class;
         }else {
             clazz = WalletActivity.class;

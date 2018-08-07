@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
@@ -129,9 +130,6 @@ public class PivxApplication extends Application implements ContextWrapper {
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-
-            //Bugsee.launch(this, "9b3473f1-984c-4f70-9aef-b0cf485839fd");
-
             // The following line triggers the initialization of ACRA
             ACRA.init(this);
             //if (BuildConfig.DEBUG)
@@ -144,14 +142,21 @@ public class PivxApplication extends Application implements ContextWrapper {
             centralFormats = new CentralFormats(appConf);
             WalletConfiguration walletConfiguration = new WalletConfImp(getSharedPreferences("pivx_wallet",MODE_PRIVATE));
             //todo: add this on the initial wizard..
-            //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
-            //AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
-            pivxModule.start();
 
+            PivxContext.CONTEXT.zerocoinContext.jniBridge = new AndroidJniBridge();
         } catch (Exception e){
-            e.printStackTrace();
+            log.error("Exception on start",e);
+        }
+    }
+
+    public void startCore() throws IOException {
+        try {
+            pivxModule.start();
+        }catch (Exception e){
+            log.error("Exception on start",e);
+            throw e;
         }
     }
 
@@ -258,8 +263,13 @@ public class PivxApplication extends Application implements ContextWrapper {
      */
     public void setTrustedServer(PivtrumPeerData trustedServer) {
         networkConf.setTrustedServer(trustedServer);
-        pivxModule.getConf().saveTrustedNode(trustedServer.getHost(),0);
-        appConf.saveTrustedNode(trustedServer);
+        if (trustedServer == null){
+            pivxModule.getConf().cleanTrustedNode();
+            appConf.cleanTrustedNode();
+        }else {
+            pivxModule.getConf().saveTrustedNode(trustedServer.getHost(), trustedServer.getTcpPort());
+            appConf.saveTrustedNode(trustedServer);
+        }
     }
 
     public CentralFormats getCentralFormats() {

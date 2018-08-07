@@ -444,5 +444,6 @@
     <string name="demon5000">Demon. 5000 x </string>
     <string name="title_send_private">Send private transaction</string>
     <string name="empty_zpiv_transactions">You don\'t have zPIV transactions</string>
+    <string name="zc_mint">Mint</string>
 
 </resources>

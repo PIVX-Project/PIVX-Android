@@ -1,7 +1,9 @@
 package pivx.org.pivxwallet.ui.transaction_send_activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,8 +11,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -40,6 +44,7 @@ import org.pivxj.core.Transaction;
 import org.pivxj.core.TransactionInput;
 import org.pivxj.core.TransactionOutput;
 import org.pivxj.uri.PivxURI;
+import org.pivxj.wallet.SendRequest;
 import org.pivxj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +56,12 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import host.furszy.zerocoinj.wallet.CannotSpendCoinsException;
 import pivx.org.pivxwallet.R;
 import global.AddressLabel;
 import global.exceptions.NoPeerConnectedException;
@@ -156,7 +166,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             isPrivate = intent.getBooleanExtra("Private",false);
         }
 
-
         layout_scroll = (ScrollView) findViewById(R.id.layout_scroll);
         buttonSend = (Button) findViewById(R.id.btnSend);
         buttonSend.setOnClickListener(this);
@@ -250,11 +259,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()>0) {
+                if (s.length() > 0) {
                     if (pivxRate != null) {
                         String valueStr = s.toString();
                         if (valueStr.charAt(0) == '.') {
                             valueStr = "0" + valueStr;
+                        }
+                        if (valueStr.charAt(valueStr.length()-1) == '.'){
+                            valueStr = valueStr.replace(".","");
                         }
                         Coin coin = Coin.parseCoin(valueStr);
                         txt_local_currency.setText(
@@ -280,7 +292,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
         // Load data if exists
         String address = intent.getStringExtra(INTENT_ADDRESS);
-        if (intent != null && address != null){
+        if (address != null){
             edit_address.setText(address);
             Coin amount = (Coin) intent.getSerializableExtra(INTENT_EXTRA_TOTAL_AMOUNT);
             edit_amount.setText(amount.toPlainString());
@@ -289,7 +301,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 edit_memo.setText(memo);
         }
 
-        layout_qr_button = (LinearLayout) findViewById(R.id.layout_qr_button);
+        layout_qr_button = findViewById(R.id.layout_qr_button);
 
         // Layout changed zPIV
 
@@ -336,21 +348,22 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             txt_change_address.setTextColor(getResources().getColor(R.color.black_a_60));
             button_qr.setImageResource(R.drawable.ic_qr_code_white);
             btnSwap.setImageResource(R.drawable.ic_swap_white);
+            edit_amount.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         else {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                    .getColor(R.color.bgPurple)));
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
+                    .getColor(this, R.color.bgPurple)));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.bgPurple));
             }
             setTitle(R.string.btn_send);
             layout_scroll.setBackgroundResource(R.color.white);
             buttonSend.setText(R.string.btn_send);
             buttonSend.setBackgroundResource(R.color.colorPurple);
-            buttonSend.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
-            text_fee_message.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.subtitle));
+            buttonSend.setTextColor(ContextCompat.getColor(this, R.color.white));
+            text_fee_message.setTextColor(ContextCompat.getColor(this, R.color.subtitle));
         }
 
 
@@ -448,6 +461,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     public void onBackPressed() {
         super.onBackPressed();
         NavigationUtils.goBackToHome(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        disconnectFromService();
     }
 
     @Override
@@ -767,88 +786,128 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Coin amount = Coin.parseCoin(amountStr);
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
-            if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
-                throw new IllegalArgumentException("Insuficient balance");
+
+
+            if (isPrivate){
+                if (amount.isGreaterThan(pivxModule.getZpivAvailableBalanceCoin())){
+                    throw new IllegalArgumentException("Insufficient balance");
+                }
+            }else if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance()))) {
+                throw new IllegalArgumentException("Insufficient balance");
+            }
 
             // memo
             String memo = edit_memo.getText().toString();
 
             NetworkParameters params = pivxModule.getConf().getNetworkParams();
 
-            if ( (outputWrappers==null || outputWrappers.isEmpty()) && (unspent==null || unspent.isEmpty()) ){
+
+            if (isPrivate){
                 addressStr = edit_address.getText().toString();
                 if (!pivxModule.chechAddress(addressStr))
                     throw new IllegalArgumentException("Address not valid");
-                Coin feePerKb = getFee();
-                Address changeAddressTemp = null;
-                if (changeAddress!=null){
-                    changeAddressTemp = changeAddress;
-                }else {
-                    changeAddressTemp = pivxModule.getReceiveAddress();
-                }
-                transaction = pivxModule.buildSendTx(addressStr,amount,feePerKb,memo,changeAddressTemp);
+                Address address = Address.fromBase58(params, addressStr);
+                // TODO: Add change address to an address in the piv wallet and not in the zpiv wallet
+                SendRequest sendRequest = pivxModule.createSpend(address, amount);
 
-                // check if there is a need to change the change address
-                if (changeToOrigin){
-                    transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
-                    transaction = pivxModule.completeTx(transaction);
-                }
+                SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                        this,
+                        "Zpiv Spend",
+                        String.format("You are just about to spend %s to\n%s\n\nThis process will take a while, please be patient", amount, addressStr),
+                        new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                            @Override
+                            public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                transaction = sendRequest.tx;
+                                connectToService();
+                                Toast.makeText(SendActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                simpleTwoButtonsDialog.show();
+                return;
             }else {
-                transaction = new Transaction(params);
-                // then outputs
-                if (outputWrappers != null && !outputWrappers.isEmpty()) {
-                    for (OutputWrapper outputWrapper : outputWrappers) {
-                        transaction.addOutput(
-                                outputWrapper.getAmount(),
-                                Address.fromBase58(params, outputWrapper.getAddress())
-                        );
-                    }
-                } else {
+
+                if ((outputWrappers == null || outputWrappers.isEmpty()) && (unspent == null || unspent.isEmpty())) {
                     addressStr = edit_address.getText().toString();
                     if (!pivxModule.chechAddress(addressStr))
                         throw new IllegalArgumentException("Address not valid");
-                    transaction.addOutput(amount, Address.fromBase58(pivxModule.getConf().getNetworkParams(), addressStr));
-                }
-
-                // then check custom inputs if there is any
-                if (unspent != null && !unspent.isEmpty()) {
-                    for (InputWrapper inputWrapper : unspent) {
-                        transaction.addInput(inputWrapper.getUnspent());
+                    Coin feePerKb = getFee();
+                    Address changeAddressTemp = null;
+                    if (changeAddress != null) {
+                        changeAddressTemp = changeAddress;
+                    } else {
+                        changeAddressTemp = pivxModule.getReceiveAddress();
                     }
-                }
-                // satisfy output with inputs if it's neccesary
-                Coin ouputsSum = transaction.getOutputSum();
-                Coin inputsSum = transaction.getInputSum();
+                    transaction = pivxModule.buildSendTx(addressStr, amount, feePerKb, memo, changeAddressTemp);
 
-                if (ouputsSum.isGreaterThan(inputsSum)) {
-                    List<TransactionOutput> unspent = pivxModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
-                    for (TransactionOutput transactionOutput : unspent) {
-                        transaction.addInput(transactionOutput);
+                    // check if there is a need to change the change address
+                    if (changeToOrigin) {
+                        transaction = changeChangeAddressToOriginAddress(transaction, changeAddressTemp);
+                        transaction = pivxModule.completeTx(transaction);
                     }
-                    // update the input amount
-                    inputsSum = transaction.getInputSum();
-                }
+                } else {
+                    transaction = new Transaction(params);
+                    // then outputs
+                    if (outputWrappers != null && !outputWrappers.isEmpty()) {
+                        for (OutputWrapper outputWrapper : outputWrappers) {
+                            transaction.addOutput(
+                                    outputWrapper.getAmount(),
+                                    Address.fromBase58(params, outputWrapper.getAddress())
+                            );
+                        }
+                    } else {
+                        addressStr = edit_address.getText().toString();
+                        if (!pivxModule.chechAddress(addressStr))
+                            throw new IllegalArgumentException("Address not valid");
+                        transaction.addOutput(amount, Address.fromBase58(pivxModule.getConf().getNetworkParams(), addressStr));
+                    }
 
-                // then fee and change address
-                Coin feePerKb = getFee();
+                    // then check custom inputs if there is any
+                    if (unspent != null && !unspent.isEmpty()) {
+                        for (InputWrapper inputWrapper : unspent) {
+                            transaction.addInput(inputWrapper.getUnspent());
+                        }
+                    }
+                    // satisfy output with inputs if it's neccesary
+                    Coin ouputsSum = transaction.getOutputSum();
+                    Coin inputsSum = transaction.getInputSum();
 
-                if (memo.length()>0)
-                    transaction.setMemo(memo);
+                    if (ouputsSum.isGreaterThan(inputsSum)) {
+                        List<TransactionOutput> unspent = pivxModule.getRandomUnspentNotInListToFullCoins(transaction.getInputs(), ouputsSum);
+                        for (TransactionOutput transactionOutput : unspent) {
+                            transaction.addInput(transactionOutput);
+                        }
+                        // update the input amount
+                        inputsSum = transaction.getInputSum();
+                    }
 
-                Address changeAddressTemp = null;
-                if (changeAddress==null){
-                    changeAddressTemp = changeAddress;
-                }else {
-                    changeAddressTemp = pivxModule.getReceiveAddress();
-                }
+                    // then fee and change address
+                    Coin feePerKb = getFee();
 
-                transaction = pivxModule.completeTx(transaction,changeAddressTemp,feePerKb);
+                    if (memo.length() > 0)
+                        transaction.setMemo(memo);
 
-                // check if there is a need to change the change address
-                // check if there is a need to change the change address
-                if (changeToOrigin){
-                    transaction = changeChangeAddressToOriginAddress(transaction,changeAddressTemp);
-                    transaction = pivxModule.completeTx(transaction);
+                    Address changeAddressTemp = null;
+                    if (changeAddress == null) {
+                        changeAddressTemp = changeAddress;
+                    } else {
+                        changeAddressTemp = pivxModule.getReceiveAddress();
+                    }
+
+                    transaction = pivxModule.completeTx(transaction, changeAddressTemp, feePerKb);
+
+                    // check if there is a need to change the change address
+                    // check if there is a need to change the change address
+                    if (changeToOrigin) {
+                        transaction = changeChangeAddressToOriginAddress(transaction, changeAddressTemp);
+                        transaction = pivxModule.completeTx(transaction);
+                    }
                 }
             }
 
@@ -938,7 +997,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void sendConfirmed(){
-        if(transaction==null){
+        if(transaction == null){
             logger.error("## trying to send a NULL transaction");
             try {
                 CrashReporter.appendSavedBackgroundTraces(new StringBuilder().append("ERROR ### sendActivity - sendConfirmed - transaction NULL"));
@@ -961,4 +1020,69 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     public static int convertDpToPx(Resources resources, int dp){
         return Math.round(dp*(resources.getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
+
+
+
+    private PivxWalletService pivxWalletService;
+    private AtomicBoolean isServiceConnected = new AtomicBoolean(false);
+
+    // Service connection..
+    protected ServiceConnection mServerConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            Log.d("APP", "onServiceConnected");
+            pivxWalletService = ((PivxWalletService.PivxBinder)binder).getService();
+            isServiceConnected.set(true);
+            ExecutorService executorService = Executors.newSingleThreadExecutor();
+            executorService.submit(() -> {
+                // Now that the service is connected, let's try to spend the coin
+                String msg;
+                try {
+                    Transaction tx = pivxWalletService.broadcastCoinSpendTransactionSync(
+                            SendRequest.forTx(transaction)
+                    );
+                    System.out.println(tx);
+                    msg = "Spend worked :)";
+                } catch (InsufficientMoneyException e) {
+                    e.printStackTrace();
+                    msg = "Insufficient Money";
+                } catch (CannotSpendCoinsException e) {
+                    e.printStackTrace();
+                    msg = "Cannot Spend coins, " + e.getMessage();
+                } catch (Exception e){
+                    e.printStackTrace();
+                    msg = "Cannot Spend coins, " + e.getMessage();
+                }
+                String finalMsg = msg;
+                runOnUiThread(() -> {
+                    Toast.makeText(SendActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
+                    disconnectFromService();
+                });
+            });
+            executorService.shutdown();
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d("APP", "onServiceDisconnected");
+            isServiceConnected.set(false);
+        }
+    };
+
+    public void connectToService() {
+        // mContext is defined upper in code, I think it is not necessary to explain what is it
+        Intent intent = new Intent(this, PivxWalletService.class);
+        if(!bindService(intent, mServerConn, Context.BIND_IMPORTANT)){
+            Toast.makeText(this, "Apparently the service is not running.." ,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void disconnectFromService() {
+        if (mServerConn != null && isServiceConnected.getAndSet(false)) {
+            unbindService(mServerConn);
+        }
+    }
+
+
 }

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import global.PivxModuleImp;
+import host.furszy.zerocoinj.wallet.MultiWallet;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
@@ -119,7 +120,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     protected void onResume() {
         super.onResume();
         // to check current activity in the navigation drawer
-        setNavigationMenuItemChecked(2);
+        setNavigationMenuItemChecked(3);
         updateNetworkStatus();
         text_rates.setText(pivxApplication.getAppConf().getSelectedRateCoin());
     }
@@ -241,7 +242,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence collectWalletDump() throws IOException {
-                return ((PivxModuleImp)pivxModule).getWallet().toString(false,true,true,null);
+                MultiWallet multiWallet = ((PivxModuleImp)pivxApplication.getModule()).getWallet();
+                return multiWallet.getPivWallet().toString(false, true, true, null) +
+                        " |||| " +
+                        multiWallet.getZpivWallet().toString(false, true, true, null);
             }
         };
         dialog.show();

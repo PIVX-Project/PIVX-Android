@@ -73,7 +73,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private View root;
     private View container_txs;
     private RelativeLayout bg_balance;
-    private TextView txt_value, text_value_bottom, text_value_bottom_local;
+    private TextView txt_value, text_value_bottom, text_value_bottom_local, txt_local_total;
     private TextView txt_unnavailable;
     private TextView txt_local_currency;
     private TextView txt_watch_only;
@@ -107,14 +107,6 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void beforeCreate(){
-        /*
-        if (!appConf.isAppInit()){
-            Intent intent = new Intent(this, SplashActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        // show report dialog if something happen with the previous process
-        */
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 
@@ -137,17 +129,18 @@ public class WalletActivity extends BaseDrawerActivity {
         // Header amount values
         text_value_bottom =  (TextView) findViewById(R.id.text_value_bottom);
         text_value_bottom_local =  (TextView) findViewById(R.id.text_value_bottom_local);
+        txt_local_total = (TextView) header_container.findViewById(R.id.txt_local_total);
 
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
         if (isPrivate) {
             setTitle(R.string.title_privacy);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                    .getColor(R.color.darkPurple)));
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
+                    .getColor(this, R.color.darkPurple)));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.darkPurple));
             }
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
             fab_add.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
@@ -156,12 +149,12 @@ public class WalletActivity extends BaseDrawerActivity {
             fab_request.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
         } else {
             setTitle(R.string.my_wallet);
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                    .getColor(R.color.bgPurple)));
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
+                    .getColor(this, R.color.bgPurple)));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.bgPurple));
             }
             fab_add.setLabelText(getResources().getString(R.string.btn_send_piv));
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
@@ -179,48 +172,32 @@ public class WalletActivity extends BaseDrawerActivity {
         container_syncing = root.findViewById(R.id.container_syncing);
 
         // Open Send
-        root.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendintent = new Intent(v.getContext(),SendActivity.class);
-                if (isPrivate) {
-                    sendintent.putExtra("Private",true);
-                } else {
-                    sendintent.putExtra("Private",false);
-                }
-                if (pivxModule.isWalletWatchOnly()){
-                    Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                startActivity(sendintent);
+        root.findViewById(R.id.fab_add).setOnClickListener(v -> {
+            Intent sendintent = new Intent(v.getContext(),SendActivity.class);
+            sendintent.putExtra("Private",isPrivate);
+            if (pivxModule.isWalletWatchOnly()){
+                Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
+                return;
             }
+            startActivity(sendintent);
         });
 
-        root.findViewById(R.id.fab_request).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), RequestActivity.class));
-            }
+        root.findViewById(R.id.fab_request).setOnClickListener(v -> {
+            Intent requestIntent = new Intent(v.getContext(), RequestActivity.class);
+            requestIntent.putExtra("Private",isPrivate);
+            startActivity(requestIntent);
         });
 
         // Convert
-        root.findViewById(R.id.fab_convert).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(v.getContext(), ConvertActivity.class));
-            }
-        });
+        root.findViewById(R.id.fab_convert).setOnClickListener(v -> startActivity(new Intent(v.getContext(), ConvertActivity.class)));
 
 
         // Floating menu
-        floatingActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                if (opened){
-                    AnimationUtils.fadeInView(view_background,200);
-                }else {
-                    AnimationUtils.fadeOutGoneView(view_background,200);
-                }
+        floatingActionMenu.setOnMenuToggleListener(opened -> {
+            if (opened){
+                AnimationUtils.fadeInView(view_background,200);
+            }else {
+                AnimationUtils.fadeOutGoneView(view_background,200);
             }
         });
 
@@ -242,6 +219,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
         updateState();
         updateBalance();
+        txsFragment.refresh();
 
         // check if this wallet need an update:
         try {
@@ -364,15 +342,12 @@ public class WalletActivity extends BaseDrawerActivity {
                             SimpleTextDialog dialogFragment = DialogsUtil.buildSimpleTextDialog(this,
                                     getString(R.string.payment_request_received),
                                     text.toString())
-                                .setOkBtnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(v.getContext(), SendActivity.class);
-                                        intent.putExtra(INTENT_ADDRESS,usedAddress);
-                                        intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,amount);
-                                        intent.putExtra(INTENT_MEMO,memo);
-                                        startActivity(intent);
-                                    }
+                                .setOkBtnClickListener(v -> {
+                                    Intent intent = new Intent(v.getContext(), SendActivity.class);
+                                    intent.putExtra(INTENT_ADDRESS,usedAddress);
+                                    intent.putExtra(INTENT_EXTRA_TOTAL_AMOUNT,amount);
+                                    intent.putExtra(INTENT_MEMO,memo);
+                                    startActivity(intent);
                                 });
                             dialogFragment.setImgAlertRes(R.drawable.ic_send_action);
                             dialogFragment.setAlignBody(SimpleTextDialog.Align.LEFT);
@@ -403,19 +378,65 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private void updateBalance() {
         Coin availableBalance = pivxModule.getAvailableBalanceCoin();
-        txt_value.setText(!availableBalance.isZero()?availableBalance.toFriendlyString():"0 Pivs");
         Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
-        txt_unnavailable.setText(!unnavailableBalance.isZero()?unnavailableBalance.toFriendlyString():"0 Pivs");
-        if (pivxRate == null)
-            pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
-        if (pivxRate!=null) {
-            txt_local_currency.setText(
-                    pivxApplication.getCentralFormats().format(
-                            new BigDecimal(availableBalance.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
-                    )
-                    + " "+pivxRate.getCode()
+        Coin zAvailableBalance = pivxModule.getZpivAvailableBalanceCoin();
+        Coin zUnspendable = pivxModule.getZpivUnnavailableBalanceCoin();
+        if (!isPrivate) {
+            updateBalanceViews(
+                    availableBalance,
+                    unnavailableBalance,
+                    "PIV",
+                    zAvailableBalance,
+                    zUnspendable,
+                    "zPIV"
             );
         }else {
+            updateBalanceViews(
+                    zAvailableBalance,
+                    zUnspendable,
+                    "zPIV",
+                    availableBalance,
+                    unnavailableBalance,
+                    "PIV"
+            );
+        }
+
+        Coin sum = availableBalance.add(zAvailableBalance);
+        if (pivxRate != null) {
+            txt_local_total.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(sum.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+        } else {
+            txt_local_total.setText("0.00");
+        }
+
+    }
+
+    private void updateBalanceViews(Coin topBalance,Coin topUnspendableBalance, String topDen, Coin bottomBalance, Coin bottomUnspendable, String bottomDen){
+        txt_value.setText(!topBalance.isZero() ? topBalance.toPlainString() + " " + topDen : "0 " + topDen);
+        txt_unnavailable.setText(!topUnspendableBalance.isZero() ? topUnspendableBalance.toPlainString() + " " + topDen : "0 " + topDen);
+
+        text_value_bottom.setText(!bottomBalance.isZero() ? bottomBalance.toPlainString() + " " + bottomDen : "0 " + bottomDen);
+
+        if (pivxRate == null)
+            pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+        if (pivxRate != null) {
+            txt_local_currency.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(topBalance.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+            text_value_bottom_local.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(bottomBalance.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+        } else {
             txt_local_currency.setText("0");
         }
     }

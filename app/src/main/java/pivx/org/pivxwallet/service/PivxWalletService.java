@@ -22,14 +22,17 @@ import android.support.v4.content.LocalBroadcastManager;
 import org.pivxj.core.Block;
 import org.pivxj.core.Coin;
 import org.pivxj.core.FilteredBlock;
+import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Peer;
 import org.pivxj.core.Transaction;
+import org.pivxj.core.TransactionBroadcast;
 import org.pivxj.core.TransactionConfidence;
 import org.pivxj.core.listeners.AbstractPeerDataEventListener;
 import org.pivxj.core.listeners.PeerConnectedEventListener;
 import org.pivxj.core.listeners.PeerDataEventListener;
 import org.pivxj.core.listeners.PeerDisconnectedEventListener;
 import org.pivxj.core.listeners.TransactionConfidenceEventListener;
+import org.pivxj.wallet.SendRequest;
 import org.pivxj.wallet.Wallet;
 import org.pivxj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
@@ -40,12 +43,17 @@ import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import chain.BlockchainManager;
 import chain.BlockchainState;
 import chain.Impediment;
+import global.wrappers.TransactionWrapper;
+import host.furszy.zerocoinj.wallet.CannotSpendCoinsException;
 import pivtrum.listeners.AddressListener;
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
@@ -85,7 +93,6 @@ public class PivxWalletService extends Service{
 
     private PivxApplication pivxApplication;
     private PivxModuleImp module;
-    //private PivtrumPeergroup pivtrumPeergroup;
     private BlockchainManager blockchainManager;
 
     private PeerConnectivityListener peerConnectivityListener;
@@ -107,6 +114,8 @@ public class PivxWalletService extends Service{
 
     private volatile long lastUpdateTime = System.currentTimeMillis();
     private volatile long lastMessageTime = System.currentTimeMillis();
+
+    private ExecutorService executor;
 
     public class PivxBinder extends Binder {
         public PivxWalletService getService() {
@@ -135,6 +144,12 @@ public class PivxWalletService extends Service{
             //todo: notify peer connected
             log.info("Peer connected: "+peer.getAddress());
             broadcastPeerConnected();
+
+            // Check if we have tx that have not been confirmed to send.
+            for (Transaction transaction : module.listPendingTxes()) {
+                log.info("Trying to send not confirmed tx again.. --> " + transaction.getHashAsString());
+                peer.sendMessage(transaction);
+            }
         }
 
         @Override
@@ -238,7 +253,6 @@ public class PivxWalletService extends Service{
             org.pivxj.core.Context.propagate(CONTEXT);
 
             try {
-
                 int depthInBlocks = transaction.getConfidence().getDepthInBlocks();
 
                 long now = System.currentTimeMillis();
@@ -266,19 +280,17 @@ public class PivxWalletService extends Service{
                             .setContentText("Coins received for a value of " + notificationAccumulatedAmount.toFriendlyString())
                             .setAutoCancel(true)
                             .setSmallIcon(R.mipmap.ic_launcher)
-                            .setColor(
-                                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
-                                            getResources().getColor(R.color.bgPurple, null)
-                                            :
-                                            ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
+                            .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
                             .setDeleteIntent(deleteIntent)
                             .setContentIntent(openPendingIntent);
                     nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
                 } else {
+                    // TODO: Correct this.. mint txes are going to pass here..
                     log.error("transaction with a value lesser than zero arrives..");
                 }
 
             }catch (Exception e){
+                log.error("Something happend on coin receive ", e);
                 e.printStackTrace();
             }
 
@@ -324,10 +336,6 @@ public class PivxWalletService extends Service{
             pivxApplication = PivxApplication.getInstance();
             module = (PivxModuleImp) pivxApplication.getModule();
             blockchainManager = module.getBlockchainManager();
-            // connect to pivtrum node
-            /*pivtrumPeergroup = new PivtrumPeergroup(pivxApplication.getNetworkConf());
-            pivtrumPeergroup.addAddressListener(addressListener);
-            module.setPivtrumPeergroup(pivtrumPeergroup);*/
 
             // Schedule service
             tryScheduleService();
@@ -345,17 +353,16 @@ public class PivxWalletService extends Service{
                     fileExists
             );
 
-            module.addCoinsReceivedEventListener(coinReceiverListener);
-            module.addOnTransactionConfidenceChange(transactionConfidenceEventListener);
+            executor = Executors.newFixedThreadPool(2, new ServiceThreadFactory("WalletService"));
+
+            module.addCoinsReceivedEventListener(executor, coinReceiverListener);
+            module.addOnTransactionConfidenceChange(executor, transactionConfidenceEventListener);
 
             final IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
             intentFilter.addAction(Intent.ACTION_DEVICE_STORAGE_LOW);
             intentFilter.addAction(Intent.ACTION_DEVICE_STORAGE_OK);
             registerReceiver(connectivityReceiver, intentFilter); // implicitly init PeerGroup
-
-            // initilizing trusted node.
-            //pivtrumPeergroup.start();
 
 
         } catch (Error e){
@@ -421,19 +428,8 @@ public class PivxWalletService extends Service{
             module.removeCoinsReceivedEventListener(coinReceiverListener);
             module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
             blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
-            // destroy the blockchain
-            /*if (resetBlockchainOnShutdown){
-                try {
-                    blockchainStore.truncate();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }*/
             blockchainManager.destroy(resetBlockchainOnShutdown);
 
-            /*if (pivtrumPeergroup.isRunning()) {
-                pivtrumPeergroup.shutdown();
-            }*/
 
             if (wakeLock.isHeld()) {
                 log.debug("wakelock still held, releasing");
@@ -447,6 +443,11 @@ public class PivxWalletService extends Service{
             e.printStackTrace();
         }
     }
+
+    public Transaction broadcastCoinSpendTransactionSync(SendRequest sendRequest) throws InsufficientMoneyException, CannotSpendCoinsException {
+        return module.spendZpiv(PivxContext.CONTEXT, sendRequest, blockchainManager.getPeerGroup(), executor);
+    }
+
 
     /**
      * Schedule service for later
@@ -496,12 +497,9 @@ public class PivxWalletService extends Service{
                         module.saveRate(pivxBtcRate);
 
                         // Get the rest of the rates:
-                        List<PivxRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<PivxRate>() {
-                            @Override
-                            public PivxRate convertRate(String code, String name, BigDecimal bitcoinRate) {
-                                BigDecimal rate = bitcoinRate.multiply(pivxBtcRate.getRate());
-                                return new PivxRate(code,rate,System.currentTimeMillis());
-                            }
+                        List<PivxRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates((code, name, bitcoinRate) -> {
+                            BigDecimal rate = bitcoinRate.multiply(pivxBtcRate.getRate());
+                            return new PivxRate(code,rate,System.currentTimeMillis());
                         });
 
                         for (PivxRate rate : rates) {
@@ -532,7 +530,7 @@ public class PivxWalletService extends Service{
                         peerConnectivityListener,
                         peerConnectivityListener,
                         blockchainDownloadListener,
-                        null
+                        executor
                         );
                 //todo: ver si conviene esto..
                 broadcastBlockchainState(true);
@@ -570,11 +568,7 @@ public class PivxWalletService extends Service{
                                 .setContentTitle("Alert")
                                 .setContentText(stringBuilder.toString())
                                 .setAutoCancel(true)
-                                .setColor(
-                                        (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
-                                                getResources().getColor(R.color.bgPurple,null)
-                                                :
-                                                ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
+                                .setColor(ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
                         ;
 
                 nm.notify(NOT_BLOCKCHAIN_ALERT, mBuilder.build());

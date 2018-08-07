@@ -65,7 +65,11 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     @Override
     protected List<TransactionWrapper> onLoading() {
-        List<TransactionWrapper> list = pivxModule.listTx();
+        List<TransactionWrapper> list = null;
+        if (isPrivate){
+            list = pivxModule.listPrivateTxes();
+        }else
+            list = pivxModule.listTx();
         Collections.sort(list, new Comparator<TransactionWrapper>(){
             public int compare(TransactionWrapper o1, TransactionWrapper o2){
                 if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
@@ -92,7 +96,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             @Override
             protected void bindHolder(TransactionViewHolderBase holder, TransactionWrapper data, int position) {
                 String amount = data.getAmount().toFriendlyString();
-                if (amount.length()<=10){
+                if (amount.length() <= 10){
                     holder.txt_scale.setVisibility(View.GONE);
                     holder.amount.setText(amount);
                 }else {
@@ -102,7 +106,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }
 
                 String localCurrency = null;
-                if (pivxRate!=null) {
+                if (pivxRate != null) {
                     localCurrency = pivxApplication.getCentralFormats().format(
                                     new BigDecimal(data.getAmount().getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
                                     )
@@ -117,20 +121,26 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 holder.description.setText(data.getTransaction().getMemo());
 
                 if (data.isSent()){
-                    //holder.cv.setBackgroundColor(Color.RED);Color.GREEN
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
                 }else if (data.isZcSpend()) {
                     holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
-                } else if (!data.isStake()){
+                }else if (data.isZcMint()){
+                    holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
+                    holder.amount.setTextColor(ContextCompat.getColor(context, isPrivate ? R.color.green : R.color.red));
+                }else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 } else {
                     holder.imageView.setImageResource(R.drawable.ic_transaction_mining);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
                 }
-                holder.title.setText(getAddressOrContact(pivxModule,data));
+
+                if (data.isZcMint()){
+                    holder.title.setText(R.string.zc_mint);
+                }else
+                    holder.title.setText(getAddressOrContact(pivxModule,data));
 
                 /*if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
                     AddressLabel contact = data.getOutputLabels().get(0);
@@ -146,7 +156,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
                 }*/
                 String memo = data.getTransaction().getMemo();
-                holder.description.setText(memo!=null?memo:"No description");
+                holder.description.setText(memo != null ? memo : "No description");
             }
         };
         adapter.setListEventListener(new ListItemListeners<TransactionWrapper>() {

@@ -66,4 +66,10 @@ public class Configurations {
         prefs.edit().clear().apply();
     }
 
+    public void remove(String key) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(key);
+        editor.apply();
+    }
+
 }

@@ -27,6 +27,7 @@ import pivx.org.pivxwallet.ui.contacts_activity.ContactsActivity;
 import pivx.org.pivxwallet.ui.donate.DonateActivity;
 import pivx.org.pivxwallet.ui.settings.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
+import pivx.org.pivxwallet.utils.NavigationUtils;
 
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
@@ -45,6 +46,8 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private TextView txt_app_version;
     private TextView txt_sync_status;
     private ImageView img_sync;
+
+    private int posChecked = 0;
 
     protected BlockchainState blockchainState = BlockchainState.SYNCING;
 
@@ -200,21 +203,23 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
 
         if (id == R.id.nav_wallet) {
             Intent intent = new Intent(this,WalletActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("Private",false);
             startActivity(intent);
-            finish();
         } else if (id == R.id.nav_address) {
             startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_privacy){
             Intent myintent = new Intent(this, WalletActivity.class);
             myintent.putExtra("Private",true);
             startActivity(myintent);
-            finish();
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_donations){
             startActivity(new Intent(this, DonateActivity.class));
+        }
+
+        if (posChecked == 2 || posChecked == 0){
+            finish();
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -222,6 +227,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     }
 
     protected void setNavigationMenuItemChecked(int pos){
+        posChecked = pos;
         navigationView.getMenu().getItem(pos).setChecked(true);
     }
 
@@ -229,7 +235,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         // Check if the activity is on foreground
         if (!isOnForeground)return;
 
-        if (txt_sync_status!=null) {
+        if (txt_sync_status != null) {
             String text = null;
             int color = 0;
             int imgSrc = 0;

@@ -62,6 +62,12 @@ public class AppConf extends Configurations {
             return null;
     }
 
+    public void cleanTrustedNode() {
+        remove(TRUSTED_NODE_HOST);
+        remove(TRUSTED_NODE_TCP);
+        remove(TRUSTED_NODE_SSL);
+    }
+
     public void setSelectedRateCoin(String coin){
         save(SELECTED_RATE_COIN,coin);
     }

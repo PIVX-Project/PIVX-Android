@@ -128,29 +128,23 @@ public class DialogsUtil {
 
                     final int finalTcpPort = tcpPort;
                     final int finalSslPort = sslPort;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            final boolean check = checkHost(host, finalTcpPort);
-                            flag.set(false);
-                            context.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if(check){
-                                        trustedNodeDialogListener.onNodeSelected(
-                                                new PivtrumPeerData(
-                                                        host,
-                                                        finalTcpPort,
-                                                        finalSslPort)
-                                        );
-                                    }else {
-                                        Toast.makeText(context, R.string.invalid_host, Toast.LENGTH_SHORT).show();
-                                    }
-                                    if (dialog!=null)
-                                        dialog.dismiss();
-                                }
-                            });
-                        }
+                    new Thread(() -> {
+                        final boolean check = checkHost(host, finalTcpPort);
+                        flag.set(false);
+                        context.runOnUiThread(() -> {
+                            if(check){
+                                trustedNodeDialogListener.onNodeSelected(
+                                        new PivtrumPeerData(
+                                                host,
+                                                finalTcpPort,
+                                                finalSslPort)
+                                );
+                            }else {
+                                Toast.makeText(context, R.string.invalid_host, Toast.LENGTH_SHORT).show();
+                            }
+                            if (dialog!=null)
+                                dialog.dismiss();
+                        });
                     }).start();
                 }
             }
