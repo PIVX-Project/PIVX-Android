@@ -16,16 +16,16 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:text="@string/demon5000"
+        android:text="@string/demon1"
         android:textColor="@color/subtitle"
         android:textSize="12dp"
         />
     <TextView
         android:id="@+id/text_demon_amount"
-        android:layout_width="90dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="x3"
+        android:text="x33"
         android:textColor="@color/mainText"
         android:textSize="14dp"
         />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="right"
-        android:text="5340000 zPiv"
+        android:text="320 zPiv"
         android:textSize="15dp"
         android:textColor="@color/mainText"/>
 
