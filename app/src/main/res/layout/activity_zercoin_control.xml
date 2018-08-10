@@ -2,39 +2,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:orientation="vertical"
     android:background="@color/white">
 
-    <LinearLayout
-        android:background="@color/black_a_10"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:orientation="vertical"
-        android:gravity="center">
+        app:cardElevation="8dp"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/colorLightGrey">
 
-        <TextView
-            android:id="@+id/text_balance"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="1,323 zPIV"
-            android:textStyle="bold"
-            android:textColor="@color/mainText"
-            android:textSize="20dp"
-            />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/coin_balance"
-            android:textSize="10dp"
-            android:textColor="@color/subtitle"
-            android:textAllCaps="true"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:gravity="center_vertical">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/coin_balance"
+                    android:textSize="12dp"
+                    android:textColor="@color/subtitle" />
+
+                <TextView
+                    android:id="@+id/text_balance"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="1,323 zPIV"
+                    android:textStyle="bold"
+                    android:textColor="@color/mainText"
+                    android:textSize="18dp"
+                    />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black_a_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/row_zerocoin_coin_balance" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,10 +76,10 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:background="@drawable/bg_border_bottom_grey"
+            android:background="@color/purple_a_20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
+            android:paddingBottom="6dp"
             android:paddingTop="12dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
@@ -55,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total_selected"
-                android:textColor="@color/subtitle"
+                android:textColor="@color/mainText"
                 android:textSize="14dp"
                 />
 
@@ -64,28 +98,17 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingRight="16dp"
                 android:gravity="right"
-                android:text="14555"
+                android:text="14555 zPIV"
                 android:textSize="18dp"
+                android:textStyle="bold"
                 android:textColor="@color/mainText"/>
 
 
         </LinearLayout>
-        <LinearLayout
-            android:background="@color/black_a_20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <include
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/row_zerocoin_coin_balance" />
-
-        </LinearLayout>
 
         <LinearLayout
-            android:background="@color/black_a_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

@@ -56,6 +56,8 @@
     <color name="black_a_30">#33000000</color>
     <color name="black_a_10">#1a000000</color>
 
+    <!-- Purple Opacity -->
+    <color name="purple_a_20">#335c4c7c</color>
 
     <!-- scanner -->
     <color name="scan_mask">#60000000</color>

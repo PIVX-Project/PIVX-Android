@@ -1,83 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:background="@drawable/bg_transparent_bottom_grey"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp"
     android:paddingTop="8dp"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:gravity="center_vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="6dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/btn_minus"
-            android:layout_gravity="center_vertical"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:paddingTop="4dp"
-            android:paddingRight="4dp"
-            android:paddingBottom="4dp"
-            android:src="@drawable/ic_minus"/>
-
-        <EditText
-            android:id="@+id/edit_count"
-            android:background="@drawable/bg_inputs"
+            <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
-            android:maxLines="1"
-            android:maxLength="3"
-            android:text="999"
-            android:textColor="@color/mainText"
-            android:textSize="14dp"/>
-
-        <ImageView
-            android:id="@+id/btn_add"
+            android:layout_marginRight="6dp"
             android:layout_gravity="center_vertical"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:paddingTop="4dp"
-            android:paddingRight="4dp"
-            android:paddingBottom="4dp"
-            android:src="@drawable/ic_add"/>
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/btn_minus"
+                android:layout_gravity="center_vertical"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:paddingTop="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="4dp"
+                android:src="@drawable/ic_minus_control"/>
+
+            <EditText
+                android:id="@+id/edit_count"
+                android:background="@drawable/bg_inputs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:maxLines="1"
+                android:maxLength="3"
+                android:text="999"
+                android:textColor="@color/mainText"
+                android:textSize="14dp"/>
+
+            <ImageView
+                android:id="@+id/btn_add"
+                android:layout_gravity="center_vertical"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:paddingTop="4dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="4dp"
+                android:src="@drawable/ic_add_control"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_demon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:text="@string/demon5000"
+            android:textColor="@color/subtitle"
+            android:textSize="12dp"
+            />
+
+
+        <TextView
+            android:id="@+id/text_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="1235340000 zPiv"
+            android:textSize="15dp"
+            android:textColor="@color/mainText"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_demon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="6dp"
-        android:text="@string/demon5000"
-        android:textColor="@color/subtitle"
-        android:textSize="12dp"
-        />
-
-
-    <TextView
-        android:id="@+id/text_amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:text="1235340000 zPiv"
-        android:textSize="15dp"
-        android:textColor="@color/mainText"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_a_10"/>
 
 </LinearLayout>
