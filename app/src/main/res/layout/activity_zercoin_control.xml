@@ -34,15 +34,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/coin_balance"
                     android:textSize="12dp"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/subtitle" />
 
                 <TextView
                     android:id="@+id/text_balance"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
                     android:text="1,323 zPIV"
                     android:textStyle="bold"
                     android:textColor="@color/mainText"
