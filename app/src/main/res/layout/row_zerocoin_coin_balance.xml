@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:background="@drawable/bg_border_bottom_grey"
+    android:background="@drawable/bg_transparent_bottom_grey"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="8dp"
@@ -12,22 +12,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
+        android:id="@+id/text_demon_amount"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="6dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="33 x"
+        android:textColor="@color/mainText"
+        android:textSize="14dp"
+        />
+
+    <TextView
         android:id="@+id/text_demon"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="6dp"
         android:layout_height="wrap_content"
         android:gravity="left"
         android:text="@string/demon1"
         android:textColor="@color/subtitle"
         android:textSize="12dp"
-        />
-    <TextView
-        android:id="@+id/text_demon_amount"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="x33"
-        android:textColor="@color/mainText"
-        android:textSize="14dp"
         />
 
     <TextView

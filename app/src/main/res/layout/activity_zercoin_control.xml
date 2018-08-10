@@ -72,17 +72,29 @@
 
 
         </LinearLayout>
+        <LinearLayout
+            android:background="@color/black_a_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <include
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/row_zerocoin_coin_balance" />
+            <include
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/row_zerocoin_coin_balance" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@color/black_a_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <include
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             layout="@layout/row_zerocoin_coin_control" />
+
+        </LinearLayout>
     </LinearLayout>
 
 
