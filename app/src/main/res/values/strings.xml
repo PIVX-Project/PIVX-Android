@@ -434,14 +434,14 @@
     <string name="coin_control">Coin Control</string>
     <string name="coin_balance">Balance</string>
     <string name="total_selected">Total Selected</string>
-    <string name="demon1">Demon. 1 x</string>
-    <string name="demon5">Demon. 5 x</string>
-    <string name="demon10">Demon. 10 x</string>
-    <string name="demon50">Demon. 50 x</string>
-    <string name="demon100">Demon. 100 x</string>
-    <string name="demon500">Demon. 500 x</string>
-    <string name="demon1000">Demon. 1000 x </string>
-    <string name="demon5000">Demon. 5000 x </string>
+    <string name="demon1">Demon. 1 </string>
+    <string name="demon5">Demon. 5 </string>
+    <string name="demon10">Demon. 10 </string>
+    <string name="demon50">Demon. 50 </string>
+    <string name="demon100">Demon. 100 </string>
+    <string name="demon500">Demon. 500 </string>
+    <string name="demon1000">Demon. 1000 </string>
+    <string name="demon5000">Demon. 5000  </string>
     <string name="title_send_private">Send private transaction</string>
     <string name="empty_zpiv_transactions">You don\'t have zPIV transactions</string>
 
