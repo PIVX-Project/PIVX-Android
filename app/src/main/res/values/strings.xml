@@ -445,5 +445,11 @@
     <string name="title_send_private">Send private transaction</string>
     <string name="empty_zpiv_transactions">You don\'t have zPIV transactions</string>
     <string name="zc_mint">Mint</string>
+    <string name="title_transaction_detail">Transaction Detail</string>
+    <string name="export_zcoin">Export zPIV</string>
+    <string name="title_export_zpiv">Export zPIV</string>
+    <string name="title_spent">Spent</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 
 </resources>
