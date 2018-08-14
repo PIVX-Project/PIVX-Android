@@ -18,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
 
 import org.pivxj.core.Block;
 import org.pivxj.core.Coin;
@@ -80,8 +81,12 @@ import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_TX_FAIL;
+import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_TX_SENT;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_BLOCKCHAIN_ALERT;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_COINS_RECEIVED;
+import static pivx.org.pivxwallet.service.IntentsConstants.NOT_ZPIV_SEND_FAILED;
+import static pivx.org.pivxwallet.service.IntentsConstants.NOT_ZPIV_SENT_COMPLETED;
 
 /**
  * Created by furszy on 6/12/17.
@@ -117,6 +122,8 @@ public class PivxWalletService extends Service{
 
     private ExecutorService executor;
 
+    private AtomicBoolean isSending = new AtomicBoolean(false);
+
     public class PivxBinder extends Binder {
         public PivxWalletService getService() {
             return PivxWalletService.this;
@@ -146,10 +153,10 @@ public class PivxWalletService extends Service{
             broadcastPeerConnected();
 
             // Check if we have tx that have not been confirmed to send.
-            for (Transaction transaction : module.listPendingTxes()) {
-                log.info("Trying to send not confirmed tx again.. --> " + transaction.getHashAsString());
-                peer.sendMessage(transaction);
-            }
+            //for (Transaction transaction : module.listPendingTxes()) {
+            //    log.info("Trying to send not confirmed tx again.. --> " + transaction.getHashAsString());
+            //    peer.sendMessage(transaction);
+            //}
         }
 
         @Override
@@ -422,7 +429,11 @@ public class PivxWalletService extends Service{
         log.info(".onDestroy()");
         try {
             // todo: notify module about this shutdown...
-            unregisterReceiver(connectivityReceiver);
+            try {
+                unregisterReceiver(connectivityReceiver);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             // remove listeners
             module.removeCoinsReceivedEventListener(coinReceiverListener);
@@ -444,8 +455,68 @@ public class PivxWalletService extends Service{
         }
     }
 
-    public Transaction broadcastCoinSpendTransactionSync(SendRequest sendRequest) throws InsufficientMoneyException, CannotSpendCoinsException {
-        return module.spendZpiv(PivxContext.CONTEXT, sendRequest, blockchainManager.getPeerGroup(), executor);
+    public synchronized void broadcastCoinSpendTransactionSync(SendRequest sendRequest){
+        if (isSending.compareAndSet(false,true)) {
+            executor.submit(() -> {
+                String failMsg;
+                try {
+                    Transaction tx = module.spendZpiv(PivxContext.CONTEXT, sendRequest, blockchainManager.getPeerGroup(), executor);
+
+                    Intent intent = new Intent(ACTION_NOTIFICATION);
+                    intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_TX_SENT);
+                    intent.putExtra(DATA_TRANSACTION_HASH, tx.getHash());
+                    broadcastManager.sendBroadcast(intent);
+
+                    Intent openIntent = new Intent(this, WalletActivity.class);
+                    openIntent.putExtra("Private", true);
+                    PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setContentTitle("Zpiv send completed")
+                            .setContentText(String.format("Amount %s to %s", Coin.COIN.toFriendlyString(), "<address>"))
+                            .setAutoCancel(true)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
+                            .setContentIntent(openPendingIntent);
+                    nm.notify(NOT_ZPIV_SENT_COMPLETED, mBuilder.build());
+
+                    isSending.set(false);
+                    return;
+                } catch (InsufficientMoneyException e) {
+                    log.info("Cannot spend coins", e);
+                    failMsg = e.getMessage();
+                } catch (CannotSpendCoinsException e) {
+                    log.info("Cannot spend coins", e);
+                    failMsg = e.getMessage();
+                } catch (Exception e){
+                    log.info("Cannot spend coins", e);
+                    failMsg = e.getMessage();
+                }
+                isSending.set(false);
+
+
+                Intent intent = new Intent(ACTION_NOTIFICATION);
+                intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_TX_FAIL);
+                broadcastManager.sendBroadcast(intent);
+
+
+                Intent openIntent = new Intent(this, WalletActivity.class);
+                openIntent.putExtra("Private", true);
+                PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                        .setContentTitle("Zpiv send failed")
+                        .setContentText(failMsg)
+                        .setAutoCancel(true)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
+                        .setContentIntent(openPendingIntent);
+                nm.notify(NOT_ZPIV_SEND_FAILED, mBuilder.build());
+
+            });
+        }else {
+            throw new IllegalStateException("Wallet already trying to spend a coin, wait until this process is finished please");
+        }
     }
 
 
@@ -485,32 +556,29 @@ public class PivxWalletService extends Service{
         final AppConf appConf = pivxApplication.getAppConf();
         PivxRate pivxRate = module.getRate(appConf.getSelectedRateCoin());
         if (pivxRate == null || pivxRate.getTimestamp() + PivxContext.RATE_UPDATE_TIME < System.currentTimeMillis()){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        CoinMarketCapApiClient c = new CoinMarketCapApiClient();
-                        CoinMarketCapApiClient.PivxMarket pivxMarket = c.getPivxPxrice();
-                        PivxRate pivxRate = new PivxRate("USD",pivxMarket.priceUsd,System.currentTimeMillis());
-                        module.saveRate(pivxRate);
-                        final PivxRate pivxBtcRate = new PivxRate("BTC",pivxMarket.priceBtc,System.currentTimeMillis());
-                        module.saveRate(pivxBtcRate);
+            new Thread(() -> {
+                try {
+                    CoinMarketCapApiClient c = new CoinMarketCapApiClient();
+                    CoinMarketCapApiClient.PivxMarket pivxMarket = c.getPivxPxrice();
+                    PivxRate pivxRate1 = new PivxRate("USD",pivxMarket.priceUsd,System.currentTimeMillis());
+                    module.saveRate(pivxRate1);
+                    final PivxRate pivxBtcRate = new PivxRate("BTC",pivxMarket.priceBtc,System.currentTimeMillis());
+                    module.saveRate(pivxBtcRate);
 
-                        // Get the rest of the rates:
-                        List<PivxRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates((code, name, bitcoinRate) -> {
-                            BigDecimal rate = bitcoinRate.multiply(pivxBtcRate.getRate());
-                            return new PivxRate(code,rate,System.currentTimeMillis());
-                        });
+                    // Get the rest of the rates:
+                    List<PivxRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates((code, name, bitcoinRate) -> {
+                        BigDecimal rate = bitcoinRate.multiply(pivxBtcRate.getRate());
+                        return new PivxRate(code,rate,System.currentTimeMillis());
+                    });
 
-                        for (PivxRate rate : rates) {
-                            module.saveRate(rate);
-                        }
-
-                    } catch (RequestPivxRateException e) {
-                        e.printStackTrace();
-                    } catch (Exception e){
-                        e.printStackTrace();
+                    for (PivxRate rate : rates) {
+                        module.saveRate(rate);
                     }
+
+                } catch (RequestPivxRateException e) {
+                    e.printStackTrace();
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
             }).start();
         }

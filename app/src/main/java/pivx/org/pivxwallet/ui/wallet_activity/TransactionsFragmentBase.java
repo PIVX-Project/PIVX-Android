@@ -28,6 +28,7 @@ import pivx.org.pivxwallet.ui.transaction_detail_activity.TransactionDetailActiv
 import global.wrappers.TransactionWrapper;
 
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_DETAIL;
+import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.IS_ZPIV_WALLET;
 import static pivx.org.pivxwallet.ui.transaction_detail_activity.FragmentTxDetail.TX_WRAPPER;
 import static pivx.org.pivxwallet.utils.TxUtils.getAddressOrContact;
 
@@ -124,11 +125,12 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
                 }else if (data.isZcSpend()) {
+                    // TODO: Add value sent from me and send to me to calculate this right..
                     holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
-                    holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
+                    holder.amount.setTextColor(ContextCompat.getColor(context,data.isPrivate() ? R.color.red : R.color.green));
                 }else if (data.isZcMint()){
                     holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
-                    holder.amount.setTextColor(ContextCompat.getColor(context, isPrivate ? R.color.green : R.color.red));
+                    holder.amount.setTextColor(ContextCompat.getColor(context, data.isPrivate() ? R.color.green : R.color.red));
                 }else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.green));
@@ -166,6 +168,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(TX_WRAPPER,data);
                 bundle.putBoolean(IS_DETAIL,true);
+                bundle.putBoolean(IS_ZPIV_WALLET, isPrivate);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

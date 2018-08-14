@@ -190,6 +190,27 @@
             <TextView
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
+                android:text = "@string/title_spent"
+                android:layout_marginBottom="10dp"
+                android:textColor = "@color/subtitle"
+                android:textSize = "14sp" />
+
+
+            <TextView
+                android:id = "@+id/txt_is_tx_spent"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="8dp"
+                android:textIsSelectable="true"
+                android:background="@drawable/transaction_inputs"
+                android:text = "No"
+                android:textColor = "@color/mainText"
+                android:textSize = "16sp" />
+
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
                 android:text = "@string/tx_detail_inputs_title"
                 android:layout_marginBottom="10dp"
                 android:textColor = "@color/subtitle"

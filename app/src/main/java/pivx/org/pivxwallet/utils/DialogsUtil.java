@@ -151,7 +151,7 @@ public class DialogsUtil {
 
             private boolean checkHost(String host, int tcpPort) {
                 if (host.equals(""))return false;
-                if (host.startsWith("192.")) return true; // localhost
+                //if (host.startsWith("192.")) return true; // localhost
                 SocketAddress sockaddr = new InetSocketAddress(host,tcpPort);
                 Socket sock = new Socket();
                 // This method will block no more than timeoutMs.
@@ -167,12 +167,7 @@ public class DialogsUtil {
                 }
             }
         });
-        nodeDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        nodeDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         return nodeDialog;
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -62,6 +63,12 @@ public class PrivacyCoinControlActivity extends BaseActivity {
         }
     }
 
+    public static class ZunspentWrapper{
+
+        private TransactionOutput output;
+
+    }
+
 
     public static class CoinControlFragment extends BaseRecyclerFragment<TransactionOutput>{
 
@@ -72,7 +79,22 @@ public class PrivacyCoinControlActivity extends BaseActivity {
 
         @Override
         protected BaseRecyclerAdapter<TransactionOutput, ? extends BaseRecyclerViewHolder> initAdapter() {
-            return null;
+            return new BaseRecyclerAdapter<TransactionOutput, BaseRecyclerViewHolder>(getActivity()) {
+                @Override
+                protected BaseRecyclerViewHolder createHolder(View itemView, int type) {
+                    return null;
+                }
+
+                @Override
+                protected int getCardViewResource(int type) {
+                    return R.layout.zerocoin_coin_control_row;
+                }
+
+                @Override
+                protected void bindHolder(BaseRecyclerViewHolder holder, TransactionOutput data, int position) {
+
+                }
+            };
         }
     }
 }

@@ -15,6 +15,8 @@ public class IntentsConstants {
 
     // Notifications numbers
     public static final int NOT_COINS_RECEIVED = 1;
+    public static final int NOT_ZPIV_SENT_COMPLETED = 2;
+    public static final int NOT_ZPIV_SEND_FAILED = 3;
     public static final int NOT_BLOCKCHAIN_ALERT = 15;
 
     //service
@@ -27,6 +29,8 @@ public class IntentsConstants {
     public static final String INTENT_BROADCAST_DATA_TYPE = "service_not_type";
     public static final String INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE = "blockchain_state";
     public static final String INTENT_BROADCAST_DATA_PEER_CONNECTED = "peer_connected";
+    public static final String INTENT_TX_SENT = "tx_sent";
+    public static final String INTENT_TX_FAIL = "tx_failed";
 
     // Data
     public static final String DATA_TRANSACTION_HASH = "tx_hash";

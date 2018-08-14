@@ -218,9 +218,7 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             startActivity(new Intent(this, DonateActivity.class));
         }
 
-        if (posChecked == 2 || posChecked == 0){
-            finish();
-        }
+        finish();
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

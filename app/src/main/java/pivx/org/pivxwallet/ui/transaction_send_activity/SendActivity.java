@@ -829,6 +829,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                             }
                         }
                 );
+                simpleTwoButtonsDialog.setImgAlertRes(R.drawable.ic_zero_coin);
+                simpleTwoButtonsDialog.setRightBtnText(R.color.bgPurple);
                 simpleTwoButtonsDialog.show();
                 return;
             }else {
@@ -913,7 +915,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             Log.i("APP","tx: "+transaction.toString());
 
-            TransactionWrapper transactionWrapper = new TransactionWrapper(transaction,null,null,amount, TransactionWrapper.TransactionUse.SENT_SINGLE);
+            TransactionWrapper transactionWrapper = new TransactionWrapper(transaction,null,null,amount, TransactionWrapper.TransactionUse.SENT_SINGLE, false);
 
             // Confirmation screen
             Intent intent = new Intent(this,SendTxDetailActivity.class);
@@ -1033,33 +1035,22 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Log.d("APP", "onServiceConnected");
             pivxWalletService = ((PivxWalletService.PivxBinder)binder).getService();
             isServiceConnected.set(true);
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.submit(() -> {
-                // Now that the service is connected, let's try to spend the coin
-                String msg;
-                try {
-                    Transaction tx = pivxWalletService.broadcastCoinSpendTransactionSync(
-                            SendRequest.forTx(transaction)
-                    );
-                    System.out.println(tx);
-                    msg = "Spend worked :)";
-                } catch (InsufficientMoneyException e) {
-                    e.printStackTrace();
-                    msg = "Insufficient Money";
-                } catch (CannotSpendCoinsException e) {
-                    e.printStackTrace();
-                    msg = "Cannot Spend coins, " + e.getMessage();
-                } catch (Exception e){
-                    e.printStackTrace();
-                    msg = "Cannot Spend coins, " + e.getMessage();
-                }
-                String finalMsg = msg;
-                runOnUiThread(() -> {
-                    Toast.makeText(SendActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
-                    disconnectFromService();
-                });
+            // Now that the service is connected, let's try to spend the coin
+            String msg;
+            try {
+                pivxWalletService.broadcastCoinSpendTransactionSync(
+                        SendRequest.forTx(transaction)
+                );
+                msg = "Sending transaction..";
+            } catch (Exception e){
+                e.printStackTrace();
+                msg = "Cannot Spend coins, " + e.getMessage();
+            }
+            String finalMsg = msg;
+            runOnUiThread(() -> {
+                Toast.makeText(SendActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
+                disconnectFromService();
             });
-            executorService.shutdown();
 
         }
 

@@ -78,12 +78,7 @@ public class RestoreWordsActivity extends BaseActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         btnBack = (Button) findViewById(R.id.btn_back);
         btnBack.setVisibility(View.GONE);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnBackClick(v);
-            }
-        });
+        btnBack.setOnClickListener(v -> btnBackClick(v));
         btnNext = (Button) findViewById(R.id.btn_next);
         container_loading = findViewById(R.id.container_loading);
 
@@ -99,8 +94,7 @@ public class RestoreWordsActivity extends BaseActivity {
 
         //Words
         mnemonicWords = pivxModule.getAvailableMnemonicWordsList();
-        mnemonicAdapter =  new ArrayAdapter<String>
-                (this, android.R.layout.select_dialog_item, mnemonicWords);
+        mnemonicAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, mnemonicWords);
     }
 
     public void btnBackClick(View v) {

@@ -119,27 +119,27 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
     }
 
     private void initBtns(View btn_container, TextView btn_left, TextView btn_right){
-        if (containerBtnsBackgroundColor!=0){
+        if (containerBtnsBackgroundColor != 0){
             btn_container.setBackgroundColor(containerBtnsBackgroundColor);
         }
-        if (leftBtnTextColor!=0){
+        if (leftBtnTextColor != 0){
             btn_left.setTextColor(leftBtnTextColor);
         }
 
-        if (rightBtnTextColor!=0){
+        if (rightBtnTextColor != 0){
             btn_right.setTextColor(rightBtnTextColor);
         }
 
-        if (leftBtnText!=null){
+        if (leftBtnText != null){
             btn_left.setText(leftBtnText);
-            if (leftBtnBackgroundColor!=0){
+            if (leftBtnBackgroundColor != 0){
                 btn_left.setBackgroundColor(leftBtnBackgroundColor);
             }
         }
 
-        if (rightBtnText!=null){
+        if (rightBtnText != null){
             btn_right.setText(rightBtnText);
-            if (rightBtnBackgroundColor!=0){
+            if (rightBtnBackgroundColor != 0){
                 btn_right.setBackgroundColor(rightBtnBackgroundColor);
             }
         }
