@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.pivxj.core.Coin;
@@ -28,7 +29,10 @@ import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Transaction;
 import org.pivxj.wallet.SendRequest;
 
+import java.math.BigDecimal;
+
 import global.PivxModuleImp;
+import global.PivxRate;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
@@ -49,6 +53,12 @@ public class ConvertActivity extends BaseActivity {
     private RadioButton radio_zpiv, radio_piv;
     private Button btn_convert;
     private EditText edit_amount;
+    private TextView txt_amount_local;
+
+    // header
+    private TextView txt_value, text_value_bottom, text_value_bottom_local, txt_local_total, txt_unnavailable, txt_local_currency, txt_watch_only;
+
+    private PivxRate pivxRate;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -69,6 +79,7 @@ public class ConvertActivity extends BaseActivity {
         View headerView = getLayoutInflater().inflate(R.layout.fragment_pivx_amount, header_container);
 
         edit_amount = (EditText) view.findViewById(R.id.edit_amount);
+        txt_amount_local = (TextView) view.findViewById(R.id.txt_amount_local);
         bg_balance = (RelativeLayout) headerView.findViewById(R.id.bg_balance);
         bg_balance.setBackgroundColor(ContextCompat.getColor(this, R.color.darkPurple));
         layout_blocked = (LinearLayout) headerView.findViewById(R.id.layout_blocked);
@@ -128,7 +139,7 @@ public class ConvertActivity extends BaseActivity {
                 DialogsUtil.buildSimpleTwoBtnsDialog(
                         v.getContext(),
                         "Mint process",
-                        String.format("You are just about to convert %s to zPIV", coin.toPlainString()),
+                        String.format("You are just about to convert %s to zPIV", coin.toFriendlyString()),
                         new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                             @Override
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
@@ -147,7 +158,10 @@ public class ConvertActivity extends BaseActivity {
                                         message = e.getMessage();
                                     }
                                     String finalMessage = message;
-                                    runOnUiThread(() -> Toast.makeText(ConvertActivity.this, finalMessage, Toast.LENGTH_SHORT).show());
+                                    runOnUiThread(() -> {
+                                        Toast.makeText(ConvertActivity.this, finalMessage, Toast.LENGTH_SHORT).show();
+                                        onBackPressed();
+                                    });
                                 }).start();
                                 edit_amount.setText("");
                                 dialog.dismiss();
@@ -166,6 +180,18 @@ public class ConvertActivity extends BaseActivity {
                 Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Header section
+        text_value_bottom =  (TextView) findViewById(R.id.text_value_bottom);
+        text_value_bottom_local =  (TextView) findViewById(R.id.text_value_bottom_local);
+        txt_local_total = (TextView) header_container.findViewById(R.id.txt_local_total);
+        txt_value = (TextView) headerView.findViewById(R.id.pivValue);
+        txt_unnavailable = (TextView) headerView.findViewById(R.id.txt_unnavailable);
+        txt_local_currency = (TextView) headerView.findViewById(R.id.txt_local_currency);
+        txt_watch_only = (TextView) headerView.findViewById(R.id.txt_watch_only);
+        bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
+
+        updateBalance();
     }
 
     @Override
@@ -185,5 +211,64 @@ public class ConvertActivity extends BaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+
+
+    private void updateBalance() {
+        Coin availableBalance = pivxModule.getAvailableBalanceCoin();
+        Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
+        Coin zAvailableBalance = pivxModule.getZpivAvailableBalanceCoin();
+        Coin zUnspendable = pivxModule.getZpivUnnavailableBalanceCoin();
+        updateBalanceViews(
+                zAvailableBalance,
+                zUnspendable,
+                "zPIV",
+                availableBalance,
+                unnavailableBalance,
+                "PIV"
+        );
+
+        Coin sum = availableBalance.add(zAvailableBalance);
+        if (pivxRate != null) {
+            txt_local_total.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(sum.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+        } else {
+            txt_local_total.setText("0.00");
+        }
+    }
+
+    private void updateBalanceViews(Coin topBalance,Coin topUnspendableBalance, String topDen, Coin bottomBalance, Coin bottomUnspendable, String bottomDen){
+        txt_value.setText(!topBalance.isZero() ? topBalance.toPlainString() + " " + topDen : "0 " + topDen);
+        txt_unnavailable.setText(!topUnspendableBalance.isZero() ? topUnspendableBalance.toPlainString() + " " + topDen : "0 " + topDen);
+
+        text_value_bottom.setText(!bottomBalance.isZero() ? bottomBalance.toPlainString() + " " + bottomDen : "0 " + bottomDen);
+
+        if (pivxRate == null)
+            pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+        if (pivxRate != null) {
+            txt_local_currency.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(topBalance.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+            text_value_bottom_local.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(bottomBalance.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+        } else {
+            txt_local_currency.setText("0");
+        }
     }
 }

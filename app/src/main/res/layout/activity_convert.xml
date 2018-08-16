@@ -70,10 +70,10 @@
 
 
         <TextView
-            android:id = "@+id/txt_local"
+            android:id = "@+id/txt_amount_local"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:text = "14 USD"
+            android:text = "0.00 USD"
             android:textColor = "@color/mainText"
             android:textSize = "16sp" />
 

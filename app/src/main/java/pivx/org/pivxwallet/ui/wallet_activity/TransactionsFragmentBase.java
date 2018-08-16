@@ -125,11 +125,14 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
                 }else if (data.isZcSpend()) {
-                    // TODO: Add value sent from me and send to me to calculate this right..
-                    holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
+                    if (data.isPrivate()){
+                        holder.imageView.setImageResource(R.drawable.ic_transaction_send_zpiv);
+                    }else {
+                        holder.imageView.setImageResource(R.drawable.ic_transaction_receive_zpiv);
+                    }
                     holder.amount.setTextColor(ContextCompat.getColor(context,data.isPrivate() ? R.color.red : R.color.green));
                 }else if (data.isZcMint()){
-                    holder.imageView.setImageResource(R.drawable.ic_transaction_incognito);
+                    holder.imageView.setImageResource(R.drawable.ic_transaction_convert_zpiv);
                     holder.amount.setTextColor(ContextCompat.getColor(context, data.isPrivate() ? R.color.green : R.color.red));
                 }else if (!data.isStake()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_receive);

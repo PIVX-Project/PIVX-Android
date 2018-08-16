@@ -73,9 +73,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private View root;
     private View container_txs;
     private RelativeLayout bg_balance;
-    private TextView txt_value, text_value_bottom, text_value_bottom_local, txt_local_total;
-    private TextView txt_unnavailable;
-    private TextView txt_local_currency;
+    private TextView txt_value, text_value_bottom, text_value_bottom_local, txt_local_total, txt_unnavailable, txt_local_currency;
     private TextView txt_watch_only;
     private View view_background;
     private View container_syncing;
@@ -130,6 +128,10 @@ public class WalletActivity extends BaseDrawerActivity {
         text_value_bottom =  (TextView) findViewById(R.id.text_value_bottom);
         text_value_bottom_local =  (TextView) findViewById(R.id.text_value_bottom_local);
         txt_local_total = (TextView) header_container.findViewById(R.id.txt_local_total);
+        txt_value = (TextView) containerHeader.findViewById(R.id.pivValue);
+        txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
+        txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
+        txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
 
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
@@ -163,11 +165,8 @@ public class WalletActivity extends BaseDrawerActivity {
         }
 
 
-        txt_value = (TextView) containerHeader.findViewById(R.id.pivValue);
-        txt_unnavailable = (TextView) containerHeader.findViewById(R.id.txt_unnavailable);
+
         container_txs = root.findViewById(R.id.container_txs);
-        txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
-        txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
         view_background = root.findViewById(R.id.view_background);
         container_syncing = root.findViewById(R.id.container_syncing);
 

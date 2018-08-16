@@ -35,8 +35,8 @@ public class LoadingActivity extends AppCompatActivity {
                         // Jump to your Next Activity or MainActivity
                         Intent intent = new Intent(this, StartActivity.class);
                         startActivity(intent);
-                        finish();
                     }
+                    finish();
                 });
             } catch (IOException e) {
                 Toast.makeText(LoadingActivity.this, "Error loading wallet",Toast.LENGTH_SHORT).show();

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.VideoView;
 
@@ -18,7 +19,8 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
  */
 
 public class SplashActivity extends AppCompatActivity {
-    VideoView videoView;
+    /** Duration of wait **/
+    private final int SPLASH_DISPLAY_LENGTH = 4000;
     private boolean ispaused = false;
 
     @Override
@@ -26,36 +28,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
+        final Runnable r = () -> jump();
 
-        videoView = (VideoView) findViewById(R.id.video_view);
-        Uri video;
-        if(PivxApplication.getInstance().getAppConf().isSplashSoundEnabled())
-            video = Uri.parse("android.resource://" + getPackageName() + "/"
-                + R.raw.splash_video);
-        else {
-            //video = Uri.parse("android.resource://" + getPackageName() + "/"
-            //        + R.raw.splash_video_muted);
-            //Intent intent = new Intent(this, WalletActivity.class);
-            //startActivity(intent);
-            jump();
-            return;
-        }
+        new Handler().postDelayed(r, SPLASH_DISPLAY_LENGTH);
 
-        if (videoView != null) {
-            videoView.setVideoURI(video);
-            videoView.setZOrderOnTop(true);
-            videoView.setOnCompletionListener(mp -> jump());
-
-            videoView.setOnErrorListener((mediaPlayer, i, i1) -> {
-                jump();
-                return true;
-            });
-
-            videoView.start();
-
-        }else{
-            jump();
-        }
     }
 
 

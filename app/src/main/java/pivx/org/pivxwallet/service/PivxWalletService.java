@@ -278,6 +278,8 @@ public class PivxWalletService extends Service{
                     //notificationCount++;
                     notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
                     Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
+                    openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     openPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, openIntent, 0);
                     Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
                     resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
@@ -468,12 +470,14 @@ public class PivxWalletService extends Service{
                     broadcastManager.sendBroadcast(intent);
 
                     Intent openIntent = new Intent(this, WalletActivity.class);
+                    openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     openIntent.putExtra("Private", true);
-                    PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+                    PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent,  PendingIntent.FLAG_CANCEL_CURRENT);
 
                     NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentTitle("Zpiv send completed")
-                            .setContentText(String.format("Amount %s to %s", Coin.COIN.toFriendlyString(), "<address>"))
+                            .setContentText(String.format("Amount %s", Coin.COIN.toFriendlyString()))
                             .setAutoCancel(true)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))

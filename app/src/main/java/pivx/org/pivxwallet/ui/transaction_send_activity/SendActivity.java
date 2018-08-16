@@ -813,7 +813,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                         this,
                         "Zpiv Spend",
-                        String.format("You are just about to spend %s to\n%s\n\nThis process will take a while, please be patient", amount, addressStr),
+                        String.format("You are just about to spend %s to\n%s\n\nThis process will take a while, please be patient", amount.toFriendlyString(), addressStr),
                         new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                             @Override
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
@@ -830,7 +830,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                         }
                 );
                 simpleTwoButtonsDialog.setImgAlertRes(R.drawable.ic_zero_coin);
-                simpleTwoButtonsDialog.setRightBtnText(R.color.bgPurple);
+                simpleTwoButtonsDialog.setRightBtnTextColor(ContextCompat.getColor(this,R.color.white));
+                simpleTwoButtonsDialog.setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white));
+                simpleTwoButtonsDialog.setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple));
                 simpleTwoButtonsDialog.show();
                 return;
             }else {
