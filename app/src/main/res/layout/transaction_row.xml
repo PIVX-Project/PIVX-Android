@@ -21,13 +21,29 @@
         android:paddingStart="12dp"
         android:paddingEnd="12dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_transaction_send"
-            android:paddingRight="14dp"
-            />
+        <RelativeLayout
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginRight="12dp">
+            
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_transaction_send"
+                />
+            <ImageView
+                android:id="@+id/img_pending"
+                android:visibility="gone"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:src="@drawable/ic_transaction_zpiv_pending"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true" />
+            
+        </RelativeLayout>
+
+       
 
 
         <LinearLayout
