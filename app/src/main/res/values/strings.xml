@@ -1,16 +1,7 @@
 <resources>
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
     <string name="app_name">PIVX wallet</string>
+    <string name="loading">Loading ...</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
     <string name="restore_wallet_message">Select a backup of the wallet\nfrom a storage unit</string>
