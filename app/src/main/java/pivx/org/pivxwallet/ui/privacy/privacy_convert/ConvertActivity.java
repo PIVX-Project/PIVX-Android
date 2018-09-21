@@ -173,9 +173,11 @@ public class ConvertActivity extends BaseActivity {
                             }
                         }
                 )
-                        .setImgAlertRes(R.drawable.ic_zero_coin)
-                        .setRightBtnTextColor(R.color.bgPurple)
-                        .show();
+                .setImgAlertRes(R.drawable.ic_zero_coin)
+                .setRightBtnTextColor(ContextCompat.getColor(this,R.color.white))
+                .setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white))
+                .setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple))
+                .show();
             } catch (InsufficientMoneyException e) {
                 Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }

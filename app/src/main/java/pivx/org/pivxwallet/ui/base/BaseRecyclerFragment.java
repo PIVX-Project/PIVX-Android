@@ -92,7 +92,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
      */
     private void load() {
         swipeRefreshLayout.setRefreshing(true);
-        if (executor!=null)
+        if (executor != null)
             executor.execute(loadRunnable);
     }
 
@@ -130,7 +130,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         @Override
         public void run() {
             if (getActivity()!=null) {
-                boolean res = false;
+                boolean res;
                 try {
                     list = onLoading();
                     res = true;
@@ -140,9 +140,8 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                     log.info("cantLoadListException: " + e.getMessage());
                 }
                 final boolean finalRes = res;
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
                         swipeRefreshLayout.setRefreshing(false);
                         if (finalRes) {
                             adapter.changeDataSet(list);
@@ -154,8 +153,10 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                                 txt_empty.setTextColor(getResources().getColor(R.color.mainText));
                             }
                         }
-                    }
-                });
+                    });
+                }else {
+                    log.error("Fuck, leaked baseRecyclerFragment.");
+                }
             }
         }
     };

@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.utils;
 
 import org.pivxj.core.ScriptException;
+import org.pivxj.core.TransactionOutput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +32,13 @@ public class TxUtils {
             }else {
                 try {
                     text = data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(), true).toBase58();
-                }catch (ScriptException e){
-                    text = data.getTransaction().getOutput(1).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(),true).toBase58();
+                }catch (ScriptException e) {
+                    try {
+                        text = data.getTransaction().getOutput(1).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams(), true).toBase58();
+                    }catch (Exception e1){
+                        logger.error("######## ERROR THAT NEEDS TO BE CHANGED..",e1);
+                        text = "Error";
+                    }
                 }
             }
         }else {

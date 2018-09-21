@@ -40,7 +40,7 @@
     <string name="btn_request">Request</string>
     <string name="payment_request">Payment Request</string>
     <string name="settings_subtitle_security">Security</string>
-    <string name="backup_wallet_message">Your backup will be encrypted with\nthe password you choose and saved\nto an external storage drive.</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with the password you choose and saved to an external storage drive.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore wallet</string>
@@ -423,14 +423,14 @@
     <!-- Privacy -->
     <string name="nav_privacy">Privacy</string>
     <string name="title_privacy">Privacy</string>
-    <string name="btn_convert">Convert</string>
-    <string name="title_convert">Convert</string>
-    <string name="convert_piv">Convert to Piv</string>
-    <string name="convert_zpiv">Convert to zPiv</string>
+    <string name="btn_convert">Mint</string>
+    <string name="title_convert">Mint</string>
+    <string name="convert_piv">Convert to PIV</string>
+    <string name="convert_zpiv">Mint</string>
     <string name="btn_send_zpiv">Send zPIV</string>
     <string name="btn_send_piv">Send PIV</string>
     <string name="label_amount_convert">Amount to convert</string>
-    <string name="message_convert_zpiv">PIV can be converted to zPIV to remove transaction history. Sending zPIV is 100% anonymous and untraceable</string>
+    <string name="message_convert_zpiv">PIV can be converted to zPIV, this new zPIV have no transaction history. Sending zPIV is 100% anonymous and untraceable</string>
     <string name="coin_control">Coin Control</string>
     <string name="coin_balance">Balance</string>
     <string name="total_selected">Total Selected</string>
@@ -451,5 +451,6 @@
     <string name="title_spent">Spent</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="denomination">Denom</string>
 
 </resources>

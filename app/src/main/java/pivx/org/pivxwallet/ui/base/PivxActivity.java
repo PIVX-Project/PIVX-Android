@@ -13,6 +13,7 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import global.PivxModule;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.loading.LoadingActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_STORED_BLOCKCHAIN_ERROR;
@@ -58,9 +59,16 @@ public class PivxActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        isOnForeground = true;
-        localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver,intentFilter);
-        localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver,errorIntentFilter);
+
+        if (!pivxApplication.isCoreStarted()){
+            Intent intent = new Intent(this, LoadingActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            isOnForeground = true;
+            localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver, intentFilter);
+            localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver, errorIntentFilter);
+        }
     }
 
     @Override

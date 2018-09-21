@@ -14,6 +14,7 @@ import java.util.Random;
 import global.PivtrumGlobalData;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.settings.settings_pincode_activity.KeyboardFragment;
@@ -64,9 +65,9 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     }
 
     private void goNext() {
-        if (pivxApplication.getAppConf().getTrustedNode()==null){
+        if (pivxApplication.getAppConf().getTrustedNode() == null){
             // select random trusted node
-            List<PivtrumPeerData> nodes = PivtrumGlobalData.listTrustedHosts();
+            List<PivtrumPeerData> nodes = PivtrumGlobalData.listTrustedHosts(PivxContext.NETWORK_PARAMETERS.getPort());
             Random random = new Random();
             pivxApplication.setTrustedServer(nodes.get(random.nextInt(nodes.size())));
             pivxApplication.stopBlockchain();

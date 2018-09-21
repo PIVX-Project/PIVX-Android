@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -146,6 +149,16 @@ public class PivxApplication extends Application implements ContextWrapper {
             pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
 
             PivxContext.CONTEXT.zerocoinContext.jniBridge = new AndroidJniBridge();
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.submit(() -> {
+                try {
+                    startCore();
+                } catch (Exception e) {
+                    log.error("Exception on core start",e);
+                }
+            });
+            executor.shutdown();
         } catch (Exception e){
             log.error("Exception on start",e);
         }
@@ -292,4 +305,7 @@ public class PivxApplication extends Application implements ContextWrapper {
         this.lastTimeRequestBackup = lastTimeBackupRequested;
     }
 
+    public boolean isCoreStarted() {
+        return pivxModule.isStarted();
+    }
 }

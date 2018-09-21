@@ -101,6 +101,9 @@ public class CrashReporter {
 	public static void appendSavedBackgroundTraces(final Appendable report) throws IOException
 	{
 		BufferedReader reader = null;
+		if (!backgroundTracesFile.exists()){
+			backgroundTracesFile.createNewFile();
+		}
 		try
 		{
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(backgroundTracesFile), Charsets.UTF_8));

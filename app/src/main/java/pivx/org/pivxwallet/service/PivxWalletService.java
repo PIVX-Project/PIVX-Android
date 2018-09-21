@@ -277,6 +277,8 @@ public class PivxWalletService extends Service{
                 if (amount.isGreaterThan(Coin.ZERO)) {
                     //notificationCount++;
                     notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
+
+                    Coin notificationAccumulatedAmountTemp = Coin.valueOf(notificationAccumulatedAmount.value);
                     Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
                     openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                             | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -285,14 +287,16 @@ public class PivxWalletService extends Service{
                     resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
                     deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                            .setContentTitle("Pivs received!")
-                            .setContentText("Coins received for a value of " + notificationAccumulatedAmount.toFriendlyString())
+                            .setContentTitle("PIV received!")
+                            .setContentText("Coins received for a value of " + notificationAccumulatedAmountTemp.toFriendlyString())
                             .setAutoCancel(true)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
                             .setDeleteIntent(deleteIntent)
                             .setContentIntent(openPendingIntent);
                     nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
+
+                    notificationAccumulatedAmount = Coin.ZERO;
                 } else {
                     // TODO: Correct this.. mint txes are going to pass here..
                     log.error("transaction with a value lesser than zero arrives..");
@@ -475,9 +479,10 @@ public class PivxWalletService extends Service{
                     openIntent.putExtra("Private", true);
                     PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent,  PendingIntent.FLAG_CANCEL_CURRENT);
 
+                    Coin value = module.getValueSentFromMe(tx, false);
                     NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                            .setContentTitle("Zpiv send completed")
-                            .setContentText(String.format("Amount %s", Coin.COIN.toFriendlyString()))
+                            .setContentTitle("zPIV send completed")
+                            .setContentText(String.format("Amount %s", value.toFriendlyString()))
                             .setAutoCancel(true)
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
@@ -509,8 +514,8 @@ public class PivxWalletService extends Service{
                 PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentTitle("Zpiv send failed")
-                        .setContentText(failMsg)
+                        .setContentTitle("zPIV send failed")
+                        .setContentText("Please try again in some minutes")
                         .setAutoCancel(true)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))

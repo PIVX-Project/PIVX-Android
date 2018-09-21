@@ -41,6 +41,7 @@ import global.PivxRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.loading.LoadingActivity;
 import pivx.org.pivxwallet.ui.privacy.privacy_convert.ConvertActivity;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
 import pivx.org.pivxwallet.ui.settings.settings_backup_activity.SettingsBackupActivity;
@@ -69,6 +70,8 @@ public class WalletActivity extends BaseDrawerActivity {
     private static final Logger log = LoggerFactory.getLogger(WalletActivity.class);
 
     private static final int SCANNER_RESULT = 122;
+    private static final int REQUEST_SEND = 300;
+    private static final int REQUEST_QR = 301;
 
     private View root;
     private View container_txs;
@@ -81,6 +84,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private TransactionsFragmentBase txsFragment;
     private Boolean isPrivate = false;
     private FloatingActionButton fab_request, fab_add, fab_convert ;
+    private FloatingActionMenu floatingActionMenu;
 
 
     // Receiver
@@ -95,8 +99,10 @@ public class WalletActivity extends BaseDrawerActivity {
                 if(intent.getStringExtra(INTENT_BROADCAST_DATA_TYPE).equals(INTENT_BROADCAST_DATA_ON_COIN_RECEIVED)){
                     // Check if the app is on foreground to update the view.
                     if (!isOnForeground)return;
-                    updateBalance();
-                    txsFragment.refresh();
+                    runOnUiThread(() -> {
+                        updateBalance();
+                        txsFragment.refresh();
+                    });
                 }
             }
 
@@ -133,7 +139,7 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_local_currency = (TextView) containerHeader.findViewById(R.id.txt_local_currency);
         txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
 
-        FloatingActionMenu floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+        floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
 
         if (isPrivate) {
             setTitle(R.string.title_privacy);
@@ -178,43 +184,48 @@ public class WalletActivity extends BaseDrawerActivity {
                 Toast.makeText(v.getContext(),R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                 return;
             }
-            startActivity(sendintent);
+            floatingActionMenu.close(false);
+            startActivityForResult(sendintent, REQUEST_SEND);
         });
 
         root.findViewById(R.id.fab_request).setOnClickListener(v -> {
             Intent requestIntent = new Intent(v.getContext(), RequestActivity.class);
             requestIntent.putExtra("Private",isPrivate);
+            floatingActionMenu.close(false);
             startActivity(requestIntent);
         });
 
         // Convert
-        root.findViewById(R.id.fab_convert).setOnClickListener(v -> startActivity(new Intent(v.getContext(), ConvertActivity.class)));
+        root.findViewById(R.id.fab_convert).setOnClickListener(v -> {
+            floatingActionMenu.close(false);
+            startActivity(new Intent(v.getContext(), ConvertActivity.class));
+        });
 
 
         // Floating menu
         floatingActionMenu.setOnMenuToggleListener(opened -> {
-            if (opened){
-                AnimationUtils.fadeInView(view_background,200);
-            }else {
-                AnimationUtils.fadeOutGoneView(view_background,200);
-            }
+            touchFabActions(opened);
         });
 
         txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         // to check current activity in the navigation drawer
         setNavigationMenuItemChecked(isPrivate ? 2 : 0);
 
         init();
 
         // register
-        localBroadcastManager.registerReceiver(pivxServiceReceiver,pivxServiceFilter);
+        try{
+            localBroadcastManager.unregisterReceiver(pivxServiceReceiver);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        localBroadcastManager.registerReceiver(pivxServiceReceiver, pivxServiceFilter);
 
         updateState();
         updateBalance();
@@ -299,8 +310,10 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.action_qr){
-            startActivity(new Intent(this, QrActivity.class));
+        if (item.getItemId() == R.id.action_qr){
+            Intent intent = new Intent(this, QrActivity.class);
+            intent.putExtra("Private", isPrivate);
+            startActivityForResult(intent, REQUEST_QR);
             return true;
         }else if (item.getItemId()==R.id.action_scan){
             if (!checkPermission(CAMERA)) {
@@ -320,7 +333,7 @@ public class WalletActivity extends BaseDrawerActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SCANNER_RESULT){
-            if (resultCode==RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 try {
                     String address = data.getStringExtra(INTENT_EXTRA_RESULT);
                     final String usedAddress;
@@ -361,6 +374,10 @@ public class WalletActivity extends BaseDrawerActivity {
                     e.printStackTrace();
                     Toast.makeText(this,"Bad address",Toast.LENGTH_LONG).show();
                 }
+            }
+        }else if (REQUEST_SEND == requestCode){
+            if(floatingActionMenu.isOpened()){
+                touchFabActions(true);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -437,6 +454,14 @@ public class WalletActivity extends BaseDrawerActivity {
             );
         } else {
             txt_local_currency.setText("0");
+        }
+    }
+
+    public void touchFabActions(boolean isOpened){
+        if (isOpened){
+            AnimationUtils.fadeInView(view_background,200);
+        }else {
+            AnimationUtils.fadeOutGoneView(view_background,200);
         }
     }
 

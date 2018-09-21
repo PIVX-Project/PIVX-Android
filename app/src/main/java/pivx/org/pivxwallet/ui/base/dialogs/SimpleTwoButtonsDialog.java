@@ -189,8 +189,9 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
         return this;
     }
 
-    public void setContainerBtnsBackgroundColor(int containerBtnsBackgroundColor) {
+    public SimpleTwoButtonsDialog setContainerBtnsBackgroundColor(int containerBtnsBackgroundColor) {
         this.containerBtnsBackgroundColor = containerBtnsBackgroundColor;
+        return this;
     }
 
     public SimpleTwoButtonsDialog setLeftBtnTextColor(int leftBtnTextColor) {

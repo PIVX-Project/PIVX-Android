@@ -73,7 +73,7 @@
                     android:layout_width = "0dp"
                     android:layout_height = "wrap_content"
                     android:layout_weight="1"
-                    android:text = "0 Zpiv"
+                    android:text = "0 zPIV"
                     android:textColor = "@color/white_a_60"
                     android:textSize = "16sp" />
 

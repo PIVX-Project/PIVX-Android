@@ -1,5 +1,7 @@
 package pivx.org.pivxwallet.ui.qr_activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +30,9 @@ public class QrActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavigationUtils.goBackToHome(this);
+        Intent intent = getIntent();
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
 }

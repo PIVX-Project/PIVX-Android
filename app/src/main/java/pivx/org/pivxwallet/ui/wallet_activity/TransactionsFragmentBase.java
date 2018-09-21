@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.pivxj.core.Coin;
+import org.pivxj.core.CoinDefinition;
 import org.pivxj.utils.MonetaryFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,12 +72,10 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             list = pivxModule.listPrivateTxes();
         }else
             list = pivxModule.listTx();
-        Collections.sort(list, new Comparator<TransactionWrapper>(){
-            public int compare(TransactionWrapper o1, TransactionWrapper o2){
-                if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
-                    return 0;
-                return o1.getTransaction().getUpdateTime().getTime() > o2.getTransaction().getUpdateTime().getTime() ? -1 : 1;
-            }
+        Collections.sort(list, (o1, o2) -> {
+            if(o1.getTransaction().getUpdateTime().getTime() == o2.getTransaction().getUpdateTime().getTime())
+                return 0;
+            return o1.getTransaction().getUpdateTime().getTime() > o2.getTransaction().getUpdateTime().getTime() ? -1 : 1;
         });
         return list;
     }
@@ -162,6 +161,25 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }*/
                 String memo = data.getTransaction().getMemo();
                 holder.description.setText(memo != null ? memo : "No description");
+
+                int spendableDepth;
+                int drawableRes;
+                if (!data.isZcMint()){
+                    spendableDepth = 2; // todo: Get this data from pivxj..
+                    drawableRes = R.drawable.ic_transaction_zpiv_pending;
+                }else {
+                    spendableDepth = CoinDefinition.MINT_REQUIRED_CONFIRMATIONS;
+                    drawableRes = R.drawable.ic_transaction_piv_pending;
+                }
+
+                if (data.getTransaction().getConfidence().getDepthInBlocks() < spendableDepth){
+                    holder.img_pending.setVisibility(View.VISIBLE);
+                    holder.img_pending.setImageResource(drawableRes);
+                }else {
+                    holder.img_pending.setVisibility(View.GONE);
+                }
+
+
             }
         };
         adapter.setListEventListener(new ListItemListeners<TransactionWrapper>() {
@@ -172,6 +190,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 bundle.putSerializable(TX_WRAPPER,data);
                 bundle.putBoolean(IS_DETAIL,true);
                 bundle.putBoolean(IS_ZPIV_WALLET, isPrivate);
+                bundle.putBoolean("Private", isPrivate);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

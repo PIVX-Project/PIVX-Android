@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="1235340000 zPiv"
+            android:text="1235340000 zPIV"
             android:textSize="15dp"
             android:textColor="@color/mainText"/>
     </LinearLayout>

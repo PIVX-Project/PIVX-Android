@@ -103,11 +103,11 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
     private void checkState(){
         long now = System.currentTimeMillis();
         long lastBlockTime = pivxApplication.getAppConf().getLastBestChainBlockTime();
-        if (lastBlockTime+OUT_OF_SYNC_TIME>now){
+        if (lastBlockTime + OUT_OF_SYNC_TIME > now){
             // check if i'm syncing or i'm synched
             long peerHeight = pivxModule.getConnectedPeerHeight();
-            if (peerHeight!=-1){
-                if (pivxModule.getChainHeight()+10>peerHeight) {
+            if (peerHeight != -1){
+                if (pivxModule.getChainHeight() +10 > peerHeight) {
                     blockchainState = BlockchainState.SYNC;
                 }else {
                     blockchainState = BlockchainState.SYNCING;
@@ -118,8 +118,8 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         }else {
             if (pivxModule.isAnyPeerConnected()) {
                 long peerHeight = pivxModule.getConnectedPeerHeight();
-                if (peerHeight!=-1){
-                    if (pivxModule.getChainHeight()+10>peerHeight) {
+                if (peerHeight != -1){
+                    if (pivxModule.getChainHeight() +10 > peerHeight) {
                         blockchainState = BlockchainState.SYNC;
                     }else {
                         blockchainState = BlockchainState.SYNCING;

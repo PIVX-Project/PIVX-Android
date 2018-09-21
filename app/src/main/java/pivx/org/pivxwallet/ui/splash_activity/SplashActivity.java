@@ -26,12 +26,9 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash);
         final Runnable r = () -> jump();
-
         new Handler().postDelayed(r, SPLASH_DISPLAY_LENGTH);
-
     }
 
 

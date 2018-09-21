@@ -94,6 +94,8 @@ public class TransactionDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavigationUtils.goBackToHome(this);
+        Intent intent = getIntent();
+        setResult(RESULT_OK,intent);
+        finish();
     }
 }

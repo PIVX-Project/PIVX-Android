@@ -133,14 +133,19 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                 Coin inputsSum = Coin.ZERO;
                 for (TransactionInput input : transactionWrapper.getTransaction().getInputs()) {
                     TransactionOutPoint unspent = input.getOutpoint();
-                    inputsSum = inputsSum.plus(pivxModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex()));
+                    Coin unspentValue = pivxModule.getUnspentValue(unspent.getHash(), (int) unspent.getIndex());
+                    if (unspentValue != null)
+                        inputsSum = inputsSum.plus(unspentValue);
+                    else
+                        // TODO: Improve this..
+                        throw new Exception("Unspent value null");
                 }
                 fee = inputsSum.subtract(transactionWrapper.getTransaction().getOutputSum());
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
-        if (fee!=null)
+        if (fee != null)
             txt_fee.setText(fee.toFriendlyString());
         else
             txt_fee.setText(R.string.no_data_available);

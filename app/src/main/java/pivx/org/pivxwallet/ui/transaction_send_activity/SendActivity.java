@@ -123,6 +123,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int CUSTOM_INPUTS = 125;
     private static final int SEND_DETAIL = 126;
     private static final int CUSTOM_CHANGE_ADDRESS = 127;
+
     private Boolean isPrivate = false;
     private View root;
     private Button buttonSend, addAllPiv;
@@ -161,6 +162,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreateView(Bundle savedInstanceState,ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_transaction_send, container);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("Private")) {
             isPrivate = intent.getBooleanExtra("Private",false);
@@ -177,8 +182,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         title_description = (TextView) findViewById(R.id.title_description);
         addAllPiv =  (Button) findViewById(R.id.btn_add_all);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
         edit_amount = (EditText) findViewById(R.id.edit_amount);
         edit_memo = (EditText) findViewById(R.id.edit_memo);
@@ -306,12 +310,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         // Layout changed zPIV
 
         if (isPrivate) {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
-                    .getColor(R.color.darkPurple)));
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
+                    .getColor(this, R.color.darkPurple)));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.darkPurple));
             }
             setTitle(R.string.title_send_private);
             layout_scroll.setBackgroundResource(R.color.darkPurple);
@@ -371,8 +375,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //if (!isPrivate)
         getMenuInflater().inflate(R.menu.send_menu,menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -386,8 +391,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             return true;
         }else if(id == R.id.option_select_inputs){
             if (isPrivate){
-                Intent myinte = new Intent(this, PrivacyCoinControlActivity.class);
-                startActivity(myinte);
+                Intent intent = new Intent(this, PrivacyCoinControlActivity.class);
+                startActivityForResult(intent, CUSTOM_INPUTS);
             } else {
                 startCoinControlActivity(unspent);
             }
@@ -428,11 +433,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private void startCoinControlActivity(Set<InputWrapper> unspent) {
         String amountStr = getAmountStr();
-        if (amountStr.length()>0){
+        if (amountStr.length() > 0){
             Intent intent = new Intent(this, InputsActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(INTENT_EXTRA_TOTAL_AMOUNT,amountStr);
-            if (unspent!=null)
+            if (unspent != null)
                 bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) unspent);
             intent.putExtras(bundle);
             startActivityForResult(intent,CUSTOM_INPUTS);
@@ -444,7 +449,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (transaction!=null)
+        if (transaction != null)
             outState.putSerializable(TX,transaction.unsafeBitcoinSerialize());
     }
 
@@ -460,7 +465,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        NavigationUtils.goBackToHome(this);
+        Intent intent = new Intent();
+        intent.putExtra("Private",isPrivate);
+        setResult(RESULT_OK, getIntent());
+        finish();
     }
 
     @Override
@@ -473,13 +481,13 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         // todo: This is not updating the filter..
-        if (filterableAdapter==null) {
+        if (filterableAdapter == null) {
             List<AddressLabel> list = new ArrayList<>(pivxModule.getContacts());
             filterableAdapter = new MyFilterableAdapter(this,list );
             edit_address.setAdapter(filterableAdapter);
         }
 
-        if(getCurrentFocus()!=null) {
+        if(getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
@@ -512,7 +520,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }else if(id == R.id.btn_add_all){
             if (!isMultiSend) {
                 cleanWallet = true;
-                Coin coin = pivxModule.getAvailableBalanceCoin();
+                Coin coin = (!isPrivate) ? pivxModule.getAvailableBalanceCoin() : pivxModule.getZpivAvailableBalanceCoin();
                 if (inPivs) {
                     edit_amount.setText(coin.toPlainString());
                     txt_local_currency.setText(
@@ -522,7 +530,6 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                                     + " " + pivxRate.getCode()
                     );
                 } else {
-
                     editCurrency.setText(
                             pivxApplication.getCentralFormats().format(
                                     new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
@@ -624,7 +631,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         }else if(requestCode == SEND_DETAIL){
-            if (resultCode==RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 try {
                     // pin ok, send the tx now
                     sendConfirmed();
@@ -812,13 +819,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
                 SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                         this,
-                        "Zpiv Spend",
+                        "zPIV Spend",
                         String.format("You are just about to spend %s to\n%s\n\nThis process will take a while, please be patient", amount.toFriendlyString(), addressStr),
                         new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                             @Override
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
                                 transaction = sendRequest.tx;
                                 connectToService();
+                                clearFields();
                                 Toast.makeText(SendActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
@@ -924,7 +932,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             Bundle bundle = new Bundle();
             bundle.putSerializable(TX_WRAPPER,transactionWrapper);
             bundle.putSerializable(TX,transaction.bitcoinSerialize());
-            if (memo.length()>0)
+            if (memo.length() > 0)
                 bundle.putString(TX_MEMO,memo);
             intent.putExtras(bundle);
             startActivityForResult(intent,SEND_DETAIL);
@@ -1017,14 +1025,19 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
         startService(intent);
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
-        finish();
-        NavigationUtils.goBackToHome(this);
+        onBackPressed();
+        //NavigationUtils.goBackToHome(this);
+    }
+
+    private void clearFields() {
+        edit_amount.setText("");
+        edit_address.setText("");
+        // TODO: remove the other stuff too..
     }
 
     public static int convertDpToPx(Resources resources, int dp){
         return Math.round(dp*(resources.getDisplayMetrics().xdpi/ DisplayMetrics.DENSITY_DEFAULT));
     }
-
 
 
     private PivxWalletService pivxWalletService;
@@ -1052,6 +1065,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             runOnUiThread(() -> {
                 Toast.makeText(SendActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
                 disconnectFromService();
+                onBackPressed();
             });
 
         }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.pivxj.core.Coin;
 import org.pivxj.core.TransactionInput;
 import org.pivxj.core.TransactionOutput;
 
@@ -30,9 +31,10 @@ import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
 public class PrivacyCoinControlActivity extends BaseActivity {
     private static final int MENU_ITEM_ITEM1 = 1;
 
+    private TextView text_balance;
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
-        getLayoutInflater().inflate(R.layout.activity_zercoin_control, container);
+        View root = getLayoutInflater().inflate(R.layout.activity_zercoin_control, container);
         setTitle(R.string.coin_control);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -44,6 +46,13 @@ public class PrivacyCoinControlActivity extends BaseActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.darkPurple)));
+
+        text_balance = (TextView) root.findViewById(R.id.text_balance);
+        updateBalance(pivxModule.getZpivAvailableBalanceCoin());
+    }
+
+    public void updateBalance(Coin totalBalance){
+        text_balance.setText(totalBalance.toPlainString() + " zPIV");
     }
 
     @Override
