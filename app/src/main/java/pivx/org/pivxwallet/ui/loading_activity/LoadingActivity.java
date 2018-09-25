@@ -1,25 +1,20 @@
-package pivx.org.pivxwallet.ui.splash_activity;
+package pivx.org.pivxwallet.ui.loading_activity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.VideoView;
 
 import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
-/**
- * Created by Neoperol on 6/13/17.
- */
+public class LoadingActivity extends AppCompatActivity {
 
-public class SplashActivity extends AppCompatActivity {
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 5000;
+    private final int SPLASH_DISPLAY_LENGTH = 20000;
     private boolean ispaused = false;
 
     @Override
@@ -27,7 +22,14 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_loading);
-        new Handler().postDelayed(this::jump, SPLASH_DISPLAY_LENGTH);
+        final Runnable r = new Runnable() {
+            public void run() {
+                jump();
+            }
+        };
+
+        new Handler().postDelayed(r, SPLASH_DISPLAY_LENGTH);
+
     }
 
 
@@ -44,18 +46,5 @@ public class SplashActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        ispaused = true;
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ispaused) {
-            jump();
-        }
-
-    }
 }

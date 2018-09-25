@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -1065,7 +1066,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             runOnUiThread(() -> {
                 Toast.makeText(SendActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
                 disconnectFromService();
-                onBackPressed();
+                new Handler().postDelayed(SendActivity.this::onBackPressed,4000);
             });
 
         }

@@ -44,9 +44,11 @@ import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -463,21 +465,26 @@ public class PivxWalletService extends Service{
 
     public synchronized void broadcastCoinSpendTransactionSync(SendRequest sendRequest){
         if (isSending.compareAndSet(false,true)) {
-            executor.submit(() -> {
+            log.info("broadcastCoinSpendTransactionSync " + sendRequest);
+            Future<Boolean> future = executor.submit(() -> {
                 String failMsg;
                 try {
+                    log.info("Starting spend process..");
+
                     Transaction tx = module.spendZpiv(PivxContext.CONTEXT, sendRequest, blockchainManager.getPeerGroup(), executor);
+
+                    log.info("Spend succeed");
 
                     Intent intent = new Intent(ACTION_NOTIFICATION);
                     intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_TX_SENT);
                     intent.putExtra(DATA_TRANSACTION_HASH, tx.getHash());
                     broadcastManager.sendBroadcast(intent);
 
-                    Intent openIntent = new Intent(this, WalletActivity.class);
+                    Intent openIntent = new Intent(PivxWalletService.this, WalletActivity.class);
                     openIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                             | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     openIntent.putExtra("Private", true);
-                    PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent,  PendingIntent.FLAG_CANCEL_CURRENT);
+                    PendingIntent openPendingIntent = PendingIntent.getActivity(PivxWalletService.this, 0, openIntent,  PendingIntent.FLAG_CANCEL_CURRENT);
 
                     Coin value = module.getValueSentFromMe(tx, false);
                     NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
@@ -490,28 +497,27 @@ public class PivxWalletService extends Service{
                     nm.notify(NOT_ZPIV_SENT_COMPLETED, mBuilder.build());
 
                     isSending.set(false);
-                    return;
+                    return true;
                 } catch (InsufficientMoneyException e) {
-                    log.info("Cannot spend coins", e);
+                    log.warn("############ - Cannot spend coins", e);
                     failMsg = e.getMessage();
                 } catch (CannotSpendCoinsException e) {
-                    log.info("Cannot spend coins", e);
+                    log.warn("############ - Cannot spend coins", e);
                     failMsg = e.getMessage();
                 } catch (Exception e){
-                    log.info("Cannot spend coins", e);
+                    log.warn("############ - Cannot spend coins", e);
                     failMsg = e.getMessage();
                 }
                 isSending.set(false);
-
 
                 Intent intent = new Intent(ACTION_NOTIFICATION);
                 intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_TX_FAIL);
                 broadcastManager.sendBroadcast(intent);
 
 
-                Intent openIntent = new Intent(this, WalletActivity.class);
+                Intent openIntent = new Intent(PivxWalletService.this, WalletActivity.class);
                 openIntent.putExtra("Private", true);
-                PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+                PendingIntent openPendingIntent = PendingIntent.getActivity(PivxWalletService.this, 0, openIntent, 0);
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentTitle("zPIV send failed")
@@ -522,7 +528,9 @@ public class PivxWalletService extends Service{
                         .setContentIntent(openPendingIntent);
                 nm.notify(NOT_ZPIV_SEND_FAILED, mBuilder.build());
 
+                return true;
             });
+            //Futures.
         }else {
             throw new IllegalStateException("Wallet already trying to spend a coin, wait until this process is finished please");
         }

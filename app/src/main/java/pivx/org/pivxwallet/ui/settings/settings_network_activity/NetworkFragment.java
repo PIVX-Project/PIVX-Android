@@ -50,9 +50,10 @@ public class NetworkFragment extends BaseRecyclerFragment<Peer> {
             protected void bindHolder(NetworkViewHolder holder, Peer data, int position) {
                 holder.address.setText(data.getAddress().toString());
                 holder.network_ip.setText(data.getPeerVersionMessage().subVer);
-                holder.protocol.setText("protocol:"+data.getPeerVersionMessage().clientVersion);
+                holder.protocol.setText("Prot "+data.getPeerVersionMessage().clientVersion + " - Ser " + data.getPeerVersionMessage().localServices);
                 holder.blocks.setText(data.getBestHeight()+" Blocks");
                 holder.speed.setText(data.getLastPingTime()+"ms");
+
             }
         };
     }
