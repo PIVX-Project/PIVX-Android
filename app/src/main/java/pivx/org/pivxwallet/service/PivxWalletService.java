@@ -87,6 +87,7 @@ import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_TX_FAIL;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_TX_SENT;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_BLOCKCHAIN_ALERT;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_COINS_RECEIVED;
+import static pivx.org.pivxwallet.service.IntentsConstants.NOT_SPENDING_PROCESS;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_ZPIV_SEND_FAILED;
 import static pivx.org.pivxwallet.service.IntentsConstants.NOT_ZPIV_SENT_COMPLETED;
 
@@ -469,6 +470,11 @@ public class PivxWalletService extends Service{
             Future<Boolean> future = executor.submit(() -> {
                 String failMsg;
                 try {
+
+                    // Notificate user about this process
+
+                    launchSpendProcessNotification();
+
                     log.info("Starting spend process..");
 
                     Transaction tx = module.spendZpiv(PivxContext.CONTEXT, sendRequest, blockchainManager.getPeerGroup(), executor);
@@ -497,6 +503,7 @@ public class PivxWalletService extends Service{
                     nm.notify(NOT_ZPIV_SENT_COMPLETED, mBuilder.build());
 
                     isSending.set(false);
+                    stopSpendProcessNotification();
                     return true;
                 } catch (InsufficientMoneyException e) {
                     log.warn("############ - Cannot spend coins", e);
@@ -509,6 +516,7 @@ public class PivxWalletService extends Service{
                     failMsg = e.getMessage();
                 }
                 isSending.set(false);
+                stopSpendProcessNotification();
 
                 Intent intent = new Intent(ACTION_NOTIFICATION);
                 intent.putExtra(INTENT_BROADCAST_DATA_TYPE, INTENT_TX_FAIL);
@@ -534,6 +542,23 @@ public class PivxWalletService extends Service{
         }else {
             throw new IllegalStateException("Wallet already trying to spend a coin, wait until this process is finished please");
         }
+    }
+
+    private void launchSpendProcessNotification() {
+        android.support.v4.app.NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getApplicationContext())
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("Spending zPIV process")
+                        .setAutoCancel(false)
+                        .setProgress(0, 0 , true)
+                        .setColor(ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
+                ;
+
+        nm.notify(NOT_SPENDING_PROCESS, mBuilder.build());
+    }
+
+    private void stopSpendProcessNotification(){
+        nm.cancel(NOT_SPENDING_PROCESS);
     }
 
 

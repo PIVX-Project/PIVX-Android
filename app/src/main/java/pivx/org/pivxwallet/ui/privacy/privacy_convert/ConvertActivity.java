@@ -1,12 +1,18 @@
 package pivx.org.pivxwallet.ui.privacy.privacy_convert;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +30,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.pivxj.core.Address;
 import org.pivxj.core.Coin;
 import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Transaction;
 import org.pivxj.wallet.SendRequest;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import global.PivxModuleImp;
 import global.PivxRate;
@@ -59,6 +68,9 @@ public class ConvertActivity extends BaseActivity {
     private TextView txt_value, text_value_bottom, text_value_bottom_local, txt_local_total, txt_unnavailable, txt_local_currency, txt_watch_only;
 
     private PivxRate pivxRate;
+
+    // Convert tx.
+    private Transaction transaction;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -104,10 +116,9 @@ public class ConvertActivity extends BaseActivity {
             btn_convert.setBackgroundResource(R.drawable.bg_button_border);
             btn_convert.setText(R.string.convert_piv);
             btn_convert.setTextColor(getResources().getColor(R.color.mainText));
-
         });
 
-        radio_zpiv.isChecked();
+        radio_zpiv.setChecked(true);
 
         radio_zpiv.setOnClickListener(v -> {
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
@@ -133,52 +144,22 @@ public class ConvertActivity extends BaseActivity {
                 Toast.makeText(v.getContext(), R.string.invalid_amount_value, Toast.LENGTH_SHORT).show();
                 return;
             }
-            Coin coin = Coin.parseCoin(mint);
             try {
-                final SendRequest sendRequest = pivxModule.createMint(coin);
-                DialogsUtil.buildSimpleTwoBtnsDialog(
-                        v.getContext(),
-                        "Mint process",
-                        String.format("You are just about to convert %s to zPIV", coin.toFriendlyString()),
-                        new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
-                            @Override
-                            public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
-                                new Thread(() -> {
-                                    String message;
-                                    try {
-                                        Transaction tx = sendRequest.tx;
-                                        pivxModule.commitTx(tx);
-                                        Intent intent = new Intent(ConvertActivity.this, PivxWalletService.class);
-                                        intent.setAction(ACTION_BROADCAST_TRANSACTION);
-                                        intent.putExtra(DATA_TRANSACTION_HASH, tx.getHash().getBytes());
-                                        startService(intent);
-                                        message = "Converting";
-                                    }catch (Exception e){
-                                        e.printStackTrace();
-                                        message = e.getMessage();
-                                    }
-                                    String finalMessage = message;
-                                    runOnUiThread(() -> {
-                                        Toast.makeText(ConvertActivity.this, finalMessage, Toast.LENGTH_SHORT).show();
-                                        onBackPressed();
-                                    });
-                                }).start();
-                                edit_amount.setText("");
-                                dialog.dismiss();
-                            }
 
-                            @Override
-                            public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
-                                dialog.dismiss();
-                            }
-                        }
-                )
-                .setImgAlertRes(R.drawable.ic_zero_coin)
-                .setRightBtnTextColor(ContextCompat.getColor(this,R.color.white))
-                .setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white))
-                .setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple))
-                .show();
+                Coin coin = Coin.parseCoin(mint);
+
+                // Check if it's a mint or a spend to re convert them to PIV
+                if (radio_piv.isChecked()){
+                    // Spend
+                    reconvertProcess(coin);
+                }else {
+                    // Mint
+                    mintProcess(coin);
+                }
             } catch (InsufficientMoneyException e) {
+                Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            } catch (Exception e){
+                LoggerFactory.getLogger(ConvertActivity.class).error("Exception on mint/convert", e);
                 Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -194,6 +175,88 @@ public class ConvertActivity extends BaseActivity {
         bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
 
         updateBalance();
+    }
+
+    private void reconvertProcess(Coin coin) throws InsufficientMoneyException {
+        // Internal address to receive the PIV
+        Address address = pivxModule.getReceiveAddress();
+        SendRequest sendRequest = pivxModule.createSpend(address, coin);
+        SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                this,
+                "zPIV Spend",
+                String.format("You are just about to convert %s zPIV to PIV again\n\nThis process will take a while, please be patient", coin.toPlainString()),
+                new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                    @Override
+                    public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                        transaction = sendRequest.tx;
+                        connectToService();
+                        clearFields();
+                        Toast.makeText(ConvertActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }
+        );
+        simpleTwoButtonsDialog.setImgAlertRes(R.drawable.ic_zero_coin);
+        simpleTwoButtonsDialog.setRightBtnTextColor(ContextCompat.getColor(this,R.color.white));
+        simpleTwoButtonsDialog.setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white));
+        simpleTwoButtonsDialog.setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple));
+        simpleTwoButtonsDialog.show();
+        return;
+    }
+
+    private void clearFields() {
+        edit_amount.setText("");
+    }
+
+    private void mintProcess(Coin coin) throws InsufficientMoneyException {
+        final SendRequest sendRequest = pivxModule.createMint(coin);
+        DialogsUtil.buildSimpleTwoBtnsDialog(
+                this,
+                "Mint process",
+                String.format("You are just about to convert %s to zPIV", coin.toFriendlyString()),
+                new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                    @Override
+                    public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                        new Thread(() -> {
+                            String message;
+                            try {
+                                Transaction tx = sendRequest.tx;
+                                pivxModule.commitTx(tx);
+                                Intent intent = new Intent(ConvertActivity.this, PivxWalletService.class);
+                                intent.setAction(ACTION_BROADCAST_TRANSACTION);
+                                intent.putExtra(DATA_TRANSACTION_HASH, tx.getHash().getBytes());
+                                startService(intent);
+                                message = "Converting";
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                message = e.getMessage();
+                            }
+                            String finalMessage = message;
+                            runOnUiThread(() -> {
+                                Toast.makeText(ConvertActivity.this, finalMessage, Toast.LENGTH_SHORT).show();
+                                onBackPressed();
+                            });
+                        }).start();
+                        edit_amount.setText("");
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }
+        )
+                .setImgAlertRes(R.drawable.ic_zero_coin)
+                .setRightBtnTextColor(ContextCompat.getColor(this,R.color.white))
+                .setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white))
+                .setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple))
+                .show();
     }
 
     @Override
@@ -244,7 +307,7 @@ public class ConvertActivity extends BaseActivity {
                             + " " + pivxRate.getCode()
             );
         } else {
-            txt_local_total.setText("0.00");
+            txt_local_total.setText("0.00 USD");
         }
     }
 
@@ -271,6 +334,59 @@ public class ConvertActivity extends BaseActivity {
             );
         } else {
             txt_local_currency.setText("0");
+        }
+    }
+
+
+    private PivxWalletService pivxWalletService;
+    private AtomicBoolean isServiceConnected = new AtomicBoolean(false);
+
+    // Service connection..
+    protected ServiceConnection mServerConn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder binder) {
+            Log.d("APP", "onServiceConnected");
+            pivxWalletService = ((PivxWalletService.PivxBinder)binder).getService();
+            isServiceConnected.set(true);
+            // Now that the service is connected, let's try to spend the coin
+            String msg;
+            try {
+                pivxWalletService.broadcastCoinSpendTransactionSync(
+                        SendRequest.forTx(transaction)
+                );
+                transaction = null;
+                msg = "Sending transaction..";
+            } catch (Exception e){
+                e.printStackTrace();
+                msg = "Cannot Spend coins, " + e.getMessage();
+            }
+            String finalMsg = msg;
+            runOnUiThread(() -> {
+                Toast.makeText(ConvertActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
+                disconnectFromService();
+                new Handler().postDelayed(ConvertActivity.this::onBackPressed,4000);
+            });
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d("APP", "onServiceDisconnected");
+            isServiceConnected.set(false);
+        }
+    };
+
+    public void connectToService() {
+        // mContext is defined upper in code, I think it is not necessary to explain what is it
+        Intent intent = new Intent(this, PivxWalletService.class);
+        if(!bindService(intent, mServerConn, Context.BIND_IMPORTANT)){
+            Toast.makeText(this, "Apparently the service is not running.." ,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void disconnectFromService() {
+        if (mServerConn != null && isServiceConnected.getAndSet(false)) {
+            unbindService(mServerConn);
         }
     }
 }

@@ -18,6 +18,7 @@ public class IntentsConstants {
     public static final int NOT_ZPIV_SENT_COMPLETED = 2;
     public static final int NOT_ZPIV_SEND_FAILED = 3;
     public static final int NOT_BLOCKCHAIN_ALERT = 15;
+    public static final int NOT_SPENDING_PROCESS = 16;
 
     //service
     public static final String ACTION_SCHEDULE_SERVICE = "schedule_service";

@@ -449,9 +449,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         if (transaction != null)
             outState.putSerializable(TX,transaction.unsafeBitcoinSerialize());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -1026,7 +1026,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
         startService(intent);
         Toast.makeText(SendActivity.this,R.string.sending_tx,Toast.LENGTH_LONG).show();
-        onBackPressed();
+
+        Intent backIntent = new Intent();
+        backIntent.putExtra("Private",isPrivate);
+        setResult(RESULT_OK, backIntent);
+        finish();
+
         //NavigationUtils.goBackToHome(this);
     }
 

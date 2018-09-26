@@ -125,7 +125,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         Coin fee = null;
         if (transactionWrapper.isStake()){
             fee = Coin.ZERO;
-        }else if(transactionWrapper.getTransaction().getFee()!=null) {
+        }else if(transactionWrapper.getTransaction().getFee() != null) {
             fee = transactionWrapper.getTransaction().getFee();
         }else {
             try {

@@ -155,12 +155,14 @@ public class PivxApplication extends Application implements ContextWrapper {
                 try {
                     startCore();
                 } catch (Exception e) {
-                    log.error("Exception on core start",e);
+                    log.error("Exception on core start shutting down app", e);
+                    System.exit(1);
                 }
             });
             executor.shutdown();
         } catch (Exception e){
             log.error("Exception on start",e);
+            System.exit(1);
         }
     }
 
