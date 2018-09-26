@@ -550,6 +550,7 @@ public class PivxWalletService extends Service{
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle("Spending zPIV process")
                         .setAutoCancel(false)
+                        .setOngoing(true)
                         .setProgress(0, 0 , true)
                         .setColor(ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
                 ;

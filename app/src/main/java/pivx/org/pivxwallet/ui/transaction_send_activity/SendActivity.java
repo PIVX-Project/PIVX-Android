@@ -71,6 +71,7 @@ import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
+import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
 import pivx.org.pivxwallet.ui.privacy.privacy_coin_control.PrivacyCoinControlActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.ChangeAddressActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.custom.CustomFeeActivity;
@@ -124,6 +125,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private static final int CUSTOM_INPUTS = 125;
     private static final int SEND_DETAIL = 126;
     private static final int CUSTOM_CHANGE_ADDRESS = 127;
+    private static final int PIN_RESULT_ZPIV = 128;
 
     private Boolean isPrivate = false;
     private View root;
@@ -376,8 +378,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //if (!isPrivate)
-        getMenuInflater().inflate(R.menu.send_menu,menu);
+        if (!isPrivate)
+            getMenuInflater().inflate(R.menu.send_menu,menu);
+        else{
+            getMenuInflater().inflate(R.menu.send_zpiv_menu,menu);
+        }
         return true;
     }
 
@@ -613,7 +618,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SCANNER_RESULT){
-            if (resultCode==RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 String address = "";
                 try {
                     address = data.getStringExtra(INTENT_EXTRA_RESULT);
@@ -713,6 +718,15 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     }
                     txt_change_address.setVisibility(View.VISIBLE);
                 }
+            }
+        }else if (requestCode == PIN_RESULT_ZPIV){
+            if (resultCode == RESULT_OK){
+                connectToService();
+                clearFields();
+                Toast.makeText(SendActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
+            }else {
+                // Spend cancelled
+                Toast.makeText(SendActivity.this,"Invalid pincode", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -826,10 +840,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                             @Override
                             public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
                                 transaction = sendRequest.tx;
-                                connectToService();
-                                clearFields();
-                                Toast.makeText(SendActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
+                                // Now open pin code screen
+                                // start pin
+                                Intent intent = new Intent(SendActivity.this, PincodeActivity.class);
+                                intent.putExtra(PincodeActivity.CHECK_PIN,true);
+                                startActivityForResult(intent, PIN_RESULT_ZPIV);
                             }
 
                             @Override
