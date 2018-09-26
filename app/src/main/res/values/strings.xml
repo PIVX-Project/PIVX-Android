@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">PIVX wallet</string>
+    <string name="app_name">PIVX Wallet</string>
     <string name="loading">Loading …</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
@@ -13,7 +13,7 @@
     <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="set_amount">Write amount to send</string>
+    <string name="set_amount">Enter amount to donate</string>
     <string name="set_amount_piv">PIV</string>
     <string name="set_amount_usd">Write amount</string>
     <string name="add_all">ADD ALL</string>
@@ -48,7 +48,7 @@
     <string name="scan_camera_permission_dialog_message">In order to scan QR codes, you need to grant permission to use the camera.</string>
     <string name="scan_result_title">Scanner result</string>
     <string name="scan_result_address_title">Address detected</string>
-    <string name="node_selection_message">You can select one of the node available or add one </string>
+    <string name="node_selection_message">Select an existing trusted node or create your own</string>
     <string name="select_node">Select Node</string>
 
     <string name="select">Select a Node</string>
@@ -93,7 +93,7 @@
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
     <string name="title_pivx_send">Amount send</string>
-    <string name="empty_message_address">You don\'t have any saved address yet.</string>
+    <string name="empty_message_address">No saved addresses</string>
     <string name="error_message">There seems to been an error\nwith your transaction</string>
     <string name="settings_change_trusted_node">Change trusted node</string>
     <string name="settings_reset_blockchain">Reset blockchain</string>
@@ -132,7 +132,7 @@
     <string name="restore_dialog_tag">restore dialog tag</string>
     <string name="restore_dialog_error">restore dialog error</string>
     <string name="settings_support">Support</string>
-    <string name="support_subject">PIVX wallet support</string>
+    <string name="support_subject">PIVX Wallet support</string>
     <string name="tutorial">Tutorial</string>
     <string name="copy">Copy</string>
     <string name="share">Share</string>
@@ -158,7 +158,7 @@
     <string name="btn_backspace">Back</string>
     <string name="pincode_saved">New pin saved</string>
     <string name="insert_old_pin">Insert your current PIN</string>
-    <string name="insert_new_pin">Insert new PIN</string>
+    <string name="insert_new_pin">Input new PIN</string>
     <string name="invalid_pincode">Invalid PIN</string>
     <string name="contact_already_exist">Contact address already exist</string>
     <string name="invalid_input_address">Invalid address</string>
@@ -173,8 +173,8 @@
     <string name="dialog_reset_blockchain_body">Your blockchain file is going to be reseted.\nThe synchronization could take a while.\n\nAre you sure?</string>
     <string name="reseting_blockchain">Reseting blockchain..</string>
     <string name="donations">Donations</string>
-    <string name="donation_message">Donations help with the maintenance and development of the app.\nThanks in advance.</string>
-    <string name="donation_title">I’m going to donate</string>
+    <string name="donation_message">Donations help fund maintenance\n and development of the app and are greatly appreciated.</string>
+    <string name="donation_title">I would like to donate</string>
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for your support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
@@ -240,7 +240,7 @@
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
     <string name="detail_no_available_inputs">No available inputs information</string>
     <string name="report_crash_title">Report crash</string>
-    <string name="crash_toast_text">PIVX wallet crash</string>
+    <string name="crash_toast_text">PIVX Wallet crash</string>
     <string name="backup_fail">Backup fail</string>
     <string name="no_peer_connection">No connection to the node</string>
     <string name="wallet_is_not_sync">Wallet is not sync, to be sure about your real balance please wait until the synchronization finish</string>
@@ -267,7 +267,7 @@
     <!-- Sweep wallet -->
     <!-- Sweep paper wallet means to redeem coins from a code usually printed on a paper -->
     <string name="title_activity_sweep_wallet">Sweep paper wallet</string>
-    <string name="sweep_wallet_info">You are about to transfer coins from a paper wallet to your PIVX wallet.\nAfter the transfer is complete, please avoid reusing the paper wallet for security reasons.\n\nSupported formats: WIF, BIP38, Mini private key.</string>
+    <string name="sweep_wallet_info">You are about to transfer coins from a paper wallet to your PIVX Wallet.\nAfter the transfer is complete, please avoid reusing the paper wallet for security reasons.\n\nSupported formats: WIF, BIP38, Mini private key.</string>
     <string name="sweep_wallet_key_title">Private key</string>
     <string name="sweep_wallet_key_password">Private key password</string>
     <string name="sweep_wallet_key_hint">type or scan a private key</string>
@@ -443,5 +443,11 @@
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="denomination">Denom</string>
+
+    <!-- Settings -->
+
+    <string name="settings_title_rates">Reference Currency</string>
+    <string name="settings_title_nodes">Node preferences</string>
+    <string name="settings_title_network">Network Monitor</string>
 
 </resources>

@@ -18,7 +18,7 @@ public class SettingsRatesActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.settings_rates, container);
-        setTitle("Rates");
+        setTitle(R.string.settings_title_rates);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

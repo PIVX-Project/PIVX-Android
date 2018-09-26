@@ -18,7 +18,7 @@ public class SettingsNetworkActivity extends BaseActivity {
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_network, container);
-        setTitle("Network Monitor");
+        setTitle(R.string.settings_title_network);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

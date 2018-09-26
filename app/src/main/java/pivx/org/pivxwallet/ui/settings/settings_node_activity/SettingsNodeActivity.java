@@ -22,7 +22,7 @@ public class SettingsNodeActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.fragment_start_node, container);
-        setTitle("Node preferences");
+        setTitle(R.string.settings_title_nodes);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btnSelectNode = (Button) root.findViewById(R.id.btnSelectNode);
