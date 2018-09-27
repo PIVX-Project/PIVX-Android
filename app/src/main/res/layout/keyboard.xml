@@ -209,7 +209,7 @@
             android:paddingBottom="18dp"
             android:gravity="center"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_keyboard_back"
+            android:src="@drawable/ic_keyboard_next"
             android:textIsSelectable="false" />
 
 

@@ -105,7 +105,7 @@ public class TutorialActivity extends AppCompatActivity implements View.OnClickL
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
-                btnNext.setText(getString(R.string.start));
+                btnNext.setText(getString(R.string.next));
                 btnSkip.setVisibility(View.GONE);
                 btn_node.setVisibility(View.VISIBLE);
             } else {

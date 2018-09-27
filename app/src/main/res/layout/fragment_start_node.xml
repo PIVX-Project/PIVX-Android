@@ -72,7 +72,7 @@
 
         <Button
             android:id="@+id/btnSelectNode"
-            android:text="@string/select_node"
+            android:text="@string/save"
             style="@style/ButtonPrimaryWhite"
             />
 

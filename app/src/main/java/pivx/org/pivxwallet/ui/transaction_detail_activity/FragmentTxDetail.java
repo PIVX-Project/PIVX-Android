@@ -59,6 +59,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     private TransactionWrapper transactionWrapper;
     private boolean isTxDetail = true;
     private boolean isZpivWallet = false;
+    private int myPosition ;
 
     @Nullable
     @Override
@@ -223,6 +224,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
             }
         };
         recycler_outputs.setAdapter(new BaseRecyclerAdapter<OutputUtil,DetailOutputHolder>(getActivity(),list,listItemListener) {
+            String myOutputs = getResources().getString(R.string.output);
             @Override
             protected DetailOutputHolder createHolder(View itemView, int type) {
                 return new DetailOutputHolder(itemView,type);
@@ -235,7 +237,8 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
 
             @Override
             protected void bindHolder(DetailOutputHolder holder, OutputUtil data, int position) {
-                holder.txt_num.setText("Position "+position);
+                myPosition = position + 1;
+                holder.txt_num.setText(myOutputs+ " "+myPosition);
                 holder.txt_address.setText(data.getLabel());
                 holder.txt_value.setText(data.getAmount().toFriendlyString());
             }

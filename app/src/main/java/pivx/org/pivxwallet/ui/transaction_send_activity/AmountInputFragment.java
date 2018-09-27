@@ -45,8 +45,9 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
         editCurrency = (EditText) root.findViewById(R.id.edit_amount_currency);
         title_local_currency = (TextView) root.findViewById(R.id.title_local_currency);
         title_amount_piv = (TextView) root.findViewById(R.id.title_amount_piv);
-        title_amount_piv.setText(getText(R.string.amount) + " "  + getText(R.string.set_amount_piv));
+        title_amount_piv.setText(getText(R.string.set_amount_piv));
         txt_local_currency = (TextView) root.findViewById(R.id.txt_local_currency);
+
         txtShowPiv = (TextView) root.findViewById(R.id.txt_show_piv) ;
         //Swap type of ammounts
         amountSwap = (ViewFlipper) root.findViewById( R.id.viewFlipper );
@@ -61,8 +62,8 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
 
         if (pivxRate != null) {
             txt_local_currency.setText("0 " + pivxRate.getCode());
-            editCurrency.setHint(pivxRate.getCode());
-            title_local_currency.setText(getText(R.string.amount) + " " + pivxRate.getCode());
+            editCurrency.setHint(pivxRate.getCode() + " " + getText(R.string.title_equivalent));
+            title_local_currency.setText(getText(R.string.amount) + "  (" + pivxRate.getCode() + " " + getText(R.string.title_equivalent)+ ")");
         }
         else {
             txt_local_currency.setText("0");

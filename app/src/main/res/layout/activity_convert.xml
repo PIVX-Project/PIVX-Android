@@ -55,7 +55,7 @@
 
         <TextView
             android:id="@+id/txt_currency_amount"
-            android:text = "@string/label_amount_convert"
+            android:text = "@string/label_amount_convert_piv"
             style="@style/Label"/>
 
         <EditText

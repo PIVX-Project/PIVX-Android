@@ -15,23 +15,24 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="set_amount">Enter amount to donate</string>
     <string name="set_amount_piv">PIV</string>
-    <string name="set_amount_usd">Write amount</string>
+    <string name="set_amount_usd">Enter amount here</string>
     <string name="add_all">ADD ALL</string>
     <string name="title_amount">Amount</string>
+    <string name="title_equivalent">Equivalent</string>
     <string name="title_address">Address</string>
-    <string name="title_name">Name</string>
+    <string name="title_name">Name or Label</string>
     <string name="title_description">Description</string>
     <string name="title_receiver_name">Receiver\'s name</string>
     <string name="title_date">Date</string>
-    <string name="set_address">Write address or label name</string>
-    <string name="add_address">Write address or label name</string>
-    <string name="set_name">Add name</string>
-    <string name="set_description">Add a description</string>
+    <string name="set_address">Add address</string>
+    <string name="add_address">Enter address here</string>
+    <string name="set_name">Enter name or label here</string>
+    <string name="set_description">Add description (optional)</string>
     <string name="btn_send">Send</string>
     <string name="btn_request">Request</string>
     <string name="payment_request">Payment Request</string>
     <string name="settings_subtitle_security">Security</string>
-    <string name="backup_wallet_message">Your backup will be encrypted with the password you choose and saved to an external storage drive.</string>
+    <string name="backup_wallet_message">Your backup will be encrypted with the password you enter below and saved to your device\'s default Download folder.</string>
     <string name="settings_subtitle_preference">Preference</string>
     <string name="settings_subtitle_about">About</string>
     <string name="restore_wallet">Restore wallet</string>
@@ -69,9 +70,9 @@
     <string name="ssl_port">SSL port</string>
     <string name="hint_ssl_port">Default SSL port</string>
     <string name="host">Host</string>
-    <string name="hint_host">Add a Host</string>
+    <string name="hint_host">Enter host here</string>
     <string name="tcp_port">TCP port</string>
-    <string name="hint_tcp_port">Default TCP port</string>
+    <string name="hint_tcp_port">Default TCP port if left blank</string>
     <string name="add_memo">Monthly payment</string>
     <string name="backup_create">Create Backup</string>
     <string name="transaction_hash">Transaction ID</string>
@@ -79,7 +80,7 @@
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
     <string name="backup_completed_text">Congratulations! Your wallet is backup is complete.\nIt has been saved in the folder at\n%s </string>
-    <string name="import_keys_dialog_message">Select one of your backups\nfiles loaded from\nfolder %s</string>
+    <string name="import_keys_dialog_message">Select a backup file to restore wallet and enter the password used to encrypt it. Backup files are saved in your device\'s default %s folder.</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
     <string name="import_keys_dialog_failure">Error importing backup file\n%s</string>
@@ -88,7 +89,7 @@
     <string name="restore_wallet_dialog_success">Wallet was restored</string>
     <string name="restore_wallet_dialog_success_replay">Your wallet was successfully restored. Its balance will be determined next. This will take some time.</string>
     <string name="unavailable">Amount unspendable:</string>
-    <string name="sending_tx">Sending transaction..</string>
+    <string name="sending_tx">Sending transaction</string>
     <string name="currency_message">Select your the local currency \n of your choice</string>
     <string name="title_fee">Fee</string>
     <string name="title_currency">Local Currency</string>
@@ -98,7 +99,7 @@
     <string name="settings_change_trusted_node">Change trusted node</string>
     <string name="settings_reset_blockchain">Reset blockchain</string>
     <string name="save">Save</string>
-    <string name="tutorial_message"> Private, Instant, Verified, Transaction\nis a privacy-focused, decentralized, open source cryptocurrency run by a global community comprised of creators, innovators, and technology enthusiasts.</string>
+    <string name="tutorial_message">Private Instant Verified Transaction (PIVX) is a decentralized and open-source privacy-focused cryptocurrency run by a global community of creators, innovators, and technology enthusiasts.</string>
     <!-- Tutorial -->
     <string name="next_words">Next 8 words</string>
     <string name="next">Next</string>
@@ -107,13 +108,13 @@
     <string name="restore">Restore</string>
     <string name="start">Start</string>
     <string name="title_slide1">PIVX is secure</string>
-    <string name="desc_slide1">First code with BIP38 Encryption and Decryption of Private Keys</string>
-    <string name="title_slide2">60 SECOND BLOCK TIME</string>
-    <string name="desc_slide2">Already very fast, PIVX transactions using SwiftX are instant with ZERO confirmation wait time required.</string>
+    <string name="desc_slide1">The first coin with BIP38 Encryption and Decryption of Private Keys</string>
+    <string name="title_slide2">6O SECOND BLOCK TIME</string>
+    <string name="desc_slide2">Standard transactions confirm in ~1 minute, and SwiftX transactions are confirmed instantly</string>
     <string name="title_slide3">Extremely secure and private</string>
-    <string name="desc_slide3">PIVX is aiming it’s sights on establishing the first truly anonymous crypto-currency.</string>
+    <string name="desc_slide3">PIVX is the most advanced Proof-of-Stake coin with Zerocoin Protocol for anonymous transactions.</string>
     <string name="title_slide4">Trusted nodes federation</string>
-    <string name="desc_slide4">Trusted nodes federation make light PoS wallets possible, you can rely on them or create your own trusted node!</string>
+    <string name="desc_slide4">The trusted nodes federation make light PoS wallets possible. Rely on existing nodes or create your own.</string>
     <string name="option_add_node">Add node</string>
     <string name="report_issue_dialog_description">Issue description</string>
     <string name="report_issue_dialog_collect_device_info">Append device information</string>
@@ -127,7 +128,7 @@
     <string name="report_issue_dialog_mail_intent_failed">Sending report failed.</string>
     <string name="report_issue_dialog_message_issue">Please describe your issue precisely enough to be reproduced.</string>
     <string name="report_issuea_dialog_title">Report issue</string>
-    <string name="invalid_inputs">Invalid inputs</string>
+    <string name="invalid_inputs">Invalid input</string>
     <string name="send_error_dialog_tag">send error dialog tag</string>
     <string name="restore_dialog_tag">restore dialog tag</string>
     <string name="restore_dialog_error">restore dialog error</string>
@@ -137,7 +138,7 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
-    <string name="security_message">Please write this in a safe place and in horizontal order, you\'ll need them to restore your wallet.\n\nDon\'t share this words to anybody. Be careful, whoever has this words is the owner of the coins!</string>
+    <string name="security_message">Write down the 24-word recovery seed phrase in the correct order. It is required to restore your wallet.\n Keep your mnemonic code safe and private. Anyone with it will be able to access your funds.</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
@@ -156,21 +157,22 @@
     <string name="number_nine">9</string>
     <string name="btn_clear">Clear</string>
     <string name="btn_backspace">Back</string>
-    <string name="pincode_saved">New pin saved</string>
-    <string name="insert_old_pin">Insert your current PIN</string>
+    <string name="pincode_saved">New PIN saved</string>
+    <string name="insert_old_pin">Input current PIN</string>
     <string name="insert_new_pin">Input new PIN</string>
     <string name="invalid_pincode">Invalid PIN</string>
     <string name="contact_already_exist">Contact address already exist</string>
     <string name="invalid_input_address">Invalid address</string>
     <string name="reminder_backup">Backup reminder</string>
-    <string name="reminder_backup_body">One of the most important parts of a mobile wallet is the backup, do you want to do it now?</string>
+    <string name="reminder_backup_body">It is highly recommended to create a backup of your wallet. Backup now?</string>
     <string name="button_ok">Ok</string>
+    <string name="btn_next">Next</string>
     <string name="backup_succed_dialog">backup_succed_dialog</string>
     <string name="error_no_connectivity_title">No internet connection</string>
     <string name="error_no_connectivity_body">The app is going to save your transaction until the connection back.\nDo you want to continue?</string>
     <string name="cannot_restore_wallet">Error, cannot restore wallet\nplease verify your password</string>
     <string name="dialog_reset_blockchain_title">Reset Blockchain</string>
-    <string name="dialog_reset_blockchain_body">Your blockchain file is going to be reseted.\nThe synchronization could take a while.\n\nAre you sure?</string>
+    <string name="dialog_reset_blockchain_body">Blockchain data will be reset.\nSynchronization may take some time.\nConfirm reset?</string>
     <string name="reseting_blockchain">Reseting blockchain..</string>
     <string name="donations">Donations</string>
     <string name="donation_message">Donations help fund maintenance\n and development of the app and are greatly appreciated.</string>
@@ -178,10 +180,10 @@
     <string name="btn_donate">Donate</string>
     <string name="donation_thanks">Sending donation.. Thanks for your support!</string>
     <string name="bad_pin_code">Invalid Pin</string>
-    <string name="restore_words_1">To restore your wallet you must write the 24, write your mnemonic code in the right order from number 1 to 8.</string>
+    <string name="restore_words_1">Enter your 24-word recovery seed phrase in the correct order to restore your wallet.</string>
     <string name="restore_from_words">Restore from words</string>
-    <string name="restore_words_2">Now from number 9 to 16</string>
-    <string name="restore_words_3">Now from number 17 to 24</string>
+    <string name="restore_words_2">Enter words 9-16</string>
+    <string name="restore_words_3">Enter words 17-24</string>
     <string name="fee_recommended">Recommended</string>
     <string name="fee_custom">Custom</string>
     <string name="confirmation_time">Confirmation time</string>
@@ -196,16 +198,16 @@
     <string name="invalid_last_amount">Invalid last address amount</string>
     <string name="inputs_explanation">Select coins to consume in the transaction</string>
     <string name="bad_address">Bad address</string>
-    <string name="invalid_amount_value">Invalid amount rate</string>
+    <string name="invalid_amount_value">Invalid amount entered</string>
     <string name="select_all">Select all</string>
     <string name="total_amount">Total:</string>
     <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
     <string name="tx_detail_amount">Total amount</string>
     <string name="tx_detail_inputs_title">Source coins</string>
     <string name="tx_detail_inputs">%d inputs</string>
-    <string name="txt_detail_confirmations">Confirmations amount</string>
+    <string name="txt_detail_confirmations">Number of confirmations</string>
     <string name="tx_detail_no_memo">No description</string>
-    <string name="tx_detail_addresses">Outputs</string>
+    <string name="tx_detail_addresses">Output(s)</string>
     <string name="custom_fee">Custom fee</string>
     <string name="coin_selection">Coin selection</string>
     <string name="set_default">Set default</string>
@@ -231,7 +233,7 @@
     <string name="delete_address_label_text">Label for address\n%s\nis going to be deleted.\n\nAre you sure?</string>
     <string name="address_label_deleted">Address label deleted.</string>
     <string name="no_available_inputs">You don\'t have any code to spend</string>
-    <string name="restore_mnemonic_screen_title">Restore Mnemonic</string>
+    <string name="restore_mnemonic_screen_title">Restore with mnemonic code</string>
     <string name="invalid_mnemonic_code">Invalid mnemonic code, please check every word again.</string>
     <string name="restore_mnemonic">Restoring wallet from mnemonic..</string>
     <string name="restore_mnemonic_title">Restore Mnemonic</string>
@@ -239,29 +241,33 @@
     <string name="invalid_host">Invalid host name</string>
     <string name="validate_multi_send_enabled">Blocked action, multi send enabled</string>
     <string name="detail_no_available_inputs">No available inputs information</string>
+    <string name="input">Input</string>
+    <string name="output">Output</string>
     <string name="report_crash_title">Report crash</string>
     <string name="crash_toast_text">PIVX Wallet crash</string>
     <string name="backup_fail">Backup fail</string>
-    <string name="no_peer_connection">No connection to the node</string>
+    <string name="no_peer_connection">No connection to any node</string>
     <string name="wallet_is_not_sync">Wallet is not sync, to be sure about your real balance please wait until the synchronization finish</string>
-    <string name="warn_sharing_pub_key">Sharing your public key will allow anybody to view your balance and transaction history.</string>
-    <string name="public_key">Public key</string>
+    <string name="warn_sharing_pub_key">Anyone with your extended public key can view your wallet balance and transactions, but not spend.</string>
+    <string name="public_key">Extended public key (xPub)</string>
     <string name="derivation_path">Derivation path (BIP32)</string>
     <string name="unknown_error_message">Error loading the xpub, please send a report</string>
     <string name="settings_export_pub_key">Export account</string>
     <string name="copy_key_message">Key copied</string>
     <string name="hint_paste_xpub">Paste your xpub here</string>
-    <string name="explanation_import_xpub">Make your wallet a Watch Only Wallet importing your xpub from another wallet.\n\nPeople using this device are going to see the full balance but not be able to spend coins.</string>
+    <string name="explanation_import_xpub">Import your extended public key (xPub) to make your wallet Watch-only.\n\nWatch-only wallets will display balance and transaction history but not allow spending.</string>
     <string name="import_xpub">Import</string>
-    <string name="settings_import_xpub">Watch only mode</string>
-    <string name="screen_title_watch_only">Watch Only</string>
-    <string name="watch_only_mode_activated">Watch only mode activated</string>
+    <string name="settings_import_xpub">Watch-only mode</string>
+    <string name="screen_title_watch_only">Watch-only</string>
+    <string name="watch_only_mode_activated">Watch-only mode activated</string>
     <string name="watch_only_mode_activated_text">Please wait until the synchronization is completed, could take a while be patient.</string>
     <string name="error_importing_xpub">Please check the key or send an error report.</string>
     <string name="error_importing_xpub_title">Error importing xpub</string>
     <string name="error_watch_only_mode">Action is not possible on watch only mode</string>
     <string name="export_wallet">Export Account</string>
     <string name="commit_tx_fail">Commit transaction fail, please send the error report</string>
+    <string name="amount_error">Amount must be higher than 0</string>
+    <string name="title_add_node">"Add Node"</string>
 
 
     <!-- Sweep wallet -->
@@ -351,8 +357,8 @@
     <string name="error_generic">Error occurred while performing action</string>
     <string name="old_wallet_version">Old wallet version</string>
     <string name="advance_restore">Advanced restore</string>
-    <string name="restore_bip32_warning">If your mnemonic code was created by this wallet on a version lower than %s please check the next box to restore your coins correctly.</string>
-    <string name="fee_included">Fee is not included on the total amount</string>
+    <string name="restore_bip32_warning">If your mnemonic code was created by version 1.02 or lower PIVX wallet, check this box to restore wallet properly.</string>
+    <string name="fee_included">Fee is not included in the amount</string>
     <string name="title_blockstore_error">Error</string>
     <string name="message_blockstore_error">Blockchain store corrupted\n\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
     <string name="upgrade_wallet">Upgrade Wallet</string>
@@ -370,17 +376,18 @@
     <string name="option_coin_selection">Coin selection</string>
     <string name="change_address_remember">Remember selection</string>
     <string name="my_address">My Address</string>
-    <string name="settings_rates">Currency Rate</string>
+    <string name="settings_rates">Reference Currency</string>
     <string name="rate_selected">Rate selected</string>
     <string name="fab_send">Send</string>
     <string name="fab_request">Request</string>
-    <string name="scan_request">Scan Request</string>
+    <string name="scan_request">Scan QR Code</string>
     <string name="payment_request_received">Request Received</string>
     <string name="description">Description</string>
     <string name="amount">Amount</string>
     <string name="restoring_wallet">Restoring wallet..</string>
-    <string name="no_transactions">You don\'t have any transfers yet.</string>
+    <string name="no_transactions">No transaction history</string>
     <string name="sync_in_progress">The wallet is out of sync, some transactions may be missing.</string>
+    <string name="title_new_address">New Address</string>
 
     <!-- Restore words -->
 
@@ -412,15 +419,16 @@
 
 
     <!-- Privacy -->
-    <string name="nav_privacy">Privacy</string>
-    <string name="title_privacy">Privacy</string>
+    <string name="nav_privacy">Private Transactions</string>
+    <string name="title_privacy">Private Transactions</string>
     <string name="btn_convert">Mint</string>
     <string name="title_convert">Mint</string>
-    <string name="convert_piv">Convert to PIV</string>
-    <string name="convert_zpiv">Mint</string>
+    <string name="convert_piv">Mint PIV</string>
+    <string name="convert_zpiv">Mint zPIV</string>
     <string name="btn_send_zpiv">Send zPIV</string>
     <string name="btn_send_piv">Send PIV</string>
-    <string name="label_amount_convert">Amount to convert</string>
+    <string name="label_amount_convert_piv">Amount of zPIV to convert into PIV </string>
+    <string name="label_amount_convert_zpiv">Amount of PIV to convert into zPIV </string>
     <string name="message_convert_zpiv">PIV can be converted to zPIV, this new zPIV have no transaction history. Sending zPIV is 100% anonymous and untraceable</string>
     <string name="coin_control">Coin Control</string>
     <string name="coin_balance">Balance</string>
@@ -434,14 +442,15 @@
     <string name="demon1000">Demon. 1000 </string>
     <string name="demon5000">Demon. 5000  </string>
     <string name="title_send_private">Send private transaction</string>
-    <string name="empty_zpiv_transactions">You don\'t have zPIV transactions</string>
+    <string name="empty_zpiv_transactions">No zPIV transactions</string>
     <string name="zc_mint">Mint</string>
+    <string name="zerocoin_mint">Zerocoin Mint</string>
     <string name="title_transaction_detail">Transaction Detail</string>
     <string name="export_zcoin">Export zPIV</string>
     <string name="title_export_zpiv">Export zPIV</string>
     <string name="title_spent">Spent</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="denomination">Denom</string>
 
     <!-- Settings -->
@@ -449,5 +458,7 @@
     <string name="settings_title_rates">Reference Currency</string>
     <string name="settings_title_nodes">Node preferences</string>
     <string name="settings_title_network">Network Monitor</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_pincode">Pincode</string>
 
 </resources>

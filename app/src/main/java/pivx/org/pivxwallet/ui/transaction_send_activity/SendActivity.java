@@ -220,8 +220,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         txt_local_currency.setText("0 " + pivxRate.getCode());
-        title_amount_local.setText(getText(R.string.amount) + " " + pivxRate.getCode());
-        editCurrency.setHint(pivxRate.getCode());
+
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -296,7 +295,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
-
+        editCurrency.setHint(pivxRate.getCode() + " " + getText(R.string.title_equivalent));
+        title_amount_local.setText(getText(R.string.amount) + "  (" + pivxRate.getCode() + " " + getText(R.string.title_equivalent)+ ")");
         // Load data if exists
         String address = intent.getStringExtra(INTENT_ADDRESS);
         if (address != null){
@@ -799,8 +799,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             // first check amount
             String amountStr = getAmountStr();
-            if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
-            if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException("Amount not valid");
+            if (amountStr.length() < 1) throw new IllegalArgumentException(String.valueOf(R.string.amount_error));
+            if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException(String.valueOf(R.string.amount_error));
             if (amountStr.charAt(0)=='.'){
                 amountStr = "0"+amountStr;
             }

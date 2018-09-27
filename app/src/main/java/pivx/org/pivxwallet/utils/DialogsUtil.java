@@ -102,7 +102,7 @@ public class DialogsUtil {
         final EditText editHost = (EditText) dialogView.findViewById(R.id.hostText);
         final EditText editTcp = (EditText) dialogView.findViewById(R.id.tcpText);
         final EditText editSsl = (EditText) dialogView.findViewById(R.id.sslText);
-        nodeDialog.setTitle("Add your Node");
+        nodeDialog.setTitle(R.string.title_add_node);
         nodeDialog.setView(dialogView);
         nodeDialog.setPositiveButton("Add Node", new DialogInterface.OnClickListener() {
 

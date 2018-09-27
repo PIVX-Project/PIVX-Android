@@ -137,7 +137,7 @@ public class InputsFragment extends BaseRecyclerFragment<InputsFragment.InputSel
     protected BaseRecyclerAdapter<InputSelectionWrapper, ? extends BaseRecyclerViewHolder> initAdapter() {
         adapter = new BaseRecyclerAdapter<InputSelectionWrapper, BaseRecyclerViewHolder>(getActivity()) {
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a");
 
             @Override
             protected BaseRecyclerViewHolder createHolder(View itemView, int type) {

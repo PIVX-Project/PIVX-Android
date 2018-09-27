@@ -60,8 +60,8 @@ public class DonateActivity extends BaseDrawerActivity {
             if (!pivxModule.chechAddress(addressStr))
                 throw new IllegalArgumentException("Address not valid");
             String amountStr = edit_amount.getText().toString();
-            if (amountStr.length() < 1) throw new IllegalArgumentException("Amount not valid");
-            if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException("Amount not valid");
+            if (amountStr.length() < 1) throw new IllegalArgumentException(String.valueOf(R.string.amount_error));
+            if (amountStr.length()==1 && amountStr.equals(".")) throw new IllegalArgumentException(String.valueOf(R.string.amount_error));
             if (amountStr.charAt(0)=='.'){
                 amountStr = "0"+amountStr;
             }

@@ -59,7 +59,7 @@
 
         <Button
             android:id="@+id/btn_continue"
-            android:text="@string/button_ok"
+            android:text="@string/btn_next"
             style="@style/ButtonPrimary" />
 
     </LinearLayout>

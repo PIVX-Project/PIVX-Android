@@ -27,7 +27,6 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private VideoView videoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,32 +35,7 @@ public class LoadingActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.loading_activity);
-
-        videoView = (VideoView) findViewById(R.id.videoView);
-        Uri video;
-        video = Uri.parse("android.resource://" + getPackageName() + "/"
-                + R.raw.loading_video);
-
-        if (videoView != null) {
-            videoView.setVideoURI(video);
-            videoView.setZOrderOnTop(true);
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            android.widget.FrameLayout.LayoutParams params = (android.widget.FrameLayout.LayoutParams) videoView.getLayoutParams();
-            params.width =  metrics.widthPixels;
-            params.height = metrics.heightPixels;
-            params.leftMargin = 0;
-            videoView.setLayoutParams(params);
-            videoView.setOnPreparedListener(mp -> {
-                mp.setLooping(true);
-            });
-            videoView.setOnErrorListener((mediaPlayer, i, i1) -> {
-                videoView.setVisibility(View.GONE);
-                return true;
-            });
-            videoView.start();
-        }
+        setContentView(R.layout.activity_loading);
 
 
         start(TimeUnit.SECONDS.toMillis(4));

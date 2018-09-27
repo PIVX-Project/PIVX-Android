@@ -62,7 +62,7 @@ public class ConvertActivity extends BaseActivity {
     private RadioButton radio_zpiv, radio_piv;
     private Button btn_convert;
     private EditText edit_amount;
-    private TextView txt_amount_local;
+    private TextView txt_amount_local, txt_currency_amount;
 
     // header
     private TextView txt_value, text_value_bottom, text_value_bottom_local, txt_local_total, txt_unnavailable, txt_local_currency, txt_watch_only;
@@ -92,6 +92,7 @@ public class ConvertActivity extends BaseActivity {
 
         edit_amount = (EditText) view.findViewById(R.id.edit_amount);
         txt_amount_local = (TextView) view.findViewById(R.id.txt_amount_local);
+        txt_currency_amount = (TextView) view.findViewById(R.id.txt_currency_amount);
         bg_balance = (RelativeLayout) headerView.findViewById(R.id.bg_balance);
         bg_balance.setBackgroundColor(ContextCompat.getColor(this, R.color.darkPurple));
         layout_blocked = (LinearLayout) headerView.findViewById(R.id.layout_blocked);
@@ -111,7 +112,8 @@ public class ConvertActivity extends BaseActivity {
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(getResources().getColor(R.color.bgPurple));
             }
-            setTitle(R.string.convert_piv);
+            setTitle(R.string.zc_mint);
+            txt_currency_amount.setText(R.string.label_amount_convert_piv);
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
             btn_convert.setBackgroundResource(R.drawable.bg_button_border);
             btn_convert.setText(R.string.convert_piv);
@@ -129,6 +131,7 @@ public class ConvertActivity extends BaseActivity {
                 window.setStatusBarColor(getResources().getColor(R.color.darkPurple));
             }
             setTitle(R.string.convert_zpiv);
+            txt_currency_amount.setText(R.string.label_amount_convert_zpiv);
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
             btn_convert.setBackgroundResource(R.drawable.bg_button_purple);
             btn_convert.setTextColor(getResources().getColor(R.color.white));
@@ -184,7 +187,7 @@ public class ConvertActivity extends BaseActivity {
         SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                 this,
                 "zPIV Spend",
-                String.format("You are just about to convert %s zPIV to PIV again\n\nThis process will take a while, please be patient", coin.toPlainString()),
+                String.format("You are just about to convert %s zPIV to PIV again\n\nThis may take some time", coin.toPlainString()),
                 new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
                     @Override
                     public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
@@ -205,6 +208,8 @@ public class ConvertActivity extends BaseActivity {
         simpleTwoButtonsDialog.setRightBtnTextColor(ContextCompat.getColor(this,R.color.white));
         simpleTwoButtonsDialog.setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white));
         simpleTwoButtonsDialog.setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple));
+        simpleTwoButtonsDialog.setLeftBtnText(R.string.button_cancel);
+        simpleTwoButtonsDialog.setRightBtnText(R.string.btn_send);
         simpleTwoButtonsDialog.show();
         return;
     }

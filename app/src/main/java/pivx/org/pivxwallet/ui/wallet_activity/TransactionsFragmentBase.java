@@ -142,7 +142,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }
 
                 if (data.isZcMint()){
-                    holder.title.setText(R.string.zc_mint);
+                    holder.title.setText(R.string.zerocoin_mint);
                 }else
                     holder.title.setText(getAddressOrContact(pivxModule,data));
 

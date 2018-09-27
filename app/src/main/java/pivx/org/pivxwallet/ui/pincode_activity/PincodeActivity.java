@@ -51,7 +51,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
         }
 
         getLayoutInflater().inflate(R.layout.fragment_pincode, container);
-        setTitle("Create Pin");
+        setTitle(R.string.title_pincode);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

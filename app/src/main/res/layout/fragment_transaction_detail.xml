@@ -109,6 +109,7 @@
                 android:textSize = "16sp" />
 
             <TextView
+                android:id="@+id/title_outputs"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:text = "@string/tx_detail_addresses"

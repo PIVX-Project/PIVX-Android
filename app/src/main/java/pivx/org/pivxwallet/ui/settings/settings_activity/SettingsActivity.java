@@ -61,7 +61,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         getLayoutInflater().inflate(R.layout.fragment_settings, container);
-        setTitle("Settings");
+        setTitle(R.string.title_settings);
 
         TextView app_version = (TextView) findViewById(R.id.app_version);
         app_version.setText(BuildConfig.VERSION_NAME);
@@ -69,7 +69,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         txt_network_info = (TextView) findViewById(R.id.txt_network_info);
 
         textAbout = (TextView)findViewById(R.id.text_about);
-        String text = "Made by<br> <font color=#5c4c7c>Furszy</font> <br>(c) PIVX Community";
+        String text = "Made by<br> <font color=#5c4c7c>Furszy</font> <br>PIVX Community © 2018";
         textAbout.setText(Html.fromHtml(text));
         // Open Backup Wallet
         buttonBackup = (Button) findViewById(R.id.btn_backup_wallet);
@@ -132,7 +132,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                 Html.fromHtml(
                         "Network<br><font color=#5c4c7c>"+pivxModule.getConf().getNetworkParams().getId()+
                                 "</font><br>" +
-                                "Height<br><font color=#5c4c7c>"+pivxModule.getChainHeight()+"</font><br>" +
+                                "Block Height<br><font color=#5c4c7c>"+pivxModule.getChainHeight()+"</font><br>" +
                                 "Protocol Version<br><font color=#5c4c7c>"+
                                 pivxModule.getProtocolVersion()+"</font>"
 
