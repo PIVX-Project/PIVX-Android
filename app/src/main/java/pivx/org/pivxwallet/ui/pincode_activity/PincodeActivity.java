@@ -62,6 +62,10 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
         keyboardFragment = (KeyboardFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_keyboard);
         keyboardFragment.setOnKeyListener(this);
         keyboardFragment.setTextButtonsColor(Color.WHITE);
+        int clearID = getResources().getIdentifier(String.valueOf(R.drawable.ic_keyboard_clear_white), "drawable", getPackageName());
+        int nextID = getResources().getIdentifier(String.valueOf(R.drawable.ic_keyboard_next_white), "drawable", getPackageName());
+        keyboardFragment.setNextButton(nextID);
+        keyboardFragment.setBackButton(clearID);
     }
 
     private void goNext() {

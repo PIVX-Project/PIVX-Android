@@ -200,6 +200,7 @@
             android:textSize="24sp"
             android:text="@string/number_zero"
             android:textIsSelectable="false" />
+
         <ImageView
             android:id="@+id/key_backspace"
             android:layout_weight="1"

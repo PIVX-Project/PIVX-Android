@@ -103,7 +103,7 @@ public class ConvertActivity extends BaseActivity {
 
         radio_zpiv = (RadioButton) findViewById(R.id.radio_zpiv);
         radio_piv = (RadioButton) findViewById(R.id.radio_piv);
-
+        radio_zpiv.setChecked(true);
         radio_piv.setOnClickListener(v -> {
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
                     .getColor(R.color.bgPurple)));
@@ -120,7 +120,7 @@ public class ConvertActivity extends BaseActivity {
             btn_convert.setTextColor(getResources().getColor(R.color.mainText));
         });
 
-        radio_zpiv.setChecked(true);
+
 
         radio_zpiv.setOnClickListener(v -> {
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources()
@@ -259,6 +259,8 @@ public class ConvertActivity extends BaseActivity {
         )
                 .setImgAlertRes(R.drawable.ic_zero_coin)
                 .setRightBtnTextColor(ContextCompat.getColor(this,R.color.white))
+                .setLeftBtnText(R.string.button_cancel)
+                .setRightBtnText(R.string.btn_send)
                 .setLeftBtnTextColor(ContextCompat.getColor(this, R.color.white))
                 .setContainerBtnsBackgroundColor(ContextCompat.getColor(this,R.color.bgPurple))
                 .show();

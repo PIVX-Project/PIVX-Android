@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.settings.settings_pincode_activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ public class KeyboardFragment extends BaseFragment implements View.OnClickListen
     private TextView key_8;
     private TextView key_9;
     private ImageView key_clear;
-    private ImageView key_back;
+    private ImageView key_next;
 
     private onKeyListener onKeyListener;
 
@@ -92,8 +93,8 @@ public class KeyboardFragment extends BaseFragment implements View.OnClickListen
         key_9.setOnClickListener(this);
         key_clear = (ImageView) root.findViewById(R.id.key_clear);
         key_clear.setOnClickListener(this);
-        key_back = (ImageView) root.findViewById(R.id.key_backspace);
-        key_back.setOnClickListener(this);
+        key_next = (ImageView) root.findViewById(R.id.key_backspace);
+        key_next.setOnClickListener(this);
         return root;
     }
 
@@ -146,6 +147,18 @@ public class KeyboardFragment extends BaseFragment implements View.OnClickListen
         key_7.setTextColor(color);
         key_8.setTextColor(color);
         key_9.setTextColor(color);
+    }
+
+    public void setNextButton(int icon) {
+        Drawable myDrawable = getResources().getDrawable(icon);
+        key_next.setImageDrawable(myDrawable);
+
+    }
+
+    public void setBackButton(int icon) {
+        Drawable myDrawable = getResources().getDrawable(icon);
+        key_clear.setImageDrawable(myDrawable);
+
     }
 
 }

@@ -51,18 +51,39 @@
                 android:textColor = "@color/subtitle"
                 android:textSize = "14sp" />
 
-            <TextView
-                android:id = "@+id/txt_amount"
-                android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:layout_marginBottom="20dp"
-                android:padding="8dp"
-                android:textIsSelectable="true"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/transaction_inputs"
-                android:text = "Error"
-                android:textStyle="bold"
-                android:textColor = "@color/mainText"
-                android:textSize = "18sp" />
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id = "@+id/txt_amount"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:padding="8dp"
+                    android:textIsSelectable="true"
+                    android:text = "Error"
+                    android:layout_alignParentLeft="true"
+                    android:textStyle="bold"
+                    android:textColor = "@color/mainText"
+                    android:textSize = "18sp" />
+
+                <TextView
+                    android:id = "@+id/txt_amount_local"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:padding="8dp"
+                    android:gravity="right"
+                    android:textIsSelectable="true"
+                    android:layout_alignParentRight="true"
+                    android:text = "Error"
+                    android:textColor = "@color/mainText"
+                    android:textSize = "18sp" />
+
+
+            </RelativeLayout>
+
 
 
             <TextView
@@ -225,7 +246,6 @@
                 android:layout_height = "wrap_content"
                 android:layout_marginBottom="20dp"
                 android:padding="8dp"
-                android:textStyle="bold"
                 android:background="@drawable/transaction_inputs"
                 tools:text = "@string/tx_detail_inputs"
                 android:textColor = "@color/mainText"

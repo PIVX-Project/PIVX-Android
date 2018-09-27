@@ -293,7 +293,7 @@ public class PivxWalletService extends Service{
                             .setContentTitle("PIV received!")
                             .setContentText("Coins received for a value of " + notificationAccumulatedAmountTemp.toFriendlyString())
                             .setAutoCancel(true)
-                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setSmallIcon(R.drawable.ic_push_notification)
                             .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
                             .setDeleteIntent(deleteIntent)
                             .setContentIntent(openPendingIntent);
@@ -497,7 +497,7 @@ public class PivxWalletService extends Service{
                             .setContentTitle("zPIV send completed")
                             .setContentText(String.format("Amount %s", value.toFriendlyString()))
                             .setAutoCancel(true)
-                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setSmallIcon(R.drawable.ic_push_notification)
                             .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
                             .setContentIntent(openPendingIntent);
                     nm.notify(NOT_ZPIV_SENT_COMPLETED, mBuilder.build());
@@ -531,7 +531,7 @@ public class PivxWalletService extends Service{
                         .setContentTitle("zPIV send failed")
                         .setContentText("Please try again in some minutes")
                         .setAutoCancel(true)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_push_notification)
                         .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
                         .setContentIntent(openPendingIntent);
                 nm.notify(NOT_ZPIV_SEND_FAILED, mBuilder.build());
@@ -547,7 +547,7 @@ public class PivxWalletService extends Service{
     private void launchSpendProcessNotification() {
         android.support.v4.app.NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext())
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_push_notification)
                         .setContentTitle("Spending zPIV process")
                         .setAutoCancel(false)
                         .setOngoing(true)
@@ -675,7 +675,7 @@ public class PivxWalletService extends Service{
             if(showNotif) {
                 android.support.v4.app.NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(getApplicationContext())
-                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setSmallIcon(R.drawable.ic_push_notification)
                                 .setContentTitle("Alert")
                                 .setContentText(stringBuilder.toString())
                                 .setAutoCancel(true)

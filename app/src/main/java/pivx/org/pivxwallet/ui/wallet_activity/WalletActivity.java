@@ -153,7 +153,7 @@ public class WalletActivity extends BaseDrawerActivity {
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
             fab_add.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
             fab_add.setLabelText(getResources().getString(R.string.btn_send_zpiv));
-            fab_add.setImageDrawable(getDrawable(R.drawable.ic_send_action));
+            fab_add.setImageDrawable(getDrawable(R.drawable.ic_fab_send));
             fab_request.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
         } else {
             setTitle(R.string.my_wallet);
@@ -361,7 +361,7 @@ public class WalletActivity extends BaseDrawerActivity {
                                     intent.putExtra(INTENT_MEMO,memo);
                                     startActivity(intent);
                                 });
-                            dialogFragment.setImgAlertRes(R.drawable.ic_send_action);
+                            dialogFragment.setImgAlertRes(R.drawable.ic_fab_send);
                             dialogFragment.setAlignBody(SimpleTextDialog.Align.LEFT);
                             dialogFragment.setImgAlertRes(R.drawable.ic_fab_recieve);
                             dialogFragment.show(getFragmentManager(),"payment_request_dialog");

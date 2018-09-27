@@ -203,8 +203,10 @@
     <string name="total_amount">Total:</string>
     <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
     <string name="tx_detail_amount">Total amount</string>
-    <string name="tx_detail_inputs_title">Source coins</string>
-    <string name="tx_detail_inputs">%d inputs</string>
+    <string name="tx_detail_inputs_title">Input(s)</string>
+    <string name="tx_detail_input_title">Input</string>
+    <string name="tx_detail_input">%d Input</string>
+    <string name="tx_detail_inputs">%d Inputs</string>
     <string name="txt_detail_confirmations">Number of confirmations</string>
     <string name="tx_detail_no_memo">No description</string>
     <string name="tx_detail_addresses">Output(s)</string>
@@ -443,7 +445,7 @@
     <string name="demon5000">Demon. 5000  </string>
     <string name="title_send_private">Send private transaction</string>
     <string name="empty_zpiv_transactions">No zPIV transactions</string>
-    <string name="zc_mint">Mint</string>
+    <string name="zc_mint">Mint PiV</string>
     <string name="zerocoin_mint">Zerocoin Mint</string>
     <string name="title_transaction_detail">Transaction Detail</string>
     <string name="export_zcoin">Export zPIV</string>

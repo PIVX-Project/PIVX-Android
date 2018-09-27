@@ -119,7 +119,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
 
                 if (data.isSent()){
-                    holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
+                    holder.imageView.setImageResource(R.drawable.ic_transaction_send);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
                 }else if (data.isZcSpend()) {
                     if (data.isPrivate()){

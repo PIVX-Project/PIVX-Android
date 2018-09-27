@@ -14,13 +14,12 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="#fff"
             android:orientation="vertical"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/img_qr"
@@ -28,19 +27,22 @@
                 android:layout_height="225dp"
                 android:layout_gravity="center" />
 
-            <TextView
-                android:id="@+id/txt_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingTop="9dp"
-                android:paddingEnd="9dp"
-                android:paddingStart="9dp"
-                android:textSize="14sp"
-                tools:text="1p2csad3113rgdv223r31edwqsa213dw213caxsad23" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:paddingTop="9dp"
+            android:paddingEnd="9dp"
+            android:paddingStart="9dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            tools:text="1p2csad3113rgdv223r31edwqsa213dw213caxsad23" />
 
 
     </LinearLayout>

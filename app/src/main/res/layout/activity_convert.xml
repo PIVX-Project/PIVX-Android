@@ -55,7 +55,7 @@
 
         <TextView
             android:id="@+id/txt_currency_amount"
-            android:text = "@string/label_amount_convert_piv"
+            android:text = "@string/label_amount_convert_zpiv"
             style="@style/Label"/>
 
         <EditText
@@ -116,7 +116,7 @@
 
         <Button
             android:id="@+id/btn_convert"
-            android:text="@string/btn_convert"
+            android:text="@string/convert_zpiv"
             style="@style/ButtonPrimary"/>
 
 

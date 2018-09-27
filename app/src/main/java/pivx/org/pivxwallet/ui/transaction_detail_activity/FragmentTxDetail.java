@@ -19,10 +19,12 @@ import org.pivxj.core.TransactionOutput;
 import org.pivxj.script.Script;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import global.PivxRate;
 import host.furszy.zerocoinj.wallet.MultiWallet;
 import pivx.org.pivxwallet.R;
 import global.AddressLabel;
@@ -54,18 +56,19 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
     private TextView txt_amount;
     private TextView txt_date;
     private RecyclerView recycler_outputs;
-    private TextView txt_memo, txt_fee, txt_inputs, txt_date_title, txt_confirmations, container_confirmations, txt_tx_weight, txt_is_tx_spent;
+    private TextView txt_memo, txt_fee, txt_inputs, txt_date_title, txt_confirmations, container_confirmations, txt_tx_weight, txt_is_tx_spent, txt_amount_local;
 
     private TransactionWrapper transactionWrapper;
     private boolean isTxDetail = true;
     private boolean isZpivWallet = false;
     private int myPosition ;
+    private PivxRate pivxRate;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_transaction_detail,container,false);
-
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
         Intent intent = getActivity().getIntent();
         if (intent != null){
             transactionWrapper = (TransactionWrapper) intent.getSerializableExtra(TX_WRAPPER);
@@ -88,6 +91,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         }
         txt_transaction_id = (TextView) root.findViewById(R.id.txt_transaction_id);
         txt_amount = (TextView) root.findViewById(R.id.txt_amount);
+        txt_amount_local = (TextView) root.findViewById(R.id.txt_amount_local);
         txt_date = (TextView) root.findViewById(R.id.txt_date);
         txt_memo = (TextView) root.findViewById(R.id.txt_memo);
         txt_fee = (TextView) root.findViewById(R.id.txt_fee);
@@ -123,6 +127,17 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         }
         txt_transaction_id.setText(transactionWrapper.getTransaction().getHashAsString());
         txt_amount.setText(transactionWrapper.getAmount().toFriendlyString());
+
+        if (pivxRate != null) {
+            txt_amount_local.setText(
+                    pivxApplication.getCentralFormats().format(
+                            new BigDecimal(transactionWrapper.getAmount().getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                    )
+                            + " " + pivxRate.getCode()
+            );
+        } else {
+            txt_amount_local.setText("0.00");
+        }
         Coin fee = null;
         if (transactionWrapper.isStake()){
             fee = Coin.ZERO;
@@ -167,7 +182,14 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
                         isZpivWallet ? MultiWallet.WalletType.ZPIV : MultiWallet.WalletType.PIV
                 ) ? R.string.yes : R.string.no);
 
-        txt_inputs.setText(getString(R.string.tx_detail_inputs,transactionWrapper.getTransaction().getInputs().size()));
+        if (transactionWrapper.getTransaction().getInputs().size() > 1) {
+            txt_inputs.setText(getString(R.string.tx_detail_inputs,transactionWrapper.getTransaction().getInputs().size()));
+        } else {
+
+            txt_inputs.setText(getString(R.string.tx_detail_input,transactionWrapper.getTransaction().getInputs().size()));
+        }
+
+
 
         List<OutputUtil> list = new ArrayList<>();
 
