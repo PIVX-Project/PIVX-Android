@@ -118,8 +118,6 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                 }
 
 
-                holder.description.setText(data.getTransaction().getMemo());
-
                 if (data.isSent()){
                     holder.imageView.setImageResource(R.mipmap.ic_transaction_send);
                     holder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
@@ -160,7 +158,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
                     holder.title.setText(data.getTransaction().getOutput(0).getScriptPubKey().getToAddress(pivxModule.getConf().getNetworkParams()).toBase58());
                 }*/
                 String memo = data.getTransaction().getMemo();
-                holder.description.setText(memo != null ? memo : "No description");
+                holder.description.setText( (memo != null && !memo.equals("") ) ? memo : "No description");
 
                 int spendableDepth;
                 int drawableRes;

@@ -419,8 +419,8 @@
 
 
     <!-- Privacy -->
-    <string name="nav_privacy">Private Transactions</string>
-    <string name="title_privacy">Private Transactions</string>
+    <string name="nav_privacy">Privacy</string>
+    <string name="title_privacy">Privacy</string>
     <string name="btn_convert">Mint</string>
     <string name="title_convert">Mint</string>
     <string name="convert_piv">Mint PIV</string>
