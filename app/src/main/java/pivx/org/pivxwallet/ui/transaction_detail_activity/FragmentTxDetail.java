@@ -118,7 +118,7 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
             txt_confirmations.setVisibility(View.GONE);
         }else {
             // set date
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy hh:mm a");
             txt_date.setText(simpleDateFormat.format(transactionWrapper.getTransaction().getUpdateTime()));
         }
         txt_transaction_id.setText(transactionWrapper.getTransaction().getHashAsString());
