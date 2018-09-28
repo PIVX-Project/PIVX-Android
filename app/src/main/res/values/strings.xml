@@ -135,6 +135,7 @@
     <string name="settings_support">Support</string>
     <string name="support_subject">PIVX Wallet support</string>
     <string name="tutorial">Tutorial</string>
+    <string name="faq">FAQ</string>
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
@@ -425,7 +426,7 @@
     <string name="title_privacy">Privacy</string>
     <string name="btn_convert">Mint</string>
     <string name="title_convert">Mint</string>
-    <string name="convert_piv">Mint PIV</string>
+    <string name="convert_piv">Convert PIV</string>
     <string name="convert_zpiv">Mint zPIV</string>
     <string name="btn_send_zpiv">Send zPIV</string>
     <string name="btn_send_piv">Send PIV</string>
@@ -445,8 +446,8 @@
     <string name="demon5000">Demon. 5000  </string>
     <string name="title_send_private">Send private transaction</string>
     <string name="empty_zpiv_transactions">No zPIV transactions</string>
-    <string name="zc_mint">Mint PiV</string>
-    <string name="zerocoin_mint">Zerocoin Mint</string>
+    <string name="zc_mint">Convert PIV</string>
+    <string name="zerocoin_mint">Mint</string>
     <string name="title_transaction_detail">Transaction Detail</string>
     <string name="export_zcoin">Export zPIV</string>
     <string name="title_export_zpiv">Export zPIV</string>
@@ -460,6 +461,7 @@
     <string name="settings_title_rates">Reference Currency</string>
     <string name="settings_title_nodes">Node preferences</string>
     <string name="settings_title_network">Network Monitor</string>
+    <string name="settings_title_faq">FAQ</string>
     <string name="title_settings">Settings</string>
     <string name="title_pincode">Pincode</string>
 

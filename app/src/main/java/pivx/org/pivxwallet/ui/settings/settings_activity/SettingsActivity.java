@@ -26,6 +26,7 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.export_account.ExportKeyActivity;
 import pivx.org.pivxwallet.ui.import_watch_only.SettingsWatchOnly;
 import pivx.org.pivxwallet.ui.restore_activity.RestoreActivity;
+import pivx.org.pivxwallet.ui.settings.faq.FaqActivity;
 import pivx.org.pivxwallet.ui.settings.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.settings.settings_network_activity.SettingsNetworkActivity;
 import pivx.org.pivxwallet.ui.settings.settings_pincode_activity.SettingsPincodeActivity;
@@ -54,7 +55,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button btn_reset_blockchain;
     private Button btn_report;
     private Button btn_support;
-    private Button buttonTutorial;
+    private Button buttonTutorial, btn_faq;
     private TextView textAbout, text_rates;
     private TextView txt_network_info;
 
@@ -113,6 +114,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         // Open Tutorial
         buttonTutorial = (Button) findViewById(R.id.btn_tutorial);
         buttonTutorial.setOnClickListener(this);
+
+        btn_faq = (Button) findViewById(R.id.btn_faq);
+        btn_faq.setOnClickListener(this);
 
     }
 
@@ -177,6 +181,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(new Intent(v.getContext(), SettingsWatchOnly.class));
         }else if (id == R.id.btn_rates){
             startActivity(new Intent(v.getContext(), SettingsRatesActivity.class));
+        }else if (id == R.id.btn_faq){
+            startActivity(new Intent(v.getContext(), FaqActivity.class));
         }
     }
 

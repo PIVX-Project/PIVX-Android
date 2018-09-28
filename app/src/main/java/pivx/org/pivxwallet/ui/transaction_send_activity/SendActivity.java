@@ -29,6 +29,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -143,6 +144,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private ImageButton btnSwap, button_qr;
     private ViewFlipper amountSwap;
     private ScrollView layout_scroll;
+    private CheckBox check_mint_change;
 
     private boolean inPivs = true;
     private Transaction transaction;
@@ -214,6 +216,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         editCurrency = (EditText) findViewById(R.id.edit_amount_currency);
         txt_currency_amount = (TextView) root.findViewById(R.id.txt_currency_amount);
         txtShowPiv = (TextView) findViewById(R.id.txt_show_piv) ;
+
+        check_mint_change = (CheckBox) findViewById(R.id.check_mint_change);
 
         //Sending amount piv
         addAllPiv.setOnClickListener(this);
@@ -356,6 +360,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             button_qr.setImageResource(R.drawable.ic_qr_code_white);
             btnSwap.setImageResource(R.drawable.ic_swap_white);
             edit_amount.setInputType(InputType.TYPE_CLASS_NUMBER);
+            check_mint_change.setVisibility(View.VISIBLE);
         }
         else {
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat

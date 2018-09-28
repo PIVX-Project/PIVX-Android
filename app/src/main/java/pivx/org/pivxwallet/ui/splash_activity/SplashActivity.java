@@ -19,7 +19,7 @@ import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 public class SplashActivity extends AppCompatActivity {
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 5000;
+    private final int SPLASH_DISPLAY_LENGTH = 2500;
     private boolean ispaused = false;
 
     @Override
