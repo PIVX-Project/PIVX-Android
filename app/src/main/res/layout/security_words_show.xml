@@ -9,7 +9,6 @@
     <TextView
         android:id="@+id/secureMessage"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:text="@string/security_message"
         style="@style/MessageTextDark" />
@@ -25,8 +24,8 @@
         android:orientation="horizontal"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:background="@color/transparent">
 
 

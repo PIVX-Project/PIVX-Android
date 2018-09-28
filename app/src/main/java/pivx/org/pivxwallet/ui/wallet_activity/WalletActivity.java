@@ -44,6 +44,7 @@ import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.loading.LoadingActivity;
 import pivx.org.pivxwallet.ui.privacy.privacy_convert.ConvertActivity;
 import pivx.org.pivxwallet.ui.qr_activity.QrActivity;
+import pivx.org.pivxwallet.ui.settings.faq.FaqActivity;
 import pivx.org.pivxwallet.ui.settings.settings_backup_activity.SettingsBackupActivity;
 import pivx.org.pivxwallet.ui.transaction_request_activity.RequestActivity;
 import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
@@ -155,6 +156,7 @@ public class WalletActivity extends BaseDrawerActivity {
             fab_add.setLabelText(getResources().getString(R.string.btn_send_zpiv));
             fab_add.setImageDrawable(getDrawable(R.drawable.ic_fab_send));
             fab_request.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
+            fab_request.setVisibility(View.GONE);
         } else {
             setTitle(R.string.my_wallet);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
@@ -304,7 +306,12 @@ public class WalletActivity extends BaseDrawerActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        if (!isPrivate) {
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
+        else {
+            getMenuInflater().inflate(R.menu.main_private, menu);
+        }
         return true;
     }
 
@@ -325,6 +332,8 @@ public class WalletActivity extends BaseDrawerActivity {
             }
             startActivityForResult(new Intent(this, ScanActivity.class),SCANNER_RESULT);
             return true;
+        } else if (item.getItemId() == R.id.action_faq){
+            startActivity(new Intent(this, FaqActivity.class));
         }
 
         return super.onOptionsItemSelected(item);

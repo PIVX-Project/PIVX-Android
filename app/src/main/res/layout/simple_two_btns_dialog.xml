@@ -17,7 +17,7 @@
         <ImageView
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/ic_warning_grey600_24dp"
+            android:src="@drawable/img_error"
             android:layout_centerVertical="true"
             android:id="@+id/img_alert"/>
 

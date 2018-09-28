@@ -31,7 +31,7 @@
 
         <TextView
             android:id = "@+id/titleDonation"
-            android:text = "@string/donation_title"
+            android:text = "@string/title_amount"
             style="@style/Label" />
 
         <EditText
@@ -43,7 +43,13 @@
             android:text = ""
             style="@style/InputPrimary" />
 
-
+        <TextView
+            android:id = "@+id/txt_local_currency"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "0"
+            android:textColor = "@color/subtitle"
+            android:textSize = "16sp" />
 
 
     </LinearLayout>

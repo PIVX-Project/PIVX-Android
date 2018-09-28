@@ -2,16 +2,22 @@ package pivx.org.pivxwallet.ui.donate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.pivxj.core.Coin;
 import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Transaction;
 
+import java.math.BigDecimal;
+
+import global.PivxRate;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.service.PivxWalletService;
@@ -33,11 +39,64 @@ public class DonateActivity extends BaseDrawerActivity {
     private EditText edit_amount;
     private Button btn_donate;
     private SimpleTextDialog errorDialog;
+    private TextView txt_local_currency;
+
+    private PivxRate pivxRate;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
         root = getLayoutInflater().inflate(R.layout.donations_fragment,container);
         edit_amount = (EditText) root.findViewById(R.id.edit_amount);
+        txt_local_currency= (TextView) root.findViewById(R.id.txt_local_currency);
+
+
+        pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
+
+        if (pivxRate!=null)
+            txt_local_currency.setText("0 "+pivxRate.getCode());
+
+        edit_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    if (pivxRate != null) {
+                        String valueStr = s.toString();
+                        if (valueStr.charAt(0) == '.') {
+                            valueStr = "0" + valueStr;
+                        }
+                        if (valueStr.charAt(valueStr.length()-1) == '.'){
+                            valueStr = valueStr.replace(".","");
+                        }
+                        Coin coin = Coin.parseCoin(valueStr);
+                        txt_local_currency.setText(
+                                pivxApplication.getCentralFormats().format(
+                                        new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                                )
+                                        + " " + pivxRate.getCode()
+                        );
+                    }else {
+                        // rate null -> no connection.
+                        txt_local_currency.setText(R.string.no_rate);
+                    }
+                }else {
+                    if (pivxRate!=null)
+                        txt_local_currency.setText("0 "+pivxRate.getCode());
+                    else
+                        txt_local_currency.setText(R.string.no_rate);
+                }
+
+            }
+        });
         btn_donate = (Button) root.findViewById(R.id.btn_donate);
         btn_donate.setOnClickListener(new View.OnClickListener() {
             @Override

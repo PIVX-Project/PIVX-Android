@@ -17,7 +17,7 @@
     <string name="set_amount_piv">PIV</string>
     <string name="set_amount_usd">Enter amount here</string>
     <string name="add_all">ADD ALL</string>
-    <string name="title_amount">Amount</string>
+    <string name="title_amount">Amount (PIV)</string>
     <string name="title_equivalent">Equivalent</string>
     <string name="title_address">Address</string>
     <string name="title_name">Name or Label</string>
@@ -80,7 +80,7 @@
     <string name="backup_passwords_doesnt_match">Passwords doesn\'t match, please enter password again.</string>
     <string name="backup_completed">Backup completed</string>
     <string name="backup_completed_text">Congratulations! Your wallet is backup is complete.\nIt has been saved in the folder at\n%s </string>
-    <string name="import_keys_dialog_message">Select a backup file to restore wallet and enter the password used to encrypt it. Backup files are saved in your device\'s default %s folder.</string>
+    <string name="import_keys_dialog_message">Select a backup file to restore wallet and enter the password used to encrypt it.\n\nBackup files are saved in your device\'s default %s folder.</string>
     <string name="backup_restore">Restore</string>
     <string name="import_export_keys_dialog_failure_title">Restore wallet fail</string>
     <string name="import_keys_dialog_failure">Error importing backup file\n%s</string>
@@ -183,8 +183,8 @@
     <string name="bad_pin_code">Invalid Pin</string>
     <string name="restore_words_1">Enter your 24-word recovery seed phrase in the correct order to restore your wallet.</string>
     <string name="restore_from_words">Restore from words</string>
-    <string name="restore_words_2">Enter words 9-16</string>
-    <string name="restore_words_3">Enter words 17-24</string>
+    <string name="restore_words_2">Enter words 9-16 of your 24-word recovery seed phrase in the correct order.</string>
+    <string name="restore_words_3">Enter words 17-24 of your 24-word recovery seed phrase in the correct order.</string>
     <string name="fee_recommended">Recommended</string>
     <string name="fee_custom">Custom</string>
     <string name="confirmation_time">Confirmation time</string>
@@ -271,6 +271,8 @@
     <string name="commit_tx_fail">Commit transaction fail, please send the error report</string>
     <string name="amount_error">Amount must be higher than 0</string>
     <string name="title_add_node">"Add Node"</string>
+
+    <string name="title_coin_selection">Coins Selection</string>
 
 
     <!-- Sweep wallet -->
@@ -360,7 +362,7 @@
     <string name="error_generic">Error occurred while performing action</string>
     <string name="old_wallet_version">Old wallet version</string>
     <string name="advance_restore">Advanced restore</string>
-    <string name="restore_bip32_warning">If your mnemonic code was created by version 1.02 or lower PIVX wallet, check this box to restore wallet properly.</string>
+    <string name="restore_bip32_warning">If your mnemonic code was created by version 1.02 or lower PIVX Wallet, check this box to restore wallet properly.</string>
     <string name="fee_included">Fee is not included in the amount</string>
     <string name="title_blockstore_error">Error</string>
     <string name="message_blockstore_error">Blockchain store corrupted\n\nPlease send the error report and try to restore the wallet from the mnemonic code or the backup file.</string>
@@ -448,7 +450,7 @@
     <string name="empty_zpiv_transactions">No zPIV transactions</string>
     <string name="zc_mint">Convert PIV</string>
     <string name="zerocoin_mint">Mint</string>
-    <string name="title_transaction_detail">Transaction Detail</string>
+    <string name="title_transaction_detail">Transaction Details</string>
     <string name="export_zcoin">Export zPIV</string>
     <string name="title_export_zpiv">Export zPIV</string>
     <string name="title_spent">Spent</string>

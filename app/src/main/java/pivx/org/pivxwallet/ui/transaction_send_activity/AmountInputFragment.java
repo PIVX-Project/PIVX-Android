@@ -45,7 +45,7 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
         editCurrency = (EditText) root.findViewById(R.id.edit_amount_currency);
         title_local_currency = (TextView) root.findViewById(R.id.title_local_currency);
         title_amount_piv = (TextView) root.findViewById(R.id.title_amount_piv);
-        title_amount_piv.setText(getText(R.string.set_amount_piv));
+        title_amount_piv.setText(getText(R.string.title_amount));
         txt_local_currency = (TextView) root.findViewById(R.id.txt_local_currency);
 
         txtShowPiv = (TextView) root.findViewById(R.id.txt_show_piv) ;
