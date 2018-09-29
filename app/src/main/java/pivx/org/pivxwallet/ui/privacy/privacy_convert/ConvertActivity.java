@@ -183,7 +183,7 @@ public class ConvertActivity extends BaseActivity {
     private void reconvertProcess(Coin coin) throws InsufficientMoneyException {
         // Internal address to receive the PIV
         Address address = pivxModule.getReceiveAddress();
-        SendRequest sendRequest = pivxModule.createSpend(address, coin);
+        SendRequest sendRequest = pivxModule.createSpend(address, coin, true);
         SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                 this,
                 "zPIV Spend",

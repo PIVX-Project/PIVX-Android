@@ -475,7 +475,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        try {
+            super.onBackPressed();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Intent intent = new Intent();
         intent.putExtra("Private",isPrivate);
         setResult(RESULT_OK, getIntent());
@@ -834,8 +838,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 if (!pivxModule.chechAddress(addressStr))
                     throw new IllegalArgumentException("Address not valid");
                 Address address = Address.fromBase58(params, addressStr);
+
+                boolean mintChange = false;
+                if (check_mint_change != null){
+                    mintChange = check_mint_change.isChecked();
+                }
+
                 // TODO: Add change address to an address in the piv wallet and not in the zpiv wallet
-                SendRequest sendRequest = pivxModule.createSpend(address, amount);
+                SendRequest sendRequest = pivxModule.createSpend(address, amount, mintChange);
 
                 SimpleTwoButtonsDialog simpleTwoButtonsDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
                         this,

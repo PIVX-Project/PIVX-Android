@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -25,6 +27,8 @@ import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
+import pivx.org.pivxwallet.ui.pincode_activity.PincodeActivity;
+import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 
 /**
@@ -34,6 +38,7 @@ import pivx.org.pivxwallet.utils.DialogsUtil;
 public class SettingsBackupActivity extends BaseActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL = 500;
+    private static final int PIN_RESULT_MNEMONIC = 303;
 
     private View root;
     private EditText edit_password;
@@ -94,8 +99,9 @@ public class SettingsBackupActivity extends BaseActivity {
                     Toast.makeText(this,R.string.error_watch_only_mode,Toast.LENGTH_SHORT).show();
                     return true;
                 }
-                Intent myIntent = new Intent(getApplicationContext(), MnemonicActivity.class);
-                startActivity(myIntent);
+                Intent intent = new Intent(SettingsBackupActivity.this, PincodeActivity.class);
+                intent.putExtra(PincodeActivity.CHECK_PIN,true);
+                startActivityForResult(intent, PIN_RESULT_MNEMONIC);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -122,10 +128,10 @@ public class SettingsBackupActivity extends BaseActivity {
                 backupRes = R.string.backup_fail;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggerFactory.getLogger(SettingsBackupActivity.class).warn("#### backup fail", e);
             backupRes = R.string.backup_fail;
         } catch (Exception e){
-            e.printStackTrace();
+            LoggerFactory.getLogger(SettingsBackupActivity.class).warn("#### backup fail", e);
             backupRes = R.string.backup_fail;
         }
         if (backupRes!=0){
@@ -225,6 +231,22 @@ public class SettingsBackupActivity extends BaseActivity {
 
             // other 'case' lines to check for other
             // permissions this app might request
+        }
+    }
+
+    /**
+     * PIN_RESULT_ZPIV
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PIN_RESULT_MNEMONIC) {
+            if (resultCode == RESULT_OK) {
+                Intent myIntent = new Intent(getApplicationContext(), MnemonicActivity.class);
+                startActivity(myIntent);
+            } else {
+                // Spend cancelled
+                Toast.makeText(SettingsBackupActivity.this, "Invalid pincode", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

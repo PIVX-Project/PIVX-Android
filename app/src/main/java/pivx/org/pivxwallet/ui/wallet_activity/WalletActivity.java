@@ -102,6 +102,7 @@ public class WalletActivity extends BaseDrawerActivity {
                     if (!isOnForeground)return;
                     runOnUiThread(() -> {
                         updateBalance();
+                        showOrHideSyncingContainer();
                         txsFragment.refresh();
                     });
                 }
@@ -229,32 +230,38 @@ public class WalletActivity extends BaseDrawerActivity {
         }
         localBroadcastManager.registerReceiver(pivxServiceReceiver, pivxServiceFilter);
 
-        updateState();
-        updateBalance();
-        txsFragment.refresh();
+        if (pivxApplication.isCoreStarted()) {
+            updateState();
+            updateBalance();
+            showOrHideSyncingContainer();
+            txsFragment.refresh();
 
-        // check if this wallet need an update:
-        try {
-            if(pivxModule.isBip32Wallet() && pivxModule.isSyncWithNode()){
-                if (!pivxModule.isWalletWatchOnly() && pivxModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
-                    Intent intent = UpgradeWalletActivity.createStartIntent(
-                            this,
-                            getString(R.string.upgrade_wallet),
-                            "An old wallet version with bip32 key was detected, in order to upgrade the wallet your coins are going to be sweeped" +
-                                    " to a new wallet with bip44 account.\n\nThis means that your current mnemonic code and" +
-                                    " backup file are not going to be valid anymore, please write the mnemonic code in paper " +
-                                    "or export the backup file again to be able to backup your coins." +
-                                    "\n\nPlease wait and not close this screen. The upgrade + blockchain sychronization could take a while."
-                                    +"\n\nTip: If this screen is closed for user's mistake before the upgrade is finished you can find two backups files in the 'Download' folder" +
-                                    " with prefix 'old' and 'upgrade' to be able to continue the restore manually."
-                                    + "\n\nThanks!",
-                            "sweepBip32"
-                    );
-                    startActivity(intent);
+            // check if this wallet need an update:
+            try {
+                if (pivxModule.isBip32Wallet() && pivxModule.isSyncWithNode()) {
+                    if (!pivxModule.isWalletWatchOnly() && pivxModule.getAvailableBalanceCoin().isGreaterThan(Transaction.DEFAULT_TX_FEE)) {
+                        Intent intent = UpgradeWalletActivity.createStartIntent(
+                                this,
+                                getString(R.string.upgrade_wallet),
+                                "An old wallet version with bip32 key was detected, in order to upgrade the wallet your coins are going to be sweeped" +
+                                        " to a new wallet with bip44 account.\n\nThis means that your current mnemonic code and" +
+                                        " backup file are not going to be valid anymore, please write the mnemonic code in paper " +
+                                        "or export the backup file again to be able to backup your coins." +
+                                        "\n\nPlease wait and not close this screen. The upgrade + blockchain sychronization could take a while."
+                                        + "\n\nTip: If this screen is closed for user's mistake before the upgrade is finished you can find two backups files in the 'Download' folder" +
+                                        " with prefix 'old' and 'upgrade' to be able to continue the restore manually."
+                                        + "\n\nThanks!",
+                                "sweepBip32"
+                        );
+                        startActivity(intent);
+                    }
                 }
+
+            } catch (NoPeerConnectedException e) {
+                log.info("No peer connection on walletUpdate", e.getMessage());
             }
-        } catch (NoPeerConnectedException e) {
-            log.info("No peer connection on walletUpdate",e.getMessage());
+        }else {
+            log.info("@@@@ This should open the loading screen first..");
         }
     }
 
@@ -402,6 +409,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
 
     private void updateBalance() {
+
         Coin availableBalance = pivxModule.getAvailableBalanceCoin();
         Coin unnavailableBalance = pivxModule.getUnnavailableBalanceCoin();
         Coin zAvailableBalance = pivxModule.getZpivAvailableBalanceCoin();
@@ -476,6 +484,10 @@ public class WalletActivity extends BaseDrawerActivity {
 
     @Override
     protected void onBlockchainStateChange(){
+        showOrHideSyncingContainer();
+    }
+
+    private void showOrHideSyncingContainer(){
         if (blockchainState == BlockchainState.SYNCING){
             AnimationUtils.fadeInView(container_syncing,500);
         }else if (blockchainState == BlockchainState.SYNC){

@@ -2,6 +2,7 @@ package pivx.org.pivxwallet;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -88,11 +89,20 @@ public class PivxApplication extends Application implements ContextWrapper {
         @Override
         public void onCrashOcurred(Thread thread, Throwable throwable) {
             log.error("crash occured..");
+
+            try {
+                // First remove every notification
+                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                nm.cancelAll();
+            }catch (Exception e){
+                log.error("Exception cancelling notifications", e);
+            }
+
             throwable.printStackTrace();
             String authorities = "pivx.org.pivxwallet.myfileprovider";
             final File cacheDir = getCacheDir();
             // show error report dialog to send the crash
-            final ArrayList<Uri> attachments = new ArrayList<Uri>();
+            final ArrayList<Uri> attachments = new ArrayList<>();
             try {
                 final File logDir = getDir("log", Context.MODE_PRIVATE);
 
@@ -116,10 +126,11 @@ public class PivxApplication extends Application implements ContextWrapper {
 
                     attachments.add(FileProvider.getUriForFile(getApplicationContext(), authorities, file));
                 }
+
+                shareText(PivxApplication.this,"PIVX wallet crash", "Unexpected crash", attachments);
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
             }
-            shareText(PivxApplication.this,"PIVX wallet crash", "Unexpected crash", attachments);
         }
     };
 
