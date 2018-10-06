@@ -15,6 +15,10 @@ import android.view.WindowManager;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieComposition;
+import com.airbnb.lottie.OnCompositionLoadedListener;
+
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,6 +41,15 @@ public class LoadingActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_loading);
 
+        LottieAnimationView mAnimationView = (LottieAnimationView) findViewById(R.id.animation_view);
+        LottieComposition.Factory.fromAssetFileName(this, "loading_animation.json", new OnCompositionLoadedListener() {
+            @Override
+            public void onCompositionLoaded(LottieComposition composition) {
+                mAnimationView.loop(true);
+                mAnimationView.playAnimation();
+            }
+        });
+
 
         start(TimeUnit.SECONDS.toMillis(4));
     }
@@ -57,7 +70,7 @@ public class LoadingActivity extends AppCompatActivity {
                             finish();
                         });
                     }else {
-                        start(TimeUnit.SECONDS.toMillis(15));
+                        start(TimeUnit.SECONDS.toMillis(4));
                     }
                 }, millis
         );

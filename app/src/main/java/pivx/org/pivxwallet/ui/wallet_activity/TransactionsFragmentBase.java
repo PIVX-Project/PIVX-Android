@@ -54,6 +54,12 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             isPrivate = intent.getBooleanExtra("Private",false);
         }
         setEmptyTextColor(Color.parseColor("#cccccc"));
+
+        init();
+        return view;
+    }
+
+    private void init(){
         if (isPrivate) {
             setEmptyView(R.drawable.img_zpiv_transaction_empty);
             setEmptyText(getString(R.string.empty_zpiv_transactions));
@@ -62,7 +68,12 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
             setEmptyView(R.drawable.img_transaction_empty);
             setEmptyText(getString(R.string.no_transactions));
         }
-        return view;
+    }
+
+    public void change(boolean isPrivate){
+        this.isPrivate = isPrivate;
+        init();
+        refresh();
     }
 
     @Override

@@ -130,7 +130,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private Boolean isPrivate = false;
     private View root;
-    private Button buttonSend, addAllPiv;
+    private Button buttonSend, addAllPiv, btn_clear;
     private AutoCompleteTextView edit_address;
     private TextView txt_local_currency , txt_coin_selection, txt_custom_fee, txt_change_address, txtShowPiv;
     private TextView txt_multiple_outputs, txt_currency_amount, text_fee_message, title_amount_piv, title_amount_local, title_address, title_description;
@@ -186,6 +186,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         title_address = (TextView) findViewById(R.id.title_address);
         title_description = (TextView) findViewById(R.id.title_description);
         addAllPiv =  (Button) findViewById(R.id.btn_add_all);
+        btn_clear = (Button) findViewById(R.id.btn_clear);
 
 
         edit_address = (AutoCompleteTextView) findViewById(R.id.edit_address);
@@ -221,6 +222,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
         //Sending amount piv
         addAllPiv.setOnClickListener(this);
+        btn_clear.setOnClickListener(this);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
 
         txt_local_currency.setText("0 " + pivxRate.getCode());
@@ -335,6 +337,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             title_amount_local.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
             title_amount_piv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white_a_60));
             addAllPiv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
+            btn_clear.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.white));
             edit_amount.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_edit_text_white_selector));
             edit_amount.setHintTextColor(getResources().getColor(R.color.white_a_80));
             edit_amount.setTextColor(getResources().getColor(R.color.white));
@@ -552,7 +555,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     );
                     txtShowPiv.setText(coin.toFriendlyString());
                 }
-            }else {
+            } else {
                 Toast.makeText(this,R.string.validate_multi_send_enabled,Toast.LENGTH_SHORT).show();
             }
         }else if(id == R.id.btn_swap){
@@ -570,6 +573,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startCustomFeeActivity(customFee);
         }else if (id == R.id.txt_change_address){
             startChangeAddressActivity(changeAddress,changeToOrigin);
+        } else if(id == R.id.btn_clear){
+            clearFields();
         }
     }
 
@@ -971,10 +976,10 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance\nMissing coins "+e.missing.toFriendlyString());
+            throw new IllegalArgumentException("Insufficient balance\nMissing coins "+e.missing.toFriendlyString());
         } catch (InsufficientInputsException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance\nMissing coins "+e.getMissing().toFriendlyString());
+            throw new IllegalArgumentException("Insufficient balance\nMissing coins "+e.getMissing().toFriendlyString());
         } catch (Wallet.DustySendRequested e){
             e.printStackTrace();
             throw new IllegalArgumentException("Dusty send output, please increase the value of your outputs");
@@ -1069,6 +1074,8 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private void clearFields() {
         edit_amount.setText("");
         edit_address.setText("");
+        edit_memo.setText("");
+        check_mint_change.setChecked(false);
         // TODO: remove the other stuff too..
     }
 

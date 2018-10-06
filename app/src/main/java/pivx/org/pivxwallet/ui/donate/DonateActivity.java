@@ -128,7 +128,7 @@ public class DonateActivity extends BaseDrawerActivity {
             if (amount.isZero()) throw new IllegalArgumentException("Amount zero, please correct it");
             if (amount.isLessThan(Transaction.MIN_NONDUST_OUTPUT)) throw new IllegalArgumentException("Amount must be greater than the minimum amount accepted from miners, "+Transaction.MIN_NONDUST_OUTPUT.toFriendlyString());
             if (amount.isGreaterThan(Coin.valueOf(pivxModule.getAvailableBalance())))
-                throw new IllegalArgumentException("Insuficient balance");
+                throw new IllegalArgumentException("Insufficient balance");
             String memo = "Donation!";
             // build a tx with the default fee
             Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo,pivxModule.getReceiveAddress());
@@ -144,7 +144,7 @@ public class DonateActivity extends BaseDrawerActivity {
 
         } catch (InsufficientMoneyException e) {
             e.printStackTrace();
-            throw new IllegalArgumentException("Insuficient balance");
+            throw new IllegalArgumentException("Insufficient balance");
         }
     }
 

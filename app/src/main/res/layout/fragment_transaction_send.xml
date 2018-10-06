@@ -117,7 +117,6 @@
                     android:text="@string/add_all"
                     android:textColor="@color/colorPurple" />
 
-
             </RelativeLayout>
 
             <LinearLayout
@@ -186,7 +185,7 @@
                         android:background="@drawable/bg_edit_text_primary_selector"
                         android:ellipsize="start"
                         android:gravity="left|center_vertical"
-                        android:hint="@string/set_address"
+                        android:hint="@string/send_input_address"
                         android:maxLines="4"
                         android:minLines="1"
                         android:padding="12dp"
@@ -212,17 +211,38 @@
                     android:text=""
                     android:textSize="15sp" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mint change"
-                    android:paddingTop="5dp"
-                    android:buttonTint="@color/white_a_60"
-                    android:textColor="@color/white"
-                    android:id="@+id/check_mint_change"
-                    android:visibility="visible"
-                    />
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mint change"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="5dp"
+                        android:buttonTint="@color/white_a_60"
+                        android:textColor="@color/white"
+                        android:id="@+id/check_mint_change"
+                        android:visibility="visible"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/transparent"
+                        android:gravity="center"
+                        android:minHeight="0dp"
+                        android:minWidth="0dp"
+                        android:paddingRight="2dp"
+                        android:text="@string/send_clear"
+                        android:textColor="@color/colorPurple" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 

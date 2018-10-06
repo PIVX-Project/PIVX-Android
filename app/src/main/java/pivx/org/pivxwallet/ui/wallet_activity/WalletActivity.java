@@ -142,7 +142,16 @@ public class WalletActivity extends BaseDrawerActivity {
         txt_watch_only = (TextView) containerHeader.findViewById(R.id.txt_watch_only);
 
         floatingActionMenu = (FloatingActionMenu) root.findViewById(R.id.fab_menu);
+        container_txs = root.findViewById(R.id.container_txs);
+        view_background = root.findViewById(R.id.view_background);
+        container_syncing = root.findViewById(R.id.container_syncing);
 
+        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+
+        initView();
+    }
+
+    private void initView() {
         if (isPrivate) {
             setTitle(R.string.title_privacy);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
@@ -158,6 +167,7 @@ public class WalletActivity extends BaseDrawerActivity {
             fab_add.setImageDrawable(getDrawable(R.drawable.ic_fab_send));
             fab_request.setColorNormal(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
             fab_request.setVisibility(View.GONE);
+            fab_convert.setVisibility(View.VISIBLE);
         } else {
             setTitle(R.string.my_wallet);
             getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat
@@ -170,14 +180,11 @@ public class WalletActivity extends BaseDrawerActivity {
             fab_add.setLabelText(getResources().getString(R.string.btn_send_piv));
             bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.bgPurple));
             fab_convert.setVisibility(View.GONE);
+            fab_request.setVisibility(View.VISIBLE);
             floatingActionMenu.setMenuButtonColorNormal(ContextCompat.getColor(this, R.color.bgPurple));
         }
 
 
-
-        container_txs = root.findViewById(R.id.container_txs);
-        view_background = root.findViewById(R.id.view_background);
-        container_syncing = root.findViewById(R.id.container_syncing);
 
         // Open Send
         root.findViewById(R.id.fab_add).setOnClickListener(v -> {
@@ -210,8 +217,18 @@ public class WalletActivity extends BaseDrawerActivity {
             touchFabActions(opened);
         });
 
-        txsFragment = (TransactionsFragmentBase) getSupportFragmentManager().findFragmentById(R.id.transactions_fragment);
+
+        // Screen changes
+
+        text_value_bottom.setOnClickListener(v -> {
+            isPrivate = !isPrivate;
+            initView();
+            updateBalance();
+            showOrHideSyncingContainer();
+            txsFragment.change(isPrivate);
+        });
     }
+
 
     @Override
     protected void onResume() {
@@ -220,17 +237,18 @@ public class WalletActivity extends BaseDrawerActivity {
         // to check current activity in the navigation drawer
         setNavigationMenuItemChecked(isPrivate ? 2 : 0);
 
-        init();
-
         // register
         try{
             localBroadcastManager.unregisterReceiver(pivxServiceReceiver);
         }catch (Exception e){
             e.printStackTrace();
         }
-        localBroadcastManager.registerReceiver(pivxServiceReceiver, pivxServiceFilter);
 
         if (pivxApplication.isCoreStarted()) {
+            init();
+
+            localBroadcastManager.registerReceiver(pivxServiceReceiver, pivxServiceFilter);
+
             updateState();
             updateBalance();
             showOrHideSyncingContainer();

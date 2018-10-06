@@ -23,8 +23,10 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import global.PivxRate;
+import global.wrappers.InputWrapper;
 import host.furszy.zerocoinj.wallet.MultiWallet;
 import pivx.org.pivxwallet.R;
 import global.AddressLabel;
@@ -272,10 +274,16 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         int id = v.getId();
         if (id == R.id.txt_inputs){
             try {
+                Set<InputWrapper> set = pivxModule.convertFrom(transactionWrapper.getTransaction().getInputs());
+                if (set == null || set.isEmpty()) {
+                    Toast.makeText(getActivity(), R.string.detail_no_available_inputs, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Intent intent = new Intent(getActivity(), InputsDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putBoolean(INTENT_NO_TOTAL_AMOUNT, true);
-                bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) pivxModule.convertFrom(transactionWrapper.getTransaction().getInputs()));
+                bundle.putSerializable(INTENT_EXTRA_UNSPENT_WRAPPERS, (Serializable) set);
                 intent.putExtras(bundle);
                 startActivity(intent);
             } catch (TxNotFoundException e) {
