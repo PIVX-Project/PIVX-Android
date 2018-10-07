@@ -245,7 +245,7 @@ public class SettingsBackupActivity extends BaseActivity {
                 startActivity(myIntent);
             } else {
                 // Spend cancelled
-                Toast.makeText(SettingsBackupActivity.this, "Invalid pincode", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsBackupActivity.this, R.string.invalid_pincode, Toast.LENGTH_SHORT).show();
             }
         }
     }

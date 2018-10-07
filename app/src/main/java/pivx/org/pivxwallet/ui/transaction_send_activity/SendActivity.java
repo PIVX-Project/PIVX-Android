@@ -737,7 +737,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             if (resultCode == RESULT_OK){
                 connectToService();
                 clearFields();
-                Toast.makeText(SendActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendActivity.this,R.string.starting_spend_process, Toast.LENGTH_SHORT).show();
             }else {
                 // Spend cancelled
                 Toast.makeText(SendActivity.this,"Invalid pincode", Toast.LENGTH_SHORT).show();

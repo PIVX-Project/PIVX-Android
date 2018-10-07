@@ -194,7 +194,7 @@ public class ConvertActivity extends BaseActivity {
                         transaction = sendRequest.tx;
                         connectToService();
                         clearFields();
-                        Toast.makeText(ConvertActivity.this,"Starting the spend process..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ConvertActivity.this,R.string.starting_spend_process, Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
 
