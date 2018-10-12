@@ -122,7 +122,7 @@ public class SnappyBlockchainStore implements BlockStore{
     @Override
     public synchronized StoredBlock getChainHead() throws BlockStoreException {
         try {
-            System.out.println("Calling get Method from chain head");
+            //System.out.println("Calling get Method from chain head");
             return get(Sha256Hash.wrap(db.getBytes(CHAIN_HEAD_KEY_STRING)));
         } catch (SnappydbException e) {
             e.printStackTrace();

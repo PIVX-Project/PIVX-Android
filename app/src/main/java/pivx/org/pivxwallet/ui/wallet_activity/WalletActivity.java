@@ -461,7 +461,7 @@ public class WalletActivity extends BaseDrawerActivity {
                             + " " + pivxRate.getCode()
             );
         } else {
-            txt_local_total.setText("0.00");
+            txt_local_total.setText("0.00 USD");
         }
 
     }
@@ -488,7 +488,7 @@ public class WalletActivity extends BaseDrawerActivity {
                             + " " + pivxRate.getCode()
             );
         } else {
-            txt_local_currency.setText("0");
+            txt_local_currency.setText("0.00 USD");
         }
     }
 

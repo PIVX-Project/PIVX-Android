@@ -17,6 +17,7 @@ import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.loading.LoadingActivity;
 import pivx.org.pivxwallet.ui.settings.settings_pincode_activity.KeyboardFragment;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 
@@ -29,6 +30,7 @@ import static pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity.I
 public class PincodeActivity extends BaseActivity implements KeyboardFragment.onKeyListener {
 
     public static final String CHECK_PIN = "check_pin";
+    private static final int REQUEST_LOADING = 201;
 
     private boolean checkPin = false;
 
@@ -79,10 +81,9 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
 
         pivxApplication.getAppConf().setAppInit(true);
 
-        Intent myIntent = new Intent(PincodeActivity.this,MnemonicActivity.class);
+        Intent myIntent = new Intent(PincodeActivity.this, LoadingActivity.class);
         myIntent.putExtra(INTENT_EXTRA_INIT_VIEW,true);
-        startActivity(myIntent);
-        finish();
+        startActivityForResult(myIntent, REQUEST_LOADING);
     }
 
 
@@ -127,7 +128,7 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     public void onBackPressed() {
         super.onBackPressed();
         // todo: controlar esto
-        if (pivxApplication.getAppConf().getPincode()==null){
+        if (pivxApplication.getAppConf().getPincode() == null){
             startActivity(new Intent(this, StartActivity.class));
             finish();
         }
@@ -173,5 +174,21 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
                 i4.setImageResource(R.drawable.pin_circle);
                 break;
         }
+    }
+
+    @Override
+    public boolean isCoreNeeded() {
+        return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_LOADING){
+            Intent myIntent = new Intent(PincodeActivity.this, MnemonicActivity.class);
+            myIntent.putExtra(INTENT_EXTRA_INIT_VIEW,true);
+            startActivity(myIntent);
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

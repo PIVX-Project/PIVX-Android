@@ -23,7 +23,7 @@ public class NetworkFragment extends BaseRecyclerFragment<Peer> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        setEmptyText("No connection to any node.");
+        setEmptyText(getString(R.string.no_peer_connection));
         setEmptyTextColor(Color.parseColor("#cccccc"));
         return view;
     }

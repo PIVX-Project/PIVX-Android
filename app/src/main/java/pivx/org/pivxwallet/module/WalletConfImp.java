@@ -27,6 +27,7 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
     private static final String PREF_TRUSTED_NODE_PORT = "trusted_node_port";
     private static final String PREFS_KEY_SCHEDULE_BLOCKCHAIN_SERVICE = "sch_block_serv";
     private static final String PREF_CURRENCY_RATE = "currency_code";
+    private static final String PREF_BEST_CHAIN_HEIGHT = "best_chain_height";
 
 
     public WalletConfImp(SharedPreferences prefs) {
@@ -133,6 +134,15 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
     @Override
     public int getProtocolVersion() {
         return NETWORK_PARAMETERS.getProtocolVersionNum(NetworkParameters.ProtocolVersion.CURRENT);
+    }
+
+    @Override
+    public void maybeIncrementBestChainHeightEver(int lastBlockSeenHeight) {
+        save(PREF_BEST_CHAIN_HEIGHT, lastBlockSeenHeight);
+    }
+
+    public int getBestChainHeightEver(){
+        return getInt(PREF_BEST_CHAIN_HEIGHT,0);
     }
 
 }

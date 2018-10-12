@@ -26,6 +26,8 @@ public class IntentsConstants {
     public static final String ACTION_RESET_BLOCKCHAIN = "reset_blockchain";
     public static final String ACTION_BROADCAST_TRANSACTION = "broad_tx";
 
+    public static final String ACTION_APP_CORE_CRASH = "app_core_crash";
+
     public static final String ACTION_NOTIFICATION = "service_not";
     public static final String INTENT_BROADCAST_DATA_TYPE = "service_not_type";
     public static final String INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE = "blockchain_state";

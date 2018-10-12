@@ -19,6 +19,7 @@ import java.util.List;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
+import pivx.org.pivxwallet.ui.loading.LoadingActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
 /**
@@ -44,7 +45,7 @@ public class MnemonicActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getLayoutInflater().inflate(R.layout.security_words_show, container);
-        setTitle("Mnemonic code");
+        setTitle(R.string.title_mnemonic_code);
 
         container_continue_btn = findViewById(R.id.container_continue_btn);
         if (!isInit){

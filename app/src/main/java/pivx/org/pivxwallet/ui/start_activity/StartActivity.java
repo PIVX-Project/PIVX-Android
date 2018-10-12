@@ -27,26 +27,20 @@ public class StartActivity extends BaseActivity {
         getLayoutInflater().inflate(R.layout.fragment_start, container);
 
         buttonCreate = (Button) findViewById(R.id.btnCreate);
-        buttonCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Open Create Wallet
-                pivxModule.createWallet();
-                Intent myIntent = new Intent(v.getContext(), TutorialActivity.class);
-                startActivity(myIntent);
-                finish();
-            }
+        buttonCreate.setOnClickListener(v -> {
+            // Open Create Wallet
+            pivxModule.createWallet();
+            Intent myIntent = new Intent(v.getContext(), TutorialActivity.class);
+            startActivity(myIntent);
+            finish();
         });
 
         // Open Restore Wallet
         buttonRestore = (Button) findViewById(R.id.btnRestore);
-        buttonRestore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
-                myIntent.setAction(ACTION_RESTORE_AND_JUMP_TO_WIZARD);
-                startActivity(myIntent);
-            }
+        buttonRestore.setOnClickListener(v -> {
+            Intent myIntent = new Intent(v.getContext(), RestoreActivity.class);
+            myIntent.setAction(ACTION_RESTORE_AND_JUMP_TO_WIZARD);
+            startActivity(myIntent);
         });
 
     }
@@ -57,5 +51,10 @@ public class StartActivity extends BaseActivity {
 
     public boolean isFullScreen(){
         return true;
+    }
+
+    @Override
+    public boolean isCoreNeeded(){
+        return false;
     }
 }

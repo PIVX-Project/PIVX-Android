@@ -60,14 +60,16 @@ public class PivxActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (!pivxApplication.isCoreStarted()){
-            Intent intent = new Intent(this, LoadingActivity.class);
-            startActivity(intent);
-            finish();
-        }else {
-            isOnForeground = true;
-            localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver, intentFilter);
-            localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver, errorIntentFilter);
+        if (isCoreNeeded()) {
+            if (!pivxApplication.isCoreStarted()) {
+                Intent intent = new Intent(this, LoadingActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                isOnForeground = true;
+                localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver, intentFilter);
+                localBroadcastManager.registerReceiver(trustedPeerConnectionDownReceiver, errorIntentFilter);
+            }
         }
     }
 
@@ -76,5 +78,9 @@ public class PivxActivity extends AppCompatActivity {
         super.onStop();
         isOnForeground = false;
         localBroadcastManager.unregisterReceiver(trustedPeerConnectionDownReceiver);
+    }
+
+    public boolean isCoreNeeded(){
+        return true;
     }
 }

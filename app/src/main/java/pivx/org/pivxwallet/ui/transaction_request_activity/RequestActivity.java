@@ -94,9 +94,9 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
     private void showRequestQr() throws Exception {
         // first check amount
         String amountStr = amountFragment.getAmountStr();
-        if (amountStr.length() < 1) throw new IllegalArgumentException(String.valueOf(R.string.amount_error));
+        if (amountStr.length() < 1) throw new IllegalArgumentException(getString(R.string.amount_error));
         if (amountStr.length() == 1 && amountStr.equals("."))
-            throw new IllegalArgumentException(String.valueOf(R.string.amount_error));
+            throw new IllegalArgumentException(getString(R.string.amount_error));
         if (amountStr.charAt(0) == '.') {
             amountStr = "0" + amountStr;
         }

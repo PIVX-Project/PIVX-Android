@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_name">PIVX Wallet</string>
-    <string name="loading">Loading …</string>
+    <string name="loading">Loading… \nPlease wait until the process is completed.</string>
     <string name="btn_create_wallet">Create Wallet</string>
     <string name="btn_restore_wallet">Restore Wallet</string>
     <string name="restore_wallet_message">Select a backup of the wallet\nfrom a storage unit</string>
@@ -199,7 +199,7 @@
     <string name="invalid_last_amount">Invalid last address amount</string>
     <string name="inputs_explanation">Select coins to consume in the transaction</string>
     <string name="bad_address">Bad address</string>
-    <string name="invalid_amount_value">Invalid amount entered</string>
+    <string name="invalid_amount_value">Invalid amount</string>
     <string name="select_all">Select all</string>
     <string name="total_amount">Total:</string>
     <string name="send_amount_input_error">You must set an amount to add custom inputs.</string>
@@ -469,5 +469,8 @@
     <string name="send_input_address">Name or Address</string>
     <string name="send_clear">CLEAR</string>
     <string name="starting_spend_process">Starting spend process</string>
+    <string name="title_mnemonic_code">Mnemonic code</string>
+    <string name="title_restore_wallet">Restore wallet</string>
+    <string name="permission_granted">Permission Granted</string>
 
 </resources>

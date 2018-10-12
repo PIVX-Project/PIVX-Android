@@ -194,6 +194,7 @@ public class PivxWalletService extends Service{
                         blockchainState = BlockchainState.SYNCING;
                     }
                     pivxApplication.getAppConf().setLastBestChainBlockTime(block.getTime().getTime());
+                    pivxApplication.getWalletConfiguration().maybeIncrementBestChainHeightEver(module.getChainHeight());
                     broadcastBlockchainState(true);
                 }
             }catch (Exception e){
@@ -306,8 +307,7 @@ public class PivxWalletService extends Service{
                 }
 
             }catch (Exception e){
-                log.error("Something happend on coin receive ", e);
-                e.printStackTrace();
+                log.error("Something happen on coin receive ", e);
             }
 
         }
@@ -331,7 +331,7 @@ public class PivxWalletService extends Service{
                     }
                 }
             }catch (Exception e){
-                e.printStackTrace();
+                log.error("onTransactionConfidenceChanged exception",e);
             }
         }
     };
@@ -427,7 +427,7 @@ public class PivxWalletService extends Service{
                 log.warn("service restart, although it was started as non-sticky");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("onStartCommand exception",e);
         }
         return START_NOT_STICKY;
     }
@@ -441,7 +441,7 @@ public class PivxWalletService extends Service{
             try {
                 unregisterReceiver(connectivityReceiver);
             }catch (Exception e){
-                e.printStackTrace();
+                // swallow
             }
 
             // remove listeners
@@ -456,11 +456,19 @@ public class PivxWalletService extends Service{
                 wakeLock.release();
             }
 
+            try {
+                // Remove every notification
+                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                nm.cancelAll();
+            }catch (Exception e){
+                log.error("Exception cancelling notifications", e);
+            }
+
             log.info("service was up for " + ((System.currentTimeMillis() - serviceCreatedAt) / 1000 / 60) + " minutes");
             // schedule service it is not scheduled yet
             tryScheduleService();
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("onDestroy exception",e);
         }
     }
 
@@ -660,7 +668,7 @@ public class PivxWalletService extends Service{
 
             StringBuilder stringBuilder = new StringBuilder();
             for (Impediment impediment : impediments) {
-                if (stringBuilder.length()!=0){
+                if (stringBuilder.length() != 0){
                     stringBuilder.append("\n");
                 }
                 if (impediment == Impediment.NETWORK){

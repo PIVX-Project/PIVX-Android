@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,7 +62,7 @@ public class ConvertActivity extends BaseActivity {
     private RadioGroup radio_convert_type;
     private RelativeLayout bg_balance;
     private RadioButton radio_zpiv, radio_piv;
-    private Button btn_convert;
+    private Button btn_convert, btn_add_all;
     private EditText edit_amount;
     private TextView txt_amount_local, txt_currency_amount;
 
@@ -97,6 +99,7 @@ public class ConvertActivity extends BaseActivity {
         bg_balance.setBackgroundColor(ContextCompat.getColor(this, R.color.darkPurple));
         layout_blocked = (LinearLayout) headerView.findViewById(R.id.layout_blocked);
         layout_blocked.setVisibility(View.GONE);
+        btn_add_all = (Button) view.findViewById(R.id.btn_add_all);
 
         // Convert Selection
         radio_convert_type = (RadioGroup) findViewById(R.id.radio_convert_type);
@@ -176,6 +179,59 @@ public class ConvertActivity extends BaseActivity {
         txt_local_currency = (TextView) headerView.findViewById(R.id.txt_local_currency);
         txt_watch_only = (TextView) headerView.findViewById(R.id.txt_watch_only);
         bg_balance.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.darkPurple));
+
+
+
+        // Actions
+
+        btn_add_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_amount.setText(pivxModule.getZpivAvailableBalanceCoin().toPlainString());
+            }
+        });
+
+        edit_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    if (pivxRate != null) {
+                        String valueStr = s.toString();
+                        if (valueStr.charAt(0) == '.') {
+                            valueStr = "0" + valueStr;
+                        }
+                        if (valueStr.charAt(valueStr.length()-1) == '.'){
+                            valueStr = valueStr.replace(".","");
+                        }
+                        Coin coin = Coin.parseCoin(valueStr);
+                        txt_amount_local.setText(
+                                pivxApplication.getCentralFormats().format(
+                                        new BigDecimal(coin.getValue() * pivxRate.getRate().doubleValue()).movePointLeft(8)
+                                )
+                                        + " " + pivxRate.getCode()
+                        );
+                    }else {
+                        // rate null -> no connection.
+                        txt_amount_local.setText(R.string.no_rate);
+                    }
+                }else {
+                    if (pivxRate != null)
+                        txt_amount_local.setText("0 "+pivxRate.getCode());
+                    else
+                        txt_amount_local.setText(R.string.no_rate);
+                }
+            }
+        });
 
         updateBalance();
     }

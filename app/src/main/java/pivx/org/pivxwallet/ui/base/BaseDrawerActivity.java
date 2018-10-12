@@ -214,8 +214,6 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
             startActivity(myintent);
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
-        } else if (id == R.id.nav_donations){
-            startActivity(new Intent(this, DonateActivity.class));
         }
 
         finish();
