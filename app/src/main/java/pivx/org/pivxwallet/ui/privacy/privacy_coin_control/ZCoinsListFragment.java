@@ -10,6 +10,8 @@ import com.zerocoinj.core.CoinDenomination;
 
 import org.pivxj.core.TransactionOutput;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,15 @@ public class ZCoinsListFragment extends BaseRecyclerFragment<AmountPerDen>{
 
     @Override
     protected List<AmountPerDen> onLoading() {
-        return pivxModule.listAmountPerDen();
+        List<AmountPerDen> amountPerDens = pivxModule.listAmountPerDen();
+        Collections.sort(amountPerDens, (o1, o2) -> {
+            CoinDenomination first = o1.getDen();
+            CoinDenomination second = o2.getDen();
+            if (first.getDenomination() > second.getDenomination()) return 1;
+            else if (first.getDenomination() < second.getDenomination()) return -1;
+            else return 0;
+        });
+        return amountPerDens;
     }
 
     @Override

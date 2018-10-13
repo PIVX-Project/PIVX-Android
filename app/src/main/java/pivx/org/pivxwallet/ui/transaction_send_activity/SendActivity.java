@@ -740,7 +740,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(SendActivity.this,R.string.starting_spend_process, Toast.LENGTH_SHORT).show();
             }else {
                 // Spend cancelled
-                Toast.makeText(SendActivity.this,"Invalid pincode", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendActivity.this,R.string.invalid_pincode, Toast.LENGTH_SHORT).show();
             }
         }
 

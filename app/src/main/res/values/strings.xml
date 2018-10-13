@@ -139,7 +139,7 @@
     <string name="copy">Copy</string>
     <string name="share">Share</string>
     <string name="copy_message">Address copied to the clipboard</string>
-    <string name="security_message">Write down the 24-word recovery seed phrase in the correct order. It is required to restore your wallet.\n Keep your mnemonic code safe and private. Anyone with it will be able to access your funds.</string>
+    <string name="security_message">Write down the 24-word recovery seed phrase in the correct order. It is required to restore your wallet.\n\n Keep your mnemonic code safe and private. Anyone with it will be able to access your funds.</string>
     <string name="security_message_confirmation">You have to confirm in the next screen</string>
     <string name="confirmation_message">Verify your security words</string>
     <string name="order_message_confirmation">Choose the words in the right order</string>
@@ -224,7 +224,7 @@
     <string name="fee_explanation">If the custom fee is lower than the minimum fee (0.0001 PIV/kB) the cost will be the minimum and not the custom fee selected.\n Fee calculated per kilobyte.</string>
     <string name="invalid_fee_amount">Invalid fee amount</string>
     <string name="load_inputs_fail">Coin control fail</string>
-    <string name="title_tx_weight">Weight</string>
+    <string name="title_tx_weight">Size</string>
     <string name="no_data_available">Data not available</string>
     <string name="delete">Delete</string>
     <string name="no_coin_selected">No coins selected</string>
@@ -472,5 +472,6 @@
     <string name="title_mnemonic_code">Mnemonic code</string>
     <string name="title_restore_wallet">Restore wallet</string>
     <string name="permission_granted">Permission Granted</string>
+    <string name="receive_qr_explanation">Senders can scan QR code or copy the address to send PIV/zPIV to you</string>
 
 </resources>

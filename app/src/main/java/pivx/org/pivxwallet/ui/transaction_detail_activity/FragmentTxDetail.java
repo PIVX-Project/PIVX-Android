@@ -177,8 +177,8 @@ public class FragmentTxDetail extends BaseFragment implements View.OnClickListen
         txt_confirmations.setText(String.valueOf(transactionWrapper.getTransaction().getConfidence().getDepthInBlocks()));
 
         int bytesSize = transactionWrapper.getTransaction().unsafeBitcoinSerialize().length;
-        bytesSize = bytesSize / 1000;
-        txt_tx_weight.setText(bytesSize + " Kb");
+        BigDecimal bytesSizeDecimal = new BigDecimal(bytesSize).movePointLeft(3);
+        txt_tx_weight.setText(bytesSizeDecimal.toPlainString() + " Kb");
 
         txt_is_tx_spent.setText(
                 pivxModule.isEveryOutputSpent(

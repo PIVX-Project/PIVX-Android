@@ -19,14 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:paddingTop="9dp"
             android:paddingEnd="9dp"
             android:paddingStart="9dp"
             android:textSize="14sp"
             android:textColor="@color/white"
-            android:paddingBottom="12dp"
-            tools:text="Senders can scan QR code or copy the address to send PIV/zPIV to you" />
+            android:paddingBottom="29dp"
+            android:text="@string/receive_qr_explanation" />
 
         <LinearLayout
             android:layout_width="wrap_content"
