@@ -536,8 +536,8 @@ public class PivxWalletService extends Service{
                 PendingIntent openPendingIntent = PendingIntent.getActivity(PivxWalletService.this, 0, openIntent, 0);
 
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
-                        .setContentTitle("zPIV send failed")
-                        .setContentText("Please try again in some minutes")
+                        .setContentTitle("zPIV spend not completed")
+                        .setContentText("Please try again in few minutes")
                         .setAutoCancel(true)
                         .setSmallIcon(R.drawable.ic_push_notification_shield)
                         .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))

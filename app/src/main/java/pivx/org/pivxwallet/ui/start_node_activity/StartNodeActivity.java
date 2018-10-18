@@ -43,7 +43,10 @@ public class StartNodeActivity extends BaseActivity {
     private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
 
-    private static final List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts(PivxContext.NETWORK_PARAMETERS.getPort());
+    private static final List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts(
+            PivxContext.NETWORK_PARAMETERS,
+            PivxContext.NETWORK_PARAMETERS.getPort()
+    );
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
