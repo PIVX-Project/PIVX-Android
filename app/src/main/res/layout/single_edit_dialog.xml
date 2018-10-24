@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ccffffff"
+    android:id="@+id/container_dialog">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_container"
+        android:paddingStart="12dp"
+        android:layout_marginTop="12dp"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/img_error"
+            android:layout_centerVertical="true"
+            android:id="@+id/img_alert"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_title"
+            android:layout_toRightOf="@+id/img_alert"
+            android:text="Login failed"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:paddingRight="12dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_body"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:text="Are you sure?"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_text"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textSize="15sp"
+        android:textAlignment="center"
+        android:hint=""
+        android:minWidth="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/btn_container"
+        android:orientation="horizontal"
+        android:background="#662D91"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:id="@+id/btn_left"
+            android:layout_weight="1"/>
+
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:id="@+id/view_btns_divider"
+            android:background="@drawable/btn_divider"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/btn_right"
+            android:text="Yes"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

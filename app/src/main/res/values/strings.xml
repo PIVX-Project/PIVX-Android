@@ -473,5 +473,6 @@
     <string name="title_restore_wallet">Restore wallet</string>
     <string name="permission_granted">Permission Granted</string>
     <string name="receive_qr_explanation">Senders can scan QR code or copy the address to send PIV/zPIV to you</string>
+    <string name="settings_reset_blockchain_to">Rollback chain to an specific block</string>
 
 </resources>

@@ -1,9 +1,12 @@
 package pivx.org.pivxwallet.ui.settings.settings_activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +56,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonChange;
     private Button btn_change_node;
     private Button btn_reset_blockchain;
+    private Button btn_reset_blockchain_to;
     private Button btn_report;
     private Button btn_support;
     private Button buttonTutorial, btn_faq;
@@ -95,6 +99,9 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         btn_reset_blockchain = (Button) findViewById(R.id.btn_reset_blockchain);
         btn_reset_blockchain.setOnClickListener(this);
+
+        btn_reset_blockchain_to = (Button) findViewById(R.id.btn_reset_blockchain_to);
+        btn_reset_blockchain_to.setOnClickListener(this);
 
         // rates
         findViewById(R.id.btn_rates).setOnClickListener(this);
@@ -164,8 +171,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             startActivity(new Intent(v.getContext(),SettingsNetworkActivity.class));
         }else if(id == R.id.btn_change_node) {
             startActivity(new Intent(v.getContext(), StartNodeActivity.class));
-        }else if(id == R.id.btn_reset_blockchain){
+        }else if(id == R.id.btn_reset_blockchain) {
             launchResetBlockchainDialog();
+        }else if(id == R.id.btn_reset_blockchain_to){
+            launchRollbackBlockchainTo();
         }else if (id == R.id.btn_report){
             launchReportDialog();
         }else if(id == R.id.btn_support){
@@ -184,6 +193,36 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         }else if (id == R.id.btn_faq){
             startActivity(new Intent(v.getContext(), FaqActivity.class));
         }
+    }
+
+    private void launchRollbackBlockchainTo() {
+        // TODO: Create dialog..
+        SimpleEditDialogFragment dialog = new SimpleEditDialogFragment(this);
+        dialog.setTitle("Rollback Chain");
+        dialog.setTitleColor(Color.BLACK);
+        dialog.setBody("You are going to rollback the chain N blocks");
+        dialog.setBodyColor(Color.BLACK);
+        dialog.setListener(new SimpleEditDialogFragment.SimpleTwoBtnsDialogListener() {
+            @Override
+            public void onRightBtnClicked(SimpleEditDialogFragment dialog) {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onLeftBtnClicked(SimpleEditDialogFragment dialog) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContainerBtnsBackgroundColor(Color.WHITE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            dialog.setRightBtnBackgroundColor(this.getResources().getColor(R.color.colorPurple, null));
+        }else {
+            dialog.setRightBtnBackgroundColor(ContextCompat.getColor(this,R.color.colorPurple));
+        }
+        dialog.setLeftBtnTextColor(Color.BLACK);
+        dialog.setRightBtnTextColor(Color.WHITE);
+        dialog.setRootBackgroundRes(R.drawable.dialog_bg);
+        dialog.show();
     }
 
     private void launchResetBlockchainDialog() {

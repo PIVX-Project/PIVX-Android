@@ -140,7 +140,7 @@
 
             <Button
                 android:id="@+id/btn_reset_blockchain"
-                android:background="@drawable/settings_item_blank"
+                android:background="@drawable/settings_items"
                 android:stateListAnimator="@null"
                 android:padding="8dp"
                 android:height="40dp"
@@ -153,6 +153,22 @@
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:text="@string/settings_reset_blockchain"/>
+
+            <Button
+                android:id="@+id/btn_reset_blockchain_to"
+                android:background="@drawable/settings_item_blank"
+                android:stateListAnimator="@null"
+                android:padding="8dp"
+                android:height="40dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/mainText"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:text="@string/settings_reset_blockchain_to"/>
 
 
         </LinearLayout>

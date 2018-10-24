@@ -975,8 +975,14 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             startActivityForResult(intent,SEND_DETAIL);
 
         } catch (InsufficientMoneyException e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("Insufficient balance\nMissing coins "+e.missing.toFriendlyString());
+            String message;
+            if (isPrivate){
+                message = "Insufficient balance\nMissing coins "+e.missing.toFriendlyString() +
+                        "\n\n Your zPIV needs at least 20 confirmations to be able to spend them";
+            }else {
+                message = "Insufficient balance\nMissing coins "+e.missing.toFriendlyString();
+            }
+            throw new IllegalArgumentException(message);
         } catch (InsufficientInputsException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Insufficient balance\nMissing coins "+e.getMissing().toFriendlyString());

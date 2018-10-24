@@ -1,21 +1,29 @@
-package pivx.org.pivxwallet.ui.base.dialogs;
+package pivx.org.pivxwallet.ui.settings.settings_activity;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.view.KeyboardShortcutGroup;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 
 import static android.view.View.GONE;
 
-/**
- * Created by mati on 26/01/17.
- */
+public class SimpleEditDialogFragment extends Dialog implements View.OnClickListener {
 
-public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListener {
+    private EditText editText;
 
     private SimpleTwoBtnsDialogListener listener;
 
@@ -42,29 +50,35 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
 
 
 
-    public SimpleTwoButtonsDialog(Context context) {
+    public SimpleEditDialogFragment(Context context) {
         super(context);
     }
 
-    public static SimpleTwoButtonsDialog newInstance(Context context) {
-        SimpleTwoButtonsDialog fragment = new SimpleTwoButtonsDialog(context);
+    public static SimpleEditDialogFragment newInstance(Context context) {
+        SimpleEditDialogFragment fragment = new SimpleEditDialogFragment(context);
         return fragment;
+    }
+
+    @Override
+    public void onProvideKeyboardShortcuts(List<KeyboardShortcutGroup> data, @Nullable Menu menu, int deviceId) {
+
     }
 
     public interface SimpleTwoBtnsDialogListener{
 
-        void onRightBtnClicked(SimpleTwoButtonsDialog dialog);
+        void onRightBtnClicked(SimpleEditDialogFragment dialog);
 
-        void onLeftBtnClicked(SimpleTwoButtonsDialog dialog);
+        void onLeftBtnClicked(SimpleEditDialogFragment dialog);
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setContentView(R.layout.simple_two_btns_dialog);
+        setContentView(R.layout.single_edit_dialog);
 
         container_dialog = findViewById(R.id.container_dialog);
+        editText = (EditText) findViewById(R.id.edit_text);
         View title_container = findViewById(R.id.title_container);
         TextView txt_title = (TextView) findViewById(R.id.txt_title);
         TextView txt_body = (TextView) findViewById(R.id.txt_body);
@@ -181,22 +195,22 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
         this.bodyColor = bodyColor;
     }
 
-    public SimpleTwoButtonsDialog setImgAlertRes(int imgAlertRes) {
+    public SimpleEditDialogFragment setImgAlertRes(int imgAlertRes) {
         this.imgAlertRes = imgAlertRes;
         return this;
     }
 
-    public SimpleTwoButtonsDialog setContainerBtnsBackgroundColor(int containerBtnsBackgroundColor) {
+    public SimpleEditDialogFragment setContainerBtnsBackgroundColor(int containerBtnsBackgroundColor) {
         this.containerBtnsBackgroundColor = containerBtnsBackgroundColor;
         return this;
     }
 
-    public SimpleTwoButtonsDialog setLeftBtnTextColor(int leftBtnTextColor) {
+    public SimpleEditDialogFragment setLeftBtnTextColor(int leftBtnTextColor) {
         this.leftBtnTextColor = leftBtnTextColor;
         return this;
     }
 
-    public SimpleTwoButtonsDialog setRightBtnTextColor(int rightBtnTextColor) {
+    public SimpleEditDialogFragment setRightBtnTextColor(int rightBtnTextColor) {
         this.rightBtnTextColor = rightBtnTextColor;
         return this;
     }
@@ -206,32 +220,32 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
         setRightBtnTextColor(color);
     }
 
-    public SimpleTwoButtonsDialog setLeftBtnText(String leftBtnText) {
+    public SimpleEditDialogFragment setLeftBtnText(String leftBtnText) {
         this.leftBtnText = leftBtnText;
         return this;
     }
 
-    public SimpleTwoButtonsDialog setLeftBtnText(int resLeftBtnText) {
+    public SimpleEditDialogFragment setLeftBtnText(int resLeftBtnText) {
         this.leftBtnText = getContext().getString(resLeftBtnText);
         return this;
     }
 
-    public SimpleTwoButtonsDialog setRightBtnText(String rightBtnText) {
+    public SimpleEditDialogFragment setRightBtnText(String rightBtnText) {
         this.rightBtnText = rightBtnText;
         return this;
     }
 
-    public SimpleTwoButtonsDialog setRightBtnText(int resRightBtnText) {
+    public SimpleEditDialogFragment setRightBtnText(int resRightBtnText) {
         this.rightBtnText = getContext().getString(resRightBtnText);
         return this;
     }
 
-    public SimpleTwoButtonsDialog setRightBtnBackgroundColor(int rightBtnBackgroundColor) {
+    public SimpleEditDialogFragment setRightBtnBackgroundColor(int rightBtnBackgroundColor) {
         this.rightBtnBackgroundColor = rightBtnBackgroundColor;
         return this;
     }
 
-    public SimpleTwoButtonsDialog setLeftBtnBackgroundColor(int leftBtnBackgroundColor) {
+    public SimpleEditDialogFragment setLeftBtnBackgroundColor(int leftBtnBackgroundColor) {
         this.leftBtnBackgroundColor = leftBtnBackgroundColor;
         return this;
     }
@@ -243,4 +257,5 @@ public class SimpleTwoButtonsDialog extends Dialog implements View.OnClickListen
     public boolean isOptionSelected() {
         return optionSelected;
     }
+
 }

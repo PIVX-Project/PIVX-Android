@@ -6,7 +6,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.widget.Toast;
+
+import com.google.common.collect.Lists;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +55,12 @@ public class AndroidUtils {
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 //		ArrayList<CharSequence> str = new ArrayList<CharSequence>();
 //		str.add(text);
-        intent.putExtra(Intent.EXTRA_TEXT, text);
+        if (Build.VERSION.SDK_INT > 21){
+            intent.putExtra(Intent.EXTRA_TEXT, Lists.newArrayList(text));
+        }else {
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+        }
+
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 

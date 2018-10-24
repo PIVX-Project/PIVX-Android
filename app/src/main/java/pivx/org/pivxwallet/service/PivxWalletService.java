@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -62,7 +63,9 @@ import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.module.PivxContext;
 import global.PivxModuleImp;
+import pivx.org.pivxwallet.module.store.AccStoreDb;
 import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
+import pivx.org.pivxwallet.module.store.StoredAccumulator;
 import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
 import pivx.org.pivxwallet.rate.RequestPivxRateException;
 import global.PivxRate;
@@ -478,6 +481,14 @@ public class PivxWalletService extends Service{
             Future<Boolean> future = executor.submit(() -> {
                 String failMsg;
                 try {
+
+                    // Print every acc value that is on the db...
+                    ArrayList<StoredAccumulator> list = ((AccStoreDb)PivxContext.CONTEXT.accStore).list();
+                    log.error("------ Stored accumulators..");
+                    for (StoredAccumulator storedAccumulator : list) {
+                        log.error(storedAccumulator.toString());
+                    }
+                    log.error("------ END Stored accumulators..");
 
                     // Notificate user about this process
 

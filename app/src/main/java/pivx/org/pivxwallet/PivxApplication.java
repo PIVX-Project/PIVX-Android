@@ -41,10 +41,13 @@ import ch.qos.logback.core.rolling.TimeBasedRollingPolicy;
 import global.ContextWrapper;
 import global.WalletConfiguration;
 import global.utils.Io;
+import host.furszy.zerocoinj.store.AccStore;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.store.AccStoreDb;
+import pivx.org.pivxwallet.module.store.SnappyAccStore;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import global.PivxModule;
 import global.PivxModuleImp;
@@ -156,6 +159,11 @@ public class PivxApplication extends Application implements ContextWrapper {
             //    new ANRWatchDog().start();
             CrashReporter.init(getCacheDir());
             CrashReporter.setCrashListener(crashListener);
+
+            PivxContext.CONTEXT.zerocoinContext.jniBridge = new AndroidJniBridge();
+            PivxContext.CONTEXT.accStore = new AccStoreDb(this);
+
+
             // Default network conf for localhost test
             networkConf = new NetworkConf();
             appConf = new AppConf(getSharedPreferences(AppConf.PREFERENCE_NAME, MODE_PRIVATE));
@@ -165,7 +173,6 @@ public class PivxApplication extends Application implements ContextWrapper {
             ContactsStore contactsStore = new ContactsStore(this);
             pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
 
-            PivxContext.CONTEXT.zerocoinContext.jniBridge = new AndroidJniBridge();
 
             if (appConf.isAppInit()) {
                 startCoreBackground();

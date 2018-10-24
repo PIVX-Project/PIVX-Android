@@ -87,6 +87,8 @@ public class WalletActivity extends BaseDrawerActivity {
     private FloatingActionButton fab_request, fab_add, fab_convert ;
     private FloatingActionMenu floatingActionMenu;
 
+    // Reminder dialog
+    private SimpleTwoButtonsDialog reminderDialog;
 
     // Receiver
     private LocalBroadcastManager localBroadcastManager;
@@ -295,26 +297,28 @@ public class WalletActivity extends BaseDrawerActivity {
             long now = System.currentTimeMillis();
             if (pivxApplication.getLastTimeRequestedBackup()+1800000L<now) {
                 pivxApplication.setLastTimeBackupRequested(now);
-                SimpleTwoButtonsDialog reminderDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
-                        this,
-                        getString(R.string.reminder_backup),
-                        getString(R.string.reminder_backup_body),
-                        new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
-                            @Override
-                            public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
-                                startActivity(new Intent(WalletActivity.this, SettingsBackupActivity.class));
-                                dialog.dismiss();
-                            }
+                if (reminderDialog == null) {
+                    reminderDialog = DialogsUtil.buildSimpleTwoBtnsDialog(
+                            this,
+                            getString(R.string.reminder_backup),
+                            getString(R.string.reminder_backup_body),
+                            new SimpleTwoButtonsDialog.SimpleTwoBtnsDialogListener() {
+                                @Override
+                                public void onRightBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                    startActivity(new Intent(WalletActivity.this, SettingsBackupActivity.class));
+                                    dialog.dismiss();
+                                }
 
-                            @Override
-                            public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
-                                dialog.dismiss();
+                                @Override
+                                public void onLeftBtnClicked(SimpleTwoButtonsDialog dialog) {
+                                    dialog.dismiss();
+                                }
                             }
-                        }
-                );
-                reminderDialog.setLeftBtnText(getString(R.string.button_dismiss));
-                reminderDialog.setLeftBtnTextColor(Color.BLACK);
-                reminderDialog.setRightBtnText(getString(R.string.button_ok));
+                    );
+                    reminderDialog.setLeftBtnText(getString(R.string.button_dismiss));
+                    reminderDialog.setLeftBtnTextColor(Color.BLACK);
+                    reminderDialog.setRightBtnText(getString(R.string.button_ok));
+                }
                 reminderDialog.show();
             }
         }
