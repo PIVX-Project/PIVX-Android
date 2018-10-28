@@ -196,7 +196,6 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     }
 
     private void launchRollbackBlockchainTo() {
-        // TODO: Create dialog..
         SimpleEditDialogFragment dialog = new SimpleEditDialogFragment(this);
         dialog.setTitle("Rollback Chain");
         dialog.setTitleColor(Color.BLACK);
@@ -205,7 +204,11 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         dialog.setListener(new SimpleEditDialogFragment.SimpleTwoBtnsDialogListener() {
             @Override
             public void onRightBtnClicked(SimpleEditDialogFragment dialog) {
+                String heightStr = dialog.getTextOnEditText();
+                int height = Integer.valueOf(heightStr);
+                pivxApplication.stopBlockchainAndRollBackitTo(height);
                 dialog.dismiss();
+                Toast.makeText(SettingsActivity.this,R.string.reseting_blockchain,Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -220,7 +223,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             dialog.setRightBtnBackgroundColor(ContextCompat.getColor(this,R.color.colorPurple));
         }
         dialog.setLeftBtnTextColor(Color.BLACK);
-        dialog.setRightBtnTextColor(Color.WHITE);
+        dialog.setRightBtnTextColor(Color.BLACK);
         dialog.setRootBackgroundRes(R.drawable.dialog_bg);
         dialog.show();
     }

@@ -79,6 +79,7 @@ import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRAN
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_CANCEL_COINS_RECEIVED;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN_ROLLBACK_TO;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_SCHEDULE_SERVICE;
 import static pivx.org.pivxwallet.service.IntentsConstants.DATA_TRANSACTION_HASH;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
@@ -114,6 +115,7 @@ public class PivxWalletService extends Service{
 
     private SnappyBlockchainStore blockchainStore;
     private boolean resetBlockchainOnShutdown = false;
+    private int resetToHeight = -1;
     /** Created service time (just for checks) */
     private long serviceCreatedAt;
     /** Cached amount to notify balance */
@@ -169,6 +171,7 @@ public class PivxWalletService extends Service{
         public void onPeerDisconnected(Peer peer, int i) {
             //todo: notify peer disconnected
             log.info("Peer disconnected: "+peer.getAddress());
+            nm.cancelAll();
         }
     }
 
@@ -350,6 +353,7 @@ public class PivxWalletService extends Service{
             final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.cancelAll();
             broadcastManager = LocalBroadcastManager.getInstance(this);
             // PIVX
             pivxApplication = PivxApplication.getInstance();
@@ -423,6 +427,11 @@ public class PivxWalletService extends Service{
                     log.info("will remove blockchain on service shutdown");
                     resetBlockchainOnShutdown = true;
                     stopSelf();
+                } else if (ACTION_RESET_BLOCKCHAIN_ROLLBACK_TO.equals(action)){
+                    log.info("will remove blockchain on service shutdown");
+                    resetBlockchainOnShutdown = true;
+                    resetToHeight = intent.getIntExtra("height",-1);
+                    stopSelf();
                 } else if (ACTION_BROADCAST_TRANSACTION.equals(action)) {
                     blockchainManager.broadcastTransaction(intent.getByteArrayExtra(DATA_TRANSACTION_HASH));
                 }
@@ -451,8 +460,12 @@ public class PivxWalletService extends Service{
             module.removeCoinsReceivedEventListener(coinReceiverListener);
             module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
             blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
-            blockchainManager.destroy(resetBlockchainOnShutdown);
 
+            if (resetToHeight != -1){
+                blockchainManager.rollbackTo(resetToHeight);
+            }else {
+                blockchainManager.destroy(resetBlockchainOnShutdown);
+            }
 
             if (wakeLock.isHeld()) {
                 log.debug("wakelock still held, releasing");

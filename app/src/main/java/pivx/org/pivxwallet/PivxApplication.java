@@ -60,6 +60,7 @@ import pivx.org.pivxwallet.utils.CentralFormats;
 import pivx.org.pivxwallet.utils.CrashReporter;
 
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN;
+import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_RESET_BLOCKCHAIN_ROLLBACK_TO;
 import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
 /**
@@ -335,6 +336,13 @@ public class PivxApplication extends Application implements ContextWrapper {
     public void stopBlockchain() {
         Intent intent = new Intent(this,PivxWalletService.class);
         intent.setAction(ACTION_RESET_BLOCKCHAIN);
+        startService(intent);
+    }
+
+    public void stopBlockchainAndRollBackitTo(int height) {
+        Intent intent = new Intent(this,PivxWalletService.class);
+        intent.setAction(ACTION_RESET_BLOCKCHAIN_ROLLBACK_TO);
+        intent.putExtra("height", height);
         startService(intent);
     }
 

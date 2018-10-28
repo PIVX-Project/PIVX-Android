@@ -24,6 +24,7 @@ public class IntentsConstants {
     public static final String ACTION_SCHEDULE_SERVICE = "schedule_service";
     public static final String ACTION_CANCEL_COINS_RECEIVED = "cancel_coins";
     public static final String ACTION_RESET_BLOCKCHAIN = "reset_blockchain";
+    public static final String ACTION_RESET_BLOCKCHAIN_ROLLBACK_TO = "reset_blockchain_rollback_to";
     public static final String ACTION_BROADCAST_TRANSACTION = "broad_tx";
 
     public static final String ACTION_APP_CORE_CRASH = "app_core_crash";

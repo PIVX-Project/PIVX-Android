@@ -267,7 +267,6 @@ public class ConvertActivity extends BaseActivity {
         simpleTwoButtonsDialog.setLeftBtnText(R.string.button_cancel);
         simpleTwoButtonsDialog.setRightBtnText(R.string.btn_send);
         simpleTwoButtonsDialog.show();
-        return;
     }
 
     private void clearFields() {
@@ -413,21 +412,25 @@ public class ConvertActivity extends BaseActivity {
             isServiceConnected.set(true);
             // Now that the service is connected, let's try to spend the coin
             String msg;
+            boolean isOk = false;
             try {
                 pivxWalletService.broadcastCoinSpendTransactionSync(
                         SendRequest.forTx(transaction)
                 );
                 transaction = null;
                 msg = "Sending transaction..";
+                isOk = true;
             } catch (Exception e){
                 e.printStackTrace();
                 msg = "Cannot Spend coins, " + e.getMessage();
             }
             String finalMsg = msg;
+            boolean finalIsOk = isOk;
             runOnUiThread(() -> {
                 Toast.makeText(ConvertActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
                 disconnectFromService();
-                new Handler().postDelayed(ConvertActivity.this::onBackPressed,4000);
+                if (finalIsOk)
+                    new Handler().postDelayed(ConvertActivity.this::onBackPressed,4000);
             });
 
         }

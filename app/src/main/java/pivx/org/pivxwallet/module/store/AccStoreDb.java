@@ -25,7 +25,7 @@ public class AccStoreDb extends AbstractSqliteDb<StoredAccumulator> implements A
 
 
     private static final String DATABASE_NAME = "AccStore";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TABLE_NAME = "acc";
 
     private static final String KEY_ID = "id";
@@ -49,8 +49,8 @@ public class AccStoreDb extends AbstractSqliteDb<StoredAccumulator> implements A
                 "create table " +TABLE_NAME+
                         "(" +
                         KEY_ID + " INTEGER primary key autoincrement, "+
-                        KEY_HEIGHT + " TEXT, "+
-                        KEY_DENOM + " TEXT, "+
+                        KEY_HEIGHT + " INTEGER, "+
+                        KEY_DENOM + " INTEGER, "+
                         KEY_VALUE + " TEXT"
                         +")"
         );
@@ -94,8 +94,12 @@ public class AccStoreDb extends AbstractSqliteDb<StoredAccumulator> implements A
     public BigInteger get(int height, CoinDenomination coinDenomination) throws AccStoreException {
         Cursor cursor = getReadableDatabase().rawQuery( "select * from "+getTableName()+" where "+KEY_HEIGHT+"='"+String.valueOf(height)+"' AND " +
                 KEY_DENOM+"='"+coinDenomination.getDenomination()+"'", null );
+
         if(cursor.moveToFirst()) {
-            return buildFrom(cursor).getValue();
+            StoredAccumulator stored = buildFrom(cursor);
+            if (stored.getDenom() == coinDenomination && stored.getHeight() == height){
+                return stored.getValue();
+            }
         }
         return null;
 

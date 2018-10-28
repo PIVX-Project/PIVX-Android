@@ -49,7 +49,6 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
     private View container_dialog;
 
 
-
     public SimpleEditDialogFragment(Context context) {
         super(context);
     }
@@ -103,7 +102,7 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
 
 
     private void initTitle(View title_container, TextView txt_title){
-        if (title!=null){
+        if (title != null){
             title_container.setVisibility(View.VISIBLE);
             txt_title.setText(title);
             if (titleColor!=0){
@@ -256,6 +255,10 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
 
     public boolean isOptionSelected() {
         return optionSelected;
+    }
+
+    public String getTextOnEditText(){
+        return (editText != null) ? editText.getText().toString() : null;
     }
 
 }

@@ -17,15 +17,19 @@ import org.pivxj.store.BlockStoreException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import host.furszy.zerocoinj.store.RollbackBlockStore;
 
 /**
  * Created by furszy on 10/17/17.
  */
 
-public class SnappyBlockchainStore implements BlockStore{
+public class SnappyBlockchainStore implements BlockStore, RollbackBlockStore{
 
     private static final String CHAIN_HEAD_KEY_STRING = "chainhead";
 
@@ -35,6 +39,9 @@ public class SnappyBlockchainStore implements BlockStore{
     private final ByteBuffer zerocoinBuffer = ByteBuffer.allocate(StoredBlock.COMPACT_SERIALIZED_SIZE_ZEROCOIN);
     private final File path;
     private final String filename;
+
+    // Stored genesis
+    private StoredBlock storedGenesis;
 
 
     /** Creates a LevelDB SPV block store using the given factory, which is useful if you want a pure Java version. */
@@ -71,7 +78,7 @@ public class SnappyBlockchainStore implements BlockStore{
         } catch (SnappydbException e) {
             // not initialized
             Block genesis = context.getParams().getGenesisBlock().cloneAsHeader();
-            StoredBlock storedGenesis = new StoredBlock(genesis, genesis.getWork(), 0);
+            storedGenesis = new StoredBlock(genesis, genesis.getWork(), 0);
             put(storedGenesis);
             setChainHead(storedGenesis);
         }
@@ -80,15 +87,11 @@ public class SnappyBlockchainStore implements BlockStore{
     @Override
     public synchronized void put(StoredBlock block) throws BlockStoreException {
         try {
-            //System.out.println("### trying to save something..");
             ByteBuffer buffer;
             buffer = block.getHeader().isZerocoin() ? zerocoinBuffer : this.buffer;
             buffer.clear();
-            //System.out.println("Block information: " + block.toString());
             block.serializeCompact(buffer);
             Sha256Hash blockHash = block.getHeader().getHash();
-            //System.out.println("### block hash to save: " + blockHash.toString());
-            //byte[] hash = blockHash.getBytes();
             byte[] dbBuffer = buffer.array();
             db.put(blockHash.toString(), dbBuffer);
             // just for now to check something:
@@ -106,7 +109,6 @@ public class SnappyBlockchainStore implements BlockStore{
         try {
             String blockToGet = hash.toString();
             if (!db.exists(blockToGet)) {
-                //System.out.println("Block to get doesn't exists: "+blockToGet);
                 return null;
             }
             byte[] bits = db.getBytes(blockToGet);
@@ -122,7 +124,6 @@ public class SnappyBlockchainStore implements BlockStore{
     @Override
     public synchronized StoredBlock getChainHead() throws BlockStoreException {
         try {
-            //System.out.println("Calling get Method from chain head");
             return get(Sha256Hash.wrap(db.getBytes(CHAIN_HEAD_KEY_STRING)));
         } catch (SnappydbException e) {
             e.printStackTrace();
@@ -194,5 +195,71 @@ public class SnappyBlockchainStore implements BlockStore{
 
     public void truncate() throws SnappydbException {
         db.destroy();
+    }
+
+    public synchronized void rollbackTo(int height) throws BlockStoreException {
+        //lock.lock();
+        try {
+            StoredBlock block = getChainHead();
+            List<Sha256Hash> blocksToRemove = new ArrayList<>();
+            StoredBlock newChainHead = null;
+            if (block.getHeight() <= height || height <= 0) throw new IllegalArgumentException("Invalid height");
+            for (;;){
+                blocksToRemove.add(block.getHeader().getHash());
+                block = block.getPrev(this);
+                if (block.getHeight() == height){
+                    newChainHead = block;
+                    break;
+                }
+            }
+            for (int i = 0; i < height; i++) {
+                blocksToRemove.add(block.getHeader().getHash());
+                block = block.getPrev(this);
+            }
+
+            // Now remove every block
+            for (Sha256Hash sha256Hash : blocksToRemove) {
+                db.del(sha256Hash.toString());
+            }
+
+            setChainHead(newChainHead);
+        } catch (SnappydbException e) {
+            throw new BlockStoreException("Exception trying to remove values from the db" ,e);
+        } finally {
+            //lock.unlock();
+        }
+    }
+
+    public synchronized void rollbackTo(Sha256Hash blockHash) throws BlockStoreException {
+        //lock.lock();
+        try {
+            // First check if its exists..
+            List<Sha256Hash> blocksToRemove = new ArrayList<>();
+            StoredBlock block = getChainHead();
+            StoredBlock chainHead;
+            while (true) {
+                if (block.getHeader().getHashAsString().equals(blockHash.toString())) {
+                    chainHead = block;
+                    break;
+                }else {
+                    blocksToRemove.add(block.getHeader().getHash());
+                    block = block.getPrev(this);
+                    if (block == null || block.equals(storedGenesis)){
+                        throw new BlockStoreException("Block not found");
+                    }
+                }
+            }
+
+            // Now remove every block
+            for (Sha256Hash sha256Hash : blocksToRemove) {
+                db.del(sha256Hash.toString());
+            }
+
+            setChainHead(chainHead);
+        } catch (SnappydbException e) {
+            throw new BlockStoreException("Exception trying to remove values from the db" ,e);
+        } finally {
+            //lock.unlock();
+        }
     }
 }
