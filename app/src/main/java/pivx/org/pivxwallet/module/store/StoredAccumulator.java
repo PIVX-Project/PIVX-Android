@@ -33,7 +33,7 @@ public class StoredAccumulator {
         return "StoredAccumulator{" +
                 "height=" + height +
                 ", denom=" + denom +
-                ", value=" + value +
+                ", value=" + value.toString(16) +
                 '}';
     }
 }

@@ -35,6 +35,7 @@ import org.pivxj.core.listeners.PeerDisconnectedEventListener;
 import org.pivxj.core.listeners.TransactionConfidenceEventListener;
 import org.pivxj.wallet.SendRequest;
 import org.pivxj.wallet.Wallet;
+import org.pivxj.wallet.exceptions.RequestFailedErrorcodeException;
 import org.pivxj.wallet.listeners.WalletCoinsReceivedEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -493,6 +494,7 @@ public class PivxWalletService extends Service{
             log.info("broadcastCoinSpendTransactionSync " + sendRequest);
             Future<Boolean> future = executor.submit(() -> {
                 String failMsg;
+                boolean showErrorMsg = false;
                 try {
 
                     // Print every acc value that is on the db...
@@ -543,8 +545,13 @@ public class PivxWalletService extends Service{
                 } catch (CannotSpendCoinsException e) {
                     log.warn("############ - Cannot spend coins", e);
                     failMsg = e.getMessage();
+                }catch (RequestFailedErrorcodeException e){
+                    log.warn("############ - Cannot spend coins", e);
+                    showErrorMsg = true;
+                    failMsg = e.getMessage();
                 } catch (Exception e){
                     log.warn("############ - Cannot spend coins", e);
+                    showErrorMsg = true;
                     failMsg = e.getMessage();
                 }
                 isSending.set(false);
@@ -559,9 +566,14 @@ public class PivxWalletService extends Service{
                 openIntent.putExtra("Private", true);
                 PendingIntent openPendingIntent = PendingIntent.getActivity(PivxWalletService.this, 0, openIntent, 0);
 
+                String finalMsg = "Please try again in few minutes";
+                if (showErrorMsg){
+                    finalMsg = failMsg;
+                }
+
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
                         .setContentTitle("zPIV spend not completed")
-                        .setContentText("Please try again in few minutes")
+                        .setContentText(finalMsg)
                         .setAutoCancel(true)
                         .setSmallIcon(R.drawable.ic_push_notification_shield)
                         .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))

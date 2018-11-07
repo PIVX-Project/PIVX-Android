@@ -44,6 +44,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import global.PivxModuleImp;
 import global.PivxRate;
+import global.exceptions.NoPeerConnectedException;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.service.PivxWalletService;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
@@ -151,6 +152,16 @@ public class ConvertActivity extends BaseActivity {
                 return;
             }
             try {
+
+                // check if the wallet is still syncing
+                try {
+                    if(!pivxModule.isSyncWithNode()){
+                        throw new IllegalArgumentException(getString(R.string.wallet_is_not_sync));
+                    }
+                } catch (NoPeerConnectedException e) {
+                    Toast.makeText(v.getContext(), R.string.no_peer_connection, Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Coin coin = Coin.parseCoin(mint);
 
@@ -408,16 +419,23 @@ public class ConvertActivity extends BaseActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder binder) {
             Log.d("APP", "onServiceConnected");
+            if (transaction == null){
+                Log.e("APP", "Trying to send a null tx");
+                return;
+            }
             pivxWalletService = ((PivxWalletService.PivxBinder)binder).getService();
             isServiceConnected.set(true);
+            Toast.makeText(ConvertActivity.this, "Processing request..", Toast.LENGTH_SHORT).show();
             // Now that the service is connected, let's try to spend the coin
             String msg;
             boolean isOk = false;
             try {
-                pivxWalletService.broadcastCoinSpendTransactionSync(
-                        SendRequest.forTx(transaction)
-                );
+                final Transaction temp = transaction;
                 transaction = null;
+
+                pivxWalletService.broadcastCoinSpendTransactionSync(
+                        SendRequest.forTx(temp)
+                );
                 msg = "Sending transaction..";
                 isOk = true;
             } catch (Exception e){
@@ -427,10 +445,11 @@ public class ConvertActivity extends BaseActivity {
             String finalMsg = msg;
             boolean finalIsOk = isOk;
             runOnUiThread(() -> {
-                Toast.makeText(ConvertActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
+                if (!finalIsOk)
+                    Toast.makeText(ConvertActivity.this, finalMsg, Toast.LENGTH_SHORT).show();
                 disconnectFromService();
-                if (finalIsOk)
-                    new Handler().postDelayed(ConvertActivity.this::onBackPressed,4000);
+                //if (finalIsOk)
+                //    new Handler().postDelayed(ConvertActivity.this::onBackPressed,4000);
             });
 
         }

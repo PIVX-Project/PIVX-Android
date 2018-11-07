@@ -44,9 +44,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
 import global.utils.Io;
+import host.furszy.zerocoinj.store.AccStore;
+import pivx.org.pivxwallet.PivxApplication;
 import pivx.org.pivxwallet.R;
+import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.store.AccStoreDb;
+import pivx.org.pivxwallet.module.store.StoredAccumulator;
 
 import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
@@ -197,7 +203,23 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
 
 
         if (viewCollectDb.isChecked()) {
-            //todo: add contacts db and rates db here.
+            try {
+                //todo: add contacts db and rates db here.
+                List<StoredAccumulator> data = ((AccStoreDb) PivxContext.CONTEXT.accStore).list();
+                if (data != null && !data.isEmpty()) {
+                    final File file = File.createTempFile("db-dump", ".txt", cacheDir);
+                    final Writer writer = new OutputStreamWriter(new FileOutputStream(file), Charsets.UTF_8);
+                    for (Object o : data) {
+                        writer.write(o.toString() + "\n");
+                    }
+                    writer.close();
+
+                    attachments.add(FileProvider.getUriForFile(getContext(), authorities, file));
+                }
+
+            }catch (Exception e){
+                log.error("Exception",e);
+            }
             /*try{
 				List data = databaseCollector.collectData();
 				if (data!=null && !data.isEmpty()){

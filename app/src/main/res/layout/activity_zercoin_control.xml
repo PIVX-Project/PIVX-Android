@@ -57,12 +57,12 @@
                 android:layout_height="1dp"
                 android:background="@color/black_a_10" />
 
-            <fragment
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="pivx.org.pivxwallet.ui.privacy.privacy_coin_control.ZCoinsListFragment"
-                android:id="@+id/fragment_zcoins_amounts"
-                />
+            <!--<fragment-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:name="pivx.org.pivxwallet.ui.privacy.privacy_coin_control.ZCoinsListFragment"-->
+                <!--android:id="@+id/fragment_zcoins_amounts"-->
+                <!--/>-->
 
         </LinearLayout>
 
@@ -106,17 +106,15 @@
 
         </LinearLayout>
 
-
-        <LinearLayout
+        <fragment
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <include
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            layout="@layout/row_zerocoin_coin_control" />
+            android:layout_weight="1"
+            android:name="pivx.org.pivxwallet.ui.privacy.privacy_coin_control.PrivacyCoinControlActivity$CoinControlFragment"
+            android:id="@+id/privacy_coin_control"
+            />
 
-        </LinearLayout>
+
     </LinearLayout>
 
 

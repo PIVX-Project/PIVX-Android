@@ -20,7 +20,7 @@ import pivx.org.pivxwallet.AndroidJniBridge;
 
 public class PivxContext {
 
-    public static final boolean IS_TEST = true;
+    public static final boolean IS_TEST = false;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);

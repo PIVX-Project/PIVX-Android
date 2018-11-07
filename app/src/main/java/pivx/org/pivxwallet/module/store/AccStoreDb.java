@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.zerocoinj.core.CoinDenomination;
 import com.zerocoinj.core.accumulators.Accumulator;
@@ -87,7 +88,9 @@ public class AccStoreDb extends AbstractSqliteDb<StoredAccumulator> implements A
 
     @Override
     public void put(int height, Accumulator accumulator) throws AccStoreException {
-        insert(new StoredAccumulator(height,accumulator.getDenomination(), accumulator.getValue()));
+        long ret = insert(new StoredAccumulator(height,accumulator.getDenomination(), accumulator.getValue()));
+        if (ret == -1) throw new AccStoreException("Cannot store acc for " + height + ", and denom: " + accumulator.getDenomination(), height, accumulator.getDenomination());
+        Log.e("AccStoreDb" ,"ret: " +ret);
     }
 
     @Override

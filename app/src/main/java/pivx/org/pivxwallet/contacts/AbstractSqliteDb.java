@@ -92,6 +92,11 @@ public abstract class AbstractSqliteDb<T> extends SQLiteOpenHelper implements Ab
                 new String[] { columnValue });
     }
 
+    public void truncate(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(getTableName(),null,null);
+    }
+
     protected abstract String getTableName();
     protected abstract ContentValues buildContent(T obj);
     protected abstract T buildFrom(Cursor cursor);

@@ -94,7 +94,11 @@ public class SnappyAccStore implements AccStore{
         return filename;
     }
 
-    public void truncate() throws SnappydbException {
-        db.destroy();
+    public void truncate() {
+        try {
+            db.destroy();
+        } catch (SnappydbException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
