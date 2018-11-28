@@ -685,6 +685,7 @@ public class PivxWalletService extends Service{
                         peerConnectivityListener,
                         peerConnectivityListener,
                         blockchainDownloadListener,
+                        null,
                         executor
                         );
                 //todo: ver si conviene esto..

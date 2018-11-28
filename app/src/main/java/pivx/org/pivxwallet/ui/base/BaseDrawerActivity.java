@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import chain.BlockchainState;
 import pivx.org.pivxwallet.BuildConfig;
@@ -29,6 +30,7 @@ import pivx.org.pivxwallet.ui.settings.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.NavigationUtils;
 
+import static pivx.org.pivxwallet.module.PivxContext.IS_ZEROCOIN_WALLET_ACTIVE;
 import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
@@ -209,9 +211,15 @@ public class BaseDrawerActivity extends PivxActivity implements NavigationView.O
         } else if (id == R.id.nav_address) {
             startActivity(new Intent(this, ContactsActivity.class));
         } else if (id == R.id.nav_privacy){
-            Intent myintent = new Intent(this, WalletActivity.class);
-            myintent.putExtra("Private",true);
-            startActivity(myintent);
+            if (IS_ZEROCOIN_WALLET_ACTIVE) {
+                Intent myintent = new Intent(this, WalletActivity.class);
+                myintent.putExtra("Private", true);
+                startActivity(myintent);
+            }else {
+                Toast.makeText(this, "Zerocoin features not enabled\n\nWaiting for new PIVX network update",Toast.LENGTH_LONG).show();
+                drawer.closeDrawer(GravityCompat.START);
+                return false;
+            }
         } else if (id == R.id.nav_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
         }

@@ -38,6 +38,7 @@ import chain.BlockchainState;
 import pivx.org.pivxwallet.R;
 import global.exceptions.NoPeerConnectedException;
 import global.PivxRate;
+import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
@@ -223,11 +224,14 @@ public class WalletActivity extends BaseDrawerActivity {
         // Screen changes
 
         text_value_bottom.setOnClickListener(v -> {
-            isPrivate = !isPrivate;
-            initView();
-            updateBalance();
-            showOrHideSyncingContainer();
-            txsFragment.change(isPrivate);
+            // not active
+            if (PivxContext.IS_ZEROCOIN_WALLET_ACTIVE) {
+                isPrivate = !isPrivate;
+                initView();
+                updateBalance();
+                showOrHideSyncingContainer();
+                txsFragment.change(isPrivate);
+            }
         });
     }
 
@@ -238,7 +242,12 @@ public class WalletActivity extends BaseDrawerActivity {
             super.onResume();
 
             // to check current activity in the navigation drawer
-            setNavigationMenuItemChecked(isPrivate ? 2 : 0);
+            if (PivxContext.IS_ZEROCOIN_WALLET_ACTIVE){
+                setNavigationMenuItemChecked(isPrivate ? 2 : 0);
+            }else {
+                setNavigationMenuItemChecked(0);
+            }
+
 
             // register
             try {
