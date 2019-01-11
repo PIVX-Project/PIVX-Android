@@ -12,29 +12,25 @@ import java.util.List;
 
 import pivx.org.pivxwallet.R;
 
-public abstract class FileAdapter extends ArrayAdapter<File>
-{
+public abstract class FileAdapter extends ArrayAdapter<File> {
 	protected final Context context;
 	protected final LayoutInflater inflater;
 
-	public FileAdapter(final Context context)
-	{
+	public FileAdapter(final Context context) {
 		super(context, 0);
 
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 	}
 
-	public void setFiles(final List<File> files)
-	{
+	public void setFiles(final List<File> files) {
 		clear();
 		for (final File file : files)
 			add(file);
 	}
 
 	@Override
-	public View getView(final int position, View row, final ViewGroup parent)
-	{
+	public View getView(final int position, View row, final ViewGroup parent) {
 		final File file = getItem(position);
 
 		if (row == null)

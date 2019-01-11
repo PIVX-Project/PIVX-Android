@@ -211,36 +211,34 @@ public class RestoreActivity extends BaseActivity {
 
     private void showRestoreSucced() {
         runOnUiThread(() -> {
-            String message = getString(R.string.restore_wallet_dialog_success_replay);
+            try {
+                String message = getString(R.string.restore_wallet_dialog_success_replay);
 
-            SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleTextDialog(RestoreActivity.this,getString(R.string.restore_wallet_dialog_success),message);
-            simpleTextDialog.setOkBtnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (jumpToWizard){
+                SimpleTextDialog simpleTextDialog = DialogsUtil.buildSimpleTextDialog(RestoreActivity.this, getString(R.string.restore_wallet_dialog_success), message);
+                simpleTextDialog.setOkBtnClickListener(v -> {
+                    if (jumpToWizard) {
                         startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
                     }
                     finish();
-                }
-            });
-            simpleTextDialog.setListener(new DialogListener() {
-                @Override
-                public void cancel(boolean isActionCompleted) {
-                    if (jumpToWizard){
+                });
+                simpleTextDialog.setListener(isActionCompleted -> {
+                    if (jumpToWizard) {
                         startActivity(new Intent(RestoreActivity.this, TutorialActivity.class));
                     }
                     finish();
-                }
-            });
-            simpleTextDialog.show(getFragmentManager(),getResources().getString(R.string.restore_dialog_tag));
+                });
+                simpleTextDialog.show(getFragmentManager(), getResources().getString(R.string.restore_dialog_tag));
 
-            if (!jumpToWizard) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pivxApplication.startPivxService();
-                    }
-                }, TimeUnit.SECONDS.toMillis(5));
+                if (!jumpToWizard) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            pivxApplication.startPivxService();
+                        }
+                    }, TimeUnit.SECONDS.toMillis(5));
+                }
+            }catch (Exception e){
+                LoggerFactory.getLogger(RestoreActivity.class).error("on restore dialog error",e);
             }
         });
     }

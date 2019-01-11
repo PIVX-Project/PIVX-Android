@@ -457,15 +457,20 @@ public class PivxWalletService extends Service{
                 // swallow
             }
 
-            // remove listeners
-            module.removeCoinsReceivedEventListener(coinReceiverListener);
-            module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
-            blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
+            if (module.isStarted()) {
 
-            if (resetToHeight != -1){
-                blockchainManager.rollbackTo(resetToHeight);
+                // remove listeners
+                module.removeCoinsReceivedEventListener(coinReceiverListener);
+                module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
+                blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
+
+                if (resetToHeight != -1) {
+                    blockchainManager.rollbackTo(resetToHeight);
+                } else {
+                    blockchainManager.destroy(resetBlockchainOnShutdown);
+                }
             }else {
-                blockchainManager.destroy(resetBlockchainOnShutdown);
+                tryScheduleServiceNow();
             }
 
             if (wakeLock.isHeld()) {
@@ -611,12 +616,12 @@ public class PivxWalletService extends Service{
      * Schedule service for later
      */
     private void tryScheduleService() {
-        boolean isSchedule = System.currentTimeMillis()<module.getConf().getScheduledBLockchainService();
+        boolean isSchedule = System.currentTimeMillis() < module.getConf().getScheduledBLockchainService();
 
         if (!isSchedule){
             log.info("scheduling service");
             AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-            long scheduleTime = System.currentTimeMillis() + 2000*60;//(1000 * 60 * 60); // One hour from now
+            long scheduleTime = System.currentTimeMillis() + 1000*60;//(1000 * 60 * 60); // One hour from now
 
             Intent intent = new Intent(this, PivxWalletService.class);
             intent.setAction(ACTION_SCHEDULE_SERVICE);
@@ -637,6 +642,30 @@ public class PivxWalletService extends Service{
             // save
             module.getConf().saveScheduleBlockchainService(scheduleTime);
         }
+    }
+
+
+    private void tryScheduleServiceNow() {
+        log.info("scheduling service now");
+        AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
+        long scheduleTime = System.currentTimeMillis() + 1000 * 60 * 2; // 2 minutes
+
+        Intent intent = new Intent(this, PivxWalletService.class);
+        intent.setAction(ACTION_SCHEDULE_SERVICE);
+        alarm.set(
+                // This alarm will wake up the device when System.currentTimeMillis()
+                // equals the second argument value
+                alarm.RTC_WAKEUP,
+                scheduleTime,
+                // PendingIntent.getService creates an Intent that will start a service
+                // when it is called. The first argument is the Context that will be used
+                // when delivering this intent. Using this has worked for me. The second
+                // argument is a request code. You can use this code to cancel the
+                // pending intent if you need to. Third is the intent you want to
+                // trigger. In this case I want to create an intent that will start my
+                // service. Lastly you can optionally pass flags.
+                PendingIntent.getService(this, 0,intent , 0)
+        );
     }
 
     private void requestRateCoin(){
@@ -680,14 +709,19 @@ public class PivxWalletService extends Service{
         log.info("check");
         try {
             if (!isChecking.getAndSet(true)) {
-                blockchainManager.check(
-                        impediments,
-                        peerConnectivityListener,
-                        peerConnectivityListener,
-                        blockchainDownloadListener,
-                        null,
-                        executor
-                        );
+
+                if(module.isStarted()) {
+                    blockchainManager.check(
+                            impediments,
+                            peerConnectivityListener,
+                            peerConnectivityListener,
+                            blockchainDownloadListener,
+                            null,
+                            executor
+                    );
+                }else {
+                    tryScheduleServiceNow();
+                }
                 //todo: ver si conviene esto..
                 broadcastBlockchainState(true);
                 isChecking.set(false);

@@ -73,10 +73,11 @@ public class PincodeActivity extends BaseActivity implements KeyboardFragment.on
     private void goNext() {
         if (pivxApplication.getAppConf().getTrustedNode() == null){
             // select random trusted node
-            List<PivtrumPeerData> nodes = PivtrumGlobalData.listTrustedHosts(PivxContext.NETWORK_PARAMETERS ,PivxContext.NETWORK_PARAMETERS.getPort());
-            Random random = new Random();
-            pivxApplication.setTrustedServer(nodes.get(random.nextInt(nodes.size())));
-            pivxApplication.stopBlockchain();
+            //List<PivtrumPeerData> nodes = PivtrumGlobalData.listTrustedHosts(PivxContext.NETWORK_PARAMETERS ,PivxContext.NETWORK_PARAMETERS.getPort());
+            //Random random = new Random();
+            //pivxApplication.setTrustedServer(nodes.get(random.nextInt(nodes.size())));
+            if (pivxModule.isStarted())
+                pivxApplication.stopBlockchain();
         }
 
         pivxApplication.getAppConf().setAppInit(true);

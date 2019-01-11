@@ -9,15 +9,15 @@ def my_crypto_dir_libs = my_crypto_dir
 def my_crypto_dir_inc  = my_crypto_dir + "/include"
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "pivx.tech.furszy"
         minSdkVersion 21
-        targetSdkVersion 25
-        versionCode 20
-        versionName "3.0.0"
+        targetSdkVersion 26
+        versionCode 22
+        versionName "3.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         externalNativeBuild {

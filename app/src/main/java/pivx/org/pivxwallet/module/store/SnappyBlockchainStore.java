@@ -94,10 +94,9 @@ public class SnappyBlockchainStore implements BlockStore, RollbackBlockStore{
             Sha256Hash blockHash = block.getHeader().getHash();
             byte[] dbBuffer = buffer.array();
             db.put(blockHash.toString(), dbBuffer);
-            // just for now to check something:
-            StoredBlock dbBlock = get(blockHash);
-
-            assert Arrays.equals(dbBlock.getHeader().getHash().getBytes(), blockHash.getBytes()) : "put is different than get in db.. " + block.getHeader().getHashAsString() + ", db: " + dbBlock.getHeader().getHashAsString();
+            // Do not remove this comments
+            //StoredBlock dbBlock = get(blockHash);
+            //assert Arrays.equals(dbBlock.getHeader().getHash().getBytes(), blockHash.getBytes()) : "put is different than get in db.. " + block.getHeader().getHashAsString() + ", db: " + dbBlock.getHeader().getHashAsString();
         } catch (SnappydbException e) {
             e.printStackTrace();
             throw new BlockStoreException(e);

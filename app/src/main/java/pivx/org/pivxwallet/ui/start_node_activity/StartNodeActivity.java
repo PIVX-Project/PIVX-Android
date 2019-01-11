@@ -81,9 +81,11 @@ public class StartNodeActivity extends BaseActivity {
         findViewById(R.id.btn_default).setOnClickListener(v -> {
             // Check this..
             pivxApplication.setTrustedServer(null);
-            pivxApplication.stopBlockchain();
-            // now that everything is good, start the service
-            new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+            if (pivxModule.isStarted()) {
+                pivxApplication.stopBlockchain();
+                // now that everything is good, start the service
+                new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+            }
             goNext();
             finish();
         });

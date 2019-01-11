@@ -256,7 +256,7 @@ public class WalletActivity extends BaseDrawerActivity {
                 e.printStackTrace();
             }
 
-            if (pivxApplication.isCoreStarted()) {
+            if (pivxApplication.isCoreStarted() && pivxModule.isStarted()) {
                 init();
 
                 localBroadcastManager.registerReceiver(pivxServiceReceiver, pivxServiceFilter);
