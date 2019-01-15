@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.common.base.Charsets;
 
@@ -61,6 +62,7 @@ import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
 
 public abstract class ReportIssueDialogBuilder extends DialogBuilder implements OnClickListener {
 
+    private static final Logger log = LoggerFactory.getLogger(ReportIssueDialogBuilder.class);
 
     private final Context context;
 
@@ -73,8 +75,17 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
     private CheckBox viewCollectWalletDump;
     private CheckBox viewCollectDb;
 
+    // IF this is true then the dialog will store this in a zip in the download folder
+    private boolean exportInternally = false;
 
-    private static final Logger log = LoggerFactory.getLogger(ReportIssueDialogBuilder.class);
+    public ReportIssueDialogBuilder(final Context context, String authorities, final int titleResId, final int messageResId, boolean exportInternally) {
+        this(context,authorities,titleResId,messageResId);
+        this.exportInternally = exportInternally;
+
+        if (this.exportInternally){
+            viewDescription.setVisibility(View.GONE);
+        }
+    }
 
     public ReportIssueDialogBuilder(final Context context, String authorities, final int titleResId, final int messageResId) {
         super(context);
@@ -108,6 +119,8 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
         final StringBuilder text = new StringBuilder();
         final ArrayList<Uri> attachments = new ArrayList<Uri>();
         final File cacheDir = context.getCacheDir();
+
+        List<File> files = new ArrayList<>();
 
         text.append(viewDescription.getText()).append('\n');
 
@@ -177,6 +190,8 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
                     is.close();
 
                     attachments.add(FileProvider.getUriForFile(getContext(), authorities, file));
+                    // Add file for internal store
+                    files.add(file);
                 }
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
@@ -195,6 +210,9 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
                     writer.close();
 
                     attachments.add(FileProvider.getUriForFile(getContext(), authorities, file));
+
+                    // Add file
+                    files.add(file);
                 }
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
@@ -215,6 +233,8 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
                     writer.close();
 
                     attachments.add(FileProvider.getUriForFile(getContext(), authorities, file));
+
+                    files.add(file);
                 }
 
             }catch (Exception e){
@@ -252,7 +272,38 @@ public abstract class ReportIssueDialogBuilder extends DialogBuilder implements 
 
         text.append("\n\nPUT ADDITIONAL COMMENTS TO THE TOP. DOWN HERE NOBODY WILL NOTICE.");
 
-        shareText(context,subject(), text, attachments);
+        if (exportInternally){
+            // TODO: Store this files in a zip in the download folder.
+            // TODO: Check if we have read/write permission..
+
+            File exportedFolder = new File(PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR, "pivx_log_export");
+            int i = 1;
+            while (exportedFolder.exists()){
+                exportedFolder = new File(PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR, "pivx_log_export ("+i+")");
+            }
+            if(exportedFolder.mkdir()){
+                for (File file : files) {
+                    try {
+                        File storeFile = new File(exportedFolder, file.getName());
+
+                        final InputStream is = new FileInputStream(file);
+                        final OutputStream os = new FileOutputStream(storeFile);
+
+                        Io.copy(is, os);
+
+                        os.close();
+                        is.close();
+                    }catch (Exception e){
+                        Toast.makeText(context, R.string.error_copying_files_to_log_folder, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                Toast.makeText(context, R.string.log_folder_created, Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(context, R.string.error_creating_log_folder, Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            shareText(context,subject(), text, attachments);
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package pivx.org.pivxwallet.ui.settings.settings_activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -36,6 +37,7 @@ import pivx.org.pivxwallet.ui.settings.settings_pincode_activity.SettingsPincode
 import pivx.org.pivxwallet.ui.settings.settings_rates.SettingsRatesActivity;
 import pivx.org.pivxwallet.ui.start_node_activity.StartNodeActivity;
 import pivx.org.pivxwallet.ui.tutorial_activity.TutorialActivity;
+import pivx.org.pivxwallet.utils.AndroidUtils;
 import pivx.org.pivxwallet.utils.CrashReporter;
 import pivx.org.pivxwallet.utils.DialogsUtil;
 import pivx.org.pivxwallet.utils.IntentsUtils;
@@ -62,6 +64,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
     private Button buttonTutorial, btn_faq;
     private TextView textAbout, text_rates;
     private TextView txt_network_info;
+
+    private final int REQUEST_WRITE_PERMISSION = 300;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState, ViewGroup container) {
@@ -114,6 +118,8 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
 
         btn_report = (Button) findViewById(R.id.btn_report);
         btn_report.setOnClickListener(this);
+
+        findViewById(R.id.btn_export_log).setOnClickListener(this);
 
         btn_support = (Button) findViewById(R.id.btn_support);
         btn_support.setOnClickListener(this);
@@ -175,8 +181,10 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             launchResetBlockchainDialog();
         }else if(id == R.id.btn_reset_blockchain_to){
             launchRollbackBlockchainTo();
-        }else if (id == R.id.btn_report){
-            launchReportDialog();
+        }else if (id == R.id.btn_report) {
+            launchReportDialog(false);
+        }else if (id == R.id.btn_export_log){
+            launchReportDialog(true);
         }else if(id == R.id.btn_support){
             IntentsUtils.startSend(
                     this,
@@ -252,13 +260,21 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         dialog.show();
     }
 
-    private void launchReportDialog() {
+    private void launchReportDialog(boolean isInternalReport) {
+
+        if (isInternalReport){
+            if (!AndroidUtils.checkPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_WRITE_PERMISSION)){
+                Toast.makeText(this, R.string.write_external_denied, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
         ReportIssueDialogBuilder dialog = new ReportIssueDialogBuilder(
                 this,
                 "pivx.org.pivxwallet.myfileprovider",
                 R.string.report_issuea_dialog_title,
-                R.string.report_issue_dialog_message_issue)
-        {
+                (isInternalReport) ? R.string.internal_log : R.string.report_issue_dialog_message_issue,
+                isInternalReport) {
             @Nullable
             @Override
             protected CharSequence subject() {
@@ -296,6 +312,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
                         multiWallet.getZpivWallet().toString(false, true, true, null);
             }
         };
+
         dialog.show();
     }
     @Override

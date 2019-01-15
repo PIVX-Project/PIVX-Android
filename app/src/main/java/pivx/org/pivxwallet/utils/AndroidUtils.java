@@ -1,12 +1,16 @@
 package pivx.org.pivxwallet.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import com.google.common.collect.Lists;
@@ -23,6 +27,7 @@ import pivx.org.pivxwallet.module.PivxContext;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 /**
  * Created by furszy on 8/18/17.
@@ -82,6 +87,48 @@ public class AndroidUtils {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Address", text);
         clipboard.setPrimaryClip(clip);
+    }
+
+
+    public static boolean checkPermissions(Activity context, String permissionId, int permissionRequestId) {
+        // Assume thisActivity is the current activity
+        if (Build.VERSION.SDK_INT > 22) {
+
+            int permissionCheck = ContextCompat.checkSelfPermission(context, permissionId);
+            if (permissionCheck == PERMISSION_GRANTED){
+                return true;
+            }
+
+            // Here, thisActivity is the current activity
+            if (ContextCompat.checkSelfPermission(context, permissionId) != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (ActivityCompat.shouldShowRequestPermissionRationale(context, permissionId)) {
+                        //Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                    // Show an expanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+                    return false;
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(context,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            permissionRequestId);
+
+                    return false;
+
+                    // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                    // app-defined int constant. The callback method gets the
+                    // result of the request.
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
 }

@@ -16,8 +16,8 @@ android {
         applicationId "pivx.tech.furszy"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 22
-        versionName "3.0.1"
+        versionCode 24
+        versionName "3.0.21"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         externalNativeBuild {

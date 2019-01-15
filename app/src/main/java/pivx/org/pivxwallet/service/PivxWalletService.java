@@ -115,7 +115,7 @@ public class PivxWalletService extends Service{
     private LocalBroadcastManager broadcastManager;
 
     private SnappyBlockchainStore blockchainStore;
-    private boolean resetBlockchainOnShutdown = false;
+    private AtomicBoolean resetBlockchainOnShutdown = new AtomicBoolean(false);
     private int resetToHeight = -1;
     /** Created service time (just for checks) */
     private long serviceCreatedAt;
@@ -426,11 +426,11 @@ public class PivxWalletService extends Service{
                     nm.cancel(NOT_COINS_RECEIVED);
                 } else if (ACTION_RESET_BLOCKCHAIN.equals(action)) {
                     log.info("will remove blockchain on service shutdown");
-                    resetBlockchainOnShutdown = true;
+                    resetBlockchainOnShutdown.set(true);
                     stopSelf();
                 } else if (ACTION_RESET_BLOCKCHAIN_ROLLBACK_TO.equals(action)){
                     log.info("will remove blockchain on service shutdown");
-                    resetBlockchainOnShutdown = true;
+                    resetBlockchainOnShutdown.set(true);
                     resetToHeight = intent.getIntExtra("height",-1);
                     stopSelf();
                 } else if (ACTION_BROADCAST_TRANSACTION.equals(action)) {
@@ -458,17 +458,25 @@ public class PivxWalletService extends Service{
             }
 
             if (module.isStarted()) {
-
+                log.info("removing listeners..");
                 // remove listeners
                 module.removeCoinsReceivedEventListener(coinReceiverListener);
                 module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
                 blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
 
+                log.info("Chainhead height before: " + blockchainStore.getChainHead().getHeight());
+
                 if (resetToHeight != -1) {
+                    log.info("resetting wallet to height " + resetToHeight);
                     blockchainManager.rollbackTo(resetToHeight);
+                    resetToHeight = -1;
+                    resetBlockchainOnShutdown.set(false);
                 } else {
-                    blockchainManager.destroy(resetBlockchainOnShutdown);
+                    log.info("destroying blockchainManager, resetting chain: " + resetBlockchainOnShutdown.get());
+                    blockchainManager.destroy(resetBlockchainOnShutdown.getAndSet(false));
                 }
+
+                log.info("Chainhead height after: " + blockchainStore.getChainHead().getHeight());
             }else {
                 tryScheduleServiceNow();
             }
@@ -727,9 +735,11 @@ public class PivxWalletService extends Service{
                 isChecking.set(false);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("Exception on blockchainManager check", e);
             isChecking.set(false);
             broadcastBlockchainState(false);
+            // Try to schedule the service again
+            tryScheduleServiceNow();
         }
     }
 

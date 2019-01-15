@@ -56,6 +56,7 @@
     <string name="text_version">Version</string>
     <string name="network_monitor">Network monitor</string>
     <string name="settings_report">Report issue</string>
+    <string name="settings_report_internal">Export log</string>
     <string name="send_message">Transaction details:</string>
     <string name="save_message">Do you want to save the address?</string>
     <string name="confirm">Confirm</string>
@@ -127,6 +128,7 @@
     <string name="report_issue_dialog_mail_intent_chooser">Send report using…</string>
     <string name="report_issue_dialog_mail_intent_failed">Sending report failed.</string>
     <string name="report_issue_dialog_message_issue">Please describe your issue precisely enough to be reproduced.</string>
+    <string name="internal_log">A folder will be created on the Downloads directory containing the wallet\'s logs</string>
     <string name="report_issuea_dialog_title">Report issue</string>
     <string name="invalid_inputs">Invalid input</string>
     <string name="send_error_dialog_tag">send error dialog tag</string>
@@ -474,5 +476,8 @@
     <string name="permission_granted">Permission Granted</string>
     <string name="receive_qr_explanation">Senders can scan QR code or copy the address to send PIV/zPIV to you</string>
     <string name="settings_reset_blockchain_to">Rollback chain to an specific block</string>
+    <string name="error_creating_log_folder">Error creating log folder</string>
+    <string name="error_copying_files_to_log_folder">Error copying files to log folder</string>
+    <string name="log_folder_created">Log folder created</string>
 
 </resources>
