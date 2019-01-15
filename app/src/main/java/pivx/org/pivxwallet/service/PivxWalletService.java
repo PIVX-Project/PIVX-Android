@@ -464,8 +464,6 @@ public class PivxWalletService extends Service{
                 module.removeTransactionsConfidenceChange(transactionConfidenceEventListener);
                 blockchainManager.removeBlockchainDownloadListener(blockchainDownloadListener);
 
-                log.info("Chainhead height before: " + blockchainStore.getChainHead().getHeight());
-
                 if (resetToHeight != -1) {
                     log.info("resetting wallet to height " + resetToHeight);
                     blockchainManager.rollbackTo(resetToHeight);
@@ -475,8 +473,6 @@ public class PivxWalletService extends Service{
                     log.info("destroying blockchainManager, resetting chain: " + resetBlockchainOnShutdown.get());
                     blockchainManager.destroy(resetBlockchainOnShutdown.getAndSet(false));
                 }
-
-                log.info("Chainhead height after: " + blockchainStore.getChainHead().getHeight());
             }else {
                 tryScheduleServiceNow();
             }
