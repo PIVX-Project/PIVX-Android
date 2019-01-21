@@ -26,7 +26,7 @@ public class PivxContext {
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
     // Zerocoin wallet features activation.
-    public static final boolean IS_ZEROCOIN_WALLET_ACTIVE = false;
+    public static final boolean IS_ZEROCOIN_WALLET_ACTIVE = true;
 
     {
         CONTEXT.zerocoinContext = new ZerocoinContext(new AndroidJniBridge());

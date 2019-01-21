@@ -479,5 +479,6 @@
     <string name="error_creating_log_folder">Error creating log folder</string>
     <string name="error_copying_files_to_log_folder">Error copying files to log folder</string>
     <string name="log_folder_created">Log folder created</string>
+    <string name="spending_zpiv">Spending zPIV process</string>
 
 </resources>

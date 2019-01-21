@@ -1,6 +1,7 @@
 package pivx.org.pivxwallet.service;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -102,6 +103,7 @@ import static pivx.org.pivxwallet.service.IntentsConstants.NOT_ZPIV_SENT_COMPLET
 
 public class PivxWalletService extends Service{
 
+    private static final String CHANNEL_ID = "pivx";
     private Logger log = LoggerFactory.getLogger(PivxWalletService.class);
 
     private PivxApplication pivxApplication;
@@ -161,11 +163,15 @@ public class PivxWalletService extends Service{
             log.info("Peer connected: "+peer.getAddress());
             broadcastPeerConnected();
 
-            // Check if we have tx that have not been confirmed to send.
-            //for (Transaction transaction : module.listPendingTxes()) {
-            //    log.info("Trying to send not confirmed tx again.. --> " + transaction.getHashAsString());
-            //    peer.sendMessage(transaction);
-            //}
+            try {
+                // Check if we have tx that have not been confirmed to send.
+                for (Transaction transaction : module.listPendingTxes()) {
+                    log.info("Trying to send not confirmed tx again.. --> " + transaction.getHashAsString());
+                    peer.sendMessage(transaction);
+                }
+            }catch (Exception e){
+                log.info("Exception on pending txes broadcast" ,e);
+            }
         }
 
         @Override
@@ -297,7 +303,8 @@ public class PivxWalletService extends Service{
                     Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
                     resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
                     deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-                    mBuilder = new NotificationCompat.Builder(getApplicationContext())
+
+                    mBuilder = new NotificationCompat.Builder(PivxWalletService.this, CHANNEL_ID)
                             .setContentTitle("PIV received!")
                             .setContentText("Coins received for a value of " + notificationAccumulatedAmountTemp.toFriendlyString())
                             .setAutoCancel(true)
@@ -354,6 +361,9 @@ public class PivxWalletService extends Service{
             final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                nm.createNotificationChannel(new NotificationChannel(CHANNEL_ID,CHANNEL_ID,NotificationManager.IMPORTANCE_HIGH));
+            }
             nm.cancelAll();
             broadcastManager = LocalBroadcastManager.getInstance(this);
             // PIVX
@@ -536,7 +546,7 @@ public class PivxWalletService extends Service{
                     PendingIntent openPendingIntent = PendingIntent.getActivity(PivxWalletService.this, 0, openIntent,  PendingIntent.FLAG_CANCEL_CURRENT);
 
                     Coin value = module.getValueSentFromMe(tx, false);
-                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                             .setContentTitle("zPIV send completed")
                             .setContentText(String.format("Amount %s", value.toFriendlyString()))
                             .setAutoCancel(true)
@@ -580,7 +590,7 @@ public class PivxWalletService extends Service{
                     finalMsg = failMsg;
                 }
 
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                         .setContentTitle("zPIV spend not completed")
                         .setContentText(finalMsg)
                         .setAutoCancel(true)
@@ -588,6 +598,9 @@ public class PivxWalletService extends Service{
                         .setColor(ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
                         .setContentIntent(openPendingIntent);
                 nm.notify(NOT_ZPIV_SEND_FAILED, mBuilder.build());
+
+                // Do it twice just for android issues.
+                stopSpendProcessNotification();
 
                 return true;
             });
@@ -598,15 +611,15 @@ public class PivxWalletService extends Service{
     }
 
     private void launchSpendProcessNotification() {
-        android.support.v4.app.NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getApplicationContext())
-                        .setSmallIcon(R.drawable.ic_push_notification_shield)
-                        .setContentTitle("Spending zPIV process")
-                        .setAutoCancel(false)
-                        .setOngoing(true)
-                        .setProgress(0, 0 , true)
-                        .setColor(ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
-                ;
+
+        android.support.v4.app.NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_push_notification_shield)
+                .setContentTitle(getString(R.string.spending_zpiv))
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .setProgress(0, 0 , true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setColor(ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple));
 
         nm.notify(NOT_SPENDING_PROCESS, mBuilder.build());
     }
@@ -758,8 +771,7 @@ public class PivxWalletService extends Service{
             }
 
             if(showNotif) {
-                android.support.v4.app.NotificationCompat.Builder mBuilder =
-                        new NotificationCompat.Builder(getApplicationContext())
+                android.support.v4.app.NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                                 .setSmallIcon(R.drawable.ic_push_notification_shield)
                                 .setContentTitle("Alert")
                                 .setContentText(stringBuilder.toString())

@@ -266,7 +266,7 @@
 
             <Button
                 android:id="@+id/btn_faq"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@drawable/settings_items"
                 android:stateListAnimator="@null"
                 android:padding="8dp"
