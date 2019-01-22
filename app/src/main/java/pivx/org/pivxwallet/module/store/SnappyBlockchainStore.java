@@ -25,13 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import chain.TruncableStore;
 import host.furszy.zerocoinj.store.RollbackBlockStore;
 
 /**
  * Created by furszy on 10/17/17.
  */
 
-public class SnappyBlockchainStore implements BlockStore, RollbackBlockStore{
+public class SnappyBlockchainStore implements BlockStore, RollbackBlockStore, TruncableStore {
 
     private static final String CHAIN_HEAD_KEY_STRING = "chainhead";
     private static final Logger log = LoggerFactory.getLogger(SnappyBlockchainStore.class);
@@ -248,7 +249,7 @@ public class SnappyBlockchainStore implements BlockStore, RollbackBlockStore{
         return context.getParams();
     }
 
-    public void truncate() throws SnappydbException {
+    public void truncate() throws Exception {
         db.destroy();
     }
 

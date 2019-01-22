@@ -47,6 +47,7 @@ import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
 import pivx.org.pivxwallet.module.PivxContext;
 import pivx.org.pivxwallet.module.store.AccStoreDb;
+import pivx.org.pivxwallet.module.store.MintsStoreDb;
 import pivx.org.pivxwallet.module.store.SnappyAccStore;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import global.PivxModule;
@@ -163,6 +164,7 @@ public class PivxApplication extends Application implements ContextWrapper {
 
             PivxContext.CONTEXT.zerocoinContext.jniBridge = new AndroidJniBridge();
             PivxContext.CONTEXT.accStore = new AccStoreDb(this);
+            PivxContext.CONTEXT.mintsStore = new MintsStoreDb(this);
 
 
             // Default network conf for localhost test

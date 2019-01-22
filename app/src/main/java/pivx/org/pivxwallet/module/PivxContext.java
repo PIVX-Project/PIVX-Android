@@ -28,6 +28,9 @@ public class PivxContext {
     // Zerocoin wallet features activation.
     public static final boolean IS_ZEROCOIN_WALLET_ACTIVE = true;
 
+    // Peers dns discovery
+    public static final boolean IS_DNS_DISCOVERY_ENABLED_BY_DEFAULT = false;
+
     {
         CONTEXT.zerocoinContext = new ZerocoinContext(new AndroidJniBridge());
     }

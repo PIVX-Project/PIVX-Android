@@ -28,10 +28,18 @@ public class WalletConfImp extends Configurations implements WalletConfiguration
     private static final String PREFS_KEY_SCHEDULE_BLOCKCHAIN_SERVICE = "sch_block_serv";
     private static final String PREF_CURRENCY_RATE = "currency_code";
     private static final String PREF_BEST_CHAIN_HEIGHT = "best_chain_height";
-
+    private static final String IS_DNS_DISCOVERY_ENABLED = "is_dns_discovery";
 
     public WalletConfImp(SharedPreferences prefs) {
         super(prefs);
+    }
+
+    public void setDSNDiscovery(boolean isEnabled) {
+        save(IS_DNS_DISCOVERY_ENABLED,isEnabled);
+    }
+
+    public boolean isDNSDiscoveryEnabled(){
+        return getBoolean(IS_DNS_DISCOVERY_ENABLED, PivxContext.IS_DNS_DISCOVERY_ENABLED_BY_DEFAULT);
     }
 
     @Override

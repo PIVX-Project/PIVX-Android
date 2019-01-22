@@ -67,10 +67,10 @@ public abstract class AbstractSqliteDb<T> extends SQLiteOpenHelper implements Ab
         db.update(getTableName(),contentValues,whereColumn+"=?",new String[]{whereValue});
     }
 
-    public void updateByKey(String whereColumn,String whereValue, T t) {
+    public int updateByKey(String whereColumn,String whereValue, T t) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = buildContent(t);
-        db.update(getTableName(),contentValues,whereColumn+"=?",new String[]{whereValue});
+        return db.update(getTableName(),contentValues,whereColumn+"=?",new String[]{whereValue});
     }
 
     public int updateFieldByKey(String whereColumn,String whereValue, String updateColumn, String updateValue) {

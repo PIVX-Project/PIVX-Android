@@ -13,10 +13,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import global.PivtrumGlobalData;
 import pivtrum.PivtrumPeer;
@@ -43,6 +47,10 @@ public class StartNodeActivity extends BaseActivity {
     private ArrayAdapter<String> adapter;
     private List<String> hosts = new ArrayList<>();
 
+    private AtomicBoolean isLoading = new AtomicBoolean(false);
+
+    private Handler handler;
+
     private static final List<PivtrumPeerData> trustedNodes = PivtrumGlobalData.listTrustedHosts(
             PivxContext.NETWORK_PARAMETERS,
             PivxContext.NETWORK_PARAMETERS.getPort()
@@ -55,6 +63,7 @@ public class StartNodeActivity extends BaseActivity {
         setTitle(R.string.select_node);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        handler = new Handler();
 
         // Open Dialog
         openDialog = (Button) findViewById(R.id.openDialog);
@@ -66,10 +75,7 @@ public class StartNodeActivity extends BaseActivity {
                     hosts = new ArrayList<>();
                     trustedNodes.add(pivtrumPeerData);
                     for (PivtrumPeerData trustedNode : trustedNodes) {
-                        if (trustedNode.getHost().equals(FURSZY_TESTNET_SERVER)) {
-                            hosts.add("pivt.furszy.tech");
-                        } else
-                            hosts.add(trustedNode.getHost());
+                        hosts.add(trustedNode.getHost());
                     }
                     adapter.addAll(hosts);
                     dropdown.setAdapter(adapter);
@@ -79,32 +85,64 @@ public class StartNodeActivity extends BaseActivity {
             dialogBuilder.show();
         });
         findViewById(R.id.btn_default).setOnClickListener(v -> {
-            // Check this..
-            pivxApplication.setTrustedServer(null);
-            if (pivxModule.isStarted()) {
-                pivxApplication.stopBlockchain();
-                // now that everything is good, start the service
-                new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+            try {
+                if (isLoading.compareAndSet(false, true)) {
+                    pivxApplication.setTrustedServer(null);
+                    pivxApplication.getWalletConfiguration().setDSNDiscovery(false);
+                    if (pivxModule.isStarted()) {
+                        pivxApplication.stopBlockchain();
+                        // now that everything is good, start the service
+                        handler.postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+                    }
+                    goNext();
+                    finish();
+                }
+            }catch (Exception e){
+                LoggerFactory.getLogger(StartNodeActivity.class).error("Error touching default nodes button", e);
+                isLoading.set(false);
             }
-            goNext();
-            finish();
+        });
+
+        findViewById(R.id.btn_dns_discovery).setOnClickListener(v -> {
+            try {
+                if (isLoading.compareAndSet(false, true)) {
+                    pivxApplication.setTrustedServer(null);
+                    pivxApplication.getWalletConfiguration().setDSNDiscovery(true);
+                    if (pivxModule.isStarted()) {
+                        pivxApplication.stopBlockchain();
+                        // now that everything is good, start the service
+                        handler.postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+                    }
+                    Toast.makeText(v.getContext(), R.string.dns_discovery_enabled, Toast.LENGTH_SHORT).show();
+                    goNext();
+                    finish();
+                }
+            }catch (Exception e){
+                LoggerFactory.getLogger(StartNodeActivity.class).error("Error touching DNS discovery nodes button", e);
+                isLoading.set(false);
+            }
         });
 
         // Node selected
-        btnSelectNode = (Button) findViewById(R.id.btnSelectNode);
+        btnSelectNode = findViewById(R.id.btnSelectNode);
         btnSelectNode.setOnClickListener(v -> {
-            int selected = dropdown.getSelectedItemPosition();
-            PivtrumPeerData selectedNode = trustedNodes.get(selected);
-            boolean isStarted = pivxApplication.getAppConf().getTrustedNode() != null;
-            pivxApplication.setTrustedServer(selectedNode);
+            if (isLoading.compareAndSet(false, true)) {
+                int selected = dropdown.getSelectedItemPosition();
+                PivtrumPeerData selectedNode = trustedNodes.get(selected);
+                boolean isStarted = pivxApplication.getAppConf().getTrustedNode() != null;
+                pivxApplication.setTrustedServer(selectedNode);
+                pivxApplication.getWalletConfiguration().setDSNDiscovery(false);
 
-            if (isStarted){
-                pivxApplication.stopBlockchain();
-                // now that everything is good, start the service
-                new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+                if (isStarted) {
+                    pivxApplication.stopBlockchain();
+                    // now that everything is good, start the service
+                    new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
+                }
+                goNext();
+                finish();
+            }else {
+                Toast.makeText(v.getContext(), R.string.app_process_task, Toast.LENGTH_SHORT).show();
             }
-            goNext();
-            finish();
         });
 
         dropdown = (Spinner)findViewById(R.id.spinner);

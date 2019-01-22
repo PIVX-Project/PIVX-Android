@@ -52,6 +52,12 @@
             style="@style/ButtonTextTransparent" />
 
         <Button
+            android:id="@+id/btn_dns_discovery"
+            android:layout_marginTop="20dp"
+            android:text="@string/settings_node_dns_discovery"
+            style="@style/ButtonTextTransparent" />
+
+        <Button
             android:id="@+id/btn_default"
             android:layout_marginTop="20dp"
             android:text="@string/node_default"

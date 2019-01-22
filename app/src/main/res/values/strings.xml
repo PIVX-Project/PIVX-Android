@@ -63,6 +63,7 @@
     <string name="action_scan">scanner</string>
     <string name="btn_select_node">Add node</string>
     <string name="node_default">Default values</string>
+    <string name="settings_node_dns_discovery">DNS Discovery</string>
     <string name="title_no_trusted_peer_connection">Peer issue</string>
     <string name="message_no_trusted_peer_connection">Trusted peer connection fail</string>
     <string name="share_address_text">Share address</string>
@@ -480,5 +481,7 @@
     <string name="error_copying_files_to_log_folder">Error copying files to log folder</string>
     <string name="log_folder_created">Log folder created</string>
     <string name="spending_zpiv">Spending zPIV process</string>
+    <string name="dns_discovery_enabled">DNS discovery enabled</string>
+    <string name="app_process_task">App processing task</string>
 
 </resources>
