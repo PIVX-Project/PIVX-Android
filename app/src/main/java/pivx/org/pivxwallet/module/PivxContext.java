@@ -21,15 +21,15 @@ import pivx.org.pivxwallet.AndroidJniBridge;
 public class PivxContext {
 
     public static final boolean IS_TEST = false;
-    public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
+    public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get(): MainNetParams.get();
     /** Pivxj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
     // Zerocoin wallet features activation.
-    public static final boolean IS_ZEROCOIN_WALLET_ACTIVE = true;
+    public static final boolean IS_ZEROCOIN_WALLET_ACTIVE = false;
 
     // Peers dns discovery
-    public static final boolean IS_DNS_DISCOVERY_ENABLED_BY_DEFAULT = false;
+    public static final boolean IS_DNS_DISCOVERY_ENABLED_BY_DEFAULT = true;
 
     {
         CONTEXT.zerocoinContext = new ZerocoinContext(new AndroidJniBridge());
@@ -47,7 +47,7 @@ public class PivxContext {
     public static final String URL_FIAT_CURRENCIES_RATE = "https://bitpay.com/rates";
 
     // report mail
-    public static final String REPORT_EMAIL = "matiasfurszyfer@gmail.com";
+    public static final String REPORT_EMAIL = "furszy@pivx.org";
     /** Subject line for manually reported issues. */
     public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
 
