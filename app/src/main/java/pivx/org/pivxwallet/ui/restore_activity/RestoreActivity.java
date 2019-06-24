@@ -19,8 +19,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.apache.commons.codec.Charsets;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
@@ -29,6 +27,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -342,7 +341,7 @@ public class RestoreActivity extends BaseActivity {
             BufferedReader reader = null;
             try {
                 if (file == null)return false;
-                reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
+                reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
                 WalletUtils.readKeys(reader, PivxContext.NETWORK_PARAMETERS,PivxContext.BACKUP_MAX_CHARS);
                 return true;
             } catch (final IOException x) {
