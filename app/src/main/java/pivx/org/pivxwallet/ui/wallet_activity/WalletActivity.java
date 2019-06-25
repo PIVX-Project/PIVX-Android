@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chain.BlockchainState;
+import de.schildbach.wallet.ui.scan.ScanActivity;
 import pivx.org.pivxwallet.R;
 import global.exceptions.NoPeerConnectedException;
 import global.PivxRate;
@@ -52,16 +53,15 @@ import pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity;
 import pivx.org.pivxwallet.ui.upgrade.UpgradeWalletActivity;
 import pivx.org.pivxwallet.utils.AnimationUtils;
 import pivx.org.pivxwallet.utils.DialogsUtil;
-import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 
 import static android.Manifest.permission.CAMERA;
+import static de.schildbach.wallet.ui.scan.ScanActivity.INTENT_EXTRA_RESULT;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_ON_COIN_RECEIVED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_ADDRESS;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_EXTRA_TOTAL_AMOUNT;
 import static pivx.org.pivxwallet.ui.transaction_send_activity.SendActivity.INTENT_MEMO;
-import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by Neoperol on 5/11/17.
@@ -110,7 +110,6 @@ public class WalletActivity extends BaseDrawerActivity {
                     });
                 }
             }
-
         }
     };
 

@@ -86,7 +86,13 @@
         <activity android:name=".ui.privacy.privacy_coin_control.PrivacyCoinControlActivity"/>
         <activity android:name=".ui.tutorial_activity.TutorialActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.qr_activity.QrActivity"/>
-        <activity android:name=".utils.scanner.ScanActivity"/>
+        <activity
+            android:name="de.schildbach.wallet.ui.scan.ScanActivity"
+            android:configChanges="keyboard|keyboardHidden"
+            android:stateNotNeeded="true"
+            android:theme="@style/My.Theme.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
         <activity android:name=".ui.donate.DonateActivity" />
         <activity android:name=".ui.export_account.ExportKeyActivity"/>
         <activity android:name=".ui.import_watch_only.SettingsWatchOnly"/>

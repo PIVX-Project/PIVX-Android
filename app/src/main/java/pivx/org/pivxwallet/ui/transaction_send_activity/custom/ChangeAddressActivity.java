@@ -15,14 +15,12 @@ import android.widget.Toast;
 
 import org.pivxj.core.AddressFormatException;
 import org.pivxj.uri.PivxURI;
-
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.DialogsUtil;
-import pivx.org.pivxwallet.utils.scanner.ScanActivity;
 import static android.Manifest.permission_group.CAMERA;
-import static pivx.org.pivxwallet.utils.scanner.ScanActivity.INTENT_EXTRA_RESULT;
-
+import de.schildbach.wallet.ui.scan.ScanActivity;
+import static de.schildbach.wallet.ui.scan.ScanActivity.INTENT_EXTRA_RESULT;
 
 /**
  * Created by furszy on 10/17/17.
