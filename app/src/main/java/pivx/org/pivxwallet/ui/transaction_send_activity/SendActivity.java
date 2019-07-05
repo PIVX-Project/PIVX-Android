@@ -224,8 +224,11 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         addAllPiv.setOnClickListener(this);
         btn_clear.setOnClickListener(this);
         pivxRate = pivxModule.getRate(pivxApplication.getAppConf().getSelectedRateCoin());
-
-        txt_local_currency.setText("0 " + pivxRate.getCode());
+        if (pivxRate != null)
+            txt_local_currency.setText("0 " + pivxRate.getCode());
+        else {
+            txt_local_currency.setText(R.string.no_rate);
+        }
 
         editCurrency.addTextChangedListener(new TextWatcher() {
             @Override
@@ -301,8 +304,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
 
             }
         });
-        editCurrency.setHint(pivxRate.getCode() + " " + getText(R.string.title_equivalent));
-        title_amount_local.setText(getText(R.string.amount) + "  (" + pivxRate.getCode() + " " + getText(R.string.title_equivalent)+ ")");
+        if (pivxRate != null) {
+            editCurrency.setHint(pivxRate.getCode() + " " + getText(R.string.title_equivalent));
+            title_amount_local.setText(getText(R.string.amount) + "  (" + pivxRate.getCode() + " " + getText(R.string.title_equivalent) + ")");
+        } else {
+            editCurrency.setHint(R.string.title_equivalent);
+        }
         // Load data if exists
         String address = intent.getStringExtra(INTENT_ADDRESS);
         if (address != null){
