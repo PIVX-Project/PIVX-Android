@@ -4,20 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.view.KeyboardShortcutGroup;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
-
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 
 import static android.view.View.GONE;
 
@@ -77,14 +71,14 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
         setContentView(R.layout.single_edit_dialog);
 
         container_dialog = findViewById(R.id.container_dialog);
-        editText = (EditText) findViewById(R.id.edit_text);
+        editText = findViewById(R.id.edit_text);
         View title_container = findViewById(R.id.title_container);
-        TextView txt_title = (TextView) findViewById(R.id.txt_title);
-        TextView txt_body = (TextView) findViewById(R.id.txt_body);
-        ImageView imgAlert = (ImageView) findViewById(R.id.img_alert);
+        TextView txt_title = findViewById(R.id.txt_title);
+        TextView txt_body = findViewById(R.id.txt_body);
+        ImageView imgAlert = findViewById(R.id.img_alert);
         View btn_container = findViewById(R.id.btn_container);
-        TextView btn_left = (TextView) findViewById(R.id.btn_left);
-        TextView btn_right = (TextView) findViewById(R.id.btn_right);
+        TextView btn_left = findViewById(R.id.btn_left);
+        TextView btn_right = findViewById(R.id.btn_right);
 
         initRoot(container_dialog);
         initTitle(title_container,txt_title);
@@ -192,6 +186,10 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
 
     public void setBodyColor(int bodyColor) {
         this.bodyColor = bodyColor;
+    }
+
+    public void setEditInputType(int inputType){
+        editText.setInputType(inputType);
     }
 
     public SimpleEditDialogFragment setImgAlertRes(int imgAlertRes) {

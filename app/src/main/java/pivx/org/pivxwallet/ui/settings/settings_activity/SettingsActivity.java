@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -209,10 +210,15 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         dialog.setTitleColor(Color.BLACK);
         dialog.setBody("You are going to rollback the chain N blocks");
         dialog.setBodyColor(Color.BLACK);
+        dialog.setEditInputType(InputType.TYPE_CLASS_NUMBER);
         dialog.setListener(new SimpleEditDialogFragment.SimpleTwoBtnsDialogListener() {
             @Override
             public void onRightBtnClicked(SimpleEditDialogFragment dialog) {
                 String heightStr = dialog.getTextOnEditText();
+                if (heightStr.isEmpty()){
+                    Toast.makeText(SettingsActivity.this, R.string.invalid_inputs,Toast.LENGTH_LONG).show();
+                    return;
+                }
                 int height = Integer.valueOf(heightStr);
                 pivxApplication.stopBlockchainAndRollBackitTo(height);
                 dialog.dismiss();
