@@ -19,15 +19,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.widget.Toast;
-
+import android.util.Log;
 import org.pivxj.core.Block;
 import org.pivxj.core.Coin;
 import org.pivxj.core.FilteredBlock;
 import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Peer;
 import org.pivxj.core.Transaction;
-import org.pivxj.core.TransactionBroadcast;
 import org.pivxj.core.TransactionConfidence;
 import org.pivxj.core.listeners.AbstractPeerDataEventListener;
 import org.pivxj.core.listeners.PeerConnectedEventListener;
@@ -43,6 +41,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -636,16 +635,15 @@ public class PivxWalletService extends Service{
         boolean isSchedule = System.currentTimeMillis() < module.getConf().getScheduledBLockchainService();
 
         if (!isSchedule){
-            log.info("scheduling service");
             AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-            long scheduleTime = System.currentTimeMillis() + 1000*60;//(1000 * 60 * 60); // One hour from now
-
+            long scheduleTime = System.currentTimeMillis() + 1000 * 60 * 15;//(1000 * 60 * 60); // One hour from now
+            log.info("scheduling service for " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(scheduleTime));
             Intent intent = new Intent(this, PivxWalletService.class);
             intent.setAction(ACTION_SCHEDULE_SERVICE);
             alarm.set(
                     // This alarm will wake up the device when System.currentTimeMillis()
                     // equals the second argument value
-                    alarm.RTC_WAKEUP,
+                    AlarmManager.RTC_WAKEUP,
                     scheduleTime,
                     // PendingIntent.getService creates an Intent that will start a service
                     // when it is called. The first argument is the Context that will be used
@@ -665,14 +663,14 @@ public class PivxWalletService extends Service{
     private void tryScheduleServiceNow() {
         log.info("scheduling service now");
         AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
-        long scheduleTime = System.currentTimeMillis() + 1000 * 60 * 2; // 2 minutes
+        long scheduleTime = System.currentTimeMillis() + 1000 * 60 * 10; // 2 minutes
 
         Intent intent = new Intent(this, PivxWalletService.class);
         intent.setAction(ACTION_SCHEDULE_SERVICE);
         alarm.set(
                 // This alarm will wake up the device when System.currentTimeMillis()
                 // equals the second argument value
-                alarm.RTC_WAKEUP,
+                AlarmManager.RTC_WAKEUP,
                 scheduleTime,
                 // PendingIntent.getService creates an Intent that will start a service
                 // when it is called. The first argument is the Context that will be used
@@ -724,6 +722,7 @@ public class PivxWalletService extends Service{
      */
     private void check() {
         log.info("check");
+        Log.i("PIVX_SERVICE", "Running check, is checking: " + isChecking.get());
         try {
             if (!isChecking.getAndSet(true)) {
 
