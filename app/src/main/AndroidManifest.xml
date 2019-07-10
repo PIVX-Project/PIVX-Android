@@ -19,6 +19,11 @@
         android:theme="@style/AppTheme"
         android:name=".PivxApplication"
         tools:replace="android:allowBackup">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity android:name=".ui.splash_activity.SplashActivity"  android:screenOrientation="portrait">
 
         </activity>
