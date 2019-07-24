@@ -31,7 +31,6 @@ public class MnemonicActivity extends BaseActivity {
     public static final String INTENT_EXTRA_INIT_VIEW = "init_view";
 
     private FlexboxLayout txt_words;
-    private View container_continue_btn;
     private Button btn_continue;
     private int margin = 100;
     private boolean isInit = false;
@@ -47,9 +46,7 @@ public class MnemonicActivity extends BaseActivity {
         getLayoutInflater().inflate(R.layout.security_words_show, container);
         setTitle(R.string.title_mnemonic_code);
 
-        container_continue_btn = findViewById(R.id.container_continue_btn);
         if (!isInit){
-            container_continue_btn.setVisibility(View.GONE);
             findViewById(R.id.btn_continue).setVisibility(View.GONE);
         }else {
             btn_continue = (Button) findViewById(R.id.btn_continue);
