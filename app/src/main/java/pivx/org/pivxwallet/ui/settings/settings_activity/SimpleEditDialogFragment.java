@@ -17,9 +17,8 @@ import static android.view.View.GONE;
 
 public class SimpleEditDialogFragment extends Dialog implements View.OnClickListener {
 
-    private EditText editText;
-
     private SimpleTwoBtnsDialogListener listener;
+    private EditText editText;
 
     private String title;
     private String body;
@@ -35,6 +34,8 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
     private int rightBtnBackgroundColor;
     private int leftBtnBackgroundColor;
     private int rootBackgroundRes;
+
+    private int editInputType = -1;
 
     private int imgAlertRes;
 
@@ -85,6 +86,8 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
         initBody(txt_body);
         initImgAlert(imgAlert);
         initBtns(btn_container,btn_left,btn_right);
+        if (editInputType != -1)
+            editText.setInputType(editInputType);
         super.onCreate(savedInstanceState);
     }
 
@@ -189,7 +192,10 @@ public class SimpleEditDialogFragment extends Dialog implements View.OnClickList
     }
 
     public void setEditInputType(int inputType){
-        editText.setInputType(inputType);
+        if(editText != null)
+            editText.setInputType(inputType);
+        else
+            this.editInputType = inputType;
     }
 
     public SimpleEditDialogFragment setImgAlertRes(int imgAlertRes) {
