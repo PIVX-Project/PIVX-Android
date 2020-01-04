@@ -97,8 +97,9 @@ public class StartNodeActivity extends BaseActivity {
                     goNext();
                     finish();
                 }
-            }catch (Exception e){
+            } catch (Exception e){
                 LoggerFactory.getLogger(StartNodeActivity.class).error("Error touching default nodes button", e);
+            } finally {
                 isLoading.set(false);
             }
         });
@@ -117,8 +118,9 @@ public class StartNodeActivity extends BaseActivity {
                     goNext();
                     finish();
                 }
-            }catch (Exception e){
+            } catch (Exception e){
                 LoggerFactory.getLogger(StartNodeActivity.class).error("Error touching DNS discovery nodes button", e);
+            } finally {
                 isLoading.set(false);
             }
         });
@@ -139,6 +141,7 @@ public class StartNodeActivity extends BaseActivity {
                     new Handler().postDelayed(() -> pivxApplication.startPivxService(), TimeUnit.SECONDS.toMillis(5));
                 }
                 goNext();
+                isLoading.set(false);
                 finish();
             }else {
                 Toast.makeText(v.getContext(), R.string.app_process_task, Toast.LENGTH_SHORT).show();
